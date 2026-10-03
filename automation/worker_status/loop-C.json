@@ -1,9 +1,9 @@
 {
   "worker": "loop-C",
   "active_slice": "part2/capital_flow",
-  "head_sha": null,
-  "verdict": "CONTINUE",
-  "reason": "Consensus protocol initialized; current slice still has failing regressions and has not reached plateau.",
-  "next_idea": "Repair exact-HEAD validation regressions first.",
-  "updated_at": null
+  "head_sha": "435321efe9c6346c9d69fa4f82cb8d657e49d89c",
+  "verdict": "BLOCKED",
+  "reason": "Exact HEAD fails 3 known Capital Flow regressions; concrete fixes identified, but worker-control lock acquisition write is blocked by the repository write safety gate.",
+  "next_idea": "When writes are permitted, acquire worker-control lock and repair BitMEX dated reserve-key selection, causal handoff availability semantics, and the future-revision fixture without weakening FlowObservation invariants.",
+  "updated_at": "2026-10-03T23:18:49Z"
 }
