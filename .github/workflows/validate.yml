@@ -3,8 +3,16 @@ name: Specialist Lab Validation
 on:
   push:
     branches: [anata-local-hardening]
+    paths:
+      - "part2/**"
+      - "specialist_evidence/**"
+      - ".github/workflows/validate.yml"
   pull_request:
     branches: [anata-local-hardening]
+    paths:
+      - "part2/**"
+      - "specialist_evidence/**"
+      - ".github/workflows/validate.yml"
   workflow_dispatch:
 
 permissions:
