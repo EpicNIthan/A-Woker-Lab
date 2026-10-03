@@ -1,0 +1,12 @@
+{
+  "schema": "anata-public-worker-lab-v1",
+  "source_repo": "EpicNIthan/-Anata_AI-Trader",
+  "source_branch": "anata-local-hardening",
+  "source_sha": "a5dfce9fca4fe9717134b251f7be7d5b5ffa8e5d",
+  "lab_repo": "EpicNIthan/A-Woker-Lab",
+  "lab_branch": "anata-local-hardening",
+  "active_slice": "part2/capital_flow",
+  "private_target_branch": "anata-local-hardening",
+  "last_promoted_public_sha": null,
+  "notes": "Public lab only. Private repo remains authority."
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "anata-worker-lab-lock-v1",
+  "status": "IDLE",
+  "owner": null,
+  "started_at": null,
+  "lease_expires_at": null,
+  "note": "Shared public-lab worker lock. Acquire immediately before state-changing work."
+}

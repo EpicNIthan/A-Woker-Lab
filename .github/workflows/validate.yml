@@ -1,0 +1,27 @@
+name: Specialist Lab Validation
+
+on:
+  push:
+    branches: [anata-local-hardening]
+  pull_request:
+    branches: [anata-local-hardening]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capital-flow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install test dependency
+        run: python -m pip install --upgrade pip pytest
+      - name: Validate exported Specialist slice
+        env:
+          PYTHONPATH: .
+        run: python -m pytest -q part2/capital_flow/tests
