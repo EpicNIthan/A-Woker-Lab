@@ -7,6 +7,8 @@
   "lab_branch": "anata-local-hardening",
   "active_slice": "part2/capital_flow",
   "private_target_branch": "anata-local-hardening",
-  "last_promoted_public_sha": null,
-  "notes": "Public lab only. Private repo remains authority."
+  "last_promoted_public_sha": "cc86c42ba9010619bff848c5b25dff090660191d",
+  "notes": "Public lab only. Private repo remains authority.",
+  "export_baseline_public_sha": "cc86c42ba9010619bff848c5b25dff090660191d",
+  "promotion_policy": "Supervisor may auto-promote only validated Specialist-slice code/test changes from this branch into private anata-local-hardening; never main."
 }
