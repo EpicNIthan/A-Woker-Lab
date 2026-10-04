@@ -1,8 +1,8 @@
 {
   "schema": "anata-worker-lab-lock-v1",
-  "status": "RUNNING",
-  "owner": "loop-A",
-  "started_at": "2026-10-04T14:00:53Z",
-  "lease_expires_at": "2026-10-04T14:20:53Z",
-  "note": "Assess current PASS Capital Flow head and record next independent evidence gap."
+  "status": "IDLE",
+  "owner": null,
+  "started_at": null,
+  "lease_expires_at": null,
+  "note": "Code-mutation lock only. Research/assessment/status writes do not require this lock."
 }
