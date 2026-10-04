@@ -3,7 +3,7 @@
   "active_slice": "part2/capital_flow",
   "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
   "verdict": "CONTINUE",
-  "reason": "Exact public HEAD remains PASS. Source-breadth rotation found Bybit first-party numbered PoR press reports with explicit publication dates, snapshot/effective dates, BTC entity scope and recurring independent-verification references, but no stable machine-readable historical report feed or immutable artifact/revision identifier was established. Coinbase cbBTC exposes a first-party refreshed-at clock and reserve/supply/address data, but is a mutable current-state page without historical immutable revision identity. No code mutation is justified without weakening PIT/revision requirements.",
-  "next_idea": "Continue source breadth with Gate first-party dated PoR announcements/reports and determine whether the underlying report/audit artifact has stable machine-readable historical access plus immutable report/hash identity; if not, rotate to a non-overlapping first-party custody/reserve source rather than scraping mutable summary HTML.",
-  "updated_at": "2026-10-04T18:35:00Z"
+  "reason": "Exact public HEAD remains PASS. Gate first-party PoR is independently useful and exposes audit time, BTC customer/platform balances, Merkle root, downloadable Merkle/User Config artifacts and dated announcements. However, a stable historical machine-readable batch index/download contract with immutable per-report artifact/revision identity tied to authoritative publication metadata is still not established, so ingestion would weaken PIT/revision guarantees.",
+  "next_idea": "Rotate beyond Gate: research a non-overlapping first-party reserve/custody or regulated custody disclosure whose historical machine-readable artifacts expose authoritative publication timestamps and immutable report/revision IDs; implement only if that full contract is established.",
+  "updated_at": "2026-10-04T21:29:00Z"
 }
