@@ -3,7 +3,7 @@
   "active_slice": "part2/capital_flow",
   "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
   "verdict": "BLOCKED",
-  "reason": "Expired loop-A lease is stale, but normal GitHub update_file was blocked by repository safety while reclaiming the code-mutation lock, before any anata-local-hardening mutation.",
-  "next_idea": "On the next eligible run, reclaim the stale lease, then minimally import StrategyTreasuryCollector in runner.py, register stable attempt name strategy_treasury, and add a focused live-run regression proving attempted+archived+handoff/evidence-health visibility while context_only remains excluded from scoring.",
-  "updated_at": "2026-10-04T17:03:00Z"
+  "reason": "Normal GitHub update_file was blocked by repository safety while reclaiming the expired worker-control mutation lease; no anata-local-hardening mutation was attempted.",
+  "next_idea": "Reclaim the stale lease, then import StrategyTreasuryCollector in runner.py, register strategy_treasury in the normal live collectors tuple, and add a focused integration regression proving attempt/archive/handoff/evidence-health visibility with context_only excluded from scoring.",
+  "updated_at": "2026-10-04T22:05:00Z"
 }
