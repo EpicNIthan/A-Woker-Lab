@@ -1,9 +1,9 @@
 {
   "worker": "loop-B",
   "active_slice": "part2/capital_flow",
-  "head_sha": "9da4877d07df2b6227bc2cdc3cda1c9a3251345e",
-  "verdict": "BLOCKED",
-  "reason": "Exact HEAD Specialist Lab Validation fails 1/69 tests: BitMEX reserve collector still selects the legacy reserve snapshot publication clock instead of the newer eligible date-prefixed snapshot. loop-C holds an unexpired worker-control lease through 2026-10-04T00:44:24Z, so loop-B must not mutate the public lab this run.",
-  "next_idea": "After the active lease clears, inspect _latest_reserve ordering/LastModified parsing and repair selection so both legacy and YYYYMMDD-reserves keys are eligible but the newest first-party LastModified snapshot wins and supplies available_at_ms; preserve the other two now-passing PIT/causal regressions.",
-  "updated_at": "2026-10-04T00:29:38Z"
+  "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
+  "verdict": "CONTINUE",
+  "reason": "Pushed first-party SEC Strategy corporate BTC treasury context with separate publication/effective clocks, explicit entity scope, accession revision identity, fail-closed parsing, and PIT/amendment tests. Exact new HEAD now requires Specialist Lab Validation.",
+  "next_idea": "After exact-SHA Actions PASS, inspect independent first-party exchange reserve/custody redundancy and current-family freshness/revision/provenance defects before PLATEAU.",
+  "updated_at": "2026-10-04T13:42:00Z"
 }
