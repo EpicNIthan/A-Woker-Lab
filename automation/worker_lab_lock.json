@@ -2,7 +2,7 @@
   "schema": "anata-worker-lab-lock-v1",
   "status": "LOCKED",
   "owner": "loop-A",
-  "started_at": "2026-10-04T15:57:00Z",
-  "lease_expires_at": "2026-10-04T16:12:00Z",
-  "note": "Strategy runner integration and regression only."
+  "started_at": "2026-10-04T18:02:00Z",
+  "lease_expires_at": "2026-10-04T18:17:00Z",
+  "note": "Strategy runner integration and representative regression only."
 }
