@@ -3,7 +3,7 @@
   "active_slice": "part2/capital_flow",
   "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
   "verdict": "CONTINUE",
-  "reason": "Exact public HEAD remains PASS. Source-breadth research found Kraken first-party PoR is genuinely independent and explicitly scopes BTC plus snapshot date/review methodology, but the public summary page does not expose a defensible publication timestamp/revision identity or stable machine-readable historical feed sufficient for PIT ingestion. Code lock is currently held by loop-A, so no code/test mutation was attempted.",
-  "next_idea": "Rotate within source breadth: verify Binance/another first-party PoR source for a stable machine-readable historical report contract with explicit release/publication clock and immutable revision/report identity; implement only if those PIT requirements are satisfied.",
-  "updated_at": "2026-10-04T15:32:00Z"
+  "reason": "Exact public HEAD remains PASS. Source-breadth rotation found Bybit first-party numbered PoR press reports with explicit publication dates, snapshot/effective dates, BTC entity scope and recurring independent-verification references, but no stable machine-readable historical report feed or immutable artifact/revision identifier was established. Coinbase cbBTC exposes a first-party refreshed-at clock and reserve/supply/address data, but is a mutable current-state page without historical immutable revision identity. No code mutation is justified without weakening PIT/revision requirements.",
+  "next_idea": "Continue source breadth with Gate first-party dated PoR announcements/reports and determine whether the underlying report/audit artifact has stable machine-readable historical access plus immutable report/hash identity; if not, rotate to a non-overlapping first-party custody/reserve source rather than scraping mutable summary HTML.",
+  "updated_at": "2026-10-04T18:35:00Z"
 }
