@@ -1,8 +1,8 @@
 {
   "schema": "anata-worker-lab-lock-v1",
   "status": "RUNNING",
-  "owner": "loop-B",
-  "started_at": "2026-10-04T13:32:11Z",
-  "lease_expires_at": "2026-10-04T13:52:11Z",
-  "note": "Capital Flow corporate BTC treasury PIT evidence batch on public anata-local-hardening."
+  "owner": "loop-A",
+  "started_at": "2026-10-04T14:00:53Z",
+  "lease_expires_at": "2026-10-04T14:20:53Z",
+  "note": "Assess current PASS Capital Flow head and record next independent evidence gap."
 }
