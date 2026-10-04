@@ -1,8 +1,8 @@
 {
   "schema": "anata-worker-lab-lock-v1",
-  "status": "IDLE",
-  "owner": null,
-  "started_at": null,
-  "lease_expires_at": null,
-  "note": "Shared public-lab worker lock. Acquire immediately before state-changing work."
+  "status": "RUNNING",
+  "owner": "loop-B",
+  "started_at": "2026-10-04T13:32:11Z",
+  "lease_expires_at": "2026-10-04T13:52:11Z",
+  "note": "Capital Flow corporate BTC treasury PIT evidence batch on public anata-local-hardening."
 }
