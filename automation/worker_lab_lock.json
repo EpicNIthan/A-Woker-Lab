@@ -1,8 +1,8 @@
 {
   "schema": "anata-worker-lab-lock-v1",
-  "status": "IDLE",
-  "owner": null,
-  "started_at": null,
-  "lease_expires_at": null,
-  "note": "Code-mutation lock only. Research/assessment/status writes do not require this lock."
+  "status": "LOCKED",
+  "owner": "loop-A",
+  "started_at": "2026-10-04T15:05:00Z",
+  "lease_expires_at": "2026-10-04T15:20:00Z",
+  "note": "Strategy runner integration mutation only."
 }
