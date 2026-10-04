@@ -3,7 +3,7 @@
   "active_slice": "part2/capital_flow",
   "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
   "verdict": "BLOCKED",
-  "reason": "Known Strategy integration gap confirmed. Fresh stale lease was reclaimed and verified, but normal GitHub update_file for part2/capital_flow/runner.py was blocked by repository safety before mutation.",
-  "next_idea": "Retry the minimal runner import/registration plus a focused integration test that stubs all live collectors, returns one context_only Strategy treasury observation, and asserts strategy_treasury attempt OK, archive/handoff treasury visibility, and scoring_records_loaded remains zero.",
-  "updated_at": "2026-10-04T15:58:00Z"
+  "reason": "Expired loop-A lease is stale, but normal GitHub update_file was blocked by repository safety while reclaiming the code-mutation lock, before any anata-local-hardening mutation.",
+  "next_idea": "On the next eligible run, reclaim the stale lease, then minimally import StrategyTreasuryCollector in runner.py, register stable attempt name strategy_treasury, and add a focused live-run regression proving attempted+archived+handoff/evidence-health visibility while context_only remains excluded from scoring.",
+  "updated_at": "2026-10-04T17:03:00Z"
 }
