@@ -7,30 +7,19 @@ Capital Flow / On-chain
 - public branch: `anata-local-hardening`
 - exact HEAD: `1ebdc70600405d2451e13d175f45bd2da9303635`
 - GitHub Actions: PASS
-- BitMEX date-prefixed reserve regression: fixed
+- BitMEX date-prefixed reserve regression: fixed; do not revisit without a new regression
 
-## Promotion rule
-Do NOT promote merely because GitHub Actions passes. Promotion requires:
-1. exact current public `anata-local-hardening` HEAD = GitHub Actions PASS;
-2. loop-A verdict = PLATEAU for that exact HEAD;
-3. loop-B verdict = PLATEAU for that exact HEAD;
-4. loop-C verdict = PLATEAU for that exact HEAD;
-5. Supervisor independently agrees PLATEAU after reviewing source/data gaps, tests, contracts, recent diffs and blockers.
+## Promotion gate
+No promotion until A+B+C each write PLATEAU for this exact HEAD and Supervisor independently agrees. Any CONTINUE/BLOCKED or stale-head status prevents promotion.
 
-Any CONTINUE or BLOCKED verdict prevents promotion.
+## Prioritized post-PASS work
+1. **Corporate BTC treasury evidence (highest value).** Add only if a first-party corporate disclosure gives an explicit entity/legal scope and defensible publication clock. Contract must separate `effective_at` (holding/acquisition/reporting date) from `available_at` (first-party filing/press-release publication time), retain document/filing identity + revision/amendment identity, and never replay later amended holdings into earlier frames. Context-only: do not force treasury holdings/acquisitions bullish/bearish.
+   - Tests: publication after effective date is invisible before publication; amendment creates a later revision rather than overwriting; subsidiaries/entities cannot be silently aggregated; missing publication timestamp fails closed.
+2. **Independent exchange reserve/custody redundancy.** Require genuinely independent first-party venue/custodian evidence, not another mirror of BitMEX or wallet-attribution inference. Preserve venue/entity scope, snapshot publication time, asset/unit, and revision identity. Do not treat proof-of-reserves liabilities/attestations as exchange netflow.
+3. **Audit current families for concrete defects before adding breadth.** ETF and DefiLlama bootstrap history is intentionally non-replayable because row publication clocks are absent. Look for a first-party source with stronger publication/revision timing rather than weakening this rule. Check stablecoin, miner/network, exchange and ETF freshness/revision/provenance tests.
+4. **Handoff quality/coverage.** Add tests for explicit family missingness, stale-vs-missing distinction, provenance visibility, revision identity and source dependence; compact handoff must not hide degraded evidence behind aggregate coverage.
 
-## Current roadmap
-1. Re-assess Capital Flow from the new exact PASS HEAD; do not reapply the BitMEX regex fix.
-2. Independently review remaining worthwhile evidence/data gaps before PLATEAU.
-3. Highest-value review order:
-   - first-party corporate BTC treasury evidence with defensible PIT publication timing and explicit entity scope;
-   - independent exchange reserve / custody transparency redundancy that is genuinely non-overlapping;
-   - any concrete freshness/revision/provenance defect in current ETF, stablecoin, miner/network or exchange evidence;
-   - handoff missingness/quality/coverage defects supported by tests.
-4. A blocked source is not a plateau. Rotate to another trustworthy gap before concluding no work remains.
-5. Supervisor should actively research blockers and give concrete source-contract/test ideas, not merely report status.
-6. Only after A+B+C+Supervisor independently conclude PLATEAU for the same exact PASS HEAD, promote the validated slice to private `anata-local-hardening`.
-7. Then rotate the public lab to the next highest-value safe Specialist slice.
-
-## Current supervisor note
-The old worker BLOCKED statuses reference the pre-fix HEAD `9da4877...` and are stale. Each worker must reassess `1ebdc706...` and write a fresh verdict for that exact HEAD.
+## Worker coordination
+- Status files referencing `9da4877...` are stale and must be refreshed against `1ebdc706...`.
+- One worker should pursue treasury contract/source feasibility; another independent reserve/custody redundancy; another concrete freshness/revision/handoff defects to avoid duplicate work.
+- A blocked source is not PLATEAU: rotate to the next trustworthy gap.
