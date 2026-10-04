@@ -89,7 +89,11 @@ class BitmexReserveCollector:
                 continue
             fields = {child.tag.rsplit("}", 1)[-1]: (child.text or "").strip() for child in item}
             key = fields.get("Key", "")
-            if "/reserves-" not in key and not key.rsplit("/", 1)[-1].startswith("reserves-"):
+            filename = key.rsplit("/", 1)[-1]
+            # BitMEX has used both legacy reserves-... keys and date-prefixed
+            # YYYYMMDD-reserves-... keys.  Treat either as reserve snapshots;
+            # publication ordering remains the first-party LastModified clock.
+            if not (filename.startswith("reserves-") or re.match(r"^\\d{8}-reserves-", filename)):
                 continue
             if not key.endswith((".yaml", ".yml")):
                 continue

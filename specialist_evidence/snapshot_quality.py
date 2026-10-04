@@ -115,9 +115,9 @@ def assess_handoff_quality(
         reason = "not_yet_available"
     elif as_of_ms is not None and as_of_ms > future_limit_ms:
         reason = "future_as_of"
-    elif available_at_ms is not None and as_of_ms is not None and available_at_ms < as_of_ms:
-        # Evidence cannot be available before the state/revision it claims to describe.
-        reason = "availability_precedes_as_of"
+    # available_at may legitimately precede the Specialist handoff as_of cutoff.
+    # Causality requires availability no later than the cutoff (checked above),
+    # while source receipt ordering is enforced independently below.
     elif observed_at_ms is not None and available_at_ms is not None and available_at_ms > observed_at_ms:
         # Local receipt is a hard upper bound on what this installation knew.
         reason = "availability_after_receipt"

@@ -16,12 +16,13 @@ def _frame(as_of_ms: int):
     )
 
 
-def _obs(as_of_ms: int, *, available_at_ms: int | None = None):
+def _obs(as_of_ms: int, *, available_at_ms: int | None = None, observed_at_ms: int | None = None):
     return FlowObservation(
         family="exchange_btc", metric="btc_netflow", asset="BTC", value=1.0, unit="BTC",
         effective_at_ms=as_of_ms - 3_600_000,
         available_at_ms=as_of_ms - 1_000 if available_at_ms is None else available_at_ms,
-        observed_at_ms=as_of_ms, source="test_exchange", source_record_id="row-1",
+        observed_at_ms=as_of_ms if observed_at_ms is None else observed_at_ms,
+        source="test_exchange", source_record_id="row-1",
         cadence_seconds=3600, data_quality=1.0,
     )
 
@@ -48,7 +49,10 @@ def test_capital_flow_handoff_fails_closed_without_visible_provenance():
 
 def test_future_source_revision_is_not_promoted_into_handoff():
     now = 1_787_520_123_456
-    future = _obs(now, available_at_ms=now + 60_000)
+    # A later revision must remain a contract-valid observation: it can only be
+    # received at or after its source availability.  Reconstructing the earlier
+    # handoff must therefore exclude it without violating FlowObservation.
+    future = _obs(now, available_at_ms=now + 60_000, observed_at_ms=now + 60_000)
     handoff = build_anata_handoff(_frame(now), [future])
     assert handoff["source_evidence"] == []
     assert handoff["causal_quality"]["usable"] is False
