@@ -2,7 +2,7 @@
   "schema": "anata-worker-lab-lock-v1",
   "status": "RUNNING",
   "owner": "loop-C",
-  "started_at": "2026-10-04T07:14:30Z",
-  "lease_expires_at": "2026-10-04T07:34:30Z",
-  "note": "Fix exact Capital Flow BitMEX dated-key regex regression only."
+  "started_at": "2026-10-04T08:11:29Z",
+  "lease_expires_at": "2026-10-04T08:31:29Z",
+  "note": "Fix exact Capital Flow BitMEX YYYYMMDD reserve-key regex regression only."
 }
