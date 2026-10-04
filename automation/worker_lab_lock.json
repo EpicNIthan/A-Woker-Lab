@@ -1,8 +1,8 @@
 {
   "schema": "anata-worker-lab-lock-v1",
   "status": "LOCKED",
-  "owner": "loop-C",
-  "started_at": "2026-10-04T19:20:00Z",
-  "lease_expires_at": "2026-10-04T19:35:00Z",
-  "note": "Stablecoin handoff revision-coherence repair and regression only."
+  "owner": "loop-A",
+  "started_at": "2026-10-04T21:03:00Z",
+  "lease_expires_at": "2026-10-04T21:18:00Z",
+  "note": "Strategy treasury live-run integration and regression only."
 }
