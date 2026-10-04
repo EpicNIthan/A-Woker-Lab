@@ -5,21 +5,25 @@ Capital Flow / On-chain
 
 ## Exact validated public state
 - public branch: `anata-local-hardening`
-- exact HEAD: `1ebdc70600405d2451e13d175f45bd2da9303635`
+- exact HEAD: `7e4970a4764c892957c84f96f267a9cdd8abc5d7`
 - GitHub Actions: PASS
-- BitMEX date-prefixed reserve regression: fixed; do not revisit without a new regression
+- newest batch: PIT-safe Strategy corporate BTC treasury collector/tests
+
+## Important integration gap found by Supervisor
+The Strategy collector exists in `providers_strategy.py` and has focused tests, but `runner.py` does not import or register `StrategyTreasuryCollector` in the live `collectors` tuple. Therefore the new evidence is not yet collected by normal Capital Flow live runs. This is the highest-priority correctness/completeness gap.
 
 ## Promotion gate
-No promotion until A+B+C each write PLATEAU for this exact HEAD and Supervisor independently agrees. Any CONTINUE/BLOCKED or stale-head status prevents promotion.
+No promotion until exact current HEAD PASS + A/B/C each independently write PLATEAU for that exact HEAD + Supervisor independently agrees. Any CONTINUE/BLOCKED/stale-head verdict prevents promotion.
 
-## Prioritized post-PASS work
-1. **Corporate BTC treasury evidence (highest value).** Add only if a first-party corporate disclosure gives an explicit entity/legal scope and defensible publication clock. Contract must separate `effective_at` (holding/acquisition/reporting date) from `available_at` (first-party filing/press-release publication time), retain document/filing identity + revision/amendment identity, and never replay later amended holdings into earlier frames. Context-only: do not force treasury holdings/acquisitions bullish/bearish.
-   - Tests: publication after effective date is invisible before publication; amendment creates a later revision rather than overwriting; subsidiaries/entities cannot be silently aggregated; missing publication timestamp fails closed.
-2. **Independent exchange reserve/custody redundancy.** Require genuinely independent first-party venue/custodian evidence, not another mirror of BitMEX or wallet-attribution inference. Preserve venue/entity scope, snapshot publication time, asset/unit, and revision identity. Do not treat proof-of-reserves liabilities/attestations as exchange netflow.
-3. **Audit current families for concrete defects before adding breadth.** ETF and DefiLlama bootstrap history is intentionally non-replayable because row publication clocks are absent. Look for a first-party source with stronger publication/revision timing rather than weakening this rule. Check stablecoin, miner/network, exchange and ETF freshness/revision/provenance tests.
-4. **Handoff quality/coverage.** Add tests for explicit family missingness, stale-vs-missing distinction, provenance visibility, revision identity and source dependence; compact handoff must not hide degraded evidence behind aggregate coverage.
+## Parallel worker lanes
+- **Loop A — integration/completeness:** wire Strategy treasury into normal live collection, add a representative runner/integration regression proving the collector is attempted and context-only evidence does not enter frozen scoring. Keep PIT/missingness/fail-closed semantics.
+- **Loop B — source breadth:** after re-reading the exact current HEAD, research one genuinely independent first-party exchange reserve/custody transparency source or another non-overlapping Capital Flow source. Do not duplicate BitMEX or Strategy. Implement only with defensible publication/PIT clocks.
+- **Loop C — quality audit:** inspect current ETF/stablecoin/miner/network/exchange/treasury handoff for a concrete freshness/revision/provenance/missingness/coverage defect. Prefer a specific testable defect over generic docs/metadata work.
 
-## Worker coordination
-- Status files referencing `9da4877...` are stale and must be refreshed against `1ebdc706...`.
-- One worker should pursue treasury contract/source feasibility; another independent reserve/custody redundancy; another concrete freshness/revision/handoff defects to avoid duplicate work.
-- A blocked source is not PLATEAU: rotate to the next trustworthy gap.
+## Coordination
+1. Research/assessment/status updates do **not** require the shared lock.
+2. Acquire `automation/worker_lab_lock.json` only immediately before actual code/test mutation on `anata-local-hardening`; keep the lease short and release immediately after push/exit.
+3. A worker seeing an active code-mutation lease may continue research and update its own status rather than wasting the run.
+4. After any code push, re-read exact HEAD and GitHub Actions before starting another mutation.
+5. A blocked source is not PLATEAU; rotate to another trustworthy gap.
+6. Do not revisit completed BitMEX regex or Strategy base collector unless a new defect is found.
