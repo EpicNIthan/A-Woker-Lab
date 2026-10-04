@@ -3,7 +3,7 @@
   "active_slice": "part2/capital_flow",
   "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
   "verdict": "CONTINUE",
-  "reason": "Pushed first-party SEC Strategy corporate BTC treasury context with separate publication/effective clocks, explicit entity scope, accession revision identity, fail-closed parsing, and PIT/amendment tests. Exact new HEAD now requires Specialist Lab Validation.",
-  "next_idea": "After exact-SHA Actions PASS, inspect independent first-party exchange reserve/custody redundancy and current-family freshness/revision/provenance defects before PLATEAU.",
-  "updated_at": "2026-10-04T13:42:00Z"
+  "reason": "Exact public HEAD remains PASS. Source-breadth research found Kraken first-party PoR is genuinely independent and explicitly scopes BTC plus snapshot date/review methodology, but the public summary page does not expose a defensible publication timestamp/revision identity or stable machine-readable historical feed sufficient for PIT ingestion. Code lock is currently held by loop-A, so no code/test mutation was attempted.",
+  "next_idea": "Rotate within source breadth: verify Binance/another first-party PoR source for a stable machine-readable historical report contract with explicit release/publication clock and immutable revision/report identity; implement only if those PIT requirements are satisfied.",
+  "updated_at": "2026-10-04T15:32:00Z"
 }
