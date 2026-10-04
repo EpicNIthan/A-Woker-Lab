@@ -3,7 +3,7 @@
   "active_slice": "part2/capital_flow",
   "head_sha": "9da4877d07df2b6227bc2cdc3cda1c9a3251345e",
   "verdict": "BLOCKED",
-  "reason": "Fresh loop-C lease was acquired and verified, but GitHub update_file for part2/capital_flow/providers_bitmex.py was blocked by OpenAI repository write safety before mutation.",
-  "next_idea": "Retry the isolated semantic regex correction from a write path permitted by repository safety; keep legacy support, newest eligible LastModified selection, and publication-time/PIT semantics unchanged.",
-  "updated_at": "2026-10-04T08:13:00Z"
+  "reason": "Cannot mutate public lab this run because worker-control has a valid unexpired loop-A lease through 2026-10-04T11:19:00Z; lock rules require respecting it.",
+  "next_idea": "On the next free lease, acquire loop-C, change only the BitMEX date-prefixed reserve regex to semantic ^\\d{8}-reserves-, run targeted and full Capital Flow validation, push one coherent commit, then release IDLE.",
+  "updated_at": "2026-10-04T11:17:00Z"
 }
