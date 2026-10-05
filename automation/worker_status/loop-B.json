@@ -1,9 +1,9 @@
 {
   "worker": "loop-B",
   "active_slice": "part2/capital_flow",
-  "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
-  "verdict": "CONTINUE",
-  "reason": "Exact public HEAD remains PASS. Gate first-party PoR is independently useful and exposes audit time, BTC customer/platform balances, Merkle root, downloadable Merkle/User Config artifacts and dated announcements. However, a stable historical machine-readable batch index/download contract with immutable per-report artifact/revision identity tied to authoritative publication metadata is still not established, so ingestion would weaken PIT/revision guarantees.",
-  "next_idea": "Rotate beyond Gate: research a non-overlapping first-party reserve/custody or regulated custody disclosure whose historical machine-readable artifacts expose authoritative publication timestamps and immutable report/revision IDs; implement only if that full contract is established.",
-  "updated_at": "2026-10-04T21:29:00Z"
+  "head_sha": "a73fc0ffa4a6d6684f58e02bbe531f4ef1e6624c",
+  "verdict": "BLOCKED",
+  "reason": "American Bitcoin Corp SEC filings satisfy the source-breadth contract: first-party machine-readable SEC submissions/archive access, explicit standalone-entity BTC holdings/as-of dates, SEC acceptanceDateTime as PIT availability clock, and immutable accession numbers as revision identity. Q1 2026 reports 7,021 BTC and Q2 reports 8,002 BTC. A coherent context-only collector was prepared after optimistic HEAD/target re-read, but create_file was rejected by repository-write safety checks, so no code/test mutation occurred.",
+  "next_idea": "Retry the prepared American Bitcoin Corp SEC collector when repository writes are accepted, then add PIT/amendment/no-future-leakage tests and live registration without duplicating Strategy or BitMEX.",
+  "updated_at": "2026-10-05T06:34:00Z"
 }
