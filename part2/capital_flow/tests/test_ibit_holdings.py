@@ -39,3 +39,62 @@ def test_ibit_holdings_rejects_missing_btc_row():
         assert "BTC holding row" in str(exc)
     else:
         raise AssertionError("collector must fail closed when the BTC row disappears")
+
+
+def test_ibit_is_live_archived_handoff_visible_and_context_only(monkeypatch, tmp_path):
+    from part2.capital_flow import runner
+    from part2.capital_flow.storage import load_observations
+
+    observed = 1_790_380_800_000
+    ibit = IbitHoldingsCollector(fetch_text=lambda _: CSV)
+
+    class EmptyCollector:
+        def collect(self, **_kwargs):
+            return ()
+
+    for name in (
+        "FarsideEtfCollector",
+        "BitmexReserveCollector",
+        "MempoolMinerNetworkCollector",
+        "StrategyTreasuryCollector",
+        "DefiLlamaStablecoinCollector",
+        "DefiLlamaStablecoinCompositionCollector",
+    ):
+        monkeypatch.setattr(runner, name, EmptyCollector)
+    monkeypatch.setattr(runner, "IbitHoldingsCollector", lambda: ibit)
+
+    result = runner.run_once(local_dir=tmp_path, network=True, as_of_ms=observed)
+
+    attempt = next(
+        item for item in result["collection_attempts"]
+        if item["collector"] == "ishares_ibit_holdings"
+    )
+    assert attempt["status"] == "OK"
+    assert attempt["observation_count"] == 1
+    assert "ishares_ibit_holdings" in result["anata_output"]["evidence_health"]["collection"]["successful_collectors"]
+
+    archived = load_observations(result["paths"]["archive"])
+    assert len(archived) == 1
+    assert archived[0].metric == "issuer_holdings_btc"
+    assert archived[0].effective_at_ms < archived[0].available_at_ms
+    assert archived[0].available_at_ms == observed
+    assert archived[0].observed_at_ms == observed
+    assert archived[0].provenance["context_only"] is True
+
+    etf = result["anata_output"]["families"]["etf"]
+    assert etf["context_observation_count"] == 1
+    assert etf["scoring_observation_count"] == 0
+
+    evidence = next(
+        item for item in result["anata_output"]["source_evidence"]
+        if item["source"] == "iShares IBIT official holdings"
+    )
+    assert evidence["role"] == "context"
+    assert evidence["latest_effective_at_ms"] == archived[0].effective_at_ms
+    assert evidence["latest_available_at_ms"] == archived[0].available_at_ms
+
+    health = result["anata_output"]["evidence_health"]["families"]["etf"]
+    assert health["visible_observation_count"] == 1
+    assert health["scoring_observation_count"] == 0
+    assert result["archive_records_loaded"] == 1
+    assert result["scoring_records_loaded"] == 0
