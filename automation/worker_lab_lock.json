@@ -1,8 +1,8 @@
 {
   "schema": "anata-worker-lab-lock-v1",
-  "status": "LOCKED",
-  "owner": "loop-A",
-  "started_at": "2026-10-05T00:04:30Z",
-  "lease_expires_at": "2026-10-05T00:19:30Z",
-  "note": "Strategy treasury live-run integration and regression only."
+  "status": "IDLE",
+  "owner": null,
+  "started_at": null,
+  "lease_expires_at": null,
+  "note": "DEPRECATED for worker gating. Workers now use exact-HEAD optimistic concurrency; this file is informational only."
 }
