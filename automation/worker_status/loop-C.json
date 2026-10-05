@@ -1,7 +1,7 @@
 {
   "worker": "loop-C",
   "status": "BLOCKED",
-  "assessed_head": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
-  "reason": "Confirmed evidence_health role-freshness defect: context_only rows refresh family latest/age clocks while scoring rows are only separated by counts/sources. Optimistic-concurrency update_file for the minimal scoring-only clock repair was safety-blocked before mutation.",
-  "next_idea": "Add scoring_latest_{effective,available,observed}_at_ms and scoring_*_age_seconds derived only from non-context_only rows; regression: stale scoring treasury + fresh context-only treasury leaves scoring freshness stale while context freshness is fresh. Preserve existing context clocks and frozen scoring."
+  "assessed_head": "06c5781338e88c8db9c730d651e4902cd6cc2891",
+  "reason": "P0 role-separated freshness defect remains confirmed. Immediately before mutation, exact anata-local-hardening HEAD and evidence_health.py blob were re-read; normal update_file was safety-blocked before mutation.",
+  "next_idea": "Apply the prepared minimal scoring-only freshness clocks/ages derived from non-context_only rows, then add focused stale-scoring + fresh-context-only treasury regression. Preserve visible/context clocks, PIT filtering, missingness, and frozen scoring."
 }
