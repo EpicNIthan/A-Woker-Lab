@@ -1,9 +1,9 @@
 {
   "worker": "loop-A",
   "active_slice": "part2/capital_flow",
-  "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
-  "verdict": "CONTINUE",
-  "reason": "Previous BLOCKED reason was obsolete: worker_lab_lock.json is deprecated and must not gate progress. Exact public HEAD remains unchanged; StrategyTreasuryCollector is still absent from runner.py live collectors, so the integration batch remains actionable under optimistic concurrency.",
-  "next_idea": "Re-read exact branch HEAD and runner/test blob SHAs immediately before mutation; import/register StrategyTreasuryCollector with a stable attempt name and add focused attempt/archive/handoff/evidence-health/context_only scoring-exclusion regression tests. Use normal update_file/create_file only; no force ref updates.",
-  "updated_at": "2026-10-05T01:49:00Z"
+  "head_sha": "a73fc0ffa4a6d6684f58e02bbe531f4ef1e6624c",
+  "verdict": "BLOCKED",
+  "reason": "Concrete inspection found IBIT live-path integration coverage missing: collector is attempted live and context-only, but no representative runner regression proves archive, handoff/source-evidence, evidence-health, PIT clocks, and frozen-scoring exclusion. Optimistic-concurrency preflight matched exact HEAD and test blob 94d5c3982ba1a24d3c7869b738d70a01b2f3193d; focused test-only update was rejected by repository-write safety before branch mutation.",
+  "next_idea": "Retry only the focused IBIT live-path regression against freshly re-read HEAD/test blob SHA; do not redo Strategy integration or source/scoring-freshness work.",
+  "updated_at": "2026-10-05T10:59:00Z"
 }
