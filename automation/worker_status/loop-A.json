@@ -1,9 +1,9 @@
 {
   "worker": "loop-A",
   "active_slice": "part2/capital_flow",
-  "head_sha": "a73fc0ffa4a6d6684f58e02bbe531f4ef1e6624c",
-  "verdict": "BLOCKED",
-  "reason": "Concrete inspection reconfirmed the IBIT live-path integration regression gap. Exact branch HEAD and test_ibit_holdings.py blob 94d5c3982ba1a24d3c7869b738d70a01b2f3193d were re-read immediately before mutation; update_file was safety-blocked before any branch change.",
-  "next_idea": "Retry only the focused IBIT live-path regression proving ishares_ibit_holdings attempt, archive, handoff/source-evidence, evidence-health, PIT clocks, and context-only frozen-scoring exclusion.",
-  "updated_at": "2026-10-05T15:03:00Z"
+  "head_sha": "06c5781338e88c8db9c730d651e4902cd6cc2891",
+  "verdict": "CONTINUE",
+  "reason": "IBIT live-path integration regression landed as one focused public test-only batch. It covers ishares_ibit_holdings attempt, archive, handoff/source-evidence, evidence-health, PIT clocks, and context-only frozen-scoring exclusion. Awaiting exact GitHub Actions validation for this HEAD.",
+  "next_idea": "Verify exact Actions result for 06c5781338e88c8db9c730d651e4902cd6cc2891; if PASS, reassess one remaining integration/completeness gap without duplicating source hunting or freshness work.",
+  "updated_at": "2026-10-05T15:55:00Z"
 }
