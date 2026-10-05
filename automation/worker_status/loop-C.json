@@ -1,9 +1,7 @@
 {
   "worker": "loop-C",
-  "active_slice": "part2/capital_flow",
-  "head_sha": "9da4877d07df2b6227bc2cdc3cda1c9a3251345e",
-  "verdict": "BLOCKED",
-  "reason": "Cannot mutate public lab this run because worker-control has a valid unexpired loop-A lease through 2026-10-04T11:19:00Z; lock rules require respecting it.",
-  "next_idea": "On the next free lease, acquire loop-C, change only the BitMEX date-prefixed reserve regex to semantic ^\\d{8}-reserves-, run targeted and full Capital Flow validation, push one coherent commit, then release IDLE.",
-  "updated_at": "2026-10-04T11:17:00Z"
+  "status": "BLOCKED",
+  "assessed_head": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
+  "reason": "Confirmed evidence_health role-freshness defect: context_only rows refresh family latest/age clocks while scoring rows are only separated by counts/sources. Optimistic-concurrency update_file for the minimal scoring-only clock repair was safety-blocked before mutation.",
+  "next_idea": "Add scoring_latest_{effective,available,observed}_at_ms and scoring_*_age_seconds derived only from non-context_only rows; regression: stale scoring treasury + fresh context-only treasury leaves scoring freshness stale while context freshness is fresh. Preserve existing context clocks and frozen scoring."
 }
