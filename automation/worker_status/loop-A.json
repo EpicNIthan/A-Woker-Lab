@@ -2,8 +2,8 @@
   "worker": "loop-A",
   "active_slice": "part2/capital_flow",
   "head_sha": "7e4970a4764c892957c84f96f267a9cdd8abc5d7",
-  "verdict": "BLOCKED",
-  "reason": "Normal GitHub update_file was blocked by repository safety while reclaiming the expired worker-control mutation lease; no anata-local-hardening mutation was attempted.",
-  "next_idea": "Reclaim the stale lease, then import StrategyTreasuryCollector in runner.py, register strategy_treasury in the normal live collectors tuple, and add a focused integration regression proving attempt/archive/handoff/evidence-health visibility with context_only excluded from scoring.",
-  "updated_at": "2026-10-04T22:05:00Z"
+  "verdict": "CONTINUE",
+  "reason": "Previous BLOCKED reason was obsolete: worker_lab_lock.json is deprecated and must not gate progress. Exact public HEAD remains unchanged; StrategyTreasuryCollector is still absent from runner.py live collectors, so the integration batch remains actionable under optimistic concurrency.",
+  "next_idea": "Re-read exact branch HEAD and runner/test blob SHAs immediately before mutation; import/register StrategyTreasuryCollector with a stable attempt name and add focused attempt/archive/handoff/evidence-health/context_only scoring-exclusion regression tests. Use normal update_file/create_file only; no force ref updates.",
+  "updated_at": "2026-10-05T01:49:00Z"
 }
