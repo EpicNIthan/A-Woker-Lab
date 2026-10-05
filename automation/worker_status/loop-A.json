@@ -3,7 +3,7 @@
   "active_slice": "part2/capital_flow",
   "head_sha": "a73fc0ffa4a6d6684f58e02bbe531f4ef1e6624c",
   "verdict": "BLOCKED",
-  "reason": "Fresh optimistic-concurrency preflight matched exact HEAD and test_ibit_holdings.py blob 94d5c3982ba1a24d3c7869b738d70a01b2f3193d. The focused IBIT live-path regression batch was attempted again but repository-write safety rejected update_file before branch mutation; no test result is claimed.",
-  "next_idea": "Retry only the focused IBIT live-path regression against freshly re-read HEAD/test blob SHA; it should prove attempt, archive, handoff/source-evidence, evidence-health, PIT clocks, and context-only frozen-scoring exclusion.",
-  "updated_at": "2026-10-05T14:06:00Z"
+  "reason": "Concrete inspection reconfirmed the IBIT live-path integration regression gap. Exact branch HEAD and test_ibit_holdings.py blob 94d5c3982ba1a24d3c7869b738d70a01b2f3193d were re-read immediately before mutation; update_file was safety-blocked before any branch change.",
+  "next_idea": "Retry only the focused IBIT live-path regression proving ishares_ibit_holdings attempt, archive, handoff/source-evidence, evidence-health, PIT clocks, and context-only frozen-scoring exclusion.",
+  "updated_at": "2026-10-05T15:03:00Z"
 }
