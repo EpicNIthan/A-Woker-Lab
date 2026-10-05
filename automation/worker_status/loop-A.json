@@ -1,9 +1,9 @@
 {
   "worker": "loop-A",
   "active_slice": "part2/capital_flow",
-  "head_sha": "06c5781338e88c8db9c730d651e4902cd6cc2891",
+  "head_sha": "6895f0d04849ed69b2cd4454abc081fa1b86cab2",
   "verdict": "CONTINUE",
-  "reason": "IBIT live-path integration regression landed as one focused public test-only batch. It covers ishares_ibit_holdings attempt, archive, handoff/source-evidence, evidence-health, PIT clocks, and context-only frozen-scoring exclusion. Awaiting exact GitHub Actions validation for this HEAD.",
-  "next_idea": "Verify exact Actions result for 06c5781338e88c8db9c730d651e4902cd6cc2891; if PASS, reassess one remaining integration/completeness gap without duplicating source hunting or freshness work.",
-  "updated_at": "2026-10-05T15:55:00Z"
+  "reason": "Added one focused BitMEX live-path integration regression covering bitmex_reserve_transparency attempt, archive, handoff/source-evidence, evidence-health, PIT clocks, and context-only frozen-scoring exclusion. Exact Actions validation is pending.",
+  "next_idea": "Verify exact Actions result for 6895f0d04849ed69b2cd4454abc081fa1b86cab2; if PASS, reassess remaining integration/completeness coverage without duplicating source breadth or freshness work.",
+  "updated_at": "2026-10-05T16:55:00Z"
 }
