@@ -16,6 +16,7 @@ from .providers_free import KoteFreeCollector
 from .providers_ibit import IbitHoldingsCollector
 from .providers_bitmex import BitmexReserveCollector
 from .providers_mempool import MempoolMinerNetworkCollector
+from .providers_strategy import StrategyTreasuryCollector
 from .providers_kote_active import ActivatedKoteCollector
 from .providers_v1 import DefiLlamaStablecoinCompositionCollector, GlassnodePitCollector
 from .storage import append_observations, atomic_write_json, load_observations
@@ -36,6 +37,7 @@ def _collect_live(*, observed_at_ms: int, include_backfill: bool) -> tuple[list[
         ("ishares_ibit_holdings", IbitHoldingsCollector(), {}),
         ("bitmex_reserve_transparency", BitmexReserveCollector(), {}),
         ("mempool_miner_network", MempoolMinerNetworkCollector(), {}),
+        ("strategy_treasury", StrategyTreasuryCollector(), {}),
         ("defillama_stablecoin", DefiLlamaStablecoinCollector(), {"include_backfill": include_backfill}),
         ("defillama_stablecoin_components", DefiLlamaStablecoinCompositionCollector(), {}),
     )
