@@ -1,9 +1,9 @@
 {
   "worker": "loop-A",
   "active_slice": "part2/capital_flow",
-  "head_sha": "6895f0d04849ed69b2cd4454abc081fa1b86cab2",
-  "verdict": "CONTINUE",
-  "reason": "Added one focused BitMEX live-path integration regression covering bitmex_reserve_transparency attempt, archive, handoff/source-evidence, evidence-health, PIT clocks, and context-only frozen-scoring exclusion. Exact Actions validation is pending.",
-  "next_idea": "Verify exact Actions result for 6895f0d04849ed69b2cd4454abc081fa1b86cab2; if PASS, reassess remaining integration/completeness coverage without duplicating source breadth or freshness work.",
-  "updated_at": "2026-10-05T16:55:00Z"
+  "head_sha": "ded21ded9a23dd34a3235fdb11509ce0b3aa37c0",
+  "verdict": "BLOCKED",
+  "reason": "Concrete integration defect: newly added AmericanBitcoinTreasuryCollector exists on exact public HEAD but runner.py does not import/register it, so american_bitcoin_treasury is never attempted, archived, handed off, or health-visible in the live path. Optimistic-concurrency preflight matched exact HEAD and runner blob b4555e10786bc76e2062901ab380bd153a8a3088, but the focused normal update_file mutation was rejected by repository-write safety before any branch change.",
+  "next_idea": "Retry only the focused live registration plus representative integration test after re-reading exact branch HEAD and target blob SHA(s). Do not redo Strategy, IBIT, or BitMEX coverage.",
+  "updated_at": "2026-10-05T18:57:00Z"
 }
