@@ -57,6 +57,8 @@ def test_ibit_is_live_archived_handoff_visible_and_context_only(monkeypatch, tmp
         "BitmexReserveCollector",
         "MempoolMinerNetworkCollector",
         "StrategyTreasuryCollector",
+        "AmericanBitcoinTreasuryCollector",
+        "CircleUsdcCirculationCollector",
         "DefiLlamaStablecoinCollector",
         "DefiLlamaStablecoinCompositionCollector",
     ):
