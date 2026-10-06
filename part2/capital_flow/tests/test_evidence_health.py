@@ -36,6 +36,32 @@ class CapitalFlowEvidenceHealthTests(unittest.TestCase):
         self.assertFalse(family["missing"])
         self.assertTrue(family["scoring_missing"])
 
+    def test_context_only_does_not_refresh_scoring_freshness(self) -> None:
+        scoring = self._obs(
+            observed_at=1_600_000,
+            available_at=1_500_000,
+            effective_at=1_400_000,
+            context_only=False,
+        )
+        context = self._obs(
+            observed_at=2_050_000,
+            available_at=2_040_000,
+            effective_at=2_030_000,
+            context_only=True,
+        )
+        health = build_evidence_health([scoring, context], as_of_ms=2_100_000)
+        family = health["families"]["exchange_btc"]
+
+        assert family["latest_effective_at_ms"] == 2_030_000
+        assert family["effective_age_seconds"] == 70.0
+        assert family["scoring_latest_effective_at_ms"] == 1_400_000
+        assert family["scoring_effective_age_seconds"] == 700.0
+        assert family["scoring_latest_available_at_ms"] == 1_500_000
+        assert family["scoring_availability_age_seconds"] == 600.0
+        assert family["scoring_latest_observed_at_ms"] == 1_600_000
+        assert family["scoring_observation_age_seconds"] == 500.0
+        assert health["semantics"]["context_only_does_not_refresh_scoring_freshness"] is True
+
     def test_collection_attempts_separate_transport_health_from_economic_freshness(self) -> None:
         health = build_evidence_health([self._obs()], as_of_ms=2_100_000, source_errors=["kote: TimeoutError: timed out"], collection_attempts=[{"collector": "farside_etf", "status": "OK", "attempted_at_ms": 2_100_000, "observation_count": 1, "error_count": 0}, {"collector": "kote", "status": "FAILED", "attempted_at_ms": 2_100_000, "observation_count": 0, "error_count": 1}])
         collection = health["collection"]
