@@ -1,9 +1,9 @@
 {
   "worker": "loop-B",
   "active_slice": "part2/capital_flow",
-  "head_sha": "a73fc0ffa4a6d6684f58e02bbe531f4ef1e6624c",
-  "verdict": "BLOCKED",
-  "reason": "Re-read worker-control and exact public HEAD. Revalidated American Bitcoin Corp SEC Q2 2026 source contract: explicit standalone scope, 8,002 BTC as of 2026-06-30, SEC acceptance publication clock and accession revision identity. Optimistic create_file for the prepared context-only collector was rejected by repository-write safety before mutation.",
-  "next_idea": "Retry the prepared American Bitcoin SEC collector and PIT/amendment/no-future-leakage tests when normal public create_file is accepted; do not duplicate Strategy or BitMEX.",
-  "updated_at": "2026-10-05T11:33:00Z"
+  "head_sha": "ded21ded9a23dd34a3235fdb11509ce0b3aa37c0",
+  "verdict": "PLATEAU",
+  "reason": "Reassessed source breadth at exact public HEAD. Coinbase cbBTC Proof of Reserves is genuinely independent and explicitly scoped, with first-party BTC reserve, cbBTC supply, reserve addresses, and a refreshed-at clock, but the live page does not expose a durable source revision identity or a separately defensible immutable public-availability clock. Deribit daily Proof of Reserves was discontinued from 2026-09-01 and the historical live page was removed. No candidate cleared the full PIT/revision contract without weakening evidence semantics.",
+  "next_idea": "Revisit Coinbase cbBTC only if a first-party API or on-chain/source artifact exposes immutable block/report identity plus defensible availability timing; otherwise rotate to another first-party custody/reserve source.",
+  "updated_at": "2026-10-06T00:31:44Z"
 }
