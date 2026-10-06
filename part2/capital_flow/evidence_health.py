@@ -80,6 +80,9 @@ def build_evidence_health(
         latest_effective = _latest(rows, "effective_at_ms")
         latest_available = _latest(rows, "available_at_ms")
         latest_observed = _latest(rows, "observed_at_ms")
+        scoring_latest_effective = _latest(scoring, "effective_at_ms")
+        scoring_latest_available = _latest(scoring, "available_at_ms")
+        scoring_latest_observed = _latest(scoring, "observed_at_ms")
         cadences = sorted({int(row.cadence_seconds) for row in rows if int(row.cadence_seconds) > 0})
         sources = sorted({str(row.source) for row in rows})
         scoring_sources = sorted({str(row.source) for row in scoring})
@@ -95,6 +98,12 @@ def build_evidence_health(
             "effective_age_seconds": _age_seconds(as_of_ms, latest_effective),
             "availability_age_seconds": _age_seconds(as_of_ms, latest_available),
             "observation_age_seconds": _age_seconds(as_of_ms, latest_observed),
+            "scoring_latest_effective_at_ms": scoring_latest_effective,
+            "scoring_latest_available_at_ms": scoring_latest_available,
+            "scoring_latest_observed_at_ms": scoring_latest_observed,
+            "scoring_effective_age_seconds": _age_seconds(as_of_ms, scoring_latest_effective),
+            "scoring_availability_age_seconds": _age_seconds(as_of_ms, scoring_latest_available),
+            "scoring_observation_age_seconds": _age_seconds(as_of_ms, scoring_latest_observed),
             "missing": not rows,
             "scoring_missing": not scoring,
         }
@@ -110,5 +119,6 @@ def build_evidence_health(
             "collector_success_does_not_imply_fresh_economic_data": True,
             "age_is_not_zero_filled": True,
             "does_not_change_capital_flow_scores": True,
+            "context_only_does_not_refresh_scoring_freshness": True,
         },
     }
