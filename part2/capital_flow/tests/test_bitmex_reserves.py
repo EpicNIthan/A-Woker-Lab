@@ -88,6 +88,8 @@ def test_bitmex_is_live_archived_handoff_visible_and_context_only(monkeypatch, t
         "IbitHoldingsCollector",
         "MempoolMinerNetworkCollector",
         "StrategyTreasuryCollector",
+        "AmericanBitcoinTreasuryCollector",
+        "CircleUsdcCirculationCollector",
         "DefiLlamaStablecoinCollector",
         "DefiLlamaStablecoinCompositionCollector",
     ):
