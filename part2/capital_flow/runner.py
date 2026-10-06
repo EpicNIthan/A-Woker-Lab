@@ -12,9 +12,11 @@ from .evidence_health import build_evidence_health
 from .handoff import build_anata_handoff
 from .output import CapitalFlowOutputBuilder
 from .providers import DefiLlamaStablecoinCollector, FarsideEtfCollector, JsonlFlowAdapter
+from .providers_abtc import AmericanBitcoinTreasuryCollector
 from .providers_free import KoteFreeCollector
 from .providers_ibit import IbitHoldingsCollector
 from .providers_bitmex import BitmexReserveCollector
+from .providers_circle import CircleUsdcCirculationCollector
 from .providers_mempool import MempoolMinerNetworkCollector
 from .providers_strategy import StrategyTreasuryCollector
 from .providers_kote_active import ActivatedKoteCollector
@@ -38,8 +40,10 @@ def _collect_live(*, observed_at_ms: int, include_backfill: bool) -> tuple[list[
         ("bitmex_reserve_transparency", BitmexReserveCollector(), {}),
         ("mempool_miner_network", MempoolMinerNetworkCollector(), {}),
         ("strategy_treasury", StrategyTreasuryCollector(), {}),
+        ("american_bitcoin_treasury", AmericanBitcoinTreasuryCollector(), {}),
         ("defillama_stablecoin", DefiLlamaStablecoinCollector(), {"include_backfill": include_backfill}),
         ("defillama_stablecoin_components", DefiLlamaStablecoinCompositionCollector(), {}),
+        ("circle_usdc_circulation", CircleUsdcCirculationCollector(), {}),
     )
     for name, collector, extra in collectors:
         try:
