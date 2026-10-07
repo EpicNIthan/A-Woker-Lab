@@ -45,7 +45,7 @@ def _source_evidence(normalized: list[FlowObservation], *, as_of_ms: int) -> lis
 
     result: list[dict[str, Any]] = []
     for (family, source, role), rows in sorted(grouped.items()):
-        newest = max(
+        newest_effective = max(
             rows,
             key=lambda obs: (
                 obs.effective_at_ms,
@@ -54,20 +54,29 @@ def _source_evidence(normalized: list[FlowObservation], *, as_of_ms: int) -> lis
                 obs.source_record_id,
             ),
         )
+        latest_effective_at_ms = newest_effective.effective_at_ms
+        latest_available_at_ms = max(
+            (obs.available_at_ms for obs in rows if obs.available_at_ms is not None),
+            default=None,
+        )
+        latest_observed_at_ms = max(
+            (obs.observed_at_ms for obs in rows),
+            default=None,
+        )
         cadences = sorted({int(obs.cadence_seconds) for obs in rows if obs.cadence_seconds is not None})
         metrics = sorted({obs.metric for obs in rows})
         quality_flags = sorted({flag for obs in rows for flag in obs.quality_flags})
         result.append({
             "family": family, "source": source, "role": role, "metrics": metrics,
-            "observation_count": len(rows), "latest_effective_at_ms": newest.effective_at_ms,
-            "latest_available_at_ms": newest.available_at_ms, "latest_observed_at_ms": newest.observed_at_ms,
-            "economic_age_ms": _age_ms(as_of_ms, newest.effective_at_ms),
-            "availability_age_ms": _age_ms(as_of_ms, newest.available_at_ms),
-            "collector_age_ms": _age_ms(as_of_ms, newest.observed_at_ms),
+            "observation_count": len(rows), "latest_effective_at_ms": latest_effective_at_ms,
+            "latest_available_at_ms": latest_available_at_ms, "latest_observed_at_ms": latest_observed_at_ms,
+            "economic_age_ms": _age_ms(as_of_ms, latest_effective_at_ms),
+            "availability_age_ms": _age_ms(as_of_ms, latest_available_at_ms),
+            "collector_age_ms": _age_ms(as_of_ms, latest_observed_at_ms),
             "cadence_seconds": cadences[0] if len(cadences) == 1 else None,
-            "cadences_seconds": cadences, "attribution_status": newest.attribution_status,
-            "attribution_quality": newest.attribution_quality, "data_quality": newest.data_quality,
-            "quality_flags": quality_flags, "provenance": dict(newest.provenance),
+            "cadences_seconds": cadences, "attribution_status": newest_effective.attribution_status,
+            "attribution_quality": newest_effective.attribution_quality, "data_quality": newest_effective.data_quality,
+            "quality_flags": quality_flags, "provenance": dict(newest_effective.provenance),
         })
     return result
 

@@ -318,6 +318,58 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertEqual(exchange_family["scoring_availability_age_ms"], as_of - older_available)
         self.assertEqual(exchange_family["scoring_collector_age_ms"], as_of - older_observed)
 
+    def test_source_evidence_revision_freshness_independent_clocks(self) -> None:
+        as_of = self._frame().as_of_ms
+
+        # Row A: newer economic effective_at_ms, but older available/observed clocks.
+        row_a = FlowObservation(
+            family="etf",
+            metric="etf_netflow_btc",
+            asset="BTC",
+            value=50.0,
+            unit="BTC",
+            effective_at_ms=as_of - 10_000,
+            available_at_ms=as_of - 50_000,
+            observed_at_ms=as_of - 40_000,
+            source="glassnode",
+            source_record_id="row:a",
+            cadence_seconds=3600,
+            attribution_status="HIGH",
+            attribution_quality=0.9,
+            data_quality=0.9,
+            provenance={"context_only": False},
+        )
+
+        # Row B: older-effective revision, but arrived/observed later (newer available/observed).
+        row_b = FlowObservation(
+            family="etf",
+            metric="etf_netflow_btc",
+            asset="BTC",
+            value=45.0,
+            unit="BTC",
+            effective_at_ms=as_of - 200_000,
+            available_at_ms=as_of - 5_000,
+            observed_at_ms=as_of - 2_000,
+            source="glassnode",
+            source_record_id="row:b",
+            cadence_seconds=3600,
+            attribution_status="HIGH",
+            attribution_quality=0.9,
+            data_quality=0.9,
+            provenance={"context_only": False},
+        )
+
+        handoff = build_anata_handoff(self._frame(), [row_a, row_b], source_errors=[])
+        sources = handoff["source_evidence"]
+        scoring_source = next(s for s in sources if s["family"] == "etf" and s["role"] == "scoring")
+
+        self.assertEqual(scoring_source["latest_effective_at_ms"], row_a.effective_at_ms)
+        self.assertEqual(scoring_source["economic_age_ms"], as_of - row_a.effective_at_ms)
+        self.assertEqual(scoring_source["latest_available_at_ms"], row_b.available_at_ms)
+        self.assertEqual(scoring_source["availability_age_ms"], as_of - row_b.available_at_ms)
+        self.assertEqual(scoring_source["latest_observed_at_ms"], row_b.observed_at_ms)
+        self.assertEqual(scoring_source["collector_age_ms"], as_of - row_b.observed_at_ms)
+
     def test_context_only_family_remains_missing_for_scoring_availability(self) -> None:
         observed = self._frame().as_of_ms
         context = FlowObservation(
