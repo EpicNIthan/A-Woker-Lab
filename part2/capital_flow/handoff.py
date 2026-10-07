@@ -161,15 +161,17 @@ def build_stablecoin_context(observations: Iterable[FlowObservation], *, as_of_m
     }
 
 
-def _family_support(frame: CapitalFlowFrame, normalized: list[FlowObservation]) -> dict[str, dict[str, Any]]:
+def _family_support(frame: CapitalFlowFrame, normalized: list[FlowObservation], *, as_of_ms: int) -> dict[str, dict[str, Any]]:
     scoring_counts = {family: 0 for family in FAMILIES}; context_counts = {family: 0 for family in FAMILIES}
     scoring_sources = {family: set() for family in FAMILIES}; context_sources = {family: set() for family in FAMILIES}
     total_counts = {family: 0 for family in FAMILIES}; total_sources = {family: set() for family in FAMILIES}
+    scoring_rows = {family: [] for family in FAMILIES}
     for obs in normalized:
         if obs.family not in scoring_counts: continue
         total_counts[obs.family] += 1; total_sources[obs.family].add(obs.source)
         if _is_context_only(obs): context_counts[obs.family] += 1; context_sources[obs.family].add(obs.source)
-        else: scoring_counts[obs.family] += 1; scoring_sources[obs.family].add(obs.source)
+        else:
+            scoring_counts[obs.family] += 1; scoring_sources[obs.family].add(obs.source); scoring_rows[obs.family].append(obs)
     result: dict[str, dict[str, Any]] = {}
     for family in FAMILIES:
         states = frame.family_states.get(family, {})
@@ -180,10 +182,20 @@ def _family_support(frame: CapitalFlowFrame, normalized: list[FlowObservation]) 
         elif scoring_counts[family] > 0: status = "OBSERVED_INSUFFICIENT_HISTORY"
         elif context_counts[family] > 0: status = "CONTEXT_ONLY"
         else: status = "MISSING"
+        rows = scoring_rows[family]
+        scoring_latest_effective = max((obs.effective_at_ms for obs in rows), default=None)
+        scoring_latest_available = max((obs.available_at_ms for obs in rows if obs.available_at_ms is not None), default=None)
+        scoring_latest_observed = max((obs.observed_at_ms for obs in rows), default=None)
         result[family] = {
             "role": "core" if family in CORE_FAMILIES else "optional", "status": status, "score": score,
             "known_horizons": known_horizons, "observation_count": total_counts[family], "source_count": len(total_sources[family]),
             "scoring_observation_count": scoring_counts[family], "scoring_source_count": len(scoring_sources[family]),
+            "scoring_latest_effective_at_ms": scoring_latest_effective,
+            "scoring_latest_available_at_ms": scoring_latest_available,
+            "scoring_latest_observed_at_ms": scoring_latest_observed,
+            "scoring_economic_age_ms": _age_ms(as_of_ms, scoring_latest_effective),
+            "scoring_availability_age_ms": _age_ms(as_of_ms, scoring_latest_available),
+            "scoring_collector_age_ms": _age_ms(as_of_ms, scoring_latest_observed),
             "context_observation_count": context_counts[family], "context_source_count": len(context_sources[family]),
             "has_context_only_evidence": context_counts[family] > 0,
         }
@@ -220,7 +232,7 @@ def _causal_metadata(normalized: list[FlowObservation], *, as_of_ms: int, source
 def build_anata_handoff(frame: CapitalFlowFrame, observations: Iterable[FlowObservation], *, source_errors: Iterable[str] = ()) -> dict[str, Any]:
     raw = list(observations)
     normalized = _visible_normalized(raw, as_of_ms=frame.as_of_ms)
-    family_support = _family_support(frame, normalized)
+    family_support = _family_support(frame, normalized, as_of_ms=frame.as_of_ms)
     source_evidence = _source_evidence(normalized, as_of_ms=frame.as_of_ms)
     errors = tuple(str(error) for error in source_errors)
     unavailable_statuses = {"MISSING", "CONTEXT_ONLY"}
