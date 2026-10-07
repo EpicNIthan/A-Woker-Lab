@@ -1,6 +1,11 @@
 name: Gemini Specialist Executor
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/gemini-executor.yml'
+      - 'automation/gemini_executor.py'
   workflow_dispatch:
     inputs:
       task_path:
@@ -48,6 +53,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+
+      - name: Validate executor syntax
+        run: python -m py_compile automation/gemini_executor.py
 
       - name: Install deterministic test runner
         run: python -m pip install --disable-pip-version-check pytest
