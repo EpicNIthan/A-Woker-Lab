@@ -57,3 +57,23 @@ def test_future_source_revision_is_not_promoted_into_handoff():
     assert handoff["source_evidence"] == []
     assert handoff["causal_quality"]["usable"] is False
     assert "no_causally_visible_source_availability" in handoff["missing_reasons"]
+
+
+def test_context_only_evidence_stays_visible_but_cannot_make_scoring_causal_quality_usable():
+    now = 1_787_520_123_456
+    context = FlowObservation(
+        family="exchange_btc", metric="btc_netflow", asset="BTC", value=1.0, unit="BTC",
+        effective_at_ms=now - 3_600_000, available_at_ms=now - 1_000, observed_at_ms=now,
+        source="test_context", source_record_id="context-1", cadence_seconds=3600, data_quality=1.0,
+        provenance={"context_only": True},
+    )
+    handoff = build_anata_handoff(_frame(now), [context])
+    assert len(handoff["source_evidence"]) == 1
+    assert handoff["source_evidence"][0]["role"] == "context"
+    assert handoff["available_at_ms"] is None
+    assert handoff["observed_at_ms"] is None
+    assert handoff["provenance_refs"] == []
+    assert "no_causally_visible_source_availability" in handoff["missing_reasons"]
+    assert "no_visible_source_provenance" in handoff["missing_reasons"]
+    assert handoff["causal_quality"]["usable"] is False
+    assert handoff["causal_quality"]["reason"] == "missing_causal_metadata"
