@@ -343,6 +343,13 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertEqual(treasury["status"], "CONTEXT_ONLY")
         self.assertEqual(treasury["observation_count"], 1)
         self.assertEqual(treasury["scoring_observation_count"], 0)
+        self.assertTrue(treasury["has_context_only_evidence"])
+        self.assertIsNone(treasury["scoring_latest_effective_at_ms"])
+        self.assertIsNone(treasury["scoring_latest_available_at_ms"])
+        self.assertIsNone(treasury["scoring_latest_observed_at_ms"])
+        self.assertIsNone(treasury["scoring_economic_age_ms"])
+        self.assertIsNone(treasury["scoring_availability_age_ms"])
+        self.assertIsNone(treasury["scoring_collector_age_ms"])
         self.assertIn("treasury", handoff["availability"]["missing_optional_families"])
 
 
