@@ -19,10 +19,14 @@ Specialist code remains on `anata-local-hardening`.
 
 ## Current exact public state
 
-- exact `anata-local-hardening` HEAD: `0820a9a3386b4df105b02768500821f1481a2655`
-- exact-head Specialist Lab Validation: PASS
-- newest change: scoring-only family freshness is exposed in the handoff
-- first Gemini smoke task is queued to add a focused handoff regression for that behavior
+- exact `anata-local-hardening` HEAD: `51e0df01dce7ffe87339b58d58ecb4febdc46423`
+- first Gemini end-to-end smoke task: **PASS**
+- executor model: `gemini-3.5-flash-lite`
+- key used: pool index 1
+- result: Gemini changed only `part2/capital_flow/tests/test_v1_handoff.py`, targeted + full Capital Flow pytest passed, then GitHub Actions committed the tested tree
+- commit: `51e0df01dce7ffe87339b58d58ecb4febdc46423`
+- queue task moved from `pending/` to `done/`
+- next planner run must reassess from this new exact HEAD; old verdicts/tasks are stale
 
 ## Planner rules
 
