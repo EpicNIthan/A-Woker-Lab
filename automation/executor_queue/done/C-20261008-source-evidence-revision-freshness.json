@@ -1,0 +1,30 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "base_sha": "f8da795c667f7ffc0d0e627a50b3e647c0afa8ba",
+  "executor_result": {
+    "attempt": 1,
+    "base_sha": "f8da795c667f7ffc0d0e627a50b3e647c0afa8ba",
+    "commit_sha": "2093bb9a9da5b8f26048840a43c76c388656c016",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Fix compact source_evidence freshness/provenance summary in part2/capital_flow/handoff.py so that economic freshness uses the latest effective timestamp while latest_available_at_ms and latest_observed_at_ms are computed as independent maxima across the normalized PIT-visible rows for each (family, source, role) group, with ages derived from their corresponding clocks. Add a focused regression test in part2/capital_flow/tests/test_v1_handoff.py verifying this behavior."
+  },
+  "instructions": "In part2/capital_flow/handoff.py, fix the compact source_evidence freshness/provenance summary so an older-effective revision that arrives/was observed later cannot have its later availability/collector clocks hidden merely because another row has the newest effective_at_ms. Keep economic freshness based on the latest effective timestamp, but compute latest_available_at_ms and latest_observed_at_ms as the independent maxima across the same normalized PIT-visible (family, source, role) rows; derive each age from its corresponding clock. Preserve PIT filtering, context/scoring role separation, explicit missingness, raw/audit separation, and frozen scoring. Add a focused regression in test_v1_handoff.py with two scoring rows from one family/source: row A has newer effective_at_ms but older available/observed; row B is an older-effective revision with later available/observed. Assert source_evidence reports row A's effective clock/economic age and row B's availability/observed clocks and ages. Do not alter scoring or unrelated handoff fields.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261008-source-evidence-revision-freshness",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "Preserve revision arrival freshness in source_evidence",
+  "worker": "C"
+}
