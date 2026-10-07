@@ -1,5 +1,6 @@
 name: Gemini Specialist Executor
 
+# Push self-test keeps executor infrastructure verifiable before scheduled runs.
 on:
   push:
     branches: [main]
