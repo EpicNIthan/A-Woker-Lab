@@ -55,14 +55,38 @@ def _source_evidence(normalized: list[FlowObservation], *, as_of_ms: int) -> lis
             ),
         )
         latest_effective_at_ms = newest_effective.effective_at_ms
-        latest_available_at_ms = max(
-            (obs.available_at_ms for obs in rows if obs.available_at_ms is not None),
-            default=None,
+
+        available_rows = [obs for obs in rows if obs.available_at_ms is not None]
+        if available_rows:
+            best_available = max(
+                available_rows,
+                key=lambda obs: (
+                    obs.available_at_ms,
+                    obs.observed_at_ms,
+                    obs.effective_at_ms,
+                    obs.source_record_id,
+                ),
+            )
+            latest_available_at_ms = best_available.available_at_ms
+            latest_available_provenance = {
+                "source_record_id": best_available.source_record_id,
+                "revision": best_available.revision,
+            }
+        else:
+            latest_available_at_ms = None
+            latest_available_provenance = None
+
+        best_observed = max(
+            rows,
+            key=lambda obs: (
+                obs.observed_at_ms,
+                obs.available_at_ms if obs.available_at_ms is not None else -1,
+                obs.effective_at_ms,
+                obs.source_record_id,
+            ),
         )
-        latest_observed_at_ms = max(
-            (obs.observed_at_ms for obs in rows),
-            default=None,
-        )
+        latest_observed_at_ms = best_observed.observed_at_ms
+
         cadences = sorted({int(obs.cadence_seconds) for obs in rows if obs.cadence_seconds is not None})
         metrics = sorted({obs.metric for obs in rows})
         quality_flags = sorted({flag for obs in rows for flag in obs.quality_flags})
@@ -70,6 +94,17 @@ def _source_evidence(normalized: list[FlowObservation], *, as_of_ms: int) -> lis
             "family": family, "source": source, "role": role, "metrics": metrics,
             "observation_count": len(rows), "latest_effective_at_ms": latest_effective_at_ms,
             "latest_available_at_ms": latest_available_at_ms, "latest_observed_at_ms": latest_observed_at_ms,
+            "clock_provenance": {
+                "effective": {
+                    "source_record_id": newest_effective.source_record_id,
+                    "revision": newest_effective.revision,
+                },
+                "availability": latest_available_provenance,
+                "observed": {
+                    "source_record_id": best_observed.source_record_id,
+                    "revision": best_observed.revision,
+                },
+            },
             "economic_age_ms": _age_ms(as_of_ms, latest_effective_at_ms),
             "availability_age_ms": _age_ms(as_of_ms, latest_available_at_ms),
             "collector_age_ms": _age_ms(as_of_ms, latest_observed_at_ms),

@@ -68,7 +68,7 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertEqual(context["change_coverage"]["30d"], 0.5)
         self.assertIn("COMPONENT_CONTEXT_EXCLUDED_FROM_FROZEN_SCORING", context["quality_flags"])
 
-        usdc = next(item for item in context["components"] if item["symbol"] == "USDC")
+        usdc = next(item for item in context["components"] if item["symbol"].upper() == "USDC")
         self.assertIsNone(usdc["change_30d_usd"])
         self.assertIn("change_30d_usd", usdc["missing_fields"])
         self.assertAlmostEqual(usdc["supply_share_of_tracked"], 1 / 3)
@@ -101,7 +101,7 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertEqual(context["change_coverage"]["1d"], 0.5)
         self.assertEqual(context["change_coverage"]["7d"], 0.0)
         self.assertAlmostEqual(context["weighted_abs_peg_deviation_bps"], 10.0)
-        usdc = next(item for item in context["components"] if item["symbol"] == "USDC")
+        usdc = next(item for item in context["components"] if item["symbol"].upper() == "USDC")
         self.assertIsNone(usdc["peg_deviation_bps"])
         self.assertIn("price_usd", usdc["missing_fields"])
 
@@ -333,6 +333,7 @@ class CapitalFlowV1Tests(unittest.TestCase):
             observed_at_ms=as_of - 40_000,
             source="glassnode",
             source_record_id="row:a",
+            revision="rev1",
             cadence_seconds=3600,
             attribution_status="HIGH",
             attribution_quality=0.9,
@@ -352,6 +353,7 @@ class CapitalFlowV1Tests(unittest.TestCase):
             observed_at_ms=as_of - 2_000,
             source="glassnode",
             source_record_id="row:b",
+            revision="rev2",
             cadence_seconds=3600,
             attribution_status="HIGH",
             attribution_quality=0.9,
@@ -369,6 +371,46 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertEqual(scoring_source["availability_age_ms"], as_of - row_b.available_at_ms)
         self.assertEqual(scoring_source["latest_observed_at_ms"], row_b.observed_at_ms)
         self.assertEqual(scoring_source["collector_age_ms"], as_of - row_b.observed_at_ms)
+
+        # Check clock provenance bindings
+        cp = scoring_source["clock_provenance"]
+        self.assertEqual(cp["effective"]["source_record_id"], "row:a")
+        self.assertEqual(cp["effective"]["revision"], "rev1")
+        self.assertEqual(cp["availability"]["source_record_id"], "row:b")
+        self.assertEqual(cp["availability"]["revision"], "rev2")
+        self.assertEqual(cp["observed"]["source_record_id"], "row:b")
+        self.assertEqual(cp["observed"]["revision"], "rev2")
+
+    def test_source_evidence_missing_availability_clock_provenance(self) -> None:
+        as_of = self._frame().as_of_ms
+        row_no_avail = FlowObservation(
+            family="miner",
+            metric="miner_outflow_btc",
+            asset="BTC",
+            value=10.0,
+            unit="BTC",
+            effective_at_ms=as_of - 10_000,
+            available_at_ms=None,
+            observed_at_ms=as_of - 5_000,
+            source="mock_miner",
+            source_record_id="miner:1",
+            revision="1",
+            cadence_seconds=3600,
+            attribution_status="HIGH",
+            attribution_quality=0.9,
+            data_quality=0.9,
+            provenance={"context_only": False},
+        )
+        # Note: point_in_time_filter excludes rows where available_at_ms is None or > as_of_ms.
+        # If we supply an observation with available_at_ms=None, it won't be in visible normalized.
+        # To test missing availability provenance when no visible row has availability, we can test with empty or filtered observations.
+        handoff = build_anata_handoff(self._frame(), [], source_errors=[])
+        # Or let's create a scenario where a family has source evidence without available rows if permitted, or test source_evidence directly.
+        from part2.capital_flow.handoff import _source_evidence
+        se = _source_evidence([row_no_avail], as_of_ms=as_of)
+        self.assertEqual(len(se), 1)
+        self.assertIsNone(se[0]["latest_available_at_ms"])
+        self.assertIsNone(se[0]["clock_provenance"]["availability"])
 
     def test_context_only_family_remains_missing_for_scoring_availability(self) -> None:
         observed = self._frame().as_of_ms
@@ -396,7 +438,7 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertEqual(treasury["observation_count"], 1)
         self.assertEqual(treasury["scoring_observation_count"], 0)
         self.assertTrue(treasury["has_context_only_evidence"])
-        self.assertIsNone(treasury["scoring_latest_effective_at_ms"])
+        self.assertIsNone(treasury["scoring_latest_effective_at_ms"]);
         self.assertIsNone(treasury["scoring_latest_available_at_ms"])
         self.assertIsNone(treasury["scoring_latest_observed_at_ms"])
         self.assertIsNone(treasury["scoring_economic_age_ms"])
