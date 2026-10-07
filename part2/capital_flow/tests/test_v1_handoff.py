@@ -257,6 +257,67 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertEqual(whale["context_source_count"], 1)
         self.assertTrue(whale["has_context_only_evidence"])
 
+    def test_handoff_scoring_freshness_regression(self) -> None:
+        as_of = self._frame().as_of_ms
+        older_effective = as_of - 100_000
+        older_available = as_of - 80_000
+        older_observed = as_of - 60_000
+
+        newer_effective = as_of - 10_000
+        newer_available = as_of - 5_000
+        newer_observed = as_of - 1_000
+
+        scoring_obs = FlowObservation(
+            family="exchange_btc",
+            metric="btc_netflow",
+            asset="BTC",
+            value=10.0,
+            unit="BTC",
+            effective_at_ms=older_effective,
+            available_at_ms=older_available,
+            observed_at_ms=older_observed,
+            source="glassnode",
+            source_record_id="score:1",
+            cadence_seconds=3600,
+            attribution_status="HIGH",
+            attribution_quality=0.9,
+            data_quality=0.9,
+            provenance={"context_only": False},
+        )
+
+        context_obs = FlowObservation(
+            family="exchange_btc",
+            metric="btc_netflow",
+            asset="BTC",
+            value=20.0,
+            unit="BTC",
+            effective_at_ms=newer_effective,
+            available_at_ms=newer_available,
+            observed_at_ms=newer_observed,
+            source="glassnode",
+            source_record_id="context:1",
+            cadence_seconds=3600,
+            attribution_status="HIGH",
+            attribution_quality=0.9,
+            data_quality=0.9,
+            provenance={"context_only": True},
+        )
+
+        handoff = build_anata_handoff(self._frame(), [scoring_obs, context_obs], source_errors=[])
+        exchange_family = handoff["families"]["exchange_btc"]
+
+        self.assertEqual(exchange_family["observation_count"], 2)
+        self.assertEqual(exchange_family["scoring_observation_count"], 1)
+        self.assertEqual(exchange_family["context_observation_count"], 1)
+        self.assertTrue(exchange_family["has_context_only_evidence"])
+
+        self.assertEqual(exchange_family["scoring_latest_effective_at_ms"], older_effective)
+        self.assertEqual(exchange_family["scoring_latest_available_at_ms"], older_available)
+        self.assertEqual(exchange_family["scoring_latest_observed_at_ms"], older_observed)
+        self.assertEqual(exchange_family["scoring_economic_age_ms"], as_of - older_effective)
+        self.assertEqual(exchange_family["scoring_availability_age_ms"], as_of - older_available)
+        self.assertEqual(exchange_family["scoring_collector_age_ms"], as_of - older_observed)
+
     def test_context_only_family_remains_missing_for_scoring_availability(self) -> None:
         observed = self._frame().as_of_ms
         context = FlowObservation(
