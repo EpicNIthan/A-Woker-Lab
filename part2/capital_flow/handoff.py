@@ -191,9 +191,13 @@ def _family_support(frame: CapitalFlowFrame, normalized: list[FlowObservation]) 
 
 
 def _causal_metadata(normalized: list[FlowObservation], *, as_of_ms: int, source_errors: tuple[str, ...], missing_families: list[str]) -> dict[str, Any]:
-    available = [int(obs.available_at_ms) for obs in normalized if obs.available_at_ms is not None]
-    observed = [int(obs.observed_at_ms) for obs in normalized]
-    refs = sorted({f"{obs.source}:{obs.source_record_id}" for obs in normalized})
+    # Top-level causal quality gates the frozen scoring handoff. Context-only
+    # evidence remains visible in source_evidence, but cannot make scoring
+    # provenance/timing appear usable on its own.
+    scoring = [obs for obs in normalized if not _is_context_only(obs)]
+    available = [int(obs.available_at_ms) for obs in scoring if obs.available_at_ms is not None]
+    observed = [int(obs.observed_at_ms) for obs in scoring]
+    refs = sorted({f"{obs.source}:{obs.source_record_id}" for obs in scoring})
     missing_reasons: list[str] = []
     limitations: list[str] = []
     if not available:
