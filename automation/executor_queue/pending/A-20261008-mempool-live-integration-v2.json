@@ -1,0 +1,23 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261008-mempool-live-integration-v2",
+  "worker": "A",
+  "title": "Add mempool live context-only integration regression",
+  "base_sha": "12d54461d05451ee5c7299b482421d58364b53e3",
+  "instructions": "Add exactly one focused deterministic run_once integration regression to the existing test_mempool_miner_network.py for the already-registered MempoolMinerNetworkCollector. Mirror the established context-only live integration pattern in test_bitmex_reserves.py and test_ibit_holdings.py. Monkeypatch every other live collector in runner to return no observations and patch runner.MempoolMinerNetworkCollector to use the existing PAYLOAD. Assert the mempool_miner_network collection attempt is OK with 2 observations and is listed in evidence_health.collection.successful_collectors; both archived observations are family miner, context_only true, receipt-bounded available_at_ms/observed_at_ms, with expected latest source effective clock; miner handoff is CONTEXT_ONLY with context_observation_count 2 and scoring_observation_count 0; source_evidence for 'mempool.space official API' has role context and exposes the archived latest effective/available clocks; miner evidence_health has visible_observation_count 2 and scoring_observation_count 0; archive_records_loaded is 2 and scoring_records_loaded is 0. Do not modify production code, provider behavior, scoring semantics, or any other file.",
+  "read_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/providers_mempool.py",
+    "part2/capital_flow/tests/test_mempool_miner_network.py",
+    "part2/capital_flow/tests/test_bitmex_reserves.py",
+    "part2/capital_flow/tests/test_ibit_holdings.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_mempool_miner_network.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_mempool_miner_network.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2
+}
