@@ -17,5 +17,6 @@
     "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "max_attempts": 2,
+  "executor_trigger": "worker-control-push-v1"
 }
