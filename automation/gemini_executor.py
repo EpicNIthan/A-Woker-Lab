@@ -32,6 +32,10 @@ class QuotaBlocked(ExecutorError):
     pass
 
 
+class CredentialsUnavailable(ExecutorError):
+    pass
+
+
 def run(cmd: list[str], *, cwd: Path, check: bool = True, timeout: int = 120) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
         cmd,
@@ -201,7 +205,7 @@ def extract_text(payload: dict[str, Any]) -> str:
 def call_gemini(prompt: str, *, model: str) -> tuple[dict[str, Any], int]:
     keys = collect_keys()
     if not keys:
-        raise ExecutorError(
+        raise CredentialsUnavailable(
             "No Gemini keys configured. Add GEMINI_API_KEY_01...GEMINI_API_KEY_10 as GitHub Actions secrets."
         )
 
@@ -479,6 +483,11 @@ def main() -> int:
 
         raise ExecutorError("Gemini exhausted bounded repair attempts; last test output:\n" + repair_log)
 
+    except CredentialsUnavailable as exc:
+        result = {"status": "WAITING_FOR_CREDENTIALS", "error": str(exc)}
+        print(json.dumps(result, indent=2))
+        gha_output("pushed", "false")
+        return 0
     except QuotaBlocked as exc:
         result = {"status": "QUOTA_BLOCKED", "error": str(exc)}
         print(json.dumps(result, indent=2), file=sys.stderr)
