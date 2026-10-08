@@ -1,0 +1,44 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "BLOCKED",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "11c62faeb6f6816bfc0c049a305a213ab2c42fef",
+  "exact_head_actions": "No workflow runs for exact head and no combined commit statuses",
+  "authoritative_control_branch": "worker-control",
+  "pending_queue": [
+    "C-20261008-stablecoin-snapshot-coherence-v3-whitespace-01.json"
+  ],
+  "reason": "Authoritative worker-control pending queue is nonempty, so Planner A must not enqueue. Pending C task is pinned to older 72d6523f128fe75163040e192a27b2d5392c3585 and its stablecoin snapshot coherence implementation/test already appear on exact current HEAD 11c62faeb6f6816bfc0c049a305a213ab2c42fef. Executor/supervisor should reconcile this stale task; Planner A will not edit queue or Specialist code.",
+  "inventory": {
+    "default_live_collectors": [
+      "FarsideEtfCollector",
+      "IbitHoldingsCollector",
+      "BitmexReserveCollector",
+      "MempoolMinerNetworkCollector",
+      "StrategyTreasuryCollector",
+      "AmericanBitcoinTreasuryCollector",
+      "DefiLlamaStablecoinCollector",
+      "DefiLlamaStablecoinCompositionCollector",
+      "CircleUsdcCirculationCollector"
+    ],
+    "optional_live_collectors": [
+      "ActivatedKoteCollector",
+      "GlassnodePitCollector"
+    ],
+    "other_provider_modules": "providers_ezbc.py contains no collector class; providers_free.py KoteFreeCollector is used for probe; JsonlFlowAdapter is a local input, not a network collector",
+    "live_run_once_coverage": [
+      "Bitmex",
+      "IBIT",
+      "Mempool",
+      "Strategy",
+      "AmericanBitcoin+Circle",
+      "generic no-network and evidence-health"
+    ],
+    "uncovered": "FarsideEtfCollector and DefiLlamaStablecoinCollector have parser/PIT tests but no focused network=True run_once archive/handoff/evidence-health scoring integration regression; Farside is first priority. Optional Kote and Glassnode also lack focused run_once coverage.",
+    "farside_schema": "result['scoring_records_loaded'], result['archive_records_loaded'], result['collection_attempts'], result['anata_output']['families']['etf']['scoring_observation_count'], result['anata_output']['source_evidence'][*]['role'], result['anata_output']['evidence_health']['families']['etf']['scoring_observation_count']; context_only_observation_count belongs to audit_latest.json, not top-level anata_output",
+    "invariants": "Do not weaken source PIT, context/scoring separation, scoring-only freshness, or revision provenance"
+  },
+  "disposition": "Research only; no new queue task because pending is nonempty; no code edits or promotion."
+}
