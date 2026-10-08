@@ -1,0 +1,18 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "assessed_sha": "03a76dc20b3753e6fb7b0509592236e91c7e981e",
+  "verdict": "CONTINUE",
+  "queue_state": "PENDING_A_FARSIDE_ALREADY_IMPLEMENTED_NO_ENQUEUE",
+  "validation": "NO_EXACT_HEAD_SPECIALIST_LAB_PASS",
+  "candidate": "GBTC SEC EDGAR 2026-06-30 BTC holdings",
+  "source": "https://www.sec.gov/Archives/edgar/data/1588489/000158848926000005/0001588489-26-000005-index.htm",
+  "accession": "0001588489-26-000005",
+  "report_btc": "138505.75680424",
+  "accepted_utc": "2026-08-04T20:02:21Z",
+  "xml": "gbtc-20260630_htm.xml",
+  "contract": "Quarter-end issuer BTC stock; context-only. Immutable SEC accession, separate effective/accepted/first-observed clocks; availability max(accepted, first-observed). Distinct GBTC fund from IBIT and ETF net flow. XBRL BTC QName/unit/context requires deterministic parser fixture before collection.",
+  "reason": "New independently identified SEC extracted XBRL filing. Implementation waits for authoritative queue reconciliation. No task enqueued.",
+  "assessed_at_utc": "2026-10-08T10:34:19Z"
+}
