@@ -1,0 +1,32 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "BLOCKED",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "3b8b093569410ec1d12ea7c62c5487f21fe6a2f5",
+  "authoritative_control_branch": "worker-control",
+  "queue": {
+    "pending": [
+      "C-20261008-handoff-unittest-entrypoint-01.json"
+    ],
+    "done_count": 7,
+    "failed_count": 7
+  },
+  "exact_head_actions": "GitHub Actions runs filtered by exact Specialist HEAD SHA returned 0; latest Specialist Lab Validation on branch is for older SHA 0820a9a...; executor done DefiLlama PASS proof matches assessed SHA but is not an exact-head Lab Validation.",
+  "evidence": {
+    "recent_commit": "3b8b093... adds only part2/capital_flow/tests/test_defillama_live_scoring_integration.py",
+    "quality_defect": "Exact-HEAD part2/capital_flow/tests/test_v1_handoff.py still ends with malformed __main मूल sentinel; direct unittest entrypoint disabled.",
+    "executor_failure": {
+      "workflow_run": 37799998853,
+      "job_id": 113389331896,
+      "conclusion": "failure",
+      "time_utc": "2026-10-08T15:21:15Z",
+      "error": "ExecutorError: test command not allowed: 'python -m part2.capital_flow.tests.test_v1_handoff --help'",
+      "code_push": false,
+      "queue_bookkeeping": "warning: could not push queue bookkeeping"
+    },
+    "next": "Do not retry while pending. Supervisor should safely reconcile the failed C task, then queue a corrected test-only task whose task.tests contain only executor-allowlisted pytest and git diff --check; retain the direct unittest --help smoke check in task instructions or within pytest subprocess regression, without relaxing executor command allowlist. Diagnose bookkeeping push conflict separately. Preserve all safety gates."
+  },
+  "disposition": "No new task queued; no Specialist edits; no private promotion."
+}
