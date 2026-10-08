@@ -1,0 +1,15 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_sha": "03a76dc20b3753e6fb7b0509592236e91c7e981e",
+  "source": "Bitwise Bitcoin ETF (BITB) SEC 10-Q, accession 0001193125-26-340183, June 30 2026, 36207.6919 BTC",
+  "source_evidence": "SEC filing index provides immutable accession, accepted 2026-08-07 15:50:17 ET, public extracted XBRL XML.",
+  "blocker": "Exact XBRL BTC quantity QName/unit/context mapping not verified; cannot distinguish from USD/share/period facts deterministically.",
+  "pit": "effective June 30; available no earlier than SEC acceptance AND first collector observation; amendments distinct revisions.",
+  "non_overlap": "BITB distinct issuer from existing IBIT/EZBC and proposed GBTC; ETF custody stock context-only, not ETF flows or directional scoring.",
+  "validation": "No exact-head Specialist Lab Validation or matching done PASS.",
+  "queue": "1 pending A Farside task already implemented; 6 done, 6 failed; NO ENQUEUE.",
+  "next": "Verify XBRL field/unit/context before any Gemini task; reconcile stale A pending separately."
+}
