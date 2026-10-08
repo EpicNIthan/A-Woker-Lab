@@ -1,0 +1,18 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "72d6523f128fe75163040e192a27b2d5392c3585",
+  "exact_head_actions": "no commit-associated PR workflow runs or combined statuses returned",
+  "authoritative_control_branch": "worker-control",
+  "queue_task_id": "C-20261008-stablecoin-snapshot-coherence-v3-whitespace-01",
+  "evidence": {
+    "production": "part2/capital_flow/handoff.py build_stablecoin_context selects newest row by (asset,metric), mixing older missing price/change into newer supply snapshot",
+    "tests": "part2/capital_flow/tests/test_v1_handoff.py has same-snapshot partial-coverage tests, not the two-revision same-symbol omission regression",
+    "prior_failure": "run 37712150188 exited on git diff --check status 2; standard Git whitespace-error exit; logs show successful checkout/setup but omit exact diff diagnostics, so malformed patch is likely, not proven",
+    "invariant": "same-source asset/effective/available/observed/revision/stablecoin_id clocks, PIT filtering, missingness, raw/audit, context-only, frozen scoring"
+  },
+  "disposition": "One revised narrowly scoped Gemini task queued; no Specialist code edited directly. If gate still fails require concrete diagnostics; do not bypass whitespace check."
+}
