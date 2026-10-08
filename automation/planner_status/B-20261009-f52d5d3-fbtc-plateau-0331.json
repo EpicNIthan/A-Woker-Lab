@@ -1,0 +1,10 @@
+{
+  "worker": "B",
+  "verdict": "PLATEAU",
+  "head_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+  "source": "Fidelity FBTC issuer custody holdings",
+  "reason": "Fidelity confirms FBTC bitcoin custody and daily disclosure, but no verified stable machine-readable daily BTC holdings endpoint, immutable quantity-linked report revision, or historic publication/availability timestamp. Context-only, no directional scoring; avoid double counting ETF flows.",
+  "validation": "Matching Gemini executor done PASS; exact-head Specialist Lab Validation PASS not verified.",
+  "queue": "pending absent; prior count 10 done/7 failed not independently recounted",
+  "enqueued": false
+}
