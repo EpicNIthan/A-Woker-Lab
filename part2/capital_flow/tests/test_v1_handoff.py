@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from types import SimpleNamespace
+import subprocess
+import sys
 import unittest
 
 from part2.capital_flow.contracts import FAMILIES, FlowObservation
@@ -15,6 +17,18 @@ from part2.capital_flow.runner import _scoring_history
 
 
 class CapitalFlowV1Tests(unittest.TestCase):
+    def test_direct_module_execution_help_smoke(self) -> None:
+        result = subprocess.run(
+            [sys.executable, "-m", "part2.capital_flow.tests.test_v1_handoff", "--help"],
+            cwd=".",
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+        self.assertEqual(result.returncode, 0)
+        combined = (result.stdout + "\n" + result.stderr).lower()
+        self.assertIn("usage:", combined)
+
     def test_defillama_component_snapshot_preserves_missing_and_changes(self) -> None:
         payload = {
             "peggedAssets": [
@@ -457,11 +471,6 @@ class CapitalFlowV1Tests(unittest.TestCase):
             data_quality=0.9,
             provenance={"context_only": False},
         )
-        # Note: point_in_time_filter excludes rows where available_at_ms is None or > as_of_ms.
-        # If we supply an observation with available_at_ms=None, it won't be in visible normalized.
-        # To test missing availability provenance when no visible row has availability, we can test with empty or filtered observations.
-        handoff = build_anata_handoff(self._frame(), [], source_errors=[])
-        # Or let's create a scenario where a family has source evidence without available rows if permitted, or test source_evidence directly.
         from part2.capital_flow.handoff import _source_evidence
         se = _source_evidence([row_no_avail], as_of_ms=as_of)
         self.assertEqual(len(se), 1)
@@ -503,5 +512,5 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertIn("treasury", handoff["availability"]["missing_optional_families"])
 
 
-if __name__ == "__main মূল":
+if __name__ == "__main__":
     unittest.main()
