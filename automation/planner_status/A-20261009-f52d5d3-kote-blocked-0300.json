@@ -1,0 +1,25 @@
+{
+  "worker": "A",
+  "verdict": "BLOCKED",
+  "head_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+  "observed_at": "2026-10-09T03:00:51+07:00",
+  "validation": "worker-control done/A-20261009-defillama-components-live-context-02.json executor_result PASS commit_sha exactly matches HEAD; no exact-HEAD Specialist Lab Validation PASS.",
+  "queue": "worker-control pending directory absent (0 pending); completed DefiLlama components task is in done; historical failed Farside task is not a new regression.",
+  "inventory": {
+    "farside_etf": "registered; test_farside_live_integration.py archive/scoring/handoff/health",
+    "ishares_ibit_holdings": "registered; test_ibit_holdings.py context archive/handoff/health",
+    "bitmex_reserve_transparency": "registered; test_bitmex_reserves.py context archive/handoff/health",
+    "mempool_miner_network": "registered; test_mempool_miner_network.py context archive/handoff/health",
+    "strategy_treasury": "registered; test_strategy_treasury.py context archive/handoff/health",
+    "american_bitcoin_treasury": "registered; test_sec_context_collectors.py context archive/handoff/health",
+    "defillama_stablecoin": "registered; test_defillama_live_scoring_integration.py scoring archive/handoff/health/PIT",
+    "defillama_stablecoin_components": "registered; test_defillama_components_live_context_integration.py context archive/handoff/health/PIT",
+    "circle_usdc_circulation": "registered; test_sec_context_collectors.py context archive/handoff/health"
+  },
+  "default_live_coverage": "9/9 focused run_once paths",
+  "optional_gap": "ActivatedKoteCollector opt-in and GlassnodePitCollector configured opt-in exist in runner.run_once but lack deterministic focused run_once archive/handoff/evidence-health/PIT integration. Kote prioritized for one test-only task.",
+  "proposed_task_id": "A-20261009-kote-optional-live-integration-01",
+  "write_blocker": "GitHub create_file safety checks rejected the single bounded test-only Kote task enqueue on worker-control; no task created and no workflow triggered.",
+  "next": "Re-fetch exact Specialist HEAD and worker-control pending before retry; never duplicate existing completed work or edit Specialist code directly.",
+  "private_promotion": false
+}
