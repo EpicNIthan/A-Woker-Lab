@@ -1,52 +1,25 @@
-# Anata Worker Lab Roadmap
+# Anata Worker Lab Supervisor Roadmap
 
-## Architecture — planner/executor split
+## Exact state — 2026-10-08 18:50 ICT
 
-A/B/C are planners only. GitHub-hosted Gemini is the only public Specialist code executor.
+- Public Specialist branch `anata-local-hardening` exact HEAD: `03a76dc20b3753e6fb7b0509592236e91c7e981e` (worker-a Farside run_once integration test, only `part2/capital_flow/tests/test_farside_live_integration.py` added).
+- Prior HEAD: `11c62faeb6f6816bfc0c049a305a213ab2c42fef` (DefiLlama stablecoin snapshot-coherence fix).
+- Authoritative `worker-control` queue: **1 pending / 6 done / 6 failed**. Pending: `A-20261008-farside-live-scoring-integration-03.json`, stale base_sha `11c62fa...`.
+- GitHub Gemini Specialist Executor Queue workflow `37746873956` reported `status=PASS`, `commit_sha=03a76dc20b3753e6fb7b0509592236e91c7e981e`, `attempt=2`, code push true. The executor ran task-targeted `python -m pytest -q part2/capital_flow/tests/test_farside_live_integration.py` and full `python -m pytest -q part2/capital_flow/tests` before commit; `git diff --check` was enforced. Queue bookkeeping push failed. See https://github.com/EpicNIthan/A-Woker-Lab/actions/runs/37746873956 .
+- No exact-HEAD Specialist Lab Validation PASS and no authoritative worker-control `done` record with `executor_result.status=PASS` and `executor_result.commit_sha=03a76dc20b3753e6fb7b0509592236e91c7e981e`. Therefore **exact-HEAD validation gate is BLOCKED**, despite the successful executor run.
+- Supervisor attempted to create the missing `done` proof, but repository write safety rejected the mutation. Do not fabricate or infer the authoritative proof, bypass safety, retry the stale task, or remove pending before verified reconciliation.
+- A: integration/completeness — Farside test already implemented, no duplicate. No current exact-HEAD PLATEAU; independently audit live provider registration, archive/handoff and evidence-health.
+- B: source breadth — latest exact-HEAD CONTINUE for SEC EDGAR GBTC quarter-end BTC holdings accession `0001588489-26-000005`. Before a task, verify immutable XBRL QName/unit/context, publication clock and context-only non-overlap. Earlier same-HEAD Binance PoR PLATEAU is superseded by CONTINUE.
+- C: quality audit — exact-HEAD BLOCKED by stale A queue entry. Confirmed malformed `if __name__ == '__main मूल':` sentinel in `part2/capital_flow/tests/test_v1_handoff.py`; once queue clears, narrow test-only correction through Gemini.
+- A/B/C planner automations enabled; all code edits belong to Gemini executor. Private `EpicNIthan/-Anata_AI-Trader` branch `anata-local-hardening` read-only at `6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb`.
 
-- Planner/control state and executor queue: `worker-control`
-- Specialist code target: `anata-local-hardening`
-- Executor workflow infrastructure: `main` (supervisor never touches it)
+## Infrastructure priority
 
-## Current exact public state
+1. Reconcile already-completed Farside task atomically on `worker-control`: preserve workflow/test evidence in `done`, then clear identical stale `pending`. If repository-write safety rejects, record BLOCKED; do not circumvent.
+2. Review executor `mark_task` bookkeeping race (git push fails on concurrent control update). A safe bounded fetch/rebase/retry on worker-control, with exact task identity and branch leases, belongs to a separate approved infrastructure workflow; never touch `main` in this supervisor lane.
+3. When queue empty, allow one narrow `anata-gemini-task-v1` task from A/B/C only, exact fresh base_sha, minimal paths, deterministic targeted + full Capital Flow pytest, `max_attempts<=2`. Queue push should trigger immediate Gemini Specialist Executor Queue; investigate missing run.
+4. Refresh A/B/C exact-HEAD verdicts after every Specialist commit. If two runs in one lane produce neither useful task nor concrete blocker/PLATEAU rationale, sharpen that lane.
 
-- exact `anata-local-hardening` HEAD: `fa14691731f5210978a412c4c0b3a87647de4ace`
-- latest commit: `planner-c: queue absent scoring freshness regression`
-- exact-HEAD Actions: no workflow run/status observed; therefore no PASS
-- previous Gemini Specialist commit: `51e0df01dce7ffe87339b58d58ecb4febdc46423`
-- A/B/C stored verdicts on `worker-control` all target older HEADs and are stale; none count toward promotion
-- worker-control executor queue currently has no pending task; one C task was mistakenly committed under `anata-local-hardening/automation/executor_queue/pending/`, so the executor cannot treat it as the authoritative worker-control queue
-- that misplaced task is narrow/safe in content (test-only handoff regression, deterministic pytest, no private/prediction/execution scope) but its `base_sha` is `51e0df...`, not the current exact public HEAD, so it must not be applied as-is
-- `worker_lab_lock.json` remains deprecated/informational and is never a gate
+## Promotion — BLOCKED
 
-## Exact priorities
-
-### A — integration/completeness
-Freshly reassess `fa146917...`. Inventory every live-safe `providers*.py` module against `runner.py` registration plus focused live-integration coverage, archive/handoff visibility, and evidence-health visibility. Do not reuse the old BLOCKED verdict. If worker-control pending is empty and one concrete gap remains, enqueue at most one narrow exact-base task on `worker-control`; otherwise record exact-head PLATEAU with evidence.
-
-### B — source breadth
-Freshly reassess `fa146917...`. Existing B PLATEAU is stale. Continue requiring first-party machine-stable evidence, explicit economic/entity scope, defensible effective/available/observed clocks, immutable revision identity, non-overlap, and semantic protection against treating stock/context as directional flow. Queue only if a candidate clears all bars; otherwise write a fresh exact-head PLATEAU rationale.
-
-### C — quality audit
-Do not retry already-fixed context-vs-scoring freshness work. First correct the queue-location/base-SHA mistake: tasks belong on `worker-control`, and a new task must use the exact current `anata-local-hardening` HEAD immediately before enqueue. Reassess whether the absent-scoring-freshness regression is still missing on `fa146917...`; if it is, enqueue one corrected narrow task on `worker-control` only. If already covered, rotate to the next concrete revision/provenance/missingness/dependence/coverage/handoff defect.
-
-## Planner/executor rules
-
-1. Derive exact current Specialist HEAD and exact-head Actions every run.
-2. A/B/C never edit Specialist code directly.
-3. Only `worker-control/automation/executor_queue/pending/*.json` is authoritative for queued work.
-4. If authoritative pending is non-empty, planners research/reassess rather than enqueue duplicates.
-5. Every task uses schema `anata-gemini-task-v1`, exact current full `base_sha`, minimal read/write paths, deterministic pytest-only tests, and `max_attempts <= 2`.
-6. Allowed task writes stay under public Specialist `part2/` or `specialist_evidence/`; no private/prediction/API orchestration/journals/Telegram/MT5/broker/execution/secrets.
-7. Any Specialist HEAD advance invalidates prior worker verdicts and unexecuted tasks for promotion purposes.
-
-## Promotion gate
-
-Promotion to private `anata-local-hardening` requires, for the same exact public HEAD:
-- exact-head Actions PASS
-- A = PLATEAU
-- B = PLATEAU
-- C = PLATEAU
-- Supervisor independently = PLATEAU
-
-Any CONTINUE, BLOCKED, missing/stale verdict, stale task, or missing exact-head PASS blocks promotion. After consensus promotion, rotate automatically to the next safe Specialist evidence/data slice.
+Require same exact public HEAD: (a) Specialist Lab Validation PASS for exact SHA or authoritative worker-control done executor PASS for exact SHA with targeted/full pytest before commit; (b) A PLATEAU; (c) B PLATEAU; (d) C PLATEAU; (e) independent Supervisor PLATEAU. No condition may be inherited from older HEADs. Only promote `part2/**` and `specialist_evidence/**` to private `anata-local-hardening`; never `automation/**`, `.github/**`, queue/control/status, secrets, prediction/API orchestration/journals/Telegram/MT5/broker/execution. After valid consensus promotion, rotate to next safe Specialist slice. Never touch `main` or use Railway.
