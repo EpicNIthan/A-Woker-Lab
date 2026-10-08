@@ -1,0 +1,25 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "3b8b093569410ec1d12ea7c62c5487f21fe6a2f5",
+  "authoritative_control_branch": "worker-control",
+  "queue": {
+    "pending": [
+      "C-20261008-handoff-unittest-entrypoint-01.json"
+    ],
+    "done_count": 7,
+    "failed_count": 7
+  },
+  "exact_head_actions": "At audit time, Actions workflow runs filtered by exact Specialist head SHA returned 0; check-runs returned []. A separate Gemini executor done PASS record exists for A-20261008-defillama-aggregate-live-scoring-01, commit_sha matches assessed HEAD, but this is not an exact-head Specialist Lab Validation run.",
+  "evidence": {
+    "recent_commit": "Gemini Worker A added only part2/capital_flow/tests/test_defillama_live_scoring_integration.py on 3b8b093569410ec1d12ea7c62c5487f21fe6a2f5.",
+    "control_queue": "worker-control tree at 04c1420dfde2e0cf168372273af5e91dad467ac9 contained no pending directory; done had 7 tasks including matching DefiLlama PASS, failed had 7 tasks. Previous Farside stale pending is no longer present and is archived in failed with stale-base result; do not retry.",
+    "quality_defect": "part2/capital_flow/tests/test_v1_handoff.py ends with `if __name__ == \"__main মূল\":` so direct module execution skips unittest.main; pytest collection remains unaffected. Verified against exact assessed HEAD.",
+    "task": "Created single narrow test-only Gemini task C-20261008-handoff-unittest-entrypoint-01.json on worker-control pending, queue commit 3b2f63c6d97147404d1375ca6f7441248121d87b; base_sha exact assessed SHA. Requires direct unittest --help subprocess regression, targeted and full Capital Flow pytest, git diff --check. No Specialist code edited.",
+    "roadmap": "Current worker-control supervisor roadmap is stale at 03a76dc... and still lists older A pending; freshly read queue and branches supersede it."
+  },
+  "disposition": "Gemini executor alone may implement. No new task while pending exists; rederive exact Specialist HEAD and authoritative queue next audit. No private promotion."
+}
