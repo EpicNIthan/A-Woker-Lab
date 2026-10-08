@@ -1,0 +1,12 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "11c62faeb6f6816bfc0c049a305a213ab2c42fef",
+  "exact_head_actions": "No exact-head Actions or checks found",
+  "task_id": "A-20261008-farside-live-scoring-integration-03",
+  "reason": "Farside collector registered but lacks focused run_once integration regression. Nine default collectors registered. Six have focused live integration tests; Farside, DefiLlama aggregate and DefiLlama components do not. Queued Farside test-only task after verifying worker-control pending was empty. Earlier failed tests asserted a nonexistent handoff key; task now uses correct per-family counts and audit JSON.",
+  "code_edited_by_planner": false
+}
