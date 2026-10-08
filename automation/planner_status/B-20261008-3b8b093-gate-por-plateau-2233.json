@@ -1,0 +1,34 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "3b8b093569410ec1d12ea7c62c5487f21fe6a2f5",
+  "worker_control_head_checked": "6c1ca2503f753e410500ac4191ec3f80522fd7ad",
+  "validation": "No exact-head Specialist Lab Validation run or check/status. Matching worker-control done executor PASS A-20261008-defillama-aggregate-live-scoring-01 commit_sha=3b8b093569410ec1d12ea7c62c5487f21fe6a2f5; not misrepresented as exact-head Actions validation.",
+  "queue": {
+    "pending": [
+      "C-20261008-handoff-unittest-entrypoint-01.json"
+    ],
+    "done_count": 7,
+    "failed_count": 7
+  },
+  "recent_change": "Gemini Worker A added only part2/capital_flow/tests/test_defillama_live_scoring_integration.py (125 lines); previous 03a76dc Farside test now stale.",
+  "source_candidate": "Gate.com Proof of Reserves, BTC exchange custody and customer liabilities",
+  "first_party_evidence": [
+    "https://www.gate.com/en-eu/proof-of-reserves",
+    "https://github.com/gate/proof-of-reverses",
+    "https://www.gate.com/id/blog/gate-releases-latest-proof-of-reserves-report-total-reserve-ratio-reaches-127-total-reserves-exceed-8.215-billion"
+  ],
+  "economic_scope": "Gate exchange BTC reserves and corresponding customer BTC liabilities; distinct from BitMEX reserve source; custody stock, context-only; no flow/direction inference or cross-source summation.",
+  "evidence_strength": "Gate describes downloadable zkmerkle proof.csv, cex_config.json and Merkle root, a potentially machine-readable batch and cryptographic identity. Official August 2026 reporting gives dated BTC balances but blog values alone are not the pinned machine artifact.",
+  "failed_requirements": [
+    "No independently verified stable unauthenticated machine-readable batch manifest/download URL for a concrete dated BTC report.",
+    "No independently verified immutable Merkle root/report revision bound to those BTC values and their economic scope.",
+    "No verifiable per-artifact first-publication timestamp; audit effective snapshot is not public availability. Observed clock must be first ingestion and replay must not backdate.",
+    "Gate official GitHub repository contains verifier/example code, not demonstrated live report dataset or availability ledger."
+  ],
+  "pit_contract_if_revisited": "effective_at=audited snapshot time; available_at=verified public batch release (or conservatively first_observed); observed_at=first collector receipt; revision=verified immutable Merkle root plus artifact SHA256; no future leaks; context_only true.",
+  "disposition": "No Gemini task enqueued because authoritative pending nonempty and source fails implementation bar. Do not recycle older rejected PoR/cbBTC/Deribit candidates without new proof."
+}
