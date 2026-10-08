@@ -1,22 +1,26 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "C-20261008-stablecoin-snapshot-coherence-v2-01",
-  "worker": "C",
-  "title": "Correct stablecoin context snapshot missingness",
+  "allowed_write_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
   "base_sha": "72d6523f128fe75163040e192a27b2d5392c3585",
+  "executor_result": {
+    "error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "status": "FAILED"
+  },
   "instructions": "In build_stablecoin_context(), selecting the latest row separately for each metric mixes snapshots: a later USDT supply-only snapshot inherits older price/change. Anchor each component on its newest PIT-visible supply row, then use only metrics with matching asset, source, effective/available/observed clocks, revision, and stablecoin_id when present. Missing snapshot metrics must remain None and reduce coverage; do not forward-fill. Preserve PIT, raw/audit provenance, context-only status, and frozen scoring. Add test_stablecoin_context_snapshot_coherence_v2: parse two separate same-day DefiLlama payloads, each containing exactly one USDT entry (id 2). Earlier observed 1787520000000: supply 1000, prevDay 950, price 1.001. Later observed 1787520500000: supply 1200, no prevDay or price. At earlier as_of assert supply=1000, price=1.001, change_1d=50. At later as_of assert supply=1200, price/change_1d/peg deviation=None, missing_fields includes price and change_1d, peg_price_coverage and change_coverage['1d'] both zero, weighted peg deviation and tracked_change_1d=None. Never put duplicate same-symbol entries in one payload: the parser keeps the last, which caused the previous task's invalid test failure. Keep existing tests passing.",
+  "max_attempts": 2,
   "read_paths": [
     "part2/capital_flow/handoff.py",
     "part2/capital_flow/providers_v1.py",
     "part2/capital_flow/tests/test_v1_handoff.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/handoff.py",
-    "part2/capital_flow/tests/test_v1_handoff.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261008-stablecoin-snapshot-coherence-v2-01",
   "tests": [
     "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py -k stablecoin_context_snapshot_coherence_v2",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "title": "Correct stablecoin context snapshot missingness",
+  "worker": "C"
 }
