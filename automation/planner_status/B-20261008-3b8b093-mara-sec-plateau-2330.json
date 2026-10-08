@@ -1,0 +1,12 @@
+{
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_sha": "3b8b093569410ec1d12ea7c62c5487f21fe6a2f5",
+  "source": "MARA Q2 2026 SEC 10-Q accession 0001507605-26-000022",
+  "evidence": "35,577 BTC total June 30 2026; SEC accepted August 6 2026 16:15:50 ET; issuer iXBRL exists",
+  "blocker": "Exact BTC XBRL fact QName, context, unit and scale not verified; avoid conflating 26,307 unrestricted and 9,270 loaned/pledged with 35,577 total. Stock is context-only.",
+  "validation": "Matching worker-control done executor PASS at exact SHA; no exact-SHA Specialist Lab Validation Actions PASS",
+  "pending": "C-20261008-handoff-unittest-entrypoint-01.json",
+  "queue_action": "NONE"
+}
