@@ -1,9 +1,48 @@
 {
   "worker": "loop-B",
   "active_slice": "part2/capital_flow",
-  "head_sha": "ded21ded9a23dd34a3235fdb11509ce0b3aa37c0",
+  "head_sha": "11c62faeb6f6816bfc0c049a305a213ab2c42fef",
   "verdict": "PLATEAU",
-  "reason": "Reassessed source breadth at exact public HEAD. Coinbase cbBTC Proof of Reserves is genuinely independent and explicitly scoped, with first-party BTC reserve, cbBTC supply, reserve addresses, and a refreshed-at clock, but the live page does not expose a durable source revision identity or a separately defensible immutable public-availability clock. Deribit daily Proof of Reserves was discontinued from 2026-09-01 and the historical live page was removed. No candidate cleared the full PIT/revision contract without weakening evidence semantics.",
-  "next_idea": "Revisit Coinbase cbBTC only if a first-party API or on-chain/source artifact exposes immutable block/report identity plus defensible availability timing; otherwise rotate to another first-party custody/reserve source.",
-  "updated_at": "2026-10-06T00:31:44Z"
+  "assessed_at_utc": "2026-10-08T07:32:50Z",
+  "worker_control_head_at_assessment": "b711c152fd60e77494cb4e967349961339da77dc",
+  "executor_queue_pending": "EMPTY_OR_ABSENT_404",
+  "exact_head_validation": "Matching worker-control done PASS for C-20261008-stablecoin-snapshot-coherence-v3-whitespace-01 at 11c62faeb6f6816bfc0c049a305a213ab2c42fef; no exact-head Actions runs/statuses returned by GitHub connector; same C task also appears in failed from stale-base re-execution, not evidence of regression.",
+  "source_candidate": "OKX monthly Proof of Reserves BTC reserve/liability snapshot (first-party exchange)",
+  "verdict_reason": "First-party OKX Proof of Reserves describes BTC exchange and third-party custody balances, monthly numbered reports, snapshot height and downloadable zk-STARK/address proof files. This is an independent exchange entity versus existing BitMEX reserve source, and reserve stock is context-only. However no verified stable unauthenticated machine-readable public report manifest/file URL with deterministic report-to-snapshot mapping was established on this run; report number/web-page figures alone are not a pinned artifact revision, and the exact public availability of a report file is not independently established. Do not create a collector that scrapes a mutable presentation page or backdates values to the snapshot height. Result: no implementable first-party source contract clears the machine-access/revision/PIT bar.",
+  "rejected_candidates": [
+    {
+      "source": "OKX Proof of Reserves",
+      "failed_requirements": [
+        "verified stable public machine-readable report endpoint/manifest",
+        "immutable source artifact identity linked to report/snapshot",
+        "defensible per-artifact publication/first-observation history"
+      ],
+      "non_overlap": "Independent exchange from BitMEX; no entity overlap; BTC reserves are stock, not inflow/outflow."
+    },
+    {
+      "source": "Coinbase cbBTC web reserve page",
+      "failed_requirements": [
+        "immutable source revision identity",
+        "independently defensible public-availability timestamp"
+      ]
+    },
+    {
+      "source": "Deribit daily reserve page",
+      "failed_requirements": [
+        "continuing source availability; daily page discontinued September 2026"
+      ]
+    },
+    {
+      "source": "WBTC Ethereum mint/burn logs",
+      "failed_requirements": [
+        "existing Capital Flow family taxonomy has no wrapped-BTC issuance/redemption family; shoehorning into exchange_btc/stablecoin/treasury would misstate economic scope"
+      ],
+      "strengths": [
+        "Ethereum JSON-RPC log/block identity and first-observation PIT are defensible"
+      ],
+      "disposition": "Do not silently modify frozen scoring taxonomy for a context-only candidate."
+    }
+  ],
+  "next_idea": "Seek an OKX first-party public report manifest with downloadable immutable report file/hash and publication/first-observation clocks; only then establish a narrow Gemini source contract. Keep reserve levels context-only and never infer exchange net flow or BTC direction. Existing pending queue was not modified.",
+  "status_scope": "worker-control status only; no Specialist code, no queue, no private systems"
 }
