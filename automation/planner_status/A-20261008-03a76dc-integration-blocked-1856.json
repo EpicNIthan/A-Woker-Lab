@@ -1,0 +1,124 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "BLOCKED",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "03a76dc20b3753e6fb7b0509592236e91c7e981e",
+  "authoritative_control_branch": "worker-control",
+  "recent_commit": {
+    "sha": "03a76dc20b3753e6fb7b0509592236e91c7e981e",
+    "change": "Only part2/capital_flow/tests/test_farside_live_integration.py added; previous 11c62fa DefiLlama snapshot coherence"
+  },
+  "exact_head_validation": {
+    "specialist_lab_validation": "No exact-head workflow runs",
+    "check_runs": "0",
+    "matching_done_executor_result_pass": false,
+    "validated": false,
+    "executor_run_37746873956": "GitHub Actions success on worker-control commit b254105..., not matching exact Specialist HEAD; reported code push PASS separately but authoritative done bookkeeping missing"
+  },
+  "queue": {
+    "pending": [
+      "A-20261008-farside-live-scoring-integration-03.json"
+    ],
+    "done_count": 6,
+    "failed_count": 6,
+    "issue": "Farside test implemented on assessed SHA but stale identical pending task remains; no duplicate/retry permitted"
+  },
+  "provider_inventory": [
+    {
+      "collector": "FarsideEtfCollector",
+      "mode": "default scoring",
+      "registered": true,
+      "focused_live_run_once": "test_farside_live_integration.py",
+      "archive_handoff_health": "asserted"
+    },
+    {
+      "collector": "IbitHoldingsCollector",
+      "mode": "default context-only",
+      "registered": true,
+      "focused_live_run_once": "test_ibit_holdings.py",
+      "archive_handoff_health": "asserted"
+    },
+    {
+      "collector": "BitmexReserveCollector",
+      "mode": "default context-only",
+      "registered": true,
+      "focused_live_run_once": "test_bitmex_reserves.py",
+      "archive_handoff_health": "asserted"
+    },
+    {
+      "collector": "MempoolMinerNetworkCollector",
+      "mode": "default context-only",
+      "registered": true,
+      "focused_live_run_once": "test_mempool_miner_network.py",
+      "archive_handoff_health": "asserted"
+    },
+    {
+      "collector": "StrategyTreasuryCollector",
+      "mode": "default context-only",
+      "registered": true,
+      "focused_live_run_once": "test_strategy_treasury.py",
+      "archive_handoff_health": "asserted"
+    },
+    {
+      "collector": "AmericanBitcoinTreasuryCollector",
+      "mode": "default context-only",
+      "registered": true,
+      "focused_live_run_once": "test_sec_context_collectors.py",
+      "archive_handoff_health": "asserted"
+    },
+    {
+      "collector": "DefiLlamaStablecoinCollector",
+      "mode": "default scoring",
+      "registered": true,
+      "focused_live_run_once": null,
+      "archive_handoff_health": "generic runner path only; no provider-focused integration assertion"
+    },
+    {
+      "collector": "DefiLlamaStablecoinCompositionCollector",
+      "mode": "default context-only",
+      "registered": true,
+      "focused_live_run_once": null,
+      "archive_handoff_health": "generic runner path only; no provider-focused integration assertion"
+    },
+    {
+      "collector": "CircleUsdcCirculationCollector",
+      "mode": "default context-only",
+      "registered": true,
+      "focused_live_run_once": "test_sec_context_collectors.py",
+      "archive_handoff_health": "asserted"
+    },
+    {
+      "collector": "ActivatedKoteCollector",
+      "mode": "optional scoring+context",
+      "registered": true,
+      "focused_live_run_once": null,
+      "archive_handoff_health": "generic optional runner path only"
+    },
+    {
+      "collector": "GlassnodePitCollector",
+      "mode": "optional config-driven",
+      "registered": true,
+      "focused_live_run_once": null,
+      "archive_handoff_health": "generic optional runner path only"
+    }
+  ],
+  "integration_summary": {
+    "default_registered": 9,
+    "default_focused_run_once_covered": 7,
+    "default_uncovered": 2,
+    "optional_registered": 2,
+    "optional_uncovered": 2,
+    "other_modules": "providers_ezbc.py has no collector; providers_free.py KoteFreeCollector probe path; JsonlFlowAdapter is local input"
+  },
+  "next_priority": {
+    "provider": "DefiLlamaStablecoinCollector",
+    "task_type": "test-only deterministic network=True run_once regression",
+    "expected_checks": "fixed PIT clocks, collection attempt, archive, scoring_records_loaded, stablecoin family scoring, source_evidence, evidence_health scoring-only freshness; other collectors mocked empty",
+    "second_priority": "DefiLlamaStablecoinCompositionCollector context-only isolation"
+  },
+  "invariants": "Preserve source PIT, revision identity, context-only exclusion from frozen scoring and scoring-only freshness",
+  "reason": "Stale completed Farside task in authoritative pending queue blocks all new Gemini tasks. Exact-head validation gate also lacks a matching authoritative done PASS or exact-head Specialist Lab Validation PASS.",
+  "disposition": "Research/status only; no task enqueue, Specialist code edits, private promotion or automation changes."
+}
