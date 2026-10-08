@@ -1,0 +1,41 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "03a76dc20b3753e6fb7b0509592236e91c7e981e",
+  "worker_control_sha_before_write": "448d1e504348252a3f81c0873c788d85778dc6b4",
+  "recent_specialist_change": "Only part2/capital_flow/tests/test_farside_live_integration.py added at current HEAD.",
+  "exact_head_validation": "No exact-HEAD Specialist Lab Validation workflow or combined status found; no worker-control done executor PASS matching exact HEAD. Workflow 37746873956 reported implementation PASS on worker-control, but bookkeeping failed; not authoritative done proof.",
+  "authoritative_queue": {
+    "pending": [
+      "A-20261008-farside-live-scoring-integration-03.json"
+    ],
+    "done_count": 6,
+    "failed_count": 6,
+    "matching_done_pass_for_current_head": false,
+    "action": "NO_ENQUEUE; pending A task already implemented, do not retry/duplicate."
+  },
+  "source_candidate": "Grayscale Bitcoin Trust ETF (GBTC) June 30 2026 BTC holdings, SEC accession 0001588489-26-000005",
+  "verified_evidence": {
+    "issuer": "Grayscale Bitcoin Trust ETF, CIK 0001588489; trust-owned BTC, not exchange-held customer BTC",
+    "reported_quantity_btc": "138505.75680424",
+    "effective_at": "2026-06-30",
+    "sec_accepted_at_utc": "2026-08-04T20:02:21Z",
+    "immutable_revision": "SEC accession 0001588489-26-000005; amendments must be distinct revisions",
+    "sec_index": "https://www.sec.gov/Archives/edgar/data/1588489/000158848926000005/0001588489-26-000005-index.html",
+    "xbrl_instance": "https://www.sec.gov/Archives/edgar/data/1588489/000158848926000005/gbtc-20260630_htm.xml"
+  },
+  "unresolved_requirements": [
+    "Exact authoritative XBRL quantity QName, unit ID, contextRef and dimension mapping not yet parsed and verified against 138505.75680424 BTC.",
+    "No deterministic fixture confirms one uniquely scoped quarter-end BTC quantity, disambiguated from shares, USD valuation and activity flow quantities.",
+    "Collector first_observed_at is runtime-specific and cannot be invented from SEC acceptance; available_at must not precede both acceptance and first observation."
+  ],
+  "pit_contract": "effective=quarter-end; publication=SEC accepted timestamp; observed=collector first observed revision; replay available_at=max(publication,first_observed). No prepublication or preobservation historical backfill.",
+  "non_overlap": "GBTC issuer BTC custody stock is separate from IBIT issuer holdings, Farside ETF USD net flow and BitMEX exchange reserves; do not aggregate across owners or count as exchange flow.",
+  "semantics": "Context-only BTC holdings stock. No directional/scoring use or inferred net flows.",
+  "verdict_reason": "SEC filing and extracted XBRL artifact are independently verified, but exact field/unit/context contract remains unverified. Evidence bar is not fully cleared; no Gemini implementation task justified at this HEAD.",
+  "next_step": "Inspect SEC extracted XBRL fact for BTC quantity QName/unit/context and build a pinned deterministic XML fixture with ambiguity, amendment, clock and context-only tests before any narrow task. Reconcile already-completed pending A bookkeeping separately.",
+  "write_scope": "worker-control planner status only; no Specialist edits, no queue writes, no private systems."
+}
