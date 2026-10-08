@@ -1,0 +1,14 @@
+{
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_branch": "anata-local-hardening",
+  "assessed_sha": "72d6523f128fe75163040e192a27b2d5392c3585",
+  "exact_head_actions": "no exact-head Actions runs and no commit statuses observed",
+  "authoritative_queue_branch": "worker-control",
+  "queued_task_id": "C-20261008-stablecoin-snapshot-coherence-v2-01",
+  "queue_commit_sha": "6f03109cd3107eb61bdd4d4142c2bc5353bef22b",
+  "evidence": "build_stablecoin_context selects per-metric latest rows, mixing older price/change with newer supply-only revision; the first executor attempt failed because its regression included duplicate same-symbol rows in one DefiLlama payload, which the parser overwrites. Production remains unchanged at assessed HEAD. V2 uses two distinct one-symbol snapshots.",
+  "scope": "public Capital Flow evidence only",
+  "note": "Planner C queued a regression task; Gemini alone implements Specialist code."
+}
