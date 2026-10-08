@@ -1,0 +1,10 @@
+{
+  "worker": "B",
+  "verdict": "PLATEAU",
+  "head_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+  "source": "Threshold tBTC v2 Ethereum L1 supply",
+  "reason": "Official contract address exists, but no verified public historical RPC/block snapshot with available/observed PIT clocks; L1 token supply is not total BTC bridge custody, cross-chain accounting unresolved, and frozen Capital Flow family taxonomy has no wrapped-BTC bridge family. Context-only, nondirectional; no task.",
+  "validation": "Matching done A-20261009-defillama-components-live-context-02 PASS; no exact-head Specialist Lab Validation Actions PASS.",
+  "queue": "pending 0, done 10, failed 7",
+  "enqueued": false
+}
