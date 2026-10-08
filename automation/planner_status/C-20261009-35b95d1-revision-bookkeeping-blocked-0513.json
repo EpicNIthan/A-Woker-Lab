@@ -1,0 +1,53 @@
+{
+  "worker": "C",
+  "verdict": "BLOCKED",
+  "assessed_head": "35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+  "assessed_at": "2026-10-09T05:13:00+07:00",
+  "scope": "PUBLIC-ONLY Capital Flow quality; no Specialist edits or private promotion",
+  "latest_commit": {
+    "sha": "35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+    "parent": "f52d5d303a6a1475f483cf35186adc0318918863",
+    "message": "worker-c: PIT-safe revision selection must not prefer stale lexicographic revision tokens",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "validation": {
+    "exact_head_specialist_lab_validation": "NO_EXACT_HEAD_RUN",
+    "matching_worker_control_done": "ABSENT",
+    "executor_run": 37845863186,
+    "executor_workflow": "Gemini Specialist Executor Queue",
+    "executor_status": "SUCCESS",
+    "executor_log_status": "PASS",
+    "executor_commit_sha": "35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+    "executor_code_push": true,
+    "executor_bookkeeping_push": false,
+    "executor_log_evidence": "2026-10-08T21:19:05Z warning: could not push queue bookkeeping; status PASS and commit_sha exact HEAD; targeted and full pytest commands were required by queued task; no independent exact-HEAD Specialist Lab Validation PASS"
+  },
+  "queue": {
+    "authoritative_branch": "worker-control",
+    "pending": [
+      "C-20261009-revision-availability-order-0418-01.json"
+    ],
+    "pending_base_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+    "done_count": 10,
+    "failed_count": 8,
+    "blocker": "completed-but-unreconciled C task; do not replay/duplicate",
+    "concurrency_evidence": "worker-control status commit 96577a7 at 2026-10-08T21:18:54Z occurred after executor began 21:18:42Z and before failed bookkeeping push logged 21:19:05Z; consistent with non-fast-forward race, though underlying Git rejection not in executor log"
+  },
+  "quality_audit": {
+    "confirmed_fixed": "r9 versus r10 now ranks PIT-visible availability/observation clocks before revision token; tests cover both input orders and same-clock revisions 1 vs 2",
+    "distinct_gap": "same-clock alias revisions 'r1' and 'r01' have equal _revision_rank=(1,('r',1,'')); when all other rank fields match, select_latest_revisions retains first-seen observation, so reversing input order changes selected value/provenance; not covered by new tests",
+    "reproducer": "Two FlowObservation objects sharing revision_key, available_at_ms, observed_at_ms, but revisions r1/r01 and differing values; compare select_latest_revisions([a,b]) vs select_latest_revisions([b,a]); first wins each time because candidate_rank==current_rank.",
+    "severity": "RESEARCH_ONLY_WHILE_PENDING; no task queued",
+    "preserve": [
+      "PIT",
+      "context-only",
+      "raw/audit provenance",
+      "frozen scoring",
+      "whitespace gate"
+    ]
+  },
+  "next": "Supervisor/infrastructure safely reconcile pending against confirmed exact code commit and executor PASS without bypassing safety; obtain exact-head validation or matching authoritative done. Only when pending empty, independently reproduce and prioritize distinct same-clock tie determinism gap. Never requeue completed revision task."
+}
