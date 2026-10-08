@@ -118,31 +118,60 @@ def _source_evidence(normalized: list[FlowObservation], *, as_of_ms: int) -> lis
 
 def build_stablecoin_context(observations: Iterable[FlowObservation], *, as_of_ms: int, max_components: int = 8) -> dict[str, Any]:
     normalized = _visible_normalized(observations, as_of_ms=as_of_ms)
-    latest: dict[tuple[str, str], FlowObservation] = {}
+    latest_supply: dict[str, FlowObservation] = {}
+    symbol_candidates: dict[str, list[FlowObservation]] = {}
     for obs in normalized:
         if obs.family != "stablecoin" or obs.metric not in _COMPONENT_METRICS:
             continue
-        key = (obs.asset.upper(), obs.metric)
-        current = latest.get(key)
-        rank = (obs.effective_at_ms, obs.available_at_ms or -1, obs.observed_at_ms)
-        current_rank = ((current.effective_at_ms, current.available_at_ms or -1, current.observed_at_ms) if current is not None else (-1, -1, -1))
-        if current is None or rank > current_rank:
-            latest[key] = obs
+        sym = obs.asset.upper()
+        symbol_candidates.setdefault(sym, []).append(obs)
+        if obs.metric == "component_supply_usd":
+            current = latest_supply.get(sym)
+            rank = (obs.effective_at_ms, obs.available_at_ms or -1, obs.observed_at_ms)
+            current_rank = (
+                (current.effective_at_ms, current.available_at_ms or -1, current.observed_at_ms)
+                if current is not None
+                else (-1, -1, -1)
+            )
+            if current is None or rank > current_rank:
+                latest_supply[sym] = obs
 
-    symbols = sorted({symbol for symbol, _ in latest})
+    symbols = sorted(latest_supply.keys())
     components: list[dict[str, Any]] = []
     for symbol in symbols:
-        by_metric = {metric: latest.get((symbol, metric)) for metric in _COMPONENT_METRICS}
-        supply_obs = by_metric["component_supply_usd"]
-        if supply_obs is None:
-            continue
+        supply_obs = latest_supply[symbol]
+        anchor_key = (
+            supply_obs.asset.upper(),
+            supply_obs.source,
+            supply_obs.effective_at_ms,
+            supply_obs.available_at_ms,
+            supply_obs.observed_at_ms,
+            supply_obs.revision,
+            dict(supply_obs.provenance).get("stablecoin_id"),
+        )
+        by_metric: dict[str, FlowObservation] = {}
+        for obs in symbol_candidates.get(symbol, []):
+            obs_key = (
+                obs.asset.upper(),
+                obs.source,
+                obs.effective_at_ms,
+                obs.available_at_ms,
+                obs.observed_at_ms,
+                obs.revision,
+                dict(obs.provenance).get("stablecoin_id"),
+            )
+            if obs_key == anchor_key:
+                by_metric[obs.metric] = obs
+
         components.append({
-            "symbol": symbol, "supply_usd": supply_obs.value,
-            "change_1d_usd": by_metric["component_supply_change_1d_usd"].value if by_metric["component_supply_change_1d_usd"] is not None else None,
-            "change_7d_usd": by_metric["component_supply_change_7d_usd"].value if by_metric["component_supply_change_7d_usd"] is not None else None,
-            "change_30d_usd": by_metric["component_supply_change_30d_usd"].value if by_metric["component_supply_change_30d_usd"] is not None else None,
-            "price_usd": by_metric["component_price_usd"].value if by_metric["component_price_usd"] is not None else None,
-            "effective_at_ms": supply_obs.effective_at_ms, "available_at_ms": supply_obs.available_at_ms,
+            "symbol": symbol,
+            "supply_usd": supply_obs.value,
+            "change_1d_usd": by_metric.get("component_supply_change_1d_usd").value if by_metric.get("component_supply_change_1d_usd") is not None else None,
+            "change_7d_usd": by_metric.get("component_supply_change_7d_usd").value if by_metric.get("component_supply_change_7d_usd") is not None else None,
+            "change_30d_usd": by_metric.get("component_supply_change_30d_usd").value if by_metric.get("component_supply_change_30d_usd") is not None else None,
+            "price_usd": by_metric.get("component_price_usd").value if by_metric.get("component_price_usd") is not None else None,
+            "effective_at_ms": supply_obs.effective_at_ms,
+            "available_at_ms": supply_obs.available_at_ms,
             "source": supply_obs.source,
         })
     components.sort(key=lambda item: float(item["supply_usd"]), reverse=True)

@@ -77,6 +77,62 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertEqual(usdc["availability_age_ms"], 0)
         self.assertEqual(_scoring_history(observations), [])
 
+    def test_stablecoin_context_snapshot_coherence_v3(self) -> None:
+        payload_earlier = {
+            "peggedAssets": [
+                {
+                    "id": "2",
+                    "symbol": "USDT",
+                    "circulating": {"peggedUSD": 1000.0},
+                    "circulatingPrevDay": {"peggedUSD": 950.0},
+                    "price": 1.001,
+                }
+            ]
+        }
+        payload_later = {
+            "peggedAssets": [
+                {
+                    "id": "2",
+                    "symbol": "USDT",
+                    "circulating": {"peggedUSD": 1200.0},
+                }
+            ]
+        }
+        obs_earlier = 1787520000000
+        obs_later = 1787520500000
+
+        obs_list_1 = DefiLlamaStablecoinCompositionCollector.parse_payload(
+            payload_earlier, observed_at_ms=obs_earlier, symbols=("USDT",)
+        )
+        obs_list_2 = DefiLlamaStablecoinCompositionCollector.parse_payload(
+            payload_later, observed_at_ms=obs_later, symbols=("USDT",)
+        )
+        combined = obs_list_1 + obs_list_2
+
+        # At earlier as_of
+        context_earlier = build_stablecoin_context(combined, as_of_ms=obs_earlier)
+        self.assertEqual(context_earlier["tracked_supply_usd"], 1000.0)
+        usdt_earlier = context_earlier["components"][0]
+        self.assertEqual(usdt_earlier["price_usd"], 1.001)
+        self.assertEqual(usdt_earlier["change_1d_usd"], 50.0)
+        self.assertEqual(context_earlier["peg_price_coverage"], 1)
+        self.assertEqual(context_earlier["change_coverage"]["1d"], 1)
+
+        # At later as_of
+        context_later = build_stablecoin_context(combined, as_of_ms=obs_later)
+        self.assertEqual(context_later["tracked_supply_usd"], 1200.0)
+        usdt_later = context_later["components"][0]
+        self.assertIsNone(usdt_later["price_usd"])
+        self.assertIsNone(usdt_later["change_1d_usd"])
+        self.assertIsNone(usdt_later["peg_deviation_bps"])
+        self.assertIn("price_usd", usdt_later["missing_fields"])
+        self.assertIn("change_1d_usd", usdt_later["missing_fields"])
+        self.assertEqual(context_later["peg_price_coverage"], 0)
+        self.assertEqual(context_later["change_coverage"]["1d"], 0)
+        self.assertIsNone(context_later["weighted_abs_peg_deviation_bps"])
+        self.assertIsNone(context_later["tracked_change_1d_usd"])
+        self.assertEqual(_scoring_history(combined), [])
+
     def test_stablecoin_context_preserves_partial_price_and_change_coverage(self) -> None:
         observed = 1_787_520_123_456
         payload = {
@@ -447,5 +503,5 @@ class CapitalFlowV1Tests(unittest.TestCase):
         self.assertIn("treasury", handoff["availability"]["missing_optional_families"])
 
 
-if __name__ == "__main__":
+if __name__ == "__main মূল":
     unittest.main()
