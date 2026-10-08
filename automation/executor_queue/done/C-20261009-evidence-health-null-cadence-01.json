@@ -1,22 +1,31 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "C-20261009-evidence-health-null-cadence-01",
-  "worker": "C",
-  "title": "Fail-safe evidence health when observation cadence is unknown",
+  "allowed_write_paths": [
+    "part2/capital_flow/evidence_health.py",
+    "part2/capital_flow/tests/test_evidence_health.py"
+  ],
   "base_sha": "c35bd7bc27b0bcd853a52728b07b7f509ac649d7",
+  "executor_result": {
+    "attempt": 1,
+    "base_sha": "c35bd7bc27b0bcd853a52728b07b7f509ac649d7",
+    "commit_sha": "5c416fdd523e335ba5d1f284c20ba36c63e995ca",
+    "key_index": 2,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Fix missingness crash when observation cadence_seconds is None by replacing the unsafe int() comprehension with a narrow None-safe selection of positive integer cadence values, and add deterministic regression tests in test_evidence_health.py."
+  },
   "instructions": "Fix one verified missingness crash on exact base SHA. In part2/capital_flow/evidence_health.py build_evidence_health, the per-family `cadences` comprehension calls `int(row.cadence_seconds)` inside its filter, but FlowObservation.cadence_seconds is optional and defaults to None. A PIT-visible observation with cadence_seconds=None currently raises TypeError and prevents evidence_health / run_once handoff output. Replace the comprehension with a narrow None-safe selection of positive integer cadence values; do not invent/zero-fill an unknown cadence. Preserve sorted distinct positive cadences, the existing `cadence_seconds` output key, PIT filtering, scoring/context-only split, three clocks/ages, transport collection status, raw audit data and frozen scoring. In part2/capital_flow/tests/test_evidence_health.py add deterministic regression(s): (1) a valid PIT-visible scoring FlowObservation with cadence_seconds=None returns normally, `cadence_seconds` is [], observation/scoring counts and missingness are correct, clocks/ages unchanged; (2) a mixed family with None and 300-second cadences yields [300] with no invented zero, and a not-yet-available row cannot contribute. Keep all changes limited to the two allowlisted paths. No source, architecture, scoring, or unrelated code changes. Run exactly the two pytest commands listed in task.tests. The executor independently enforces `git diff --check` as its whitespace safety gate; do not bypass it. If environment or command fails, report BLOCKED with concrete failure logs rather than broadening scope.",
+  "max_attempts": 2,
   "read_paths": [
     "part2/capital_flow/evidence_health.py",
     "part2/capital_flow/contracts.py",
     "part2/capital_flow/tests/test_evidence_health.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/evidence_health.py",
-    "part2/capital_flow/tests/test_evidence_health.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261009-evidence-health-null-cadence-01",
   "tests": [
     "python -m pytest -q part2/capital_flow/tests/test_evidence_health.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "title": "Fail-safe evidence health when observation cadence is unknown",
+  "worker": "C"
 }
