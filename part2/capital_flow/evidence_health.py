@@ -83,7 +83,13 @@ def build_evidence_health(
         scoring_latest_effective = _latest(scoring, "effective_at_ms")
         scoring_latest_available = _latest(scoring, "available_at_ms")
         scoring_latest_observed = _latest(scoring, "observed_at_ms")
-        cadences = sorted({int(row.cadence_seconds) for row in rows if int(row.cadence_seconds) > 0})
+        cadences = sorted(
+            {
+                int(row.cadence_seconds)
+                for row in rows
+                if row.cadence_seconds is not None and int(row.cadence_seconds) > 0
+            }
+        )
         sources = sorted({str(row.source) for row in rows})
         scoring_sources = sorted({str(row.source) for row in scoring})
         families[family] = {

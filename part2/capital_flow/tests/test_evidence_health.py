@@ -10,8 +10,8 @@ from part2.capital_flow.runner import run_once
 
 
 class CapitalFlowEvidenceHealthTests(unittest.TestCase):
-    def _obs(self, *, family: str = "exchange_btc", observed_at: int = 2_000_000, available_at: int | None = 1_900_000, effective_at: int = 1_800_000, context_only: bool = False) -> FlowObservation:
-        return FlowObservation(family=family, metric="btc_netflow" if family == "exchange_btc" else "net_flow_usd", asset="BTC" if family == "exchange_btc" else "USD", value=12.0, unit="BTC" if family == "exchange_btc" else "USD", effective_at_ms=effective_at, available_at_ms=available_at, observed_at_ms=observed_at, source="fixture_source", source_record_id=f"{family}:{effective_at}", cadence_seconds=300, provenance={"context_only": context_only})
+    def _obs(self, *, family: str = "exchange_btc", observed_at: int = 2_000_000, available_at: int | None = 1_900_000, effective_at: int = 1_800_000, context_only: bool = False, cadence_seconds: int | None = 300) -> FlowObservation:
+        return FlowObservation(family=family, metric="btc_netflow" if family == "exchange_btc" else "net_flow_usd", asset="BTC" if family == "exchange_btc" else "USD", value=12.0, unit="BTC" if family == "exchange_btc" else "USD", effective_at_ms=effective_at, available_at_ms=available_at, observed_at_ms=observed_at, source="fixture_source", source_record_id=f"{family}:{effective_at}", cadence_seconds=cadence_seconds, provenance={"context_only": context_only})
 
     def test_family_health_preserves_three_clocks_and_missingness(self) -> None:
         health = build_evidence_health([self._obs()], as_of_ms=2_100_000)
@@ -81,6 +81,53 @@ class CapitalFlowEvidenceHealthTests(unittest.TestCase):
             self.assertEqual(health["collection"]["successful_collectors"], [])
             self.assertEqual(result["collection_attempts"], [])
             self.assertTrue(all(item["missing"] for item in health["families"].values()))
+
+    def test_cadence_seconds_none_handling_and_mixed_cadences(self) -> None:
+        # (1) Valid PIT-visible observation with cadence_seconds=None returns normally,
+        # cadence_seconds is [], observation/scoring counts and missingness are correct, clocks/ages unchanged.
+        obs_none = self._obs(
+            family="exchange_btc",
+            observed_at=2_000_000,
+            available_at=1_900_000,
+            effective_at=1_800_000,
+            cadence_seconds=None,
+        )
+        health_none = build_evidence_health([obs_none], as_of_ms=2_100_000)
+        fam_none = health_none["families"]["exchange_btc"]
+        self.assertEqual(fam_none["cadence_seconds"], [])
+        self.assertEqual(fam_none["visible_observation_count"], 1)
+        self.assertEqual(fam_none["scoring_observation_count"], 1)
+        self.assertFalse(fam_none["missing"])
+        self.assertEqual(fam_none["latest_effective_at_ms"], 1_800_000)
+        self.assertEqual(fam_none["effective_age_seconds"], 300.0)
+
+        # (2) Mixed family with None and 300-second cadences yields [300] with no invented zero,
+        # and a not-yet-available row cannot contribute.
+        obs_300 = self._obs(
+            family="treasury",
+            observed_at=2_000_000,
+            available_at=1_900_000,
+            effective_at=1_800_000,
+            cadence_seconds=300,
+        )
+        obs_none_treasury = self._obs(
+            family="treasury",
+            observed_at=2_000_000,
+            available_at=1_900_000,
+            effective_at=1_800_000,
+            cadence_seconds=None,
+        )
+        obs_future = self._obs(
+            family="treasury",
+            observed_at=2_300_000,
+            available_at=2_200_000,
+            effective_at=2_100_000,
+            cadence_seconds=300,
+        )
+        health_mixed = build_evidence_health([obs_300, obs_none_treasury, obs_future], as_of_ms=2_100_000)
+        fam_treasury = health_mixed["families"]["treasury"]
+        self.assertEqual(fam_treasury["cadence_seconds"], [300])
+        self.assertEqual(fam_treasury["visible_observation_count"], 2)
 
 
 if __name__ == "__main__":
