@@ -1,0 +1,35 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "03a76dc20b3753e6fb7b0509592236e91c7e981e",
+  "authoritative_control_branch": "worker-control",
+  "exact_head_validation": "No exact-HEAD Actions run, check-run, or combined commit status PASS. Worker-control workflow 37746873956 success is not exact-head CI.",
+  "queue": {
+    "pending": [
+      "A-20261008-farside-live-scoring-integration-03.json"
+    ],
+    "done_matching_latest_head": [],
+    "failed_latest_head": []
+  },
+  "candidate": "Binance monthly BTC Proof of Reserves",
+  "verdict_reason": "Binance first-party monthly reserve and customer liability stock is independent of existing BitMEX exchange reserve evidence, with snapshot on first of month 00:00 UTC and release by seventh. But no verified stable unauthenticated machine-readable per-report dataset/manifest and immutable public artifact-to-report mapping. Merkle root commitment alone does not establish public revision retrieval/history. Release-by deadline is not an exact publication timestamp. Collector first-observation cannot be backdated to snapshot. Reject implementation; context-only stock must not be interpreted as deposits, withdrawals, or BTC price direction.",
+  "failed_requirements": [
+    "stable unauthenticated machine-readable report access",
+    "immutable artifact and BTC reserves/liabilities revision mapping",
+    "defensible exact source-publication and collector first-observation clocks"
+  ],
+  "prior_rejections": [
+    "OKX PoR: unverified immutable machine-readable manifest/publication",
+    "cbBTC: refreshed-at lacks immutable revision/availability proof",
+    "Deribit daily reserve page: discontinued"
+  ],
+  "sources": [
+    "https://www.binance.com/en/proof-of-reserves",
+    "https://www.binance.com/en-IN/support/faq/detail/815b25f0cb054bdd9d35eccc408fe981"
+  ],
+  "changes": "No Specialist edits, queue writes, or private operations. Stale pending A task remains authoritative blocker. worker-control roadmap is stale.",
+  "assessed_at_utc": "2026-10-08T08:28:55.757Z"
+}
