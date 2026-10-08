@@ -1,0 +1,27 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_farside_live_integration.py"
+  ],
+  "base_sha": "72d6523f128fe75163040e192a27b2d5392c3585",
+  "executor_result": {
+    "error": "ExecutorError: Gemini exhausted bounded repair attempts; last test output:\n$ python -m pytest -q part2/capital_flow/tests/test_farside_live_integration.py\nexit=1\nF                                                                        [100%]\n=================================== FAILURES ===================================\n____________________ test_farside_live_scoring_integration _____________________\n\nfarside_html_fixture = '\\n    <table>\\n      <tr><th>Date</th><th>IBIT</th><th>Total</th></tr>\\n      <tr><td>14 Aug 2026</td><td>(55.5)</td><td>(56.2)</td></tr>\\n      <tr><td>17 Aug 2026</td><td>111.9</td><td>137.3</td></tr>\\n    </table>\\n    '\n\n    def test_farside_live_scoring_integration(farside_html_fixture: str) -> None:\n        as_of_ms = 1787054400000  # 17 Aug 2026 UTC snapshot time\n        expected_17_aug_ms = int(\n            datetime(2026, 8, 17, 0, 0, 0, tzinfo=timezone.utc).timestamp() * 1000\n        )\n    \n        def mock_collect(self, *, observed_at_ms=None, include_backfill=False):\n            return FarsideEtfCollector.parse_html(\n                farside_html_fixture,\n                observed_at_ms=observed_at_ms or as_of_ms,\n                include_backfill=include_backfill,\n            )\n    \n        with tempfile.TemporaryDirectory() as tmp_dir:\n            with (\n                patch.object(FarsideEtfCollector, \"collect\", mock_collect),\n                patch(\"part2.capital_flow.runner.IbitHoldingsCollector.collect\", return_value=[]),\n                patch(\"part2.capital_flow.runner.BitmexReserveCollector.collect\", return_value=[]),\n                patch(\"part2.capital_flow.runner.MempoolMinerNetworkCollector.collect\", return_value=[]),\n                patch(\"part2.capital_flow.runner.StrategyTreasuryCollector.collect\", return_value=[]),\n                patch(\"part2.capital_flow.runner.AmericanBitcoinTreasuryCollector.collect\", return_value=[]),\n                patch(\"part2.capital_flow.runner.DefiLlamaStablecoinCollector.collect\", return_value=[]),\n                patch(\"part2.capital_flow.runner.DefiLlamaStablecoinCompositionCollector.collect\", return_value=[]),\n                patch(\"part2.capital_flow.runner.CircleUsdcCirculationCollector.collect\", return_value=[]),\n            ):\n                result = run_once(local_dir=tmp_dir, as_of_ms=as_of_ms, network=True)\n    \n            attempts = result[\"collection_attempts\"]\n            farside_attempt = next(att for att in attempts if att[\"collector\"] == \"farside_etf\")\n            assert farside_attempt[\"status\"] == \"OK\"\n    \n            anata_output = result[\"anata_output\"]\n            evidence_health = anata_output[\"evidence_health\"]\n    \n            etf_family = evidence_health[\"families\"][\"etf\"]\n            assert etf_family[\"scoring_observation_count\"] == 1\n            assert etf_family[\"latest_effective_at_ms\"] == expected_17_aug_ms\n    \n            scoring_history = result[\"scoring_records_loaded\"]\n            assert scoring_history >= 1\n    \n>           context_rows = anata_output[\"context_only_observation_count\"]\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE           KeyError: 'context_only_observation_count'\n\npart2/capital_flow/tests/test_farside_live_integration.py:64: KeyError\n=========================== short test summary info ============================\nFAILED part2/capital_flow/tests/test_farside_live_integration.py::test_farside_live_scoring_integration - KeyError: 'context_only_observation_count'\n1 failed in 0.36s\n",
+    "status": "FAILED"
+  },
+  "instructions": "Create one deterministic pytest regression for the already-registered FarsideEtfCollector using runner.run_once. Use a fixed HTML table with dates 14 Aug 2026 and 17 Aug 2026, latest Total 137.3; fixed as_of_ms=1787054400000. Stub FarsideEtfCollector.collect to call FarsideEtfCollector.parse_html on fixture; stub all eight other live collectors in runner._collect_live to return (). Assert attempt OK, one archived ETF net_flow_usd scoring row, one scoring history record, zero context rows, ETF handoff scoring count 1, source_evidence role scoring, and evidence_health collection success and scoring-only freshness. Critical correction from failed task: 17 Aug 2026 UTC midnight is 1786924800000, NOT 1786838400000. Use timezone-aware datetime conversion for assertions. Keep all production code unchanged, no external requests or secrets.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/providers.py",
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/evidence_health.py",
+    "part2/capital_flow/tests/test_providers_replay.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261008-farside-live-scoring-integration-02",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_farside_live_integration.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "Farside live collector regression",
+  "worker": "A"
+}
