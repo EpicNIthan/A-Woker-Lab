@@ -1,0 +1,28 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "base_sha": "3b8b093569410ec1d12ea7c62c5487f21fe6a2f5",
+  "executor_result": {
+    "attempt": 1,
+    "base_sha": "3b8b093569410ec1d12ea7c62c5487f21fe6a2f5",
+    "commit_sha": "c35bd7bc27b0bcd853a52728b07b7f509ac649d7",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Restore correct Python unittest entrypoint in test_v1_handoff.py and add deterministic --help subprocess regression test."
+  },
+  "instructions": "TEST-ONLY correctness regression. In part2/capital_flow/tests/test_v1_handoff.py, replace the malformed trailing `if __name__ == \"__main \u092e\u0942\u0932\":` with the exact Python sentinel `if __name__ == \"__main__\":` and retain `unittest.main()`. Add one narrowly scoped deterministic unittest method in the existing CapitalFlowV1Tests class that launches a subprocess with `[sys.executable, '-m', 'part2.capital_flow.tests.test_v1_handoff', '--help']` (or equivalent direct-file invocation) using the repository root as cwd and a bounded timeout, then asserts returncode == 0 AND that combined stdout/stderr includes `usage:` (case-insensitive). This subprocess must use `--help` so unittest.main prints its CLI help without running the tests recursively. The test must fail on the currently malformed guard, where module execution silently produces no unittest CLI help. Do not create a new test file, modify imports beyond what this single test requires, alter production/handoff/evidence-health/scoring logic, or modify any other file. Preserve PIT semantics, snapshot coherence, source-clock provenance, explicit missingness, context-only separation, frozen scoring, and all existing test assertions. The direct unittest `--help` smoke behavior MUST be asserted by the new subprocess regression inside targeted pytest; do not list a standalone unittest command as an executor test. The executor permits pytest-only task tests, runs both listed pytest commands, and independently enforces `git diff --check` before commit. Require clean whitespace and do not bypass safety checks. If command or infrastructure fails, report BLOCKED with concrete logs rather than bypassing gates.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261008-handoff-unittest-entrypoint-01",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "Restore direct unittest entrypoint and prevent malformed guard regression",
+  "worker": "C"
+}
