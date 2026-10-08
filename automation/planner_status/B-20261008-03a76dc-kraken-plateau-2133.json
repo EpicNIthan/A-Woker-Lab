@@ -1,0 +1,11 @@
+{
+  "worker": "B",
+  "assessed_sha": "03a76dc20b3753e6fb7b0509592236e91c7e981e",
+  "verdict": "PLATEAU",
+  "source": "Kraken BTC Proof of Reserves, 2026-06-30, 102.9% coverage",
+  "blocker": "No verified public stable machine-readable report with immutable revision linked to ratio or exact publication clock. Review widget returned 403.",
+  "pit": "Snapshot date only; do not backdate availability; first observation prospective.",
+  "scope": "Kraken exchange custody/liabilities, reserve stock context-only; independent of BitMEX, not flow.",
+  "validation": "No exact-head Specialist Lab Validation or matching done PASS.",
+  "queue": "One pending stale completed Worker A Farside task; no enqueue."
+}
