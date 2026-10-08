@@ -1,0 +1,11 @@
+{
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_sha": "3b8b093569410ec1d12ea7c62c5487f21fe6a2f5",
+  "source": "ARKB issuer BTC holdings",
+  "blocker": "Issuer PDF lacks immutable revision/publication proof; live product page lacks verified structured BTC quantity and first-availability clock. ETF custody stock is context-only.",
+  "validation": "Exact-head Gemini done PASS, no matching Specialist Lab Validation Actions PASS.",
+  "pending": "C-20261008-handoff-unittest-entrypoint-01.json",
+  "queue_action": "NONE"
+}
