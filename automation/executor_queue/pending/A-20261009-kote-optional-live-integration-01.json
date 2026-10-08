@@ -1,0 +1,25 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261009-kote-optional-live-integration-01",
+  "worker": "A",
+  "title": "Kote optional live run_once PIT/archive/handoff integration regression",
+  "base_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+  "read_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/providers_kote_active.py",
+    "part2/capital_flow/providers_free.py",
+    "part2/capital_flow/tests/test_kote_activation.py",
+    "part2/capital_flow/tests/test_defillama_components_live_context_integration.py",
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/evidence_health.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_kote_live_integration.py"
+  ],
+  "max_attempts": 2,
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_kote_live_integration.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "instructions": "TEST ONLY. At exact base_sha, create exactly part2/capital_flow/tests/test_kote_live_integration.py; no production changes, secrets, API requests, prediction, broker or execution code. Add focused deterministic pytest tests for runner.run_once(kote_enabled=True,network=True,include_backfill=False,as_of_ms=fixed,local_dir=tmp_path) with all NINE default live collectors monkeypatched to return [] and ActivatedKoteCollector.from_env monkeypatched to return a fake collector. Fake collect_with_errors(observed_at_ms,include_backfill) returns representative FlowObservation(s) with defensible point-in-time clocks and source_record_id, including one scoring Kote exchange_btc row and one context_only whale_lth row. Assert collection_attempts 'kote' OK count, archive persistence, scoring_records_loaded exclusion of context_only, handoff family counts/source_evidence/evidence_health, source_errors empty, no hidden future data under an earlier as_of_ms offline replay. Add deterministic error-path test: fake collector returns a row plus a single provider error, assert PARTIAL attempt, preserved row, source_errors and evidence health; and from_env failure path marks FAILED and archives nothing. Keep tests offline with no KOTE_API_KEY requirement and no external HTTP. Use actual HEAD output schemas; do not assert nonexistent keys. Do not alter frozen scoring weights or source taxonomy. Run only targeted pytest and full Capital Flow pytest before commit; executor enforces git diff --check. If test cannot be implemented faithfully, fail closed with concrete logs."
+}
