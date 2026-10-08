@@ -1,0 +1,21 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261008-handoff-unittest-entrypoint-01",
+  "worker": "C",
+  "title": "Restore direct unittest entrypoint and prevent malformed guard regression",
+  "base_sha": "3b8b093569410ec1d12ea7c62c5487f21fe6a2f5",
+  "instructions": "TEST-ONLY correctness regression. In part2/capital_flow/tests/test_v1_handoff.py, replace the malformed trailing `if __name__ == \"__main मूल\":` with the exact Python sentinel `if __name__ == \"__main__\":` and retain `unittest.main()`. Add one narrowly scoped deterministic unittest method in the existing CapitalFlowV1Tests class that launches a subprocess with `[sys.executable, '-m', 'part2.capital_flow.tests.test_v1_handoff', '--help']` (or equivalent direct-file invocation) using the repository root as cwd and a bounded timeout, then asserts returncode == 0 AND that combined stdout/stderr includes `usage:` (case-insensitive). This subprocess must use `--help` so unittest.main prints its CLI help without running the tests recursively. The test must fail on the currently malformed guard, where module execution silently produces no unittest CLI help. Do not create a new test file, modify imports beyond what this single test requires, alter production/handoff/evidence-health/scoring logic, or modify any other file. Preserve PIT semantics, snapshot coherence, source-clock provenance, explicit missingness, context-only separation, frozen scoring, and all existing test assertions. Before committing run both pytest commands, the direct `python -m part2.capital_flow.tests.test_v1_handoff --help` smoke check, and `git diff --check`; require clean whitespace, do not bypass safety checks. If command or infrastructure fails, report BLOCKED with concrete logs rather than bypassing gates.",
+  "read_paths": [
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+    "python -m pytest -q part2/capital_flow/tests",
+    "python -m part2.capital_flow.tests.test_v1_handoff --help",
+    "git diff --check"
+  ],
+  "max_attempts": 2
+}
