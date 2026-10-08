@@ -1,0 +1,18 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "BLOCKED",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "11c62faeb6f6816bfc0c049a305a213ab2c42fef",
+  "authoritative_control_branch": "worker-control",
+  "exact_head_actions": "No exact-head Actions run for 11c62faeb6f6816bfc0c049a305a213ab2c42fef; workflow 37717382665 succeeded on executor control SHA 496cbe5706141fbdaefb2ae6b3793190859f196c and produced Specialist commit 11c62fa...",
+  "queue_task_id": "C-20261008-stablecoin-snapshot-coherence-v3-whitespace-01",
+  "evidence": {
+    "queue": "Same task ID present in both worker-control pending and done; done executor_result.status PASS with commit_sha 11c62faeb6f6816bfc0c049a305a213ab2c42fef, pending base_sha 72d6523f128fe75163040e192a27b2d5392c3585 is stale.",
+    "production": "handoff.py has snapshot-anchored component metrics and focused two-payload regression.",
+    "incidental_regression": "test_v1_handoff.py direct unittest guard is if __name__ == '__main মূল' rather than '__main__'; not corrected while pending queue is nonempty.",
+    "race": "worker-control commit bb20e2c at 02:20:39 UTC during executor workflow 02:20:28–02:21:11 UTC; queue bookkeeping push failed; underlying git rejection not independently captured."
+  },
+  "disposition": "Do not enqueue/retry duplicate; supervisor should reconcile stale pending against exact matching done PASS proof using approved safety-checked worker-control process; no safety bypass. Once empty, queue narrow sentinel correction after fresh HEAD verification."
+}
