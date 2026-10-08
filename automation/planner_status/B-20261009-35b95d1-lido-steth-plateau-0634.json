@@ -1,0 +1,28 @@
+{
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-09T06:34:16+07:00",
+  "assessed_head": "35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+  "worker_control_head_at_assessment": "f8563ee640925924ba23d22751d831c2c2f741ec",
+  "validation": "No exact-head Specialist Lab Validation Actions PASS; executor run 37845863186 success and code commit at exact HEAD, but matching authoritative done proof absent",
+  "queue": {
+    "pending": [
+      "automation/executor_queue/pending/C-20261009-revision-availability-order-0418-01.json"
+    ],
+    "done_count": 10,
+    "failed_count": 8,
+    "do_not_retry_completed_C": true
+  },
+  "source": "Lido Ethereum stETH pooled-ether custody/accounting contract",
+  "source_url": "https://docs.lido.fi/contracts/lido/",
+  "entity_scope": "Lido protocol ETH controlled/accounted for, not BTC custody; stETH supply equals getTotalPooledEther and includes buffered ETH, validator balance, pending deposits and external stVault backing",
+  "evidence": "Lido mainnet stETH contract 0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84 exposes getTotalPooledEther() and totalSupply(); AccountingOracle reports reference consensus slot and are applied onchain.",
+  "failed_requirements": [
+    "No independently verified stable unauthenticated archival Ethereum JSON-RPC response pinned to a finalized block hash for this method on this run",
+    "No actual sampled report transaction/block, effective slot, public availability and collector-observed timestamps were retrieved and cross-checked",
+    "Existing frozen Capital Flow family taxonomy lacks ETH liquid-staking reserve stock; no demonstrated non-overlapping family mapping. stETH supply must not be added to stablecoin or ETF flow"
+  ],
+  "semantic_boundary": "ETH staking/custody stock only, context-only; never directional BTC/ETH inference; no double-count with aggregate DeFi liquidity or Lido TVL.",
+  "action": "No Gemini task enqueued while authoritative pending task remains; preserve existing queue; no Specialist edits or private promotion."
+}
