@@ -1,0 +1,57 @@
+{
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "BLOCKED",
+  "head_sha": "35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+  "observed_at": "2026-10-09T04:58:18+07:00",
+  "head_change": {
+    "parent_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+    "commit_message": "worker-c: PIT-safe revision selection must not prefer stale lexicographic revision tokens",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "integration_runner_unchanged": true
+  },
+  "validation": {
+    "status": "NOT_VALIDATED_BY_REQUIRED_GATE",
+    "exact_head_specialist_lab_validation_pass": false,
+    "matching_worker_control_done_executor_result_pass": false,
+    "executor_run": "37845863186",
+    "executor_run_reported_status": "PASS",
+    "executor_run_reported_commit_sha": "35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+    "code_push": true,
+    "bookkeeping_push": false,
+    "explanation": "A successful workflow run and its log are informative but do not satisfy the specified exact-HEAD validation gate without matching authoritative done executor_result PASS or exact-HEAD Specialist Lab Validation PASS."
+  },
+  "queue": {
+    "authoritative_branch": "worker-control",
+    "pending": [
+      "C-20261009-revision-availability-order-0418-01.json"
+    ],
+    "done_count": 10,
+    "failed_count": 8,
+    "pending_base_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+    "blocker": "Worker C task code landed at HEAD but pending remains due to executor queue-bookkeeping push failure; supervisor/infrastructure must reconcile without re-executing completed task."
+  },
+  "default_provider_inventory": {
+    "farside_etf": "runner registered; deterministic test_farside_live_integration.py run_once scoring/archive/handoff/evidence-health",
+    "ishares_ibit_holdings": "runner registered; test_ibit_holdings.py run_once context-only/archive/handoff/evidence-health",
+    "bitmex_reserve_transparency": "runner registered; test_bitmex_reserves.py run_once context-only/archive/handoff/evidence-health",
+    "mempool_miner_network": "runner registered; test_mempool_miner_network.py run_once context-only/archive/handoff/evidence-health",
+    "strategy_treasury": "runner registered; test_strategy_treasury.py run_once context-only/archive/handoff/evidence-health",
+    "american_bitcoin_treasury": "runner registered; test_sec_context_collectors.py run_once context-only/archive/handoff/evidence-health",
+    "defillama_stablecoin": "runner registered; test_defillama_live_scoring_integration.py run_once scoring/archive/handoff/evidence-health/PIT",
+    "defillama_stablecoin_components": "runner registered; test_defillama_components_live_context_integration.py run_once context-only/archive/handoff/evidence-health/PIT",
+    "circle_usdc_circulation": "runner registered; test_sec_context_collectors.py run_once context-only/archive/handoff/evidence-health"
+  },
+  "default_coverage": "9/9 registered default live collectors have focused deterministic run_once integration coverage (coverage observed in committed tests, not newly executed in this assessment).",
+  "optional_inventory": {
+    "kote": "opt-in ActivatedKoteCollector registered by kote_enabled; parser/activation tests exist, but focused deterministic run_once archive/handoff/evidence-health/PIT integration missing; prior Kote task failed due to incorrect assumption about historical scoring_records_loaded; avoid retry until pending empty and fresh validation.",
+    "glassnode": "opt-in GlassnodePitCollector registered by glassnode_config; focused deterministic run_once archive/handoff/evidence-health/PIT integration missing."
+  },
+  "next": "First reconcile Worker C pending bookkeeping and obtain exact-HEAD required PASS proof; then re-fetch HEAD, diff, roadmap, pending/done/failed and consider one bounded optional Kote integration task if gap persists. No task enqueue while pending nonempty.",
+  "no_specialist_code_edits": true,
+  "no_private_promotion": true,
+  "no_automation_changes": true
+}
