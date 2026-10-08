@@ -85,7 +85,9 @@ def normalize_observation(obs: FlowObservation) -> FlowObservation:
             )
 
     if not math.isfinite(value):
-        raise ValueError("normalized value must remain finite")
+        raise ValueError(
+            "normalized value must remain finite"
+        )
 
     return FlowObservation(
         family=obs.family,
@@ -110,12 +112,18 @@ def normalize_observation(obs: FlowObservation) -> FlowObservation:
     )
 
 
-def _revision_rank(revision: str) -> tuple[int, str]:
+def _revision_rank(revision: str) -> tuple[int, int | str]:
     text = str(revision).strip()
     try:
-        return (int(text), text)
+        return (0, int(text))
     except ValueError:
-        return (-1, text)
+        match = re.search(r"(\d+)", text)
+        if match:
+            prefix = text[:match.start()]
+            number = int(match.group(1))
+            suffix = text[match.end():]
+            return (1, (prefix, number, suffix))
+        return (2, text)
 
 
 def select_latest_revisions(observations: Iterable[FlowObservation]) -> list[FlowObservation]:
@@ -132,8 +140,16 @@ def select_latest_revisions(observations: Iterable[FlowObservation]) -> list[Flo
         if current is None:
             chosen[key] = obs
             continue
-        candidate_rank = (_revision_rank(obs.revision), obs.available_at_ms or -1, obs.observed_at_ms)
-        current_rank = (_revision_rank(current.revision), current.available_at_ms or -1, current.observed_at_ms)
+        candidate_rank = (
+            obs.available_at_ms or -1,
+            obs.observed_at_ms,
+            _revision_rank(obs.revision),
+        )
+        current_rank = (
+            current.available_at_ms or -1,
+            current.observed_at_ms,
+            _revision_rank(current.revision),
+        )
         if candidate_rank > current_rank:
             chosen[key] = obs
     return list(chosen.values())

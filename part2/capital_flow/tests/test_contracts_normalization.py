@@ -55,6 +55,58 @@ class ContractNormalizationTests(unittest.TestCase):
         chosen_late = select_latest_revisions(late)
         self.assertEqual(chosen_late[0].value, 99)
 
+    def test_revision_numeric_ordering_r9_vs_r10(self):
+        t1 = DAY + 1000
+        t2 = DAY + 2000
+        r9 = obs(
+            source="src",
+            source_record_id="rec-1",
+            revision="r9",
+            value=9.0,
+            available_at_ms=t1,
+            observed_at_ms=t1,
+        )
+        r10 = obs(
+            source="src",
+            source_record_id="rec-1",
+            revision="r10",
+            value=10.0,
+            available_at_ms=t2,
+            observed_at_ms=t2,
+        )
+
+        # At as_of between t1 and t2, only r9 is visible.
+        filtered_early = point_in_time_filter([r9, r10], t1 + 500)
+        chosen_early = select_latest_revisions(filtered_early)
+        self.assertEqual(len(chosen_early), 1)
+        self.assertEqual(chosen_early[0].revision, "r9")
+        self.assertEqual(chosen_early[0].value, 9.0)
+
+        # At as_of after t2, r10 wins regardless of input order [r9, r10] vs [r10, r9].
+        for input_list in ([r9, r10], [r10, r9]):
+            filtered_late = point_in_time_filter(input_list, t2 + 500)
+            chosen_late = select_latest_revisions(filtered_late)
+            self.assertEqual(len(chosen_late), 1)
+            self.assertEqual(chosen_late[0].revision, "r10")
+            self.assertEqual(chosen_late[0].value, 10.0)
+
+    def test_same_clock_tie_behavior_and_separate_records(self):
+        t1 = DAY + 1000
+        obs_a = obs(source="src", source_record_id="rec-1", revision="1", value=1.0, available_at_ms=t1, observed_at_ms=t1)
+        obs_b = obs(source="src", source_record_id="rec-1", revision="2", value=2.0, available_at_ms=t1, observed_at_ms=t1)
+        # Same-clock tie-breaking: revision 2 vs 1
+        chosen_tie = select_latest_revisions([obs_a, obs_b])
+        self.assertEqual(len(chosen_tie), 1)
+        self.assertEqual(chosen_tie[0].revision, "2")
+        self.assertEqual(chosen_tie[0].value, 2.0)
+
+        # Separate source_record_id are not collapsed
+        obs_c = obs(source="src", source_record_id="rec-2", revision="1", value=3.0, available_at_ms=t1, observed_at_ms=t1)
+        chosen_separate = select_latest_revisions([obs_a, obs_c])
+        self.assertEqual(len(chosen_separate), 2)
+        values = {o.value for o in chosen_separate}
+        self.assertEqual(values, {1.0, 3.0})
+
     def test_explicit_cross_provider_economic_duplicate_is_suppressed(self):
         a = obs(source="a", source_record_id="a1", economic_event_id="event-x", data_quality=0.8)
         b = obs(source="b", source_record_id="b1", economic_event_id="event-x", data_quality=0.95)
