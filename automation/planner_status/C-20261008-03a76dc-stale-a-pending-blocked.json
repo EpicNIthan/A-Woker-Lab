@@ -1,0 +1,26 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "BLOCKED",
+  "specialist_branch": "anata-local-hardening",
+  "assessed_sha": "03a76dc20b3753e6fb7b0509592236e91c7e981e",
+  "authoritative_control_branch": "worker-control",
+  "exact_head_actions": "No exact-head Actions workflow run or check-run for 03a76dc20b3753e6fb7b0509592236e91c7e981e. Executor workflow 37746873956 on worker-control b2541050cd5227a4d3269d546f08cb9a1ecb2542 reported PASS and produced this Specialist commit, but is not exact-head CI.",
+  "queue": {
+    "pending": [
+      "A-20261008-farside-live-scoring-integration-03.json"
+    ],
+    "done_c_stablecoin": "C-20261008-stablecoin-snapshot-coherence-v3-whitespace-01.json",
+    "failed_c_stablecoin": "C-20261008-stablecoin-snapshot-coherence-v3-whitespace-01.json"
+  },
+  "evidence": {
+    "latest_commit": "worker-a: Farside run_once integration test; only part2/capital_flow/tests/test_farside_live_integration.py added.",
+    "reconciliation": "Former stale C-v3 pending entry is now absent; authoritative done PASS record matches 11c62faeb6f6816bfc0c049a305a213ab2c42fef. Do not requeue.",
+    "new_queue_blocker": "A-20261008-farside-live-scoring-integration-03.json still pending with base_sha 11c62faeb6f6816bfc0c049a305a213ab2c42fef despite executor run 37746873956 PASS producing 03a76dc20b3753e6fb7b0509592236e91c7e981e; log says 'warning: could not push queue bookkeeping'. Supervisor must reconcile using approved safety-checked process; do not retry or delete from Planner C.",
+    "quality_defect": "part2/capital_flow/tests/test_v1_handoff.py ends with if __name__ == '__main मूल': instead of if __name__ == '__main__':; direct python -m part2.capital_flow.tests.test_v1_handoff cannot invoke unittest.main. pytest collection still works.",
+    "production": "Snapshot-coherent stablecoin metrics in part2/capital_flow/handoff.py remain anchored to same supply revision/effective/available/observed/source; prior fixed defects not requeued.",
+    "roadmap": "automation/supervisor_roadmap.md still references older fa146917 HEAD and older queue state; not authoritative over freshly checked branch and queue."
+  },
+  "disposition": "No new C task while any worker-control pending JSON exists. Supervisor reconcile completed A task without bypassing safety. When queue empty and HEAD freshly rechecked, queue narrow unittest sentinel regression correction with targeted/full Capital Flow pytest and git diff --check; no direct Specialist edits or private promotion."
+}
