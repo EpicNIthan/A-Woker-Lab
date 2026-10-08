@@ -1,0 +1,48 @@
+{
+  "worker": "C",
+  "verdict": "CONTINUE",
+  "assessed_head": "f52d5d303a6a1475f483cf35186adc0318918863",
+  "observed_at": "2026-10-09T04:18:42+07:00",
+  "scope": "public anata-local-hardening Capital Flow quality audit only",
+  "validation": {
+    "exact_head_specialist_lab_validation": "NO_EXACT_HEAD_RUN",
+    "latest_seen_validation_run": "37627780085 (different SHA 0820a9a...)",
+    "matching_executor_done": "automation/executor_queue/done/A-20261009-defillama-components-live-context-02.json; PASS commit_sha f52d5d303a6a1475f483cf35186adc0318918863; targeted/full pytest required by task",
+    "latest_commit": "f52d5d3 adds only part2/capital_flow/tests/test_defillama_components_live_context_integration.py"
+  },
+  "audit": {
+    "issue": "PIT revision selection incorrectly ranks provider revision token before available/observed clocks",
+    "location": "part2/capital_flow/normalization.py select_latest_revisions and _revision_rank",
+    "reproducer": "Same revision_key: r9 available/observed at T1, r10 at T2>T1; after PIT as_of>=T2 both visible, but (-1,'r9') > (-1,'r10') so older r9 wins. Existing test only covers numeric revisions '1','2'.",
+    "impact": "Latest available correction can be silently discarded, stale values retained despite later PIT-visible revision",
+    "preserve": [
+      "PIT filter before selection",
+      "revision identity",
+      "raw/audit provenance",
+      "context-only isolation",
+      "frozen scoring"
+    ],
+    "not_requeued": [
+      "unittest entrypoint",
+      "null cadence",
+      "scoring freshness",
+      "stablecoin snapshot coherence",
+      "source clocks",
+      "Farside/mempool/DefiLlama integrations"
+    ]
+  },
+  "queue": {
+    "pending": 1,
+    "task_id": "C-20261009-revision-availability-order-0418-01",
+    "base_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+    "task_commit": "a3f465216efbbc3f2f657a89d609847ed8844673",
+    "trigger": {
+      "workflow": "Gemini Specialist Executor Queue",
+      "run_id": 37845863186,
+      "event": "push",
+      "status": "queued"
+    },
+    "other": "Prior A Kote optional test task failed and archived; no longer pending."
+  },
+  "next": "Do not enqueue while pending; inspect Gemini result, re-fetch HEAD/queue and reassess exact HEAD. No private promotion."
+}
