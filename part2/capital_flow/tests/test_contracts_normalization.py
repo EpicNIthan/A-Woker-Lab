@@ -154,6 +154,23 @@ class ContractNormalizationTests(unittest.TestCase):
         self.assertEqual(len(kept), 2)
         self.assertEqual(decisions, [])
 
+    def test_distinct_assets_same_event_id_survive_and_same_asset_resolves(self):
+        btc_a = obs(asset="BTC", source="prov-1", source_record_id="rec-btc-1", economic_event_id="shared-event-123", data_quality=0.9)
+        btc_b = obs(asset="BTC", source="prov-2", source_record_id="rec-btc-2", economic_event_id="shared-event-123", data_quality=0.9)
+        eth = obs(asset="ETH", source="prov-1", source_record_id="rec-eth-1", economic_event_id="shared-event-123", data_quality=0.9)
+
+        for input_order in (
+            [btc_a, btc_b, eth],
+            [eth, btc_b, btc_a],
+            [btc_b, btc_a, eth],
+        ):
+            kept, decisions = normalize_and_dedup(input_order)
+            assets = {o.asset for o in kept}
+            self.assertEqual(assets, {"BTC", "ETH"})
+            self.assertEqual(len(kept), 2)
+            self.assertEqual(len(decisions), 1)
+            self.assertEqual(decisions[0]["economic_event_id"], "shared-event-123")
+
     def test_cross_provider_equal_rank_determinism_and_controls(self):
         t1 = DAY + 1000
         obs_prov_alpha = obs(

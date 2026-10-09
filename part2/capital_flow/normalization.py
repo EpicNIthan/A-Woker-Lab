@@ -166,11 +166,11 @@ def suppress_duplicates(observations: Iterable[FlowObservation]) -> tuple[list[F
     The decisions are returned for audit rather than silently discarded.
     """
 
-    by_event: dict[tuple[str, str, str], list[FlowObservation]] = defaultdict(list)
+    by_event: dict[tuple[str, str, str, str], list[FlowObservation]] = defaultdict(list)
     passthrough: list[FlowObservation] = []
     for obs in observations:
         if obs.economic_event_id:
-            by_event[(obs.family, obs.metric, obs.economic_event_id)].append(obs)
+            by_event[(obs.family, obs.metric, obs.asset, obs.economic_event_id)].append(obs)
         else:
             passthrough.append(obs)
 
@@ -194,7 +194,7 @@ def suppress_duplicates(observations: Iterable[FlowObservation]) -> tuple[list[F
         for duplicate in group[1:]:
             decisions.append(
                 {
-                    "economic_event_id": key[2],
+                    "economic_event_id": key[3],
                     "kept_observation_id": winner.observation_id,
                     "suppressed_observation_id": duplicate.observation_id,
                     "reason": "DUPLICATE_ECONOMIC_EVENT",
