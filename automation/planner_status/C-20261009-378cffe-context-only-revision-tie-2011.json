@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-09T20:11:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "55114df3e83070383f3ab5e31da2f64d1cbe6ca3",
+  "recent_commit": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "done_path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result_status": "PASS",
+    "executor_result_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_lab_validation": "NOT_FOUND"
+  },
+  "authoritative_queue_at_read": {
+    "pending": 0,
+    "pending_directory_absent": true,
+    "done": 16,
+    "failed": 13
+  },
+  "planner_statuses": {
+    "A": "A-20261009-378cffe-optional-integration-continue-1955.json CONTINUE exact SHA",
+    "B": "B-20261009-378cffe-liquid-federation-plateau-1835.json PLATEAU exact SHA",
+    "C_previous": "C-20261009-378cffe-context-only-revision-tie-1713.json CONTINUE exact SHA"
+  },
+  "roadmap": "automation/supervisor_roadmap.md stale on 9549675; private promotion BLOCKED",
+  "quality_audit": {
+    "pit": "available_at_ms must be known and <=as_of; visible filter before revision selection; later correction replay tests present",
+    "clocks": "effective_at_ms, available_at_ms, observed_at_ms separate; available<=observed; revision rank availability, observed, revision",
+    "revision": "equal-ranked different values now deterministic with conflict flag; equal-valued conflicting metadata remains an unbroken tie",
+    "asset_identity": "revision_key includes uppercase asset; BTC/ETH tests present",
+    "economic_event_dedup": "explicit event ID and asset used; cross-provider tests present",
+    "source_provenance": "observation_id excludes provenance; same economic value and clocks can have different context_only metadata",
+    "context_only": "handoff._visible_normalized dedups before _is_context_only; arrival-order winner can be scoring or context-only",
+    "missingness": "family_support scoring counts and missingness depend on retained context_only metadata",
+    "deterministic_tests": "no same-rank same-value context_only permutation/duplicate/later-correction regression",
+    "defect": {
+      "id": "EQUAL_RANK_CONTEXT_ONLY_PROVENANCE_TIE",
+      "file": "part2/capital_flow/normalization.py",
+      "lines": "156-163",
+      "related": [
+        "part2/capital_flow/contracts.py:219-235",
+        "part2/capital_flow/handoff.py:25-31"
+      ],
+      "reproducer": "Two FlowObservation records with identical family=etf, metric=net_flow_usd, asset=BTC, source=src, source_record_id=rec, revision=1, value=100, unit=USD, effective_at_ms=1000, available_at_ms=1000, observed_at_ms=1000, but provenance context_only true versus false. observation_id and tie keys identical. select_latest_revisions([context,scoring]) returns context-only, reversing returns scoring-eligible; normalize_and_dedup inherits it.",
+      "impact": "Scoring eligibility, provenance and missingness depend on input order",
+      "reproducer_type": "Static deterministic code-path, not planner-executed pytest"
+    }
+  },
+  "prior_failed_task": "automation/executor_queue/failed/C-20261009-context-only-equal-rank-1713-01.json; git diff --check exit 2; no correction committed",
+  "next": "If pending remains empty and repository write safety allows, queue one smaller Gemini-only task limited to normalization.py and test_contracts_normalization.py; fail-closed context_only preference and stable canonical provenance tie-break; do not modify Specialist directly.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control status and task queue only; no main/private/Railway/prediction/API/broker/secrets/workflows/schedules/promotion"
+}
