@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T00:29:39+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "99c645e0d573c70dda3fca59c8227bdc2a814a90",
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_actions": "NOT_VERIFIED"
+  },
+  "recent_commit": {
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory": "absent",
+    "done": 16,
+    "failed": 15
+  },
+  "roadmap": "automation/supervisor_roadmap.md exact HEAD 378cffe, snapshot 2026-10-09 20:50 ICT; failed count stale (13 vs 15)",
+  "other_lanes": {
+    "A": "CONTINUE optional Kote/Glassnode integration test gap",
+    "C": "CONTINUE equal-rank context_only provenance tie, latest 23:15 ICT"
+  },
+  "candidate": {
+    "name": "ether.fi eETH/weETH ETH pooled staking backing",
+    "first_party_repo": "https://github.com/etherfi-protocol/smart-contracts",
+    "pinned_first_party_source": "https://github.com/etherfi-protocol/smart-contracts/blob/15ff96d4d5e8e6a19a472cd40a7bcb858c9e7a88/src/core/LiquidityPool.sol",
+    "source_sha": "15ff96d4d5e8e6a19a472cd40a7bcb858c9e7a88",
+    "reproducible_source_evidence": "Pinned LiquidityPool.sol defines public getTotalPooledEther() returning totalValueOutOfLp + totalValueInLp and Rebase(uint256 totalEthLocked,uint256 totalEEthShares) event. Repo README identifies eETH rebasing and weETH wrapper of the same staked ETH.",
+    "live_reproduction": {
+      "method": "POST eth_blockNumber to https://ethereum-rpc.publicnode.com with JSON-RPC 2.0",
+      "result": "ConnectionError: NameResolutionError; DNS resolution failed; no JSON block or eth_call reserve balance captured"
+    },
+    "criteria": {
+      "machine_readable": "FIRST_PARTY_CONTRACT_INTERFACE_VERIFIED; LIVE_OBSERVATION_NOT_REPRODUCED",
+      "economic_entity_scope": "ether.fi pooled ETH staking backing eETH/weETH; staking stock, not new BTC/ETH capital inflow",
+      "immutable_identity": "SOURCE_CODE_SHA_VERIFIED; NO_LIVE_BLOCK_HASH_TX_LOG_INDEX_OR_BLOCK_PINNED_BALANCE",
+      "effective_clock": "NO_ONCHAIN_BLOCK_TIMESTAMP_CAPTURED",
+      "available_clock": "NO_HISTORICAL_FIRST_PUBLICATION_OR_INGEST_AVAILABILITY_PROOF",
+      "observed_clock": "research time only; no live successful balance response",
+      "non_overlap": "FAIL: eETH and weETH are alternative claims on the same ETH; pooled staking ETH overlaps circulating/staked ETH and TVL aggregates",
+      "context_only": "REQUIRED: nondirectional ETH stock must not affect direction or scoring"
+    },
+    "rejection": "No verified block-pinned reserve quantity, historical availability clock or non-overlap proof. First-party Solidity source is reproducible but does not establish qualifying PIT reserve observations."
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control planner_status only; no code, main, private, workflows, schedules, Railway, prediction/API, broker/execution, secrets or promotion"
+}
