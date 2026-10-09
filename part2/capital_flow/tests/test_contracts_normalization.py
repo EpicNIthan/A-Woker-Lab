@@ -138,6 +138,30 @@ class ContractNormalizationTests(unittest.TestCase):
         values = {o.value for o in chosen_separate}
         self.assertEqual(values, {1.0, 3.0})
 
+    def test_btc_and_eth_same_source_record_identity_survive_normalize_and_dedup(self):
+        t1 = DAY + 1000
+        t2 = DAY + 2000
+
+        # Early revision for both BTC and ETH sharing same source/source_record_id/family/metric
+        btc_r1 = obs(asset="BTC", source="multi-asset-src", source_record_id="rec-shared-99", revision="1", value=100.0, unit="USD", available_at_ms=t1, observed_at_ms=t1)
+        eth_r1 = obs(asset="ETH", source="multi-asset-src", source_record_id="rec-shared-99", revision="1", value=200.0, unit="USD", available_at_ms=t1, observed_at_ms=t1)
+
+        # Later revision for BTC only, sharing the exact same source record identity
+        btc_r2 = obs(asset="BTC", source="multi-asset-src", source_record_id="rec-shared-99", revision="2", value=150.0, unit="USD", available_at_ms=t2, observed_at_ms=t2)
+
+        for input_order in (
+            [btc_r1, eth_r1, btc_r2],
+            [btc_r2, eth_r1, btc_r1],
+            [eth_r1, btc_r1, btc_r2],
+        ):
+            # At as_of after t2, btc_r2 replaces btc_r1, while eth_r1 survives distinctly.
+            filtered = point_in_time_filter(input_order, t2 + 500)
+            kept, _ = normalize_and_dedup(filtered)
+            self.assertEqual(len(kept), 2)
+
+            assets_and_values = {(o.asset, o.value) for o in kept}
+            self.assertEqual(assets_and_values, {("BTC", 150.0), ("ETH", 200.0)})
+
     def test_explicit_cross_provider_economic_duplicate_is_suppressed(self):
         a = obs(source="a", source_record_id="a1", economic_event_id="event-x", data_quality=0.8)
         b = obs(source="b", source_record_id="b1", economic_event_id="event-x", data_quality=0.95)

@@ -125,7 +125,7 @@ class SourceContract:
             "attribution_assumptions",
             "storage_license_notes",
             "fallback_behavior",
-        ):
+):
             if not str(getattr(self, name)).strip():
                 raise ValueError(f"{name} must be documented")
 
@@ -206,8 +206,8 @@ class FlowObservation:
         return self.available_at_ms is not None
 
     @property
-    def revision_key(self) -> tuple[str, str, str, str]:
-        return (self.source, self.source_record_id, self.family, self.metric)
+    def revision_key(self) -> tuple[str, str, str, str, str]:
+        return (self.source, self.source_record_id, self.family, self.metric, self.asset.upper())
 
     @property
     def economic_key(self) -> str:
