@@ -1,0 +1,29 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_kote_live_integration.py"
+  ],
+  "base_sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "executor_result": {
+    "error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 2 (char 9847)",
+    "status": "FAILED"
+  },
+  "instructions": "TEST-ONLY and OFFLINE, exact base_sha. Create only part2/capital_flow/tests/test_kote_live_integration.py. Monkeypatch all nine default collectors in runner to return empty observations and ActivatedKoteCollector.from_env to return fake collector; no HTTP or credentials. Test run_once(network=True,kote_enabled=True,as_of_ms=T,local_dir=tmp_path) with one PIT-visible scoring Kote exchange_btc observation and one context_only Kote whale_lth observation. Assert Kote collection_attempts OK/count, archived rows and source provenance, scoring_records_loaded==1 (not 2), handoff scoring/context family counts and source_evidence roles, evidence_health collection/family fields, source_errors empty. Replay run_once(network=False,as_of_ms=T-1) with same archive: assert no PIT-visible source_evidence/family observations, but archive_records_loaded==2 and scoring_records_loaded==1 because those counters reflect entire stored history, NOT PIT visibility. Avoid previous failed task's incorrect assertion scoring_records_loaded==0 on earlier replay. Include deterministic PARTIAL error return (preserve valid row, report source error) and FAILED from_env exception (no new archived rows) as separate tests. Check exact existing handoff keys before assertions; avoid brittle assumptions. No production edits, source taxonomy/weights, prediction, private, main, automation, API orchestration, secrets, Telegram, MT5, broker, or execution. Run targeted pytest and full Capital Flow pytest before committing. If tests fail, fail closed and preserve logs.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/providers_kote_active.py",
+    "part2/capital_flow/tests/test_kote_activation.py",
+    "part2/capital_flow/tests/test_defillama_components_live_context_integration.py",
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/evidence_health.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261009-kote-runonce-pit-1452-01",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_kote_live_integration.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "Deterministic Kote optional run_once archive/handoff/PIT integration coverage",
+  "worker": "A"
+}
