@@ -1,0 +1,73 @@
+{
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "head_sha": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+  "observed_at": "2026-10-09T11:04:15+07:00",
+  "authoritative_control_branch": "worker-control",
+  "validation": {
+    "method": "matching_done_executor_PASS",
+    "proof_path": "automation/executor_queue/done/C-20261009-cross-provider-equal-rank-dedup-0819-01.json",
+    "executor_result_status": "PASS",
+    "executor_result_commit_sha": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+    "independent_exact_head_lab_validation_confirmed": false
+  },
+  "latest_commit": {
+    "message": "worker-c: Deterministic cross-provider economic duplicate tie resolution",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "runner_unchanged": true
+  },
+  "queue": {
+    "pending": 0,
+    "pending_directory_absent": true,
+    "done": 13,
+    "failed": 9
+  },
+  "default_live_inventory": {
+    "farside_etf": "_collect_live; test_farside_live_integration.py",
+    "ishares_ibit_holdings": "_collect_live; test_ibit_holdings.py",
+    "bitmex_reserve_transparency": "_collect_live; test_bitmex_reserves.py",
+    "mempool_miner_network": "_collect_live; test_mempool_miner_network.py",
+    "strategy_treasury": "_collect_live; test_strategy_treasury.py",
+    "american_bitcoin_treasury": "_collect_live; test_sec_context_collectors.py",
+    "defillama_stablecoin": "_collect_live; test_defillama_live_scoring_integration.py",
+    "defillama_stablecoin_components": "_collect_live; test_defillama_components_live_context_integration.py",
+    "circle_usdc_circulation": "_collect_live; test_sec_context_collectors.py"
+  },
+  "default_coverage": "9/9 live collectors registered and focused deterministic run_once tests present by source inspection; no planner-side pytest run",
+  "optional_inventory": {
+    "kote": {
+      "runner_hook": "network and kote_enabled -> ActivatedKoteCollector.from_env -> collect_with_errors; OK/PARTIAL/FAILED collection_attempts",
+      "existing_test": "test_kote_activation.py verifies parser, closed buckets, context-only, freshness and backfill, but not runner.run_once archive/handoff/evidence-health/PIT",
+      "gap": "TEST_ONLY: focused deterministic optional Kote live run_once end-to-end regression missing; no production defect established"
+    },
+    "glassnode": {
+      "runner_hook": "network and glassnode_config -> GlassnodePitCollector.from_config_file -> collect; OK/FAILED attempts",
+      "existing_test": "test_v1_handoff.py validates Glassnode config/metadata/PIT parsing; no focused optional runner.run_once integration test",
+      "gap": "TEST_ONLY: live archive/handoff/evidence-health/PIT regression missing; defer to separate task"
+    }
+  },
+  "prior_failure": {
+    "task": "A-20261009-kote-optional-live-integration-01",
+    "cause": "Incorrect assertion earlier_result.scoring_records_loaded == 0: counter is archive scoring history, not PIT visibility",
+    "correction": "Replay before available_at/observed_at: archive and scoring_records_loaded may remain nonzero; verify handoff families scoring_observation_count, source_evidence and evidence_health PIT-visible counts are zero/missing"
+  },
+  "next": {
+    "decision": "enqueue exactly one test-only Gemini Kote regression if pending remains absent",
+    "task_id": "A-20261009-kote-optional-runonce-pit-1104-01",
+    "allowed_write_paths": [
+      "part2/capital_flow/tests/test_kote_live_integration.py"
+    ],
+    "tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_kote_live_integration.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "max_attempts": 2
+  },
+  "no_specialist_edits": true,
+  "no_private_promotion": true,
+  "no_automation_changes": true
+}
