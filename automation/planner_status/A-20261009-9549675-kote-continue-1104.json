@@ -65,9 +65,23 @@
       "python -m pytest -q part2/capital_flow/tests/test_kote_live_integration.py",
       "python -m pytest -q part2/capital_flow/tests"
     ],
-    "max_attempts": 2
+    "max_attempts": 2,
+    "task_creation": {
+      "attempted": true,
+      "success": false,
+      "path": "automation/executor_queue/pending/A-20261009-kote-optional-runonce-pit-1104-01.json",
+      "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending.",
+      "gemini_triggered": false,
+      "preserved_task_plan": true
+    }
   },
   "no_specialist_edits": true,
   "no_private_promotion": true,
-  "no_automation_changes": true
+  "no_automation_changes": true,
+  "queue_after_attempt": {
+    "pending": 0,
+    "done": 13,
+    "failed": 9,
+    "task_not_created": true
+  }
 }
