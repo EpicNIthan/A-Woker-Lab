@@ -1,22 +1,26 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "C-20261009-revision-availability-order-0418-01",
-  "worker": "C",
-  "title": "PIT-safe revision selection must not prefer stale lexicographic revision tokens",
+  "allowed_write_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
   "base_sha": "f52d5d303a6a1475f483cf35186adc0318918863",
+  "executor_result": {
+    "error": "ExecutorError: stale task base_sha=f52d5d303a6a1475f483cf35186adc0318918863 current_head=35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+    "status": "FAILED"
+  },
   "instructions": "QUALITY FIX ONLY. At the exact base SHA, normalization.select_latest_revisions currently ranks (_revision_rank(revision), available_at_ms, observed_at_ms), and _revision_rank('r9')=(-1,'r9') outranks _revision_rank('r10')=(-1,'r10'). Thus for SAME (source,source_record_id,family,metric), a later-visible correction r10 with newer available_at_ms can be discarded in favor of stale r9. Modify only normalization.py and test_contracts_normalization.py. Keep the existing point_in_time_filter-before-revision contract: only observations visible at as_of may compete. Prefer the latest known available revision by availability/observation clocks over provider-specific nonnumeric lexicographic revision tokens; provide deterministic tie-breaking for equal clocks, handling numeric or prefixed numeric revision tokens naturally rather than treating r9 as newer than r10. Preserve stable ordering across reversed input order, unknown-availability exclusion under PIT, revision_key identity, normalize/dedup audit behavior, raw/provenance, context-only isolation and frozen scoring. Add deterministic pytest regression with same source record identity, same effective timestamp, r9 available at T1/observed T1, r10 available at T2/observed T2, T2>T1: at as_of between T1 and T2 r9 remains, at as_of after T2 r10 wins regardless of input order; include same-clock tie behavior and separate source_record_id not collapsed. Existing tests must continue passing. No other production files, no external requests. Executor must enforce whitespace-clean git diff --check itself; fail closed with concrete logs if unable to pass targeted and full Capital Flow pytest.",
+  "max_attempts": 2,
   "read_paths": [
     "part2/capital_flow/normalization.py",
     "part2/capital_flow/contracts.py",
     "part2/capital_flow/tests/test_contracts_normalization.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/normalization.py",
-    "part2/capital_flow/tests/test_contracts_normalization.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261009-revision-availability-order-0418-01",
   "tests": [
     "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "title": "PIT-safe revision selection must not prefer stale lexicographic revision tokens",
+  "worker": "C"
 }
