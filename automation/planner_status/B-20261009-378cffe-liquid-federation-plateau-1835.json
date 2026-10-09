@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-09T18:35:07+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_preflight": "6f496f0c7601f3f1bb1dafcdaf7e7531169dfdf3",
+  "recent_specialist_commit": {
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "exact_head_validation": {
+    "executor_done_path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_head_actions_runs": 0,
+    "exact_head_check_runs": 0
+  },
+  "authoritative_worker_control": {
+    "pending": "ABSENT_404_CONFIRMED_TREE_EMPTY",
+    "done": 16,
+    "failed": 13,
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_head": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+    "roadmap_stale": true,
+    "worker_B_status_head": "11c62faeb6f6816bfc0c049a305a213ab2c42fef",
+    "worker_B_status_stale": true
+  },
+  "candidate": {
+    "name": "Liquid Network Federation BTC peg custody and L-BTC issuance",
+    "operator": "Blockstream / Liquid Federation",
+    "scope": "BTC locked on Bitcoin mainchain by Liquid federation multisig, backing L-BTC on Liquid one-for-one. Bridge custody stock, not exchange BTC net flow or realized trading demand.",
+    "first_party_sources": [
+      "https://docs.liquid.net/docs/esplora-api",
+      "https://docs.liquid.net/docs/advanced-pegin-pegout",
+      "https://help.blockstream.com/liquid-network/faqs/what-is-a-liquid-peg-in",
+      "https://help.blockstream.com/liquid-network/faqs/what-is-a-liquid-peg-out"
+    ],
+    "machine_readable": {
+      "documented": true,
+      "public_api": "https://blockstream.info/liquid/api/",
+      "examples": [
+        "GET /tx/<txid>/status -> confirmed,block_height,block_hash",
+        "GET /address/<address>/utxo -> txid,vout,value or blinded commitment,asset",
+        "GET /asset/<asset_id> -> issued/burned chain statistics",
+        "GET /blocks/tip/hash"
+      ],
+      "live_access": "UNVERIFIED: web direct GET /blocks/tip/height and /blocks/tip/hash inaccessible; independent container GET /blocks/tip/height failed DNS resolution 2026-10-09T11:35:07Z"
+    },
+    "identity": "PARTIAL: transaction IDs, UTXO outpoints and block hashes documented, but no verified complete federation mainchain custody-address/UTXO inventory bound to one BTC block hash; confidential Liquid outputs can conceal amounts.",
+    "point_in_time": {
+      "effective_at": "PARTIAL: block height/hash could identify chain event; no reserve aggregate captured at a specified mainchain block; BTC peg-in requires 102 confirmations before L-BTC claim.",
+      "available_at": "FAIL: historical first-public availability of aggregate reserve/custody data not demonstrated; block timestamp alone is not availability.",
+      "observed_at": "FAIL: no successful live reserve payload capture; research observation 2026-10-09T11:35:07Z is a failed access attempt only."
+    },
+    "non_overlap": "FAIL_UNPROVEN: locked BTC and issued L-BTC are one backing relationship; avoid counting both as separate reserves or inflows. No demonstrated reconciliation to existing Capital Flow bridge/custody evidence and no verified address-set completeness.",
+    "semantics": "CONTEXT_ONLY: reserve/collateral stock must never contribute to directional scoring or synthetic net flow; preserve missingness and do not backfill availability using block timestamp.",
+    "rejection": "Although official no-auth Esplora machine API documents immutable tx/block identifiers, direct response was unverified, no complete mainchain federation custody reserve snapshot or address reconciliation is demonstrated, and available/observed PIT clocks fail. Do not queue Gemini."
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "next_proof": "Obtain reproducible historical federation custody address-set and UTXO reconciliation pinned to a Bitcoin block hash, public first-availability capture, and LBTC issuance non-overlap proof; then reassess without changing scoring taxonomy."
+}
