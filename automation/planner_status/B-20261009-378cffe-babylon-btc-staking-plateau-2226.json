@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-09T22:26:55+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "1fc79e3fde2343ece603e8f5eefe5c6d1bd8ca91",
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "done_path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "executor_status": "PASS",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_actions": "NOT_VERIFIED"
+  },
+  "recent_commit": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory": "404 absent",
+    "done": 16,
+    "failed": 13
+  },
+  "roadmap": "automation/supervisor_roadmap.md updated 20:50 ICT for exact 378cffe",
+  "other_lanes": {
+    "A": "CONTINUE optional Kote/Glassnode test-only integration gap",
+    "C": "CONTINUE context_only equal-rank provenance tie defect"
+  },
+  "candidate": {
+    "name": "Babylon Genesis native BTC staking delegations",
+    "official_docs": [
+      "https://docs.babylonlabs.io/api/staking-api/get-stats-v-2/",
+      "https://docs.babylonlabs.io/api/staking-api/get-delegations/",
+      "https://github.com/babylonlabs-io/babylon/blob/main/x/btcstaking/README.md"
+    ],
+    "documented_endpoint": "GET https://staking-api.babylonlabs.io/v2/stats",
+    "reproduction": "curl -L --max-time 8 -H 'Accept: application/json' https://staking-api.babylonlabs.io/v2/stats",
+    "observed_result": "No live JSON: DNS resolution failed (NameResolutionError, Temporary failure in name resolution).",
+    "criteria": {
+      "machine_readable": "Documented JSON, no reproducible live payload",
+      "economic_scope": "Native BTC locked in Babylon staking; not custodial reserve or newly created BTC",
+      "immutable_identity": "Staking transaction hash documented; no live block-pinned reserve quantity or block hash verified",
+      "effective_clock": "Bitcoin block inclusion timestamp possible but not captured",
+      "available_clock": "Historical first-available/publication clock not established",
+      "observed_clock": "Research time only; no live source observation",
+      "non_overlap": "FAIL: staked BTC is a subset of circulating BTC and may overlap BTC TVL aggregations",
+      "context_only": "REQUIRED: nondirectional locked stock cannot enter scoring"
+    },
+    "verdict": "REJECT; fails live reproducibility, reserve identity, available clock and non-overlap"
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control status only; no code, main, private, workflows, schedules, Railway, prediction/API, broker/execution, secrets or promotion"
+}
