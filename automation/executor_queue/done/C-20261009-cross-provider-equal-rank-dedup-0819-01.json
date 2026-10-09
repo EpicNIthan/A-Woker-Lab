@@ -1,22 +1,31 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "C-20261009-cross-provider-equal-rank-dedup-0819-01",
-  "worker": "C",
-  "title": "Deterministic cross-provider economic duplicate tie resolution",
+  "allowed_write_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
   "base_sha": "35e5d6fb6616d715355cf177f7b57d808d62c173",
+  "executor_result": {
+    "attempt": 2,
+    "base_sha": "35e5d6fb6616d715355cf177f7b57d808d62c173",
+    "commit_sha": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Add deterministic source-identity-based final tie-break to suppress_duplicates in normalization.py and fix cross-provider equal-rank test controls in test_contracts_normalization.py."
+  },
   "instructions": "QUALITY AUDIT FIX ONLY, on exact base SHA. In part2/capital_flow/normalization.py, suppress_duplicates groups records by (family, metric, economic_event_id) and stable-sorts by (data_quality, attribution_quality, observed_at_ms) descending. Two PIT-visible cross-provider records of the SAME economic event with equal ranking fields but different source/source_record_id/value/provenance currently yield different winners when the input order is reversed, silently changing retained value/provenance and suppression decisions. Add a deterministic, documented, source-identity-based final tie-break (e.g. source, source_record_id, revision, observation_id) ONLY after existing quality, attribution, and observed_at_ms priorities; preserve existing higher-quality winner and no-dedup without economic_event_id. Add a deterministic regression in part2/capital_flow/tests/test_contracts_normalization.py using two different providers with the same family/metric/economic_event_id and identical primary ranking fields but distinct values and provenance; assert identical kept source/value/provenance and suppression decision identifiers under both input permutations. Include unequal-quality control, separate economic events, and missing economic_event_id guard. Preserve PIT availability filtering upstream, context-only isolation, dependence semantics, raw/audit provenance, and frozen scoring; do not invent evidence or change provider data, scoring formulas, or any other files. Executor must run targeted and full Capital Flow pytest and its built-in git diff --check, fail closed if tests fail. Never access private/main/Railway/prediction/API/journals/Telegram/MT5/broker/execution/secrets.",
+  "max_attempts": 2,
   "read_paths": [
     "part2/capital_flow/normalization.py",
     "part2/capital_flow/contracts.py",
     "part2/capital_flow/tests/test_contracts_normalization.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/normalization.py",
-    "part2/capital_flow/tests/test_contracts_normalization.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261009-cross-provider-equal-rank-dedup-0819-01",
   "tests": [
     "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "title": "Deterministic cross-provider economic duplicate tie resolution",
+  "worker": "C"
 }
