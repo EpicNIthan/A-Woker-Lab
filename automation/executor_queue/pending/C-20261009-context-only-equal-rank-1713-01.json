@@ -1,0 +1,24 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261009-context-only-equal-rank-1713-01",
+  "worker": "C",
+  "title": "Fail-closed deterministic context-only provenance selection for equal-rank same-value revisions",
+  "base_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "instructions": "PUBLIC SPECIALIST CAPITAL FLOW ONLY. At exact base SHA, part2/capital_flow/normalization.py select_latest_revisions groups by revision_key and selects highest (available_at_ms, observed_at_ms, revision rank), then sorts equal-rank candidates by (observation_id,value). FlowObservation.observation_id omits provenance. Two same-key/same-clock/same-revision/same-value records with provenance {'context_only':True} vs {'context_only':False} therefore tie and winner depends on input order, silently changing scoring eligibility after handoff._visible_normalized and _is_context_only. Fix ONLY equal-rank same-economic-value metadata tie behavior deterministically, fail-closed: if conflicting context_only eligibility exists among top-ranked candidates, do not allow the resulting retained observation to become scoring evidence merely because the scoring row arrived first; mark explicit provenance/quality conflict without claiming one provider record is uniquely authoritative. Preserve source provenance auditable, do not erase existing conflict marker for different economic values, preserve revision precedence, PIT availability, asset isolation, explicit economic-event dedup, source quality and scoring formulas. Add deterministic regression tests for both permutations (identical retained eligibility, provenance/flags), same metadata duplicates (no false conflict), later available correction precedence, and normalize_and_dedup/handoff scoring vs context-only counts/missingness if narrowly testable. Existing tests for value conflicts and BTC/ETH must still pass. Do not modify contracts, handoff, scoring, runner or API/prediction/execution files. No main/private/Railway/secrets/schedules/workflows. Run targeted pytest and full Capital Flow pytest; fail closed on failures.",
+  "read_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py",
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2
+}
