@@ -1,0 +1,22 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261009-context-only-metadata-tie-2315-01",
+  "worker": "C",
+  "title": "Fail-closed context-only equal-rank tie",
+  "base_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "read_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "max_attempts": 2,
+  "instructions": "Fix only select_latest_revisions equal-rank same-value metadata ties. Current (observation_id,value) keys ignore provenance, so input order changes context_only eligibility. Preserve PIT, revision rank, asset identity, economic value conflict behavior. Within top equal-rank same-value candidates prefer provenance.context_only=True (fail closed), then stable canonical provenance JSON tie-break. Preserve winning provenance. Add deterministic quality flag if context_only metadata conflicts. In test_contracts_normalization.py add one focused regression covering both permutations, exact duplicates (no conflict flag), and later available correction wins. Run git diff --check and both pytest commands. No other files or behavior. Output valid executor JSON only.",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ]
+}
