@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T04:30:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "4b77e32150fcb6b759fe086a016f28555a2192c7",
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_actions": "NOT_VERIFIED"
+  },
+  "recent_commits": [
+    {
+      "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+      "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+      "changed_files": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    {
+      "sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "message": "worker-c: Keep BTC and ETH distinct in same-source revision selection"
+    },
+    {
+      "sha": "b18dda2930232fb55dc98486dd054a2f4abdcfa3",
+      "message": "worker-c: Preserve distinct assets in economic-event duplicate suppression"
+    }
+  ],
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory": "absent_404",
+    "done": 16,
+    "failed": 15
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "snapshot": "2026-10-10 03:45 ICT",
+    "exact_head_matches": true,
+    "queue_counts_match": true,
+    "other_lanes": {
+      "A": "PLATEAU exact-HEAD at 03:58 ICT; optional Kote/Glassnode gaps are test-only",
+      "C": "CONTINUE exact-HEAD at 03:13 ICT; equal-rank context_only provenance tie, Gemini JSON failures"
+    }
+  },
+  "candidate": {
+    "name": "CFTC Traders in Financial Futures (TFF), BTC/ETH futures-only positioning",
+    "first_party": "U.S. Commodity Futures Trading Commission",
+    "first_party_machine_readable": "https://www.cftc.gov/dea/newcot/FinFutWk.txt",
+    "first_party_help": "https://www.cftc.gov/MarketReports/CommitmentsofTraders/ReleaseSchedule/index.htm",
+    "first_party_data_explanation": "https://www.cftc.gov/zh-hans/node/128971",
+    "reproduce": "GET https://www.cftc.gov/dea/newcot/FinFutWk.txt; parse CSV records with a standards-compliant CSV reader; filter contract_market_code='133741', report_date='2026-10-06', report_type='FutOnly' and confirm BTC CME OI 21432, leveraged funds long 5731, short 12583; ETH CME code='146021' OI 27681. Source text verified via official CFTC URL in public web retrieval; local requests.get for official Socrata endpoint failed DNS resolution.",
+    "source_row_identity": {
+      "report_date": "2026-10-06",
+      "contract_market_code": "133741",
+      "report_family": "TFF",
+      "report_type": "FutOnly",
+      "exchange": "CME",
+      "units": "5 Bitcoins per contract",
+      "btc_open_interest_contracts": 21432,
+      "btc_leveraged_funds_long_contracts": 5731,
+      "btc_leveraged_funds_short_contracts": 12583,
+      "eth_contract_market_code": "146021",
+      "eth_open_interest_contracts": 27681
+    },
+    "criteria": {
+      "machine_readable": "PASS: official live weekly comma-delimited file returned BTC/ETH rows via web; official PRE supports API CSV/JSON but direct Socrata live probe failed DNS",
+      "economic_entity_scope": "CFTC-reported CME BTC/ETH futures participant positions; exchange derivatives open interest, NOT spot inflow, custody or reserves",
+      "immutable_identity": "PARTIAL: report date+contract code+TFF FutOnly identify a logical row; CFTC says published historical data is not updated, but live weekly URL is mutable and no immutable report byte hash/archive revision was captured",
+      "effective_clock": "2026-10-06 Tuesday futures reporting close; time-of-day not pinned in source",
+      "available_clock": "CFTC release scheduled 2026-10-09 15:30 Eastern (2026-10-10 02:30 ICT); scheduled not verified actual first-publication; 2025 CFTC delayed releases prove schedule cannot substitute actual availability",
+      "observed_clock": "2026-10-10 approximately 04:28 ICT via official public web retrieval; no durable first-ingest evidence for historical replay",
+      "non_overlap": "FAIL: BTC futures positions are constituents of CME open interest and overlap prior CME futures OI candidate; no independent net capital quantity; standard/micro/nano contract units differ and cannot be naively summed",
+      "context_only": "REQUIRED: futures position stock and trader category observations must be non-additive context_only; no capital inflow/outflow inference, no direction scoring"
+    },
+    "rejection": "Despite reproducible first-party machine-readable BTC/ETH rows, there is no immutable captured report revision, no proven actual historical availability clock, and no economic non-overlap from CME open-interest stock. Cannot satisfy all mandatory source-breadth gates.",
+    "next_evidence": "Acquire first-party archived immutable report artifact/byte hash plus observed publication timestamp and independent non-overlap proof before reconsideration; preserve strict context_only."
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "promotion": "NONE",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control planner_status only; no Specialist code, either main, private, workflows, schedules, Railway, prediction/API, broker/execution, secrets or promotion"
+}
