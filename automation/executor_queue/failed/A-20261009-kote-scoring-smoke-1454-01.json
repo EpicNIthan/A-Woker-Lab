@@ -1,0 +1,25 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_kote_live_scoring_smoke.py"
+  ],
+  "base_sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "executor_result": {
+    "error": "ExecutorError: Gemini exhausted bounded repair attempts; last test output:\n$ python -m pytest -q part2/capital_flow/tests/test_kote_live_scoring_smoke.py\nexit=2\n\n==================================== ERRORS ====================================\n__ ERROR collecting part2/capital_flow/tests/test_kote_live_scoring_smoke.py ___\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1204: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1176: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:690: in _load_unlocked\n    ???\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:179: in exec_module\n    source_stat, co = _rewrite_test(fn, self.config)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:348: in _rewrite_test\n    tree = ast.parse(source, filename=strfn)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/ast.py:50: in parse\n    return compile(source, filename, mode, flags,\nE     File \"/home/runner/work/A-Woker-Lab/A-Woker-Lab/work/part2/capital_flow/tests/test_kote_live_scoring_smoke.py\", line 23\nE       }\nE       ^\nE   SyntaxError: closing parenthesis '}' does not match opening parenthesis '(' on line 11\n=========================== short test summary info ============================\nERROR part2/capital_flow/tests/test_kote_live_scoring_smoke.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.16s\n",
+    "status": "FAILED"
+  },
+  "instructions": "MINIMAL TEST-ONLY. Create one short deterministic pytest function in the single allowed test file, no production edits. Patch runner._collect_live to return ([],[],[]) and patch runner.ActivatedKoteCollector.from_env to return a fake object whose collect_with_errors returns exactly one valid PIT-visible FlowObservation(exchange_btc,btc_netflow,BTC,unit=BTC,source=kote_exchange_netflow,source_record_id=smoke, effective_at_ms=T-86400000, available_at_ms=T, observed_at_ms=T, cadence_seconds=86400) and []. Call runner.run_once(local_dir=tmp_path,network=True,kote_enabled=True,as_of_ms=T). Assert Kote attempt OK count=1, appended_observations=1, scoring_records_loaded=1, and archive_records_loaded=1. Call runner.run_once(local_dir=tmp_path,network=False,as_of_ms=T-1) and assert archive_records_loaded=1, scoring_records_loaded=1 (history counters are NOT PIT-filtered), and exchange_btc handoff family scoring_observation_count=0. Do not add context-only or error tests in this small task. No HTTP, credentials, prediction, private, main, API orchestration, broker, execution, automation. Run targeted and full Capital Flow pytest before commit; fail closed on any failure.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/tests/test_kote_activation.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261009-kote-scoring-smoke-1454-01",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_kote_live_scoring_smoke.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "One offline Kote scoring run_once smoke regression",
+  "worker": "A"
+}
