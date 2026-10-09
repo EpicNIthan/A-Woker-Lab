@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "observed_at": "2026-10-09T18:55:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_branch": "worker-control",
+  "control_head_at_read": "1a3c07ed38c38c5c96382cc4422f6a7510a12558",
+  "recent_commit": {
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "runner_unchanged": true
+  },
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_planner_pytest": false
+  },
+  "queue": {
+    "pending": 0,
+    "pending_directory_absent_404": true,
+    "done": 16,
+    "failed": 13
+  },
+  "authoritative_status": {
+    "roadmap": "automation/supervisor_roadmap.md (stale 9549675)",
+    "A_previous": "A-20261009-8010dfa-kote-continue-1400.json (stale)",
+    "B": "B-20261009-378cffe-liquid-federation-plateau-1835.json PLATEAU",
+    "C": "C-20261009-378cffe-context-only-revision-tie-1713.json CONTINUE"
+  },
+  "default_live_collectors": {
+    "registered": 9,
+    "covered_by_deterministic_run_once_tests": 9,
+    "registration": "part2/capital_flow/runner.py:_collect_live lines 33-56",
+    "names": [
+      "farside_etf",
+      "ishares_ibit_holdings",
+      "bitmex_reserve_transparency",
+      "mempool_miner_network",
+      "strategy_treasury",
+      "american_bitcoin_treasury",
+      "defillama_stablecoin",
+      "defillama_stablecoin_components",
+      "circle_usdc_circulation"
+    ],
+    "duplicate_work_avoided": true
+  },
+  "optional_gap": {
+    "kind": "TEST_ONLY",
+    "production_defect_established": false,
+    "kote": {
+      "runner": "runner.py lines 88-98: kote_enabled -> ActivatedKoteCollector.from_env -> collect_with_errors -> collected/attempts",
+      "existing_test": "part2/capital_flow/tests/test_kote_activation.py (parser, closed bucket, context-only, freshness, backfill)",
+      "missing": "deterministic live run_once -> archive -> handoff -> evidence_health -> PIT replay integration"
+    },
+    "glassnode": {
+      "runner": "runner.py lines 100-108: glassnode_config -> GlassnodePitCollector.from_config_file -> collect -> collected/attempts",
+      "missing": "focused deterministic optional live run_once -> archive -> handoff -> evidence_health -> PIT replay integration"
+    },
+    "shared_pipeline": "runner.py lines 120-137: append/load archive, scoring history, handoff and evidence health; history counters not PIT filtered"
+  },
+  "previous_failed_kote_tasks": [
+    {
+      "id": "A-20261009-kote-optional-live-integration-01",
+      "cause": "test wrongly asserted scoring_records_loaded==0 on earlier PIT replay; actual archived scoring history remains 1"
+    },
+    {
+      "id": "A-20261009-kote-runonce-pit-1452-01",
+      "cause": "Gemini invalid JSON output"
+    },
+    {
+      "id": "A-20261009-kote-scoring-smoke-1454-01",
+      "cause": "Gemini generated Python SyntaxError mismatched closing bracket line 23"
+    }
+  ],
+  "action": "NO_TASK_ENQUEUED",
+  "reason": "Three prior Kote test-only executor failures and no demonstrated production defect; avoid blind retry or duplicate default collector coverage. Reassess once executor can reliably generate valid deterministic test-only code; no changes to production or queue.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control status only; no private promotion, no workflows/schedules, no Specialist code writes"
+}
