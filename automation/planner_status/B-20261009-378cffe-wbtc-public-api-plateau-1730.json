@@ -1,0 +1,55 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-09T17:30:58+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_preflight": "222359313124d2c69342163208838df821d07cc3",
+  "latest_specialist_commit": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+  "recent_diff": {
+    "base_sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "head_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "validation": {
+    "method": "authoritative_executor_done_matching_PASS",
+    "done_path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_head_specialist_lab_actions": "NOT_FOUND",
+    "commit_combined_statuses": 0
+  },
+  "authoritative_queue": {
+    "pending": "EMPTY_DIRECTORY_ABSENT",
+    "done": 16,
+    "failed": 13
+  },
+  "roadmap": "automation/supervisor_roadmap.md references stale 9549675340a0f4d8ed5b39336a0a97293c7fa121",
+  "worker_status": "automation/worker_status/loop-B.json stale on 11c62faeb6f6816bfc0c049a305a213ab2c42fef",
+  "other_lane_update": "C-20261009-context-only-equal-rank-1713-01 failed after git diff --check returned exit 2; not evidence of code change.",
+  "source": {
+    "name": "WBTC official public proof-of-reserve API",
+    "economic_scope": "Native BTC held by WBTC custodians backing multichain WBTC circulating liabilities; this is BTC custody stock, not exchange net flow or a new BTC inflow.",
+    "first_party_docs": "https://docs.wbtc.network/resources/api-reference",
+    "first_party_mcp_docs": "https://docs.wbtc.network/resources/mcp-server",
+    "official_dashboard": "https://wbtc.network/transparency",
+    "documented_endpoint": "GET https://openapi.wbtc.network/public/v1/proof-of-reserve",
+    "documented_machine_readable": "JSON data.reserves.nativeBtcReserve; data.reserves.addresses[].address/balanceBtc; data.supply.circulatingSupply/byChain; data.collateralization.reserveRatio; meta.updatedAt/meta.version; unauthenticated v1; published OpenAPI schema /public/v1/openapi.json.",
+    "live_reproducibility": "BLOCKED_UNVERIFIED: attempted direct GET via web and container; web tool returned URL not accessible and container DNS resolution failed. Documentation provides reproducible curl command but no live JSON observed.",
+    "identity": "FAIL: no immutable reserve snapshot/report hash, Bitcoin block hash/height or revision ID bound to aggregate reserve quantity; BTC address balances in mutable live response are not a historical immutable snapshot.",
+    "pit_clocks": {
+      "effective_at": "FAIL: no block height or immutable snapshot effective timestamp for aggregate",
+      "available_at": "FAIL: meta.updatedAt explicitly may be response-generation time; cannot establish first public availability",
+      "observed_at": "ASSESSMENT_ATTEMPT_ONLY: no successful live response; not an independently captured source observation"
+    },
+    "non_overlap": "FAIL_UNPROVEN: native BTC backing multichain WBTC must not be added to circulating WBTC or Aave V3 WBTC lending balances; dedup by WBTC backing economic exposure and chain.",
+    "treatment": "CONTEXT_ONLY; no directional score, no synthetic inflow/outflow, no zero-filling missing values.",
+    "rejection": "Public machine-readable API is documented, but live response, immutable reserve snapshot identity, defensible PIT clocks and non-overlap proof are absent. No safe collector task yet.",
+    "followup": "Verify live JSON, bind address set and balances to an immutable Bitcoin block, capture first public availability, and reconcile WBTC native/bridge issuance without double-counting."
+  },
+  "action": "NO_GEMINI_TASK_ENQUEUED; PLATEAU filed on worker-control only; no Specialist code or private promotion."
+}
