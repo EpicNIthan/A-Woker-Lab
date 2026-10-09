@@ -1,0 +1,82 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "observed_at": "2026-10-09T14:00:00+07:00",
+  "head_sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "control_branch": "worker-control",
+  "control_head_at_read": "55bfed5d4295fd59987fa3ef2c562dfafb7ab0cc",
+  "latest_commit": {
+    "message": "worker-c: Keep BTC and ETH distinct in same-source revision selection",
+    "parent": "b18dda2930232fb55dc98486dd054a2f4abdcfa3",
+    "changed_files": [
+      "part2/capital_flow/contracts.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "runner_unchanged": true
+  },
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-cross-asset-revision-key-1351-01.json",
+    "executor_status": "PASS",
+    "commit_sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "independent_lab_validation_confirmed": false
+  },
+  "queue_at_read": {
+    "pending": 0,
+    "pending_directory_absent": true,
+    "done": 15,
+    "failed": 10
+  },
+  "default_collectors": {
+    "count": "9/9",
+    "names": [
+      "farside_etf",
+      "ishares_ibit_holdings",
+      "bitmex_reserve_transparency",
+      "mempool_miner_network",
+      "strategy_treasury",
+      "american_bitcoin_treasury",
+      "defillama_stablecoin",
+      "defillama_stablecoin_components",
+      "circle_usdc_circulation"
+    ],
+    "registration": "part2/capital_flow/runner.py:_collect_live",
+    "integration_tests": [
+      "test_farside_live_integration.py",
+      "test_ibit_holdings.py",
+      "test_bitmex_reserves.py",
+      "test_mempool_miner_network.py",
+      "test_strategy_treasury.py",
+      "test_sec_context_collectors.py",
+      "test_defillama_live_scoring_integration.py",
+      "test_defillama_components_live_context_integration.py"
+    ],
+    "claim": "registered; deterministic run_once coverage present by source inspection; no planner-side pytest"
+  },
+  "optional_gap": {
+    "provider": "Kote",
+    "kind": "TEST_ONLY",
+    "production_defect_established": false,
+    "runner_hook": "run_once network=True,kote_enabled=True -> ActivatedKoteCollector.from_env -> collect_with_errors -> archive -> handoff -> evidence_health",
+    "existing_test": "test_kote_activation.py tests schema, closed buckets, context-only, freshness, backfill but not run_once end-to-end",
+    "reproducer": "With all nine default collectors monkeypatched empty, fake ActivatedKoteCollector.from_env/collect_with_errors to return PIT-available scoring and context-only rows; call runner.run_once(tmp_path,network=True,kote_enabled=True,as_of_ms=T), inspect collection_attempts, archive, family scoring/context, source_evidence and evidence_health; replay run_once(network=False,as_of_ms=T-1) and assert zero PIT-visible family/source_evidence counts while archive_records_loaded and scoring_records_loaded may remain nonzero.",
+    "previous_failed_task": "A-20261009-kote-optional-live-integration-01",
+    "previous_failure": "incorrect assertion scoring_records_loaded==0 on historical replay; counter is entire archived scoring history, not PIT visibility"
+  },
+  "other_optional_gap": "Glassnode opt-in config has metadata/PIT unit tests, but no focused live run_once archive/handoff/evidence-health integration; defer to separate task",
+  "next_task": {
+    "task_id": "A-20261009-kote-runonce-pit-1400-01",
+    "base_sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "allowed_write_paths": [
+      "part2/capital_flow/tests/test_kote_live_integration.py"
+    ],
+    "max_attempts": 2,
+    "tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_kote_live_integration.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ]
+  },
+  "scope": "PUBLIC_ONLY; PLANNER_ONLY; no Specialist code edits, no private promotion, no schedule changes"
+}
