@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-09T19:55:57+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control_head_at_read": "5f9dd05ffb3f37e3914720a21c429d5798896dfe",
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_pytest": false
+  },
+  "recent_commit": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "runner_unchanged": true
+  },
+  "queue": {
+    "pending": 0,
+    "pending_directory_absent_404": true,
+    "done": 16,
+    "failed": 13
+  },
+  "roadmap": "automation/supervisor_roadmap.md remains stale on 9549675",
+  "planner_status": {
+    "A": "A-20261009-378cffe-optional-integration-continue-1855.json CONTINUE exact SHA",
+    "B": "B-20261009-378cffe-liquid-federation-plateau-1835.json PLATEAU exact SHA",
+    "C": "C-20261009-378cffe-context-only-revision-tie-1713.json CONTINUE exact SHA"
+  },
+  "worker_status": "automation/worker_status/loop-A/B/C.json are stale; planner_status is more recent",
+  "default_live_collectors": {
+    "registered": 9,
+    "deterministic_run_once_coverage": 9,
+    "action": "NO_DUPLICATION"
+  },
+  "optional_integration": {
+    "classification": "TEST_ONLY_GAP",
+    "production_defect_established": false,
+    "kote": {
+      "hook": "part2/capital_flow/runner.py run_once: network and kote_enabled -> ActivatedKoteCollector.from_env -> collect_with_errors -> shared archive/handoff/evidence_health",
+      "existing_test": "part2/capital_flow/tests/test_kote_activation.py tests parser/closed bucket/context/freshness/backfill, not full live run_once",
+      "missing": "focused deterministic run_once -> archive -> handoff -> evidence_health -> PIT regression"
+    },
+    "glassnode": {
+      "hook": "part2/capital_flow/runner.py run_once: network and glassnode_config -> GlassnodePitCollector.from_config_file -> collect",
+      "missing": "focused deterministic optional run_once -> archive -> handoff -> evidence_health -> PIT regression"
+    },
+    "pit_note": "archive_records_loaded and scoring_records_loaded are entire stored history counts, not PIT-filtered; assert PIT visibility in handoff instead"
+  },
+  "prior_kote_failures": [
+    {
+      "id": "A-20261009-kote-optional-live-integration-01",
+      "reason": "incorrect earlier-replay scoring_records_loaded==0; observed 1"
+    },
+    {
+      "id": "A-20261009-kote-runonce-pit-1452-01",
+      "reason": "Gemini invalid JSON: Expecting comma delimiter line 9"
+    },
+    {
+      "id": "A-20261009-kote-scoring-smoke-1454-01",
+      "reason": "Gemini-generated Python SyntaxError mismatched bracket line 23"
+    }
+  ],
+  "action": "NO_TASK_ENQUEUED",
+  "rationale": "Same exact SHA and same integration evidence as 18:55 A status; three test-generation failures, no proven production defect. Avoid wasting another bounded Gemini task until executor reliability improves or a concrete production failure is demonstrated.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control status only; no Specialist code, private promotion, workflows or schedules"
+}
