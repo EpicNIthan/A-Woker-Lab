@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-09T23:15:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "679a5a063dfc9d5ce06415601f1c99ad7935dd0d",
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_lab_validation": "NOT_FOUND"
+  },
+  "recent_commit": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory": "absent 404",
+    "done": 16,
+    "failed": 14
+  },
+  "planner_statuses": {
+    "A": "CONTINUE exact SHA optional integration test-only gap, A-20261009-378cffe-optional-integration-continue-1955.json",
+    "B": "PLATEAU exact SHA source breadth, B-20261009-378cffe-babylon-btc-staking-plateau-2226.json",
+    "C": "CONTINUE exact SHA previous C-20261009-378cffe-context-only-revision-tie-2011.json"
+  },
+  "roadmap": "automation/supervisor_roadmap.md read: exact HEAD but queue count stale at 16 done/13 failed; new failed task brings failed to 14",
+  "audit": {
+    "pit": "point_in_time_filter before revision selection; available_at_ms must be present and <= as_of",
+    "clocks": "effective/available/observed separate; selection prioritizes available, observed, numeric-aware revision",
+    "asset_identity": "revision_key includes asset; BTC/ETH isolated",
+    "economic_event_dedup": "asset-aware economic event handling fixed previously",
+    "provenance": "observation_id omits provenance",
+    "context_only": "handoff checks context_only after normalize_and_dedup; same-valued equal-rank candidates can retain either metadata role",
+    "missingness": "retained role changes family scoring and context support counts",
+    "tests": "existing conflicting economic values, duplicate, later correction tests; no metadata-role permutation test",
+    "defect": {
+      "id": "EQUAL_RANK_CONTEXT_ONLY_PROVENANCE_TIE",
+      "file": "part2/capital_flow/normalization.py",
+      "lines": "156-163",
+      "related": [
+        "part2/capital_flow/contracts.py:219-235",
+        "part2/capital_flow/handoff.py:25-31"
+      ],
+      "reproducer": "Construct equal-rank same-value BTC ETF records with identical source_record_id, clocks and revision but provenance.context_only true versus false. Their observation_id and sort keys tie; [context,scoring] selects context, reversed selects scoring. Downstream handoff role and missingness differ.",
+      "severity": "scoring-eligibility fail-open, deterministic order dependence",
+      "reproducer_type": "static code-path verified; not independently executed pytest"
+    }
+  },
+  "previous_executor_failure": {
+    "path": "automation/executor_queue/failed/C-20261009-context-only-tie-minimal-2252-01.json",
+    "reason": "Gemini invalid JSON Invalid \\escape at line 7 column 3944; no Specialist commit"
+  },
+  "next": "Only if queue still empty, enqueue one minimal Gemini-only fix with fail-closed context_only=True preference, canonical provenance tie-break and permutation/duplicate/later-correction tests. No direct Specialist edits.",
+  "promotion": "BLOCKED until A/B/C and independent Supervisor exact-SHA PLATEAU",
+  "scope": "PUBLIC_ONLY; worker-control status/queue only; no main/private/Railway/prediction/API/broker/execution/secrets/workflows/schedules"
+}
