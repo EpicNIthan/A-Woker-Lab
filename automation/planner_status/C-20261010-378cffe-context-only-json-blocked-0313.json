@@ -1,0 +1,82 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-10T03:13:50+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "3ace0a4cd30fb10b710a17753352ad73273e28f0",
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_specialist_lab_validation": "NOT_FOUND",
+    "independent_pytest": "NOT_RUN"
+  },
+  "recent_commit": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "newer_public_commit": false
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory": "absent_404",
+    "done": 16,
+    "failed": 15
+  },
+  "other_lanes": {
+    "A": "CONTINUE exact HEAD; optional Kote/Glassnode test-only gap, latest 2026-10-09 19:55 ICT",
+    "B": "PLATEAU exact HEAD; latest ether.fi source qualification 2026-10-10 00:29 ICT",
+    "C": "CONTINUE exact HEAD; previous filed 2026-10-10 02:12 ICT"
+  },
+  "roadmap": "automation/supervisor_roadmap.md inspected: snapshot 2026-10-09 20:50 ICT, exact HEAD matches but queue failed=13 is stale versus current 15",
+  "audit": {
+    "point_in_time": "point_in_time_filter precedes normalize_and_dedup in handoff._visible_normalized; effective_at_ms <= as_of_ms postfilter",
+    "clocks": "revision winner uses available_at_ms, observed_at_ms, revision; effective clock remains distinct",
+    "asset_identity": "contracts.revision_key includes uppercased asset",
+    "economic_event_dedup": "normalization.suppress_duplicates groups by family/metric/asset/economic_event_id",
+    "source_provenance": "contracts.observation_id excludes provenance",
+    "context_only": "handoff._is_context_only reads provenance.context_only; normalization tie can change role",
+    "missingness": "winner role changes scoring-eligible observations and source evidence/missingness",
+    "deterministic_tests": "existing conflicting-value and duplicate tests present; conflicting-context-only metadata permutation test absent",
+    "defect": {
+      "id": "EQUAL_RANK_CONTEXT_ONLY_PROVENANCE_TIE",
+      "file": "part2/capital_flow/normalization.py",
+      "lines": "156-163",
+      "related": [
+        "part2/capital_flow/contracts.py:219-235",
+        "part2/capital_flow/handoff.py:24-31"
+      ],
+      "reproducer": "Two FlowObservation rows share source, source_record_id, family, metric, asset=BTC, revision, available/observed clocks, value and all identity fields but have provenance.context_only=True versus False. observation_id and (observation_id,value) keys tie; reversing input order changes retained provenance and downstream scoring eligibility.",
+      "verification": "STATIC_EXACT_SHA_CODE_INSPECTION; no independently executed reproducer",
+      "impact": "Order-dependent promotion of context-only evidence to scoring and altered provenance/missingness",
+      "correction": "fail-closed context_only=True preference, canonical provenance tie-break and deterministic permutation/duplicate/later-correction tests; Gemini executor only"
+    }
+  },
+  "executor_blocker": {
+    "status": "BLOCKED_STRUCTURED_JSON_RELIABILITY",
+    "failed_tasks": [
+      "C-20261009-context-only-tie-minimal-2252-01",
+      "C-20261009-context-only-metadata-tie-2315-01"
+    ],
+    "errors": [
+      "Gemini returned invalid JSON: Invalid escape line 7 column 3944",
+      "Gemini returned invalid JSON: Expecting comma delimiter line 7 column 5363"
+    ],
+    "earlier_failure": "C-20261009-context-only-equal-rank-1713-01 failed git diff --check exit 2",
+    "improvement_verified": false
+  },
+  "action": "STATUS_ONLY_NO_TASK_ENQUEUED",
+  "next": "Verify structured Gemini JSON reliability through approved infrastructure owner; do not submit near-identical task before demonstration. Re-fetch exact HEAD/queue on next run; if improved, one narrow task only, max_attempts<=2.",
+  "promotion": "BLOCKED: C CONTINUE and A CONTINUE; no independent Supervisor exact-SHA PLATEAU",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control status only; no Specialist code, main/private, workflows/schedules, Railway, prediction/API, broker/execution, secrets, promotion"
+}
