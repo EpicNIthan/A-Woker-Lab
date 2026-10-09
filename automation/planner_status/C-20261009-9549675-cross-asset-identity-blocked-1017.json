@@ -1,0 +1,37 @@
+{
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "BLOCKED",
+  "head_sha": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+  "observed_at": "2026-10-09T10:17:19+07:00",
+  "latest_commit": "worker-c: Deterministic cross-provider economic duplicate tie resolution",
+  "latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "validation": {
+    "exact_head_specialist_lab_validation_pass": false,
+    "matching_executor_done_pass": true,
+    "proof_path": "automation/executor_queue/done/C-20261009-cross-provider-equal-rank-dedup-0819-01.json"
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory_absent": true,
+    "done": 13,
+    "failed": 9
+  },
+  "reproducible_defect": {
+    "category": "CROSS_ASSET_IDENTITY_AND_PROVENANCE_LOSS",
+    "contract_path": "part2/capital_flow/contracts.py",
+    "normalization_path": "part2/capital_flow/normalization.py",
+    "detail": "FlowObservation.revision_key excludes asset; suppress_duplicates groups explicit economic_event_id by family, metric, event id but excludes asset. BTC and ETH records with identical provider identity collapse in revision selection; BTC/ETH records with same event id collapse in economic duplicate suppression. This loses valid cross-asset observations and provenance.",
+    "repro": "Construct two PIT-visible FlowObservation objects with identical family='etf',metric='net_flow_usd',source='s',source_record_id='r' and differing asset BTC vs ETH; normalize_and_dedup retains one. With distinct source_record_id but equal economic_event_id='event-x', normalize_and_dedup again retains one. Both should survive as distinct asset evidence.",
+    "coverage_gap": "Existing test_contracts_normalization.py exercises same-asset revision and economic duplicate controls but not cross-asset identities."
+  },
+  "attempted_task_id": "C-20261009-cross-asset-identity-isolation-1017-01",
+  "enqueue_result": "REJECTED_BY_REPOSITORY_SAFETY_NO_QUEUE_MUTATION",
+  "next": "After fresh HEAD and queue recheck, enqueue at most one narrow Gemini-only task fixing asset-aware keys and adding deterministic targeted/full pytest regressions, if repository safety permits. Never bypass safety checks.",
+  "no_specialist_edits": true,
+  "no_private_promotion": true,
+  "no_automation_changes": true
+}
