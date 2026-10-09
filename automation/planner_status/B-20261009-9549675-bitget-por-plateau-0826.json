@@ -1,0 +1,39 @@
+{
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-09T08:26:41+07:00",
+  "exact_specialist_head": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+  "specialist_latest_commit": "worker-c: Deterministic cross-provider economic duplicate tie resolution",
+  "specialist_changed_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "validation": "Matching worker-control done/C-20261009-cross-provider-equal-rank-dedup-0819-01.json executor_result PASS with commit_sha=9549675340a0f4d8ed5b39336a0a97293c7fa121; no exact-head Specialist Lab Validation Actions PASS found.",
+  "worker_control_head_at_assessment": "0f2b97ecbbc09f9bd20b27dae5c0764a42c1df37",
+  "authoritative_queue": {
+    "pending": "ABSENT_404",
+    "done": 13,
+    "failed": 9
+  },
+  "roadmap": "automation/supervisor_roadmap.md remains stale at 3b8b093; loop-B status remains stale at 11c62fa; neither supersedes fresh branch/queue reads.",
+  "candidate": "Bitget monthly Proof of Reserves, BTC exchange custody and user liabilities",
+  "first_party_evidence": [
+    "https://www.bitget.com/asia/blog/articles/september-2026-proof-of-reserves-131-percent",
+    "https://www.bitget.com/asia/promotion/proof-of-reserves",
+    "https://github.com/BitgetLimited/proof-of-reserves"
+  ],
+  "positive": [
+    "First-party September 30, 2026 disclosure identifies September 29 09:00 UTC snapshot, 47th monthly report, BTC reserve ratio 142%.",
+    "Bitget is an independent exchange entity; BTC reserves are nondirectional stock and must remain context-only."
+  ],
+  "rejected_evidence": [
+    "No verified unauthenticated stable machine-readable per-report BTC reserves/liabilities endpoint or manifest mapping to snapshot.",
+    "Public PoR page returns placeholder root '--', 0% and 'No reserve data available yet' to text retrieval; cannot validate actual report payload or hash.",
+    "Official GitHub proof-of-reserves repository contains Java verifier and example merkel_tree_bg.json, not independently verified current report archive.",
+    "Snapshot effective clock is explicit but immutable per-report identity and defensible first-publication/first-observation clock tied to the same machine artifact are not verified.",
+    "Never infer exchange net flows or directional scoring from monthly custody stocks; do not double count any BitMEX exchange reserve stock as the same event."
+  ],
+  "disposition": "No task enqueued; require immutable public report artifact, verified machine-readable BTC quantity, report hash and publication/observation clock before reconsideration.",
+  "scope": "worker-control planner status only; no Specialist code, private, execution, main, or automation changes"
+}
