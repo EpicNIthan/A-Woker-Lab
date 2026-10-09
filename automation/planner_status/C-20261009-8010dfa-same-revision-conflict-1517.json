@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at_utc": "2026-10-09T08:18:46.225Z",
+  "exact_specialist_head": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "control_head_at_read": "dc0c6a63da34a5fb2923107ca32e422053367327",
+  "latest_commit": {
+    "message": "worker-c: Keep BTC and ETH distinct in same-source revision selection",
+    "parent": "b18dda2930232fb55dc98486dd054a2f4abdcfa3",
+    "changed_files": [
+      "part2/capital_flow/contracts.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "done_path": "automation/executor_queue/done/C-20261009-cross-asset-revision-key-1351-01.json",
+    "executor_result_status": "PASS",
+    "executor_result_commit_sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_lab_validation": "NOT_VERIFIED",
+    "qualification": "Executor done record matches SHA and task requires targeted and full pytest; no planner-side pytest was run."
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory_absent": true,
+    "done": 15,
+    "failed": 12
+  },
+  "planner_statuses": {
+    "A": "automation/planner_status/A-20261009-8010dfa-kote-continue-1400.json: CONTINUE exact HEAD; later Kote runonce tasks failed Gemini invalid JSON",
+    "B": "automation/planner_status/B-20261009-9549675-aave-v3-wbtc-plateau-1227.json: PLATEAU older HEAD",
+    "C_previous": "automation/planner_status/C-20261009-9549675-cross-asset-identity-blocked-1115.json: stale; fixed"
+  },
+  "roadmap": "automation/supervisor_roadmap.md stale 9549675, promotion blocked",
+  "quality_audit": {
+    "point_in_time": "FlowObservation.visible_at excludes unknown available_at and values after as_of; point_in_time_filter must precede revision selection; existing regression tests cover delayed correction.",
+    "clocks": "FlowObservation separately records effective_at_ms, available_at_ms and observed_at_ms; enforces available<=observed. Revision winner ranks available, observed, revision.",
+    "revision": "Fixed numeric r9/r10 ordering and r1/r01 raw-label ties; remaining same-key same-revision same-available/observed conflict is input-order dependent.",
+    "asset_identity": "revision_key now includes uppercased asset; economic_event dedup groups by asset. BTC/ETH tests cover permutations.",
+    "economic_event_dedup": "Explicit economic_event_id required; cross-provider ties use quality, attribution, observed, source, source_record_id, revision, observation_id.",
+    "provenance": "source_record_id and revision are retained, but conflicting same-record values with equal rank select first input without conflict flag, causing unstable value and provenance.",
+    "context_only": "handoff separates context-only and scoring rows; evidence_health scoring freshness excludes context-only; no scoring formula change requested.",
+    "missingness": "Unknown availability excluded; evidence_health reports missing/scoring_missing and null ages; no zero-filling of unavailable freshness.",
+    "tests": "test_contracts_normalization.py covers PIT correction, revision aliases, cross-asset identity and duplicate ties but no identical-clock+revision conflicting-value permutation.",
+    "defect": {
+      "id": "SAME_RECORD_SAME_REVISION_CONFLICT_ORDER_DEPENDENCE",
+      "file": "part2/capital_flow/normalization.py",
+      "lines": "129-155, especially 143-154",
+      "reproducer": "Construct a=FlowObservation(family='etf',metric='net_flow_usd',asset='BTC',unit='USD',source='src',source_record_id='rec',revision='1',effective_at_ms=1000,available_at_ms=1000,observed_at_ms=1000,value=100); b identical except value=200. select_latest_revisions([a,b])[0].value == 100, but select_latest_revisions([b,a])[0].value == 200. Same effect through normalize_and_dedup; no economic_event_id needed. This is deterministic on exact HEAD selection rank logic.",
+      "impact": "Input ordering silently determines selected conflicting economic value and source provenance. No explicit conflict flag or deterministic policy.",
+      "severity": "NARROW_DETERMINISTIC_REVISION_CONFLICT"
+    }
+  },
+  "next": "If pending remains empty and repository safety permits, enqueue one narrow Gemini task to deterministic-handle equal-rank conflicting values with permutation tests and full Capital Flow pytest; never modify Specialist code directly.",
+  "scope": "PUBLIC_ONLY; worker-control status only; no private/main/prediction/API/broker/secrets/schedules/automation changes"
+}
