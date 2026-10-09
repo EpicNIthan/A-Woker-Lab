@@ -1,0 +1,32 @@
+{
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "BLOCKED",
+  "head_sha": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+  "observed_at": "2026-10-09T11:15:00+07:00",
+  "latest_commit": "worker-c: Deterministic cross-provider economic duplicate tie resolution",
+  "validation": {
+    "matching_executor_done_pass": true,
+    "exact_head_specialist_lab_validation_pass": false,
+    "proof_path": "automation/executor_queue/done/C-20261009-cross-provider-equal-rank-dedup-0819-01.json"
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory_absent": true,
+    "done": 13,
+    "failed": 9
+  },
+  "defect": {
+    "category": "CROSS_ASSET_IDENTITY_AND_PROVENANCE_LOSS",
+    "files": [
+      "part2/capital_flow/contracts.py",
+      "part2/capital_flow/normalization.py"
+    ],
+    "reproduction": "Two PIT-visible FlowObservation records with same family/metric/source/source_record_id and distinct BTC versus ETH asset collapse via revision_key; distinct source_record_id but same family/metric/economic_event_id and BTC versus ETH collapse via suppress_duplicates. Both lose one asset's value/provenance. Test file has no cross-asset control."
+  },
+  "attempted_task_id": "C-20261009-cross-asset-identity-isolation-1115-01",
+  "enqueue_result": "REJECTED_BY_REPOSITORY_SAFETY_NO_QUEUE_MUTATION",
+  "next": "Freshly recheck exact public HEAD and worker-control pending queue, then attempt one narrow Gemini task only when safety permits. Do not bypass.",
+  "no_specialist_edits": true,
+  "no_private_promotion": true
+}
