@@ -1,0 +1,30 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "base_sha": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+  "executor_result": {
+    "attempt": 1,
+    "base_sha": "9549675340a0f4d8ed5b39336a0a97293c7fa121",
+    "commit_sha": "b18dda2930232fb55dc98486dd054a2f4abdcfa3",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Group explicit economic_event_id observations by (family, metric, asset, economic_event_id) in suppress_duplicates, preserve economic_event_id in audit decisions, and add regression tests for distinct-asset event preservation and deterministic same-asset winner selection."
+  },
+  "instructions": "Small quality fix only. In suppress_duplicates, group explicit economic_event_id observations by (family, metric, asset, economic_event_id) rather than (family, metric, economic_event_id). Preserve the economic_event_id field in suppression audit decisions and deterministic same-asset winner selection. Add compact deterministic regression in test_contracts_normalization.py: BTC and ETH with identical family/metric/event id but different provider record ids both survive normalize_and_dedup with no suppression; same-asset cross-provider duplicate still resolves to one deterministic winner regardless of input order. No other behavior changes. Keep edits surgical; do not rewrite whole files. Run targeted and full Capital Flow pytest; fail closed on error.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261009-asset-event-dedup-1247-01",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "Preserve distinct assets in economic-event duplicate suppression",
+  "worker": "C"
+}
