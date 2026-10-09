@@ -90,6 +90,37 @@ class ContractNormalizationTests(unittest.TestCase):
             self.assertEqual(chosen_late[0].revision, "r10")
             self.assertEqual(chosen_late[0].value, 10.0)
 
+    def test_same_clock_revision_alias_determinism_r1_vs_r01(self):
+        t1 = DAY + 1000
+        obs_r1 = obs(
+            source="src",
+            source_record_id="rec-alias",
+            family="etf",
+            metric="net_flow_usd",
+            revision="r1",
+            value=11.1,
+            available_at_ms=t1,
+            observed_at_ms=t1,
+            provenance={"token": "r1"},
+        )
+        obs_r01 = obs(
+            source="src",
+            source_record_id="rec-alias",
+            family="etf",
+            metric="net_flow_usd",
+            revision="r01",
+            value=22.2,
+            available_at_ms=t1,
+            observed_at_ms=t1,
+            provenance={"token": "r01"},
+        )
+        for input_permutation in ([obs_r1, obs_r01], [obs_r01, obs_r1]):
+            chosen = select_latest_revisions(input_permutation)
+            self.assertEqual(len(chosen), 1)
+            winner = chosen[0]
+            self.assertEqual(winner.revision, "r1")
+            self.assertEqual(winner.provenance, {"token": "r1"})
+
     def test_same_clock_tie_behavior_and_separate_records(self):
         t1 = DAY + 1000
         obs_a = obs(source="src", source_record_id="rec-1", revision="1", value=1.0, available_at_ms=t1, observed_at_ms=t1)

@@ -112,18 +112,18 @@ def normalize_observation(obs: FlowObservation) -> FlowObservation:
     )
 
 
-def _revision_rank(revision: str) -> tuple[int, int | str]:
+def _revision_rank(revision: str) -> tuple[int, int | tuple[str, int, str] | str, str]:
     text = str(revision).strip()
     try:
-        return (0, int(text))
+        return (0, int(text), text)
     except ValueError:
         match = re.search(r"(\d+)", text)
         if match:
             prefix = text[:match.start()]
             number = int(match.group(1))
             suffix = text[match.end():]
-            return (1, (prefix, number, suffix))
-        return (2, text)
+            return (1, (prefix, number, suffix), text)
+        return (2, text, text)
 
 
 def select_latest_revisions(observations: Iterable[FlowObservation]) -> list[FlowObservation]:
