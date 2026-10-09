@@ -1,22 +1,31 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "C-20261009-same-clock-revision-alias-determinism-0759-01",
-  "worker": "C",
-  "title": "Deterministic equal-clock revision alias selection",
+  "allowed_write_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
   "base_sha": "35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+  "executor_result": {
+    "attempt": 2,
+    "base_sha": "35b95d1fa97e46aa7d7b481cc89a92398359d11b",
+    "commit_sha": "35e5d6fb6616d715355cf177f7b57d808d62c173",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Implement deterministic tie-break for equal-clock numeric-alias revisions in select_latest_revisions using stable raw revision identifier, and add test_same_clock_revision_alias_determinism_r1_vs_r01 along with retained r9/r10, numeric 1 vs 2, and separate records tests."
+  },
   "instructions": "QUALITY AUDIT FIX ONLY, on exact base SHA. In part2/capital_flow/normalization.py, select_latest_revisions ranks by available_at_ms, observed_at_ms, _revision_rank(revision). Current _revision_rank('r1') and _revision_rank('r01') compare equal, so for same revision_key, equal available_at_ms and observed_at_ms but distinct revision token/value/provenance, the winner depends on input order. Make selection deterministic for these equal-clock numeric-alias ties using a stable raw revision identifier tie-break after the existing clocks and numeric-aware rank; preserve priority of later PIT-visible availability/observation, existing r9/r10 ordering, point_in_time_filter-before-revision contract, revision_key/source identity, context-only isolation, raw/provenance, and frozen scoring. Add deterministic regression in test_contracts_normalization.py that creates same-source/source_record_id/family/metric observations r1 and r01 with same clocks but different value/provenance and asserts identical winner and provenance under both input permutations; also retain r9/r10 PIT tests, numeric 1 vs 2 same-clock behavior, and separate record identities. Avoid expanding scope into other tie policies or provider semantics. No external requests, no private/prediction/execution content. Bounded executor must run targeted pytest and full Capital Flow pytest, plus its built-in git diff --check, before committing; fail closed if tests fail.",
+  "max_attempts": 2,
   "read_paths": [
     "part2/capital_flow/normalization.py",
     "part2/capital_flow/contracts.py",
     "part2/capital_flow/tests/test_contracts_normalization.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/normalization.py",
-    "part2/capital_flow/tests/test_contracts_normalization.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261009-same-clock-revision-alias-determinism-0759-01",
   "tests": [
     "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "title": "Deterministic equal-clock revision alias selection",
+  "worker": "C"
 }
