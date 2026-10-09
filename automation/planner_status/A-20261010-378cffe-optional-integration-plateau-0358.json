@@ -1,0 +1,99 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T03:58:32+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_pytest": false,
+    "independent_specialist_lab_validation": "NOT_ESTABLISHED"
+  },
+  "recent_commit": {
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "collector_runner_changed": false
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory": "absent_404",
+    "done": 16,
+    "failed": 15
+  },
+  "roadmap": "automation/supervisor_roadmap.md (2026-10-10 03:45 ICT) read; requires fresh A verdict and recognizes optional test-only gap; C defect and Gemini JSON reliability block global promotion",
+  "planner_status": {
+    "A_prior": "A-20261009-378cffe-optional-integration-continue-1955.json CONTINUE stale verdict",
+    "B": "B-20261010-378cffe-etherfi-eeth-plateau-0029.json PLATEAU",
+    "C": "C-20261010-378cffe-context-only-json-blocked-0313.json CONTINUE"
+  },
+  "worker_status": "automation/worker_status/loop-A/B/C.json inspected and stale relative to exact-SHA planner_status",
+  "integration": {
+    "default_collectors": {
+      "registered": 9,
+      "deterministic_run_once_coverage": 9,
+      "action": "NO_DUPLICATION"
+    },
+    "optional_kote": {
+      "classification": "TEST_ONLY_COVERAGE_GAP",
+      "production_hook": "part2/capital_flow/runner.py:88-98 network && kote_enabled; ActivatedKoteCollector.from_env.collect_with_errors; rows/attempts/errors",
+      "existing_tests": "part2/capital_flow/tests/test_kote_activation.py activation/unit tests",
+      "missing": "focused offline run_once -> archive -> handoff -> evidence_health -> PIT replay regression",
+      "production_defect_proven": false
+    },
+    "optional_glassnode": {
+      "classification": "TEST_ONLY_COVERAGE_GAP",
+      "production_hook": "part2/capital_flow/runner.py:100-108 network && glassnode_config; GlassnodePitCollector.from_config_file.collect",
+      "missing": "focused offline opt-in run_once -> archive -> handoff -> evidence_health -> PIT replay regression",
+      "production_defect_proven": false
+    },
+    "shared_pipeline": {
+      "archive": "runner.py:120-122 append_observations and load_observations",
+      "handoff": "runner.py:136 build_anata_handoff; handoff.py:24-27 point_in_time_filter before normalization",
+      "evidence_health": "runner.py:137 build_evidence_health with collection_attempts",
+      "pit_counter_note": "runner.py:151-152 archive_records_loaded/scoring_records_loaded count stored history, not PIT-visible replay; assert PIT via handoff instead"
+    },
+    "production_completeness": "NO_NEW_PRODUCTION_DEFECT_ESTABLISHED",
+    "optional_test_coverage": "INCOMPLETE; NOT IN ITSELF A PROMOTION-BLOCKING PRODUCTION DEFECT"
+  },
+  "prior_kote_failures": [
+    {
+      "id": "A-20261009-kote-optional-live-integration-01",
+      "evidence": "failed pytest asserted replay scoring_records_loaded==0 but historical scoring count was 1"
+    },
+    {
+      "id": "A-20261009-kote-runonce-pit-1452-01",
+      "evidence": "Gemini returned invalid JSON expecting comma delimiter line 9"
+    },
+    {
+      "id": "A-20261009-kote-scoring-smoke-1454-01",
+      "evidence": "generated test SyntaxError mismatched bracket line 23"
+    }
+  ],
+  "executor_reliability": {
+    "classification": "BLOCKED_GEMINI_STRUCTURED_JSON",
+    "recent_C_failures": [
+      "C-20261009-context-only-tie-minimal-2252-01",
+      "C-20261009-context-only-metadata-tie-2315-01"
+    ],
+    "mitigation_verified": false
+  },
+  "decision": {
+    "planner_A": "PLATEAU",
+    "new_task": "NONE",
+    "reason": "No new reproducible optional collector production failure, all default collectors covered; avoid duplicate low-value tests while Gemini JSON reliability remains unmitigated",
+    "global_promotion": "BLOCKED: C CONTINUE on equal-rank context_only scoring eligibility defect and independent Supervisor not PLATEAU",
+    "private_promotion": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control status only; no Specialist code, private/main, Railway, prediction/API, broker/execution, secrets, workflows/schedules"
+}
