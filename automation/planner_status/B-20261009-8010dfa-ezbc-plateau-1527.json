@@ -1,0 +1,19 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "exact_specialist_head": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "assessed_at_utc": "2026-10-09T08:26:13.229Z",
+  "control_head_at_read": "c950c381d716edac6b97b254a431f667d52dc471",
+  "validation": "Matching done PASS C-20261009-cross-asset-revision-key-1351-01; independent exact-head Actions PASS not found",
+  "queue": {
+    "pending": 0,
+    "done": 15,
+    "failed": 12
+  },
+  "source": "Franklin Templeton EZBC BTC holdings",
+  "first_party": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39639/SINGLCLASS/franklin-bitcoin-etf/EZBC",
+  "evidence": "Official as-of 2026-10-05 5603.61 BTC; XLS label visible but stable direct machine-readable download and immutable daily report/revision identity unverified. Effective date known, first available_at unknown, observed_at captured only this run. Distinct EZBC fund but potential overlap with aggregate ETF observations; BTC custody stock context-only, never directional.",
+  "disposition": "No source qualified; no task enqueued. Roadmap and B worker status are stale."
+}
