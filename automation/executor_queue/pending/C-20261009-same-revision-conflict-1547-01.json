@@ -1,0 +1,22 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261009-same-revision-conflict-1547-01",
+  "worker": "C",
+  "title": "Deterministic handling of same-clock conflicting same-record revisions",
+  "base_sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "instructions": "NARROW PUBLIC CAPITAL FLOW QUALITY FIX ONLY. In select_latest_revisions, two FlowObservation records with identical revision_key (including asset), identical available_at_ms, observed_at_ms and revision but different values currently select whichever appears first. Example obs(source='src',source_record_id='rec',family='etf',metric='net_flow_usd',asset='BTC',revision='1',available_at_ms=T,observed_at_ms=T,value=100) and same identity/clocks/revision with value=200: [a,b] vs [b,a] choose different values. Add a stable, order-independent tie-break for equal rank (observation_id is available and includes value) and explicitly flag conflicting equal-rank economic values in the selected FlowObservation. Keep higher available/observed/revision precedence, PIT filtering, asset separation, existing economic_event duplicate suppression and units unchanged. Preserve provenance, and use an existing immutable FlowObservation replacement pattern or dataclasses.replace for a deterministic quality_flags conflict marker; do not silently claim one conflicting value is uniquely correct. Add deterministic tests for both permutations (same winner value, provenance, quality flag), identical duplicates (no conflict marker), and later available correction wins. Avoid modifying contracts, runner, handoff, scoring formulas or other paths. No private, main, automation, prediction, API orchestration, secrets, Telegram, MT5, broker, execution. Run targeted pytest and full Capital Flow pytest before committing; fail closed on any failure."
+}
