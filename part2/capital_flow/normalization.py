@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
+import dataclasses
 import math
 import re
 from typing import Iterable
@@ -133,26 +134,46 @@ def select_latest_revisions(observations: Iterable[FlowObservation]) -> list[Flo
     later correction cannot replace what was known in an earlier replay state.
     """
 
-    chosen: dict[tuple[str, str, str, str], FlowObservation] = {}
+    groups: dict[tuple[str, str, str, str, str], list[FlowObservation]] = defaultdict(list)
     for obs in observations:
-        key = obs.revision_key
-        current = chosen.get(key)
-        if current is None:
-            chosen[key] = obs
-            continue
-        candidate_rank = (
-            obs.available_at_ms or -1,
-            obs.observed_at_ms,
-            _revision_rank(obs.revision),
+        groups[obs.revision_key].append(obs)
+
+    chosen: list[FlowObservation] = []
+    for key, group in groups.items():
+        # Group observations by their rank tuple
+        ranked_groups: dict[tuple, list[FlowObservation]] = defaultdict(list)
+        for obs in group:
+            r = (
+                obs.available_at_ms or -1,
+                obs.observed_at_ms,
+                _revision_rank(obs.revision),
+            )
+            ranked_groups[r].append(obs)
+
+        highest_rank = max(ranked_groups.keys())
+        top_candidates = ranked_groups[highest_rank]
+
+        # Stable deterministic tie-break for equal rank using observation_id and value
+        top_candidates.sort(
+            key=lambda x: (
+                x.observation_id,
+                x.value,
+            )
         )
-        current_rank = (
-            current.available_at_ms or -1,
-            current.observed_at_ms,
-            _revision_rank(current.revision),
-        )
-        if candidate_rank > current_rank:
-            chosen[key] = obs
-    return list(chosen.values())
+        winner = top_candidates[0]
+
+        if len(top_candidates) > 1:
+            # Check if there is an economic value conflict among equal rank candidates
+            first_val = top_candidates[0].value
+            if any(c.value != first_val for c in top_candidates[1:]):
+                flag_name = "CONFLICTING_EQUAL_RANK_VALUES"
+                if flag_name not in winner.quality_flags:
+                    new_flags = tuple(list(winner.quality_flags) + [flag_name])
+                    winner = dataclasses.replace(winner, quality_flags=new_flags)
+
+        chosen.append(winner)
+
+    return chosen
 
 
 def suppress_duplicates(observations: Iterable[FlowObservation]) -> tuple[list[FlowObservation], list[dict[str, str]]]:

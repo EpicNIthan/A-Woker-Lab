@@ -138,6 +138,97 @@ class ContractNormalizationTests(unittest.TestCase):
         values = {o.value for o in chosen_separate}
         self.assertEqual(values, {1.0, 3.0})
 
+    def test_same_clock_conflicting_same_record_revisions_permutation_and_flags(self):
+        t1 = DAY + 1000
+        obs_1 = obs(
+            source="src",
+            source_record_id="rec",
+            family="etf",
+            metric="net_flow_usd",
+            asset="BTC",
+            revision="1",
+            available_at_ms=t1,
+            observed_at_ms=t1,
+            value=100.0,
+            provenance={"tag": "one"},
+        )
+        obs_2 = obs(
+            source="src",
+            source_record_id="rec",
+            family="etf",
+            metric="net_flow_usd",
+            asset="BTC",
+            revision="1",
+            available_at_ms=t1,
+            observed_at_ms=t1,
+            value=200.0,
+            provenance={"tag": "two"},
+        )
+        for permutation in ([obs_1, obs_2], [obs_2, obs_1]):
+            chosen = select_latest_revisions(permutation)
+            self.assertEqual(len(chosen), 1)
+            winner = chosen[0]
+            # Winner is deterministic (based on observation_id / value sorting)
+            expected_winner_value = min(obs_1.value, obs_2.value)
+            self.assertEqual(winner.value, expected_winner_value)
+            self.assertIn("CONFLICTING_EQUAL_RANK_VALUES", winner.quality_flags)
+            self.assertTrue(winner.provenance)
+
+    def test_same_clock_identical_duplicates_no_conflict_marker(self):
+        t1 = DAY + 1000
+        obs_1 = obs(
+            source="src",
+            source_record_id="rec-dup",
+            family="etf",
+            metric="net_flow_usd",
+            asset="BTC",
+            revision="1",
+            available_at_ms=t1,
+            observed_at_ms=t1,
+            value=100.0,
+        )
+        obs_2 = obs(
+            source="src",
+            source_record_id="rec-dup",
+            family="etf",
+            metric="net_flow_usd",
+            asset="BTC",
+            revision="1",
+            available_at_ms=t1,
+            observed_at_ms=t1,
+            value=100.0,
+        )
+        chosen = select_latest_revisions([obs_1, obs_2])
+        self.assertEqual(len(chosen), 1)
+        winner = chosen[0]
+        self.assertEqual(winner.value, 100.0)
+        self.assertNotIn("CONFLICTING_EQUAL_RANK_VALUES", winner.quality_flags)
+
+    def test_later_available_correction_wins(self):
+        t1 = DAY + 1000
+        t2 = DAY + 2000
+        obs_early = obs(
+            source="src",
+            source_record_id="rec-corr",
+            revision="1",
+            available_at_ms=t1,
+            observed_at_ms=t1,
+            value=100.0,
+        )
+        obs_late = obs(
+            source="src",
+            source_record_id="rec-corr",
+            revision="1",
+            available_at_ms=t2,
+            observed_at_ms=t2,
+            value=300.0,
+        )
+        for permutation in ([obs_early, obs_late], [obs_late, obs_early]):
+            chosen = select_latest_revisions(permutation)
+            self.assertEqual(len(chosen), 1)
+            self.assertEqual(chosen[0].value, 300.0)
+            self.assertNotIn("CONFLICTING_EQUAL_RANK_VALUES", chosen[0].quality_flags)
+
     def test_btc_and_eth_same_source_record_identity_survive_normalize_and_dedup(self):
         t1 = DAY + 1000
         t2 = DAY + 2000
