@@ -154,6 +154,101 @@ class ContractNormalizationTests(unittest.TestCase):
         self.assertEqual(len(kept), 2)
         self.assertEqual(decisions, [])
 
+    def test_cross_provider_equal_rank_determinism_and_controls(self):
+        t1 = DAY + 1000
+        obs_prov_alpha = obs(
+            source="alpha_provider",
+            source_record_id="rec-alpha-100",
+            economic_event_id="event-shared-999",
+            data_quality=0.9,
+            attribution_quality=0.95,
+            observed_at_ms=t1,
+            value=10.0,
+            unit="USD_MILLIONS",
+            provenance={"collector": "alpha"},
+        )
+        obs_prov_beta = obs(
+            source="beta_provider",
+            source_record_id="rec-beta-200",
+            economic_event_id="event-shared-999",
+            data_quality=0.9,
+            attribution_quality=0.95,
+            observed_at_ms=t1,
+            value=20.0,
+            unit="USD_MILLIONS",
+            provenance={"collector": "beta"},
+        )
+
+        kept_set_1, decisions_1 = normalize_and_dedup([obs_prov_alpha, obs_prov_beta])
+        kept_set_2, decisions_2 = normalize_and_dedup([obs_prov_beta, obs_prov_alpha])
+
+        self.assertEqual(len(kept_set_1), 1)
+        self.assertEqual(len(kept_set_2), 1)
+        self.assertEqual(kept_set_1[0].source, kept_set_2[0].source)
+        self.assertEqual(kept_set_1[0].value, kept_set_2[0].value)
+        self.assertEqual(kept_set_1[0].provenance, kept_set_2[0].provenance)
+        self.assertEqual(decisions_1, decisions_2)
+        self.assertEqual(len(decisions_1), 1)
+        self.assertEqual(decisions_1[0]["reason"], "DUPLICATE_ECONOMIC_EVENT")
+
+        obs_low_q = obs(
+            source="beta_provider",
+            source_record_id="rec-beta-200",
+            economic_event_id="event-shared-999",
+            data_quality=0.7,
+            attribution_quality=0.95,
+            observed_at_ms=t1,
+            value=20.0,
+            unit="USD_MILLIONS",
+        )
+        kept_unequal, _ = normalize_and_dedup([obs_low_q, obs_prov_alpha])
+        self.assertEqual(len(kept_unequal), 1)
+        self.assertEqual(kept_unequal[0].source, "alpha_provider")
+        self.assertEqual(kept_unequal[0].value, 10_000_000.0)
+
+        obs_event_one = obs(
+            source="alpha_provider",
+            source_record_id="rec-1",
+            economic_event_id="event-1",
+            data_quality=0.9,
+            observed_at_ms=t1,
+            value=10.0,
+            unit="USD_MILLIONS",
+        )
+        obs_event_two = obs(
+            source="alpha_provider",
+            source_record_id="rec-2",
+            economic_event_id="event-2",
+            data_quality=0.9,
+            observed_at_ms=t1,
+            value=15.0,
+            unit="USD_MILLIONS",
+        )
+        kept_events, _ = normalize_and_dedup([obs_event_one, obs_event_two])
+        self.assertEqual(len(kept_events), 2)
+
+        obs_no_event_1 = obs(
+            source="alpha_provider",
+            source_record_id="rec-alpha-100",
+            economic_event_id=None,
+            data_quality=0.9,
+            observed_at_ms=t1,
+            value=10.0,
+            unit="USD_MILLIONS",
+        )
+        obs_no_event_2 = obs(
+            source="beta_provider",
+            source_record_id="rec-beta-200",
+            economic_event_id=None,
+            data_quality=0.9,
+            observed_at_ms=t1,
+            value=20.0,
+            unit="USD_MILLIONS",
+        )
+        kept_missing, decisions_missing = normalize_and_dedup([obs_no_event_1, obs_no_event_2])
+        self.assertEqual(len(kept_missing), 2)
+        self.assertEqual(decisions_missing, [])
+
 
 if __name__ == "__main__":
     unittest.main()

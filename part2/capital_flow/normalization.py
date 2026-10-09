@@ -161,6 +161,7 @@ def suppress_duplicates(observations: Iterable[FlowObservation]) -> tuple[list[F
     - Revisions are resolved separately by `select_latest_revisions`.
     - When `economic_event_id` is shared, keep the highest quality representation.
     - Records without an explicit economic event id are not guessed to be duplicates.
+    - Equal-rank records resolve deterministically via source-identity (source, source_record_id, revision, observation_id).
 
     The decisions are returned for audit rather than silently discarded.
     """
@@ -181,6 +182,10 @@ def suppress_duplicates(observations: Iterable[FlowObservation]) -> tuple[list[F
                 x.data_quality,
                 x.attribution_quality if x.attribution_quality is not None else -1.0,
                 x.observed_at_ms,
+                x.source,
+                x.source_record_id,
+                _revision_rank(x.revision),
+                x.observation_id,
             ),
             reverse=True,
         )
