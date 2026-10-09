@@ -1,0 +1,53 @@
+{
+  "worker": "C",
+  "verdict": "CONTINUE",
+  "assessed_head": "35e5d6fb6616d715355cf177f7b57d808d62c173",
+  "assessed_at": "2026-10-09T08:19:00+07:00",
+  "scope": "PUBLIC-ONLY Capital Flow quality audit; no Specialist edits, no private promotion",
+  "latest_commit": {
+    "sha": "35e5d6fb6616d715355cf177f7b57d808d62c173",
+    "message": "worker-c: Deterministic equal-clock revision alias selection",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "confirmed": "_revision_rank adds stable raw revision tie-break; test_same_clock_revision_alias_determinism_r1_vs_r01 covers input permutations"
+  },
+  "validation": {
+    "exact_head_specialist_lab_validation": "NO_EXACT_HEAD_RUN",
+    "exact_head_check_runs": 0,
+    "matching_done_task": "C-20261009-same-clock-revision-alias-determinism-0759-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "35e5d6fb6616d715355cf177f7b57d808d62c173",
+    "executor_workflow_run": 37867558343,
+    "executor_run_conclusion": "success",
+    "executor_attempt": 2,
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ]
+  },
+  "authoritative_queue": {
+    "branch": "worker-control",
+    "pending": 0,
+    "done": 12,
+    "failed": 9,
+    "control_head_at_audit": "8ac2feb5fab65bcb53fae840c24f2d508f1f6004"
+  },
+  "quality_audit": {
+    "defect": "Cross-provider economic_event_id duplicate suppression chooses first input when data_quality, attribution_quality, and observed_at_ms tie; same economic event with different source/record/value can produce different kept observation and provenance when input order is reversed.",
+    "location": "part2/capital_flow/normalization.py suppress_duplicates group.sort stable sort with only quality/attribution/observed_at_ms",
+    "reproducer": "Create two FlowObservation entries with same family, metric, economic_event_id, same quality/attribution/observed clocks, distinct sources/record ids/values; normalize_and_dedup([a,b]) keeps a, normalize_and_dedup([b,a]) keeps b. Current test_contracts_normalization.py covers only unequal quality (0.8 vs 0.95).",
+    "consequence": "Input-order-dependent provenance and retained economic value for the same duplicate economic event, potentially changing downstream Capital Flow aggregates without an explicit source-quality difference.",
+    "severity": "NARROW_DETERMINISTIC_DEPENDENCE_PROVENANCE_GAP",
+    "preserve": [
+      "PIT-visible filtering upstream",
+      "existing quality > attribution > observed ranking",
+      "context-only separation",
+      "economic_event_id dependence boundaries",
+      "no score formula changes",
+      "whitespace gate"
+    ]
+  },
+  "next": "If HEAD and pending still unchanged, enqueue one narrow Gemini task fixing deterministic cross-provider equal-rank duplicate selection, with permutation regression and targeted/full Capital Flow pytest. No direct Specialist edits."
+}
