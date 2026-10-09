@@ -1,0 +1,77 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T05:29:04+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "f8314692d33be97670cb57d85fb272934c938616",
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_actions": "NOT_FOUND: zero runs and zero check-runs for exact SHA"
+  },
+  "recent_commits": [
+    {
+      "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+      "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+      "changed_files": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    {
+      "sha": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "message": "worker-c: Keep BTC and ETH distinct in same-source revision selection"
+    },
+    {
+      "sha": "b18dda2930232fb55dc98486dd054a2f4abdcfa3",
+      "message": "worker-c: Preserve distinct assets in economic-event duplicate suppression"
+    }
+  ],
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory": "absent",
+    "done": 16,
+    "failed": 15
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "snapshot": "2026-10-10 03:45 ICT",
+    "exact_head_matches": true,
+    "queue_counts_match": true,
+    "planner_B_entry_stale": true
+  },
+  "other_lanes": {
+    "A": "PLATEAU exact HEAD at 2026-10-10 03:58 ICT; optional integration tests only",
+    "C": "CONTINUE exact HEAD at 2026-10-10 03:13 ICT; equal-rank context_only provenance tie and Gemini JSON failures"
+  },
+  "candidate": {
+    "name": "Deribit BTC options open interest (per-instrument book summary)",
+    "first_party": "Deribit exchange",
+    "first_party_api_documentation": "https://docs.deribit.com/api-reference/market-data/public-get_book_summary_by_currency",
+    "first_party_collection_guide": "https://docs.deribit.com/articles/options-data-collection-best-practices",
+    "reproduction": "GET https://www.deribit.com/api/v2/public/get_book_summary_by_currency?currency=BTC&kind=option; JSON result entries keyed by instrument_name; examine open_interest and creation_timestamp; separate option vs future kinds and native units. Official docs expose example JSON; live API GET via local Python requests failed DNS resolution, and web fetch of endpoint was inaccessible. NO current live OI quantity was verified.",
+    "criteria": {
+      "first_party_machine_readable": "DOCUMENTED_PASS; LIVE_UNVERIFIED. JSON-RPC GET endpoint and first-party schema show per-instrument open_interest; no successful live response captured",
+      "economic_entity_scope": "BTC option contracts on Deribit, instrument-specific OI denominated in underlying BTC; derivatives position stock, NOT BTC custody, ETF flow, exchange BTC transfer, stablecoin issuance, or treasury flow",
+      "immutable_identity": "FAIL: instrument_name identifies a contract but not an immutable OI snapshot/report/revision; response is mutable; no block hash, event log, archival report hash, or historical snapshot identifier captured",
+      "effective_clock": "FAIL: example creation_timestamp is not verified as authoritative effective timestamp for each OI value; no block/report period identity",
+      "available_clock": "FAIL: no historically proven first-publication/first-availability time per OI snapshot; API poll time cannot backdate historical availability",
+      "observed_clock": "Research inspected official documentation at 2026-10-10T05:29:04+07:00; local live request failed DNS resolution, no live snapshot bytes observed",
+      "non_overlap": "FAIL FOR CAPITAL_FLOW: capital_flow/README.md explicitly assigns funding/OI/basis/derivatives pressure to Market Driver; no demonstrated non-overlap with that specialist or any broader OI aggregation. Deribit options are separate instruments from CME futures, but this does not establish independent capital inflow",
+      "context_only": "If retained outside Capital Flow, nondirectional derivatives OI is non-additive context_only; must not drive capital-flow directional scoring or be treated as net cash movement"
+    },
+    "rejection": "This is a documented first-party machine-readable derivatives endpoint, but no live immutable PIT snapshot, no historical availability proof, no economic non-overlap, and OI is explicitly owned by Market Driver rather than Capital Flow. Source-breadth gate FAIL; do not expand Capital Flow with cross-specialist OI.",
+    "next_evidence": "Do not pursue Deribit OI in Capital Flow. Seek first-party BTC custody/treasury/miner or purchasing-capital movement with durable immutable record, three PIT clocks, and quantified non-overlap. Do not recycle prior rejected candidates without new proof."
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "promotion": "NONE",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; only worker-control planner_status write; no Specialist code, either main, private, Railway, prediction/API, broker/execution, secrets, workflows, schedules or promotion"
+}
