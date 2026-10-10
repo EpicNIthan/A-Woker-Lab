@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T23:03:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "fresh_reads": {
+    "specialist_branch": "anata-local-hardening",
+    "control_branch": "worker-control",
+    "control_head_at_read": "4bbcdacc814eda1306c0639ab2381068a9bd1d01",
+    "roadmap": "automation/supervisor_roadmap.md (22:46 ICT)",
+    "prior_A": "A-20261010-378cffe-integration-plateau-2058.json",
+    "latest_C": "C-20261010-378cffe-context-only-json-blocked-2215.json",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "absent",
+      "done": 16,
+      "failed": 16
+    }
+  },
+  "specialist_change_review": {
+    "head_commit": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "runner_changed": false
+  },
+  "integration_evidence": {
+    "default_collectors": "9/9 default live collectors have previously verified deterministic run_once coverage; runner unchanged on latest commit; no independent current-run pytest",
+    "optional_kote": "runner.run_once network+kote_enabled path calls ActivatedKoteCollector and appends collected observations to common archive; test_kote_activation.py covers parsing/activation but does not invoke runner.run_once",
+    "optional_glassnode": "runner.run_once network+glassnode_config path calls GlassnodePitCollector and appends to common archive; test_v1_handoff.py covers PIT metadata/parser and handoff, but not enabled runner.run_once",
+    "shared_pipeline": "runner.py appends collected observations, reloads archive, builds handoff and evidence_health; collection errors/attempts are reported",
+    "coverage_limit": "test_evidence_health.py's run_once test uses network=False; optional full opt-in run_once -> archive -> handoff -> evidence_health -> PIT regression remains unestablished",
+    "production_completeness": "No new reproducible production integration defect on this exact HEAD; opt-in regression absence is test-only coverage gap, not proof of broken production behavior",
+    "analysis_delta": "Fresh cross-check of test_kote_activation.py, test_v1_handoff.py, test_evidence_health.py and runner.py isolates why existing unit/handoff checks cannot establish the optional end-to-end chain: the only evidence_health run_once smoke explicitly disables network; Kote tests exercise collectors without runner, Glassnode tests exercise metadata/parser/handoff without enabled runner. This narrows missing proof, not a new production defect."
+  },
+  "validation": {
+    "source": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_pytest": "NOT_ESTABLISHED"
+  },
+  "executor_reliability": {
+    "status": "UNMITIGATED",
+    "evidence": [
+      "C-20261009-context-only-tie-minimal-2252-01: malformed JSON",
+      "C-20261009-context-only-metadata-tie-2315-01: malformed JSON",
+      "B-20261010-strive-sec-treasury-1429-01: invalid JSON escape"
+    ],
+    "new_task": "NONE; avoid identical retry until reliability mitigation is verified"
+  },
+  "decision": {
+    "A": "PLATEAU",
+    "optional_test_coverage_promotion_blocker": false,
+    "new_production_integration_defect": "NONE_ESTABLISHED",
+    "C": "CONTINUE: context_only equal-rank provenance tie may alter scoring eligibility",
+    "overall_promotion": "BLOCKED: C defect, independent validation absent, Supervisor approval absent",
+    "private_promotion": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; only create planner_status on worker-control; no Specialist code, private/main, Railway, prediction/API/broker/execution, secrets, workflows or schedules."
+}
