@@ -1,0 +1,73 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T20:27:04+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "9066d0fd69ab5768a6aa8e2bd470d0614642b72e",
+  "latest_specialist_commit": {
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "newer_commit": false
+  },
+  "authoritative_control": {
+    "roadmap": "automation/supervisor_roadmap.md (2026-10-10 18:46 ICT)",
+    "latest_A": "A-20261010-378cffe-integration-plateau-1856.json PLATEAU (integration)",
+    "latest_B_prior": "B-20261010-378cffe-hut8-abtc-overlap-plateau-1633.json PLATEAU",
+    "latest_C": "C-20261010-378cffe-context-only-json-blocked-1711.json CONTINUE (quality/provenance)",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_absent",
+      "done": 16,
+      "failed": 16
+    }
+  },
+  "validation": {
+    "method": "worker-control matching executor done PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_ESTABLISHED",
+    "commit_statuses": 0,
+    "exact_sha_workflow_runs": 0
+  },
+  "candidate": {
+    "name": "HIVE Digital Technologies FY2026 Bitcoin mining production versus treasury inventory",
+    "source": "https://www.sec.gov/Archives/edgar/data/1720424/000106299326002965/0001062993-26-002965-index.htm",
+    "exhibit": "https://www.sec.gov/Archives/edgar/data/1720424/000106299326002965/exhibit99-1.htm",
+    "accession": "0001062993-26-002965",
+    "form": "8-K",
+    "filer_cik": "0001720424",
+    "filing_accepted_display": "2026-06-02 06:23:19 ET",
+    "reported_effective_period": "FY ended 2026-03-31",
+    "reported_mined_btc_fy2026": 2885,
+    "reported_treasury_btc_asof_20260331": 150,
+    "criteria": {
+      "first_party_machine_readable": "PASS: accession-specific SEC HTML exhibit; XBRL instance exists but metric-level extraction unverified",
+      "immutable_report_identity": "PASS: accession-specific SEC archive",
+      "economic_entity_scope": "PASS: HIVE company; mined production is distinct from custody stock",
+      "effective_clock": "PASS: fiscal year ending 2026-03-31 for 2885 mined; 2026-03-31 for 150 stock",
+      "available_clock": "PASS: SEC acceptance 2026-06-02 06:23:19 ET; no backdating to 2026-03-31",
+      "observed_clock": "research observation 2026-10-10 20:27 ICT; no collector ingestion",
+      "non_overlap": "NOT_ESTABLISHED for proposed additive capital-flow signal; mined output does not evidence independent buying or exchange sale",
+      "context_only": "REQUIRED for mined-production/treasury stock; no directional scoring"
+    },
+    "rejection": "Do not turn 2,885 BTC mined during a fiscal year into BTC purchasing flow, miner selling, or change in custody stock. The same report shows only 150 BTC held at year end; the difference cannot be assigned to dated exchange selling without independent transaction-level evidence. A single historical annual mining total is not a new independently attributable directional source, and the 150 BTC custody snapshot is a separate context-only metric not qualified as a fresh continuous collector by this review."
+  },
+  "executor_reliability": {
+    "status": "UNMITIGATED_INVALID_GEMINI_JSON",
+    "proof": "automation/executor_queue/failed/B-20261010-strive-sec-treasury-1429-01.json",
+    "decision": "No new task: candidate rejected, pending empty; no duplicate Strive retry."
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "promotion": "NONE; C CONTINUE and independent exact-SHA validation missing",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control planner_status file only; no Specialist edits, main/private, Railway, prediction/API/broker/execution/secrets, workflows/schedules or promotion."
+}
