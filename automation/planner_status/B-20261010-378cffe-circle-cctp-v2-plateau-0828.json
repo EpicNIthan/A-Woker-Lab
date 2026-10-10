@@ -1,0 +1,72 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T08:28:37+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "505bba848caa403e14d977dfe79697fab22ab8e2",
+  "latest_specialist_commit": {
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb"
+  },
+  "validation": {
+    "method": "matching_authoritative_executor_done_PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_check_runs": 0,
+    "independent_exact_sha_commit_statuses": 0
+  },
+  "authoritative_queue": {
+    "branch": "worker-control",
+    "pending": 0,
+    "pending_directory": "404_absent",
+    "done": 16,
+    "failed": 15
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "snapshot": "2026-10-10 07:55 ICT",
+    "exact_specialist_head_matches": true,
+    "queue_counts_match": true,
+    "planner_B_entry_stale": true
+  },
+  "other_lanes": {
+    "A": "PLATEAU exact SHA at 03:58 ICT, optional integration tests only",
+    "C": "CONTINUE exact SHA at 08:11 ICT, equal-rank context_only provenance tie; Gemini invalid JSON"
+  },
+  "candidate": {
+    "name": "Circle CCTP V2 native USDC cross-chain burn/mint attestations",
+    "first_party": "Circle",
+    "first_party_docs": [
+      "https://developers.circle.com/cctp",
+      "https://developers.circle.com/cctp/references/technical-guide"
+    ],
+    "reproduction": "Circle documents GET https://iris-api.circle.com/v2/messages/{sourceDomain}?transactionHash={sourceBurnTxHash}; source-chain TokenMessengerV2 depositForBurn emits message; Iris attests after confirmations; destination MessageTransmitterV2 receiveMessage mints. A valid source burn transaction hash and matching destination receipt would be required to reproduce an observation. No live transaction payload or block-pinned event was obtained this run.",
+    "criteria": {
+      "first_party_machine_readable": "DOCUMENTED_PASS_LIVE_UNVERIFIED: Circle documents public GET /v2/messages and signed attestation; no concrete live message observed",
+      "immutable_event_identity": "PARTIAL: onchain burn transaction hash, message nonce and destination receipt can identify an event; no specific source block hash/transaction/log index or destination receipt captured",
+      "economic_entity_scope": "FAIL_FOR_NEW_CAPITAL: native USDC transfer across chain domains, not independent USDC issuance, BTC exchange reserve, BTC custody, treasury or BTC purchasing-capital inflow",
+      "effective_clock": "UNVERIFIED: source burn block time would be effective time; no source block was captured",
+      "available_clock": "FAIL: first historical public attestation availability and finality time per event not established; do not equate burn time with signed attestation availability",
+      "observed_clock": "Documentation inspected 2026-10-10 08:28 ICT; no API response or onchain event bytes observed",
+      "non_overlap": "FAIL: source-chain USDC burn and destination-chain USDC mint represent the same transfer, not two capital events. Counting destination mint as independent new USDC supply double-counts existing aggregate stablecoin supply/chain relocation; no reconciliation to existing stablecoin source proved",
+      "context_only": "If ever used, cross-chain transfer/bridge state is nondirectional context_only, non-additive; no Capital Flow score or BUY/SELL inference"
+    },
+    "rejection": "First-party machine-readable protocol exists, but the economics are redistribution of existing USDC between chains rather than independent new purchasing capital; no live immutable event, no complete three PIT clocks, and no demonstrated non-overlap. PLATEAU; no implementation task.",
+    "next_evidence": "Seek a genuinely independent BTC custody, miner, treasury or purchasing-capital source with first-party durable machine-readable records, immutable event/report/block identity, full effective/available/observed clocks, quantified non-overlap and context-only custody stock. Do not retry previously rejected sources without new reproducible proof."
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "promotion": "NONE",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY: worker-control planner_status file only; no Specialist code, private, main, Railway, prediction/API, broker/execution, secrets, workflows, schedules or promotion"
+}
