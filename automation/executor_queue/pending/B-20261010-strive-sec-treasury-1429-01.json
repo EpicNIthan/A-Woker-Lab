@@ -1,0 +1,25 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "B-20261010-strive-sec-treasury-1429-01",
+  "worker": "B",
+  "title": "Strive SEC 8-K consolidated BTC treasury context-only collector",
+  "base_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "instructions": "PUBLIC CAPITAL FLOW SOURCE-BREADTH ONLY. Implement a standalone Strive Inc SEC EDGAR corporate BTC treasury collector using CIK 0001920406, first-party submissions JSON and accession-specific archived 8-K HTML. Reproducible fixture: SEC accession 0001628280-26-064753, accepted 2026-10-05 07:59:57 ET (11:59:57Z), primary document https://www.sec.gov/Archives/edgar/data/1920406/000162828026064753/asst-20261005.htm. The explicit as-of holdings table reports 27,462 BTC on 2026-09-25 and 29,462 BTC on 2026-10-02, with narrative purchase of 2,000 BTC during Sep 28-Oct 2; do not mistakenly select 28,000 BTC quarter-end or 8,137 BTC quarterly acquisitions. Select latest eligible explicit BTC holdings as-of row, preserve full accession revision, company CIK, consolidated Strive scope (includes Semler after merger), economic event identity, UTC end-of-day effective timestamp, SEC acceptance available_at, collector observed_at, context_only=true, CONTEXT_ONLY flag, no directional scoring. Fail closed on missing/ambiguous numeric table, future acceptance, conflicting dates/values, bad provenance or SEC schema changes; do not backdate first availability or double-count Semler subsidiary. Reuse established patterns in providers_strategy.py/providers_abtc.py but do not edit those. Add deterministic fixture-based tests for exact holdings selection, as-of/availability/observation clocks, amendments, order independence, Semler scope, malformed/missing data and no directionality. Keep this collector standalone/test-only in this task: do NOT wire runner, scoring, handoff or production; no other changes. Never touch automation, private/main, Railway, prediction/API orchestration, Telegram, MT5, broker/execution, secrets or workflows. Run both targeted and full Capital Flow tests before committing; fail closed if tests fail or structured Gemini response is malformed.",
+  "read_paths": [
+    "part2/capital_flow/providers_strategy.py",
+    "part2/capital_flow/providers_abtc.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/SOURCES.md",
+    "part2/capital_flow/tests/test_strategy_treasury.py",
+    "part2/capital_flow/tests/test_sec_context_collectors.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/providers_strive.py",
+    "part2/capital_flow/tests/test_strive_treasury.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_strive_treasury.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2
+}
