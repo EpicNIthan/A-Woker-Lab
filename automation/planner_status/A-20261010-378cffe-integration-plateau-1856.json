@@ -1,0 +1,59 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T18:56:37+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "2983c22fc60a0fa5d1fff55c0f10928372a7499d",
+  "source_review": {
+    "latest_commit": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "latest_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "runner_changed": false,
+    "default_live_collectors": 9,
+    "default_run_once_coverage": "Previously verified deterministic coverage for all nine; fresh runner confirms registration and shared processing. No independent pytest rerun.",
+    "optional_kote": "ActivatedKoteCollector branch is gated by network and kote_enabled, appends observations to collected, then shared archive, handoff, evidence_health; test_kote_activation.py exercises parsing/activation but not complete run_once path.",
+    "optional_glassnode": "GlassnodePitCollector branch is gated by network and glassnode_config; collected rows feed same shared archive, handoff, evidence_health; test_v1_handoff.py tests PIT metadata/parser and handoff but not complete opt-in run_once path.",
+    "production_completeness": "No reproducible production integration defect established; optional collectors are explicitly opt-in, and lack of full integration regression is not evidence of failure.",
+    "optional_test_coverage": "Complete deterministic opt-in run_once -> archive -> handoff -> evidence_health -> PIT regression remains unproven for Kote and Glassnode; non-promotion-blocking A coverage gap on current evidence.",
+    "analysis_delta": "Fresh read distinguishes source-level optional network gates and shared postcollection processing from tests of isolated parser/activation/handoff. No newer collector-runner changes or new production-failure evidence. Avoid another duplicate optional-test task."
+  },
+  "authoritative_control": {
+    "roadmap": "automation/supervisor_roadmap.md updated 2026-10-10 18:46 ICT",
+    "planner_A_latest_prior": "A-20261010-378cffe-integration-plateau-1556.json",
+    "planner_B_latest": "B-20261010-378cffe-hut8-abtc-overlap-plateau-1633.json PLATEAU",
+    "planner_C_latest": "C-20261010-378cffe-context-only-json-blocked-1711.json CONTINUE",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "absent_404",
+      "done": 16,
+      "failed": 16
+    },
+    "executor_reliability": "Unmitigated invalid structured JSON in C and B tasks, including B-20261010-strive-sec-treasury-1429-01; previous Kote tasks failed on PIT assertion, invalid JSON and Python syntax. No retry justified."
+  },
+  "validation": {
+    "method": "authoritative matching executor DONE/PASS",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_ESTABLISHED",
+    "exact_sha_check_runs": 0,
+    "exact_sha_commit_statuses": 0
+  },
+  "decision": {
+    "A": "PLATEAU",
+    "new_executor_task": "NONE",
+    "reason": "Production collector integration complete to available evidence; optional PIT coverage is test-only. Gemini JSON reliability unmitigated.",
+    "overall_promotion": "BLOCKED: C CONTINUE context_only provenance scoring eligibility defect, no independent validation, Supervisor NOT PLATEAU",
+    "private_promotion": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control planner_status write only; no Specialist code, main, private, Railway, prediction/API/broker/execution, secrets, workflows, schedules or promotion."
+}
