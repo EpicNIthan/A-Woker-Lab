@@ -1,0 +1,74 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-11T03:26:22+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "3808b190fcfb38ab113636d6c661264ae079e031",
+  "specialist_latest_commit": {
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "newer_commit": false
+  },
+  "authoritative_control": {
+    "branch": "worker-control",
+    "roadmap": "automation/supervisor_roadmap.md (2026-10-10 22:46 ICT)",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_absent",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_A": "A-20261010-378cffe-integration-plateau-2303.json PLATEAU (integration)",
+    "latest_B_prior": "B-20261010-378cffe-hive-fy2026-production-vs-stock-plateau-2027.json PLATEAU",
+    "latest_C": "C-20261011-378cffe-context-only-json-blocked-0215.json CONTINUE (quality)"
+  },
+  "validation": {
+    "method": "matching worker-control done executor result",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_validation": "NOT_ESTABLISHED",
+    "commit_statuses": 0
+  },
+  "candidate": {
+    "name": "Metaplanet October 5 2026 Bitcoin sale-and-reacquisition disclosure",
+    "first_party_index": "https://metaplanet.jp/en/disclosures",
+    "index_title": "Notice of Additional Purchase of Bitcoin (Including Sale and Reacquisition of Bitcoin to Demonstrate Liquidity)",
+    "index_date": "2026-10-05",
+    "third_party_reported_quantities_unverified_by_accessible_primary_payload": {
+      "btc_sold": 10000,
+      "btc_reacquired": 11000,
+      "net_btc": 1000,
+      "quarter_end_btc_stock": 44000
+    },
+    "criteria": {
+      "first_party_machine_readable": "PARTIAL: first-party HTML disclosure index is accessible, but accession-specific report PDF/HTML numeric payload was not recovered and parsed",
+      "immutable_event_report_block_identity": "FAIL: no verified immutable primary report URL/hash/document identity; index listing is mutable",
+      "economic_entity_scope": "PARTIAL: Metaplanet group identified, but sale/reacquisition and possible subsidiaries/financing arrangements not reconciled from primary",
+      "effective_clock": "PARTIAL: index date 2026-10-05; trade-by-trade effective timestamps not verified",
+      "available_clock": "PARTIAL: dated disclosure index only; exact first-publication timestamp and revisions unverified",
+      "observed_clock": "research-only 2026-10-11 03:26 ICT; no collector ingestion",
+      "non_overlap": "FAIL: reported 10k sale and 11k reacquisition are a round-trip, not independent 21k net purchasing capital; exchange-volume and existing treasury overlap not excluded",
+      "context_only": "REQUIRED: reported 44k BTC quarter-end treasury stock must never be directional scored"
+    },
+    "rejection": "Official Metaplanet disclosure index verifies a dated notice about BTC sale and reacquisition, but no accessible immutable first-party numeric report was verified in this audit. Secondary reports of 10,000 BTC sold and 11,000 reacquired cannot be promoted as first-party parsed evidence. Even if confirmed, gross legs cannot be added as independent capital flows; 44,000 BTC end-of-quarter treasury inventory is context-only. Exact trade identities/timestamps, publication revision clock, and non-overlap are unproven."
+  },
+  "executor_reliability": {
+    "status": "UNMITIGATED_INVALID_GEMINI_JSON",
+    "failed_task": "automation/executor_queue/failed/B-20261010-strive-sec-treasury-1429-01.json",
+    "action": "NO_RETRY"
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "promotion": "NONE; C CONTINUE and independent validation absent",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control planner_status only; no Specialist code, main/private, Railway, prediction/API/broker/execution/secrets, workflows/schedules or promotion."
+}
