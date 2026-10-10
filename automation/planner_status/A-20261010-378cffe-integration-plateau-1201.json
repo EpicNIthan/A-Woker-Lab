@@ -1,0 +1,58 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T12:01:19+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "evidence": {
+    "recent_commit": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "recent_changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "collector_runner_changed": false,
+    "authoritative_queue": {
+      "pending": 0,
+      "pending_directory": "absent",
+      "done": 16,
+      "failed": 15
+    },
+    "roadmap": "automation/supervisor_roadmap.md read at current worker-control HEAD 820bb7f421a336d94b79bac092682e45623e1485",
+    "planner_status_A_prior": "A-20261010-378cffe-optional-integration-plateau-0358.json",
+    "planner_status_C_latest": "C-20261010-378cffe-context-only-json-blocked-0811.json",
+    "exact_head_validation": {
+      "source": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+      "status": "PASS",
+      "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+      "required_tests": [
+        "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "independent_pytest": false
+    }
+  },
+  "integration": {
+    "default_collectors": "9/9 default live collectors have deterministic run_once coverage, consistent with prior audited inventory",
+    "optional_kote": "Production opt-in hook network && kote_enabled, shared archive/handoff/evidence_health processing; activation tests exist. Dedicated opt-in run_once -> archive -> handoff -> evidence_health -> PIT regression missing.",
+    "optional_glassnode": "Production opt-in hook network && glassnode_config, shared archive/handoff/evidence_health processing; dedicated opt-in run_once -> archive -> handoff -> evidence_health -> PIT regression missing.",
+    "classification": "Optional regression-test coverage incomplete; no new reproducible production defect demonstrated. Do not classify test absence as production failure.",
+    "pit_counter_caveat": "archive_records_loaded and scoring_records_loaded count stored history rather than replay-visible PIT records; assert replay through handoff."
+  },
+  "executor_reliability": {
+    "status": "UNMITIGATED_GEMINI_STRUCTURED_JSON",
+    "failed_kote_tasks": 3,
+    "failed_C_json_tasks": [
+      "C-20261009-context-only-tie-minimal-2252-01",
+      "C-20261009-context-only-metadata-tie-2315-01"
+    ],
+    "verified_mitigation": false
+  },
+  "decision": {
+    "new_task": "NONE",
+    "reason": "No promotion-blocking A production defect; do not blindly retry optional regression tasks while Gemini JSON remains unreliable",
+    "global_promotion": "BLOCKED by C CONTINUE equal-rank context_only scoring eligibility, missing independent validation and Supervisor PLATEAU",
+    "private_promotion": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY worker-control status file; no Specialist code, private/main, Railway, prediction/API, broker/execution, secrets, workflows or schedules"
+}
