@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-10T22:15:09+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "04236f038fc8312042b6ac2b5b614745daff0ef5",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_absent",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_A": "A-20261010-378cffe-integration-plateau-2058.json PLATEAU",
+    "latest_B": "B-20261010-378cffe-hive-fy2026-production-vs-stock-plateau-2027.json PLATEAU",
+    "previous_C": "C-20261010-378cffe-context-only-json-blocked-2116.json CONTINUE"
+  },
+  "specialist": {
+    "commit": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "newer_commit": false
+  },
+  "validation": {
+    "matching_executor": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_pytest": "NOT_ESTABLISHED",
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_workflow_runs": 0
+  },
+  "audit": {
+    "id": "EQUAL_RANK_CONTEXT_ONLY_PROVENANCE_TIE",
+    "source": "part2/capital_flow/normalization.py:156-163",
+    "repro": "Equal rank and value, same observation_id, provenance.context_only True versus False; sort key omits provenance, so stable sort preserves input arrival order and changes scoring eligibility.",
+    "regression": "Specific permutation test missing; no executable regression run this audit.",
+    "required_fix": "Fail closed on context_only=True; canonical provenance tie-break; cover both permutations, exact duplicates, later correction, preserve PIT and value conflict flags."
+  },
+  "executor_blocker": {
+    "status": "UNMITIGATED_INVALID_GEMINI_JSON",
+    "failed_tasks": [
+      "C-20261009-context-only-tie-minimal-2252-01: invalid escape",
+      "C-20261009-context-only-metadata-tie-2315-01: missing comma",
+      "B-20261010-strive-sec-treasury-1429-01: invalid escape"
+    ],
+    "prior": "C-20261009-context-only-equal-rank-1713-01 failed git diff --check",
+    "verified_reliability_mitigation": false
+  },
+  "decision": {
+    "new_executor_task": "NONE",
+    "reason": "No verified Gemini structured JSON mitigation; no duplicate retry.",
+    "A": "PLATEAU",
+    "B": "PLATEAU",
+    "C": "CONTINUE",
+    "supervisor": "NOT_PLATEAU",
+    "private_promotion": "BLOCKED"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; status file only on worker-control; no Specialist edits, main/private/Railway, prediction/API/broker/execution, secrets, workflows, schedules, or promotion."
+}
