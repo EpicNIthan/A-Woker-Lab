@@ -1,0 +1,59 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T20:58:03+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "evidence": {
+    "latest_specialist_commit": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "latest_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py (+39/-18)",
+      "part2/capital_flow/tests/test_contracts_normalization.py (+91/-0)"
+    ],
+    "collector_runner_changed": false,
+    "default_live_collectors": 9,
+    "default_run_once_tests": "Previously verified deterministic coverage for all nine; current HEAD retains same runner, but no independent pytest rerun.",
+    "optional_kote": "run_once network+kote_enabled branch collects and reports failures; rows enter common archive, handoff and evidence_health. Activation tests exist, but full opt-in run_once->archive->handoff->evidence_health->PIT regression is not proven.",
+    "optional_glassnode": "run_once network+glassnode_config branch collects and reports failures; rows enter common archive, handoff and evidence_health. PIT metadata/handoff tests exist, but complete opt-in end-to-end regression is not proven.",
+    "production_completeness": "No reproducible production collector integration failure on this HEAD. Optional paths exist and are opt-in; absent full integration tests are not proof of broken production behavior.",
+    "optional_test_coverage": "Kote and Glassnode opt-in end-to-end deterministic PIT regressions remain missing/unestablished; A classifies as non-promotion-blocking optional test coverage.",
+    "analysis_delta": "Rechecked exact HEAD commit/diff, current runner and test inventory against 18:56 A filing: no collector-runner changes or new production failure. Current runner appends optional observations to the same archive and uses loaded history for handoff and evidence_health; network=False cannot exercise opt-in paths. New 20:27 B HIVE assessment rejects a mining-production metric as independent directional flow, not an A integration defect."
+  },
+  "authoritative_control": {
+    "control_head_at_read": "9be24b44b72f1c7439bc0745b5bc92f4db5b3f52",
+    "roadmap": "automation/supervisor_roadmap.md (updated 2026-10-10 18:46 ICT)",
+    "prior_A": "A-20261010-378cffe-integration-plateau-1856.json",
+    "latest_B": "B-20261010-378cffe-hive-fy2026-production-vs-stock-plateau-2027.json PLATEAU",
+    "latest_C": "C-20261010-378cffe-context-only-json-blocked-1711.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "pending_directory": "absent"
+    },
+    "executor_reliability": "UNMITIGATED: malformed Gemini structured JSON in B Strive and two C tasks; older Kote tasks failed on PIT count assertion, malformed JSON and syntax. No identical retries."
+  },
+  "validation": {
+    "method": "matching worker-control executor done/PASS",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_pytest": "NOT_ESTABLISHED",
+    "exact_head_check_runs": 0,
+    "exact_head_commit_statuses": 0
+  },
+  "decision": {
+    "A": "PLATEAU",
+    "new_executor_task": "NONE",
+    "rationale": "No new reproducible A production defect. Optional end-to-end tests alone do not block A, and Gemini JSON reliability remains unmitigated.",
+    "overall_promotion": "BLOCKED: C context_only provenance tie changes scoring eligibility, independent validation absent, Supervisor approval absent",
+    "private_promotion": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; only worker-control planner_status creation. No Specialist code, private/main, Railway, prediction/API/broker/execution, secrets, workflows, schedules or promotion."
+}
