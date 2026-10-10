@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-10T15:56:33+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "29f934f1857e9cf45e4d87eb92ce749a64f751be",
+  "source_review": {
+    "latest_commit": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "latest_changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "latest_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "runner_changed_since_previous_review": false,
+    "runner_exact_sha": "part2/capital_flow/runner.py: _collect_live registers nine default collectors; run_once optional Kote and Glassnode branches append collected observations and share archive, handoff, evidence_health paths",
+    "source_coverage": "Nine default live collectors previously verified deterministic run_once coverage; current HEAD does not modify runner or default integration tests",
+    "optional_kote": "Hook/activation tests exist; no complete deterministic opt-in run_once -> archive -> handoff -> evidence_health -> PIT regression; no demonstrated production failure",
+    "optional_glassnode": "Opt-in collector hook exists; complete deterministic opt-in run_once -> archive -> handoff -> evidence_health -> PIT regression not established; no demonstrated production failure",
+    "production_completeness": "No new promotion-blocking Planner A production integration defect found",
+    "optional_test_coverage": "Incomplete; not equivalent to production integration failure",
+    "scope_limit": "No independent live provider execution or fresh pytest run claimed"
+  },
+  "authoritative_control": {
+    "roadmap": "automation/supervisor_roadmap.md, published 2026-10-10 07:55 ICT; stale queue count 15 failed",
+    "planner_A_latest_prior": "A-20261010-378cffe-integration-plateau-1401.json",
+    "planner_B_latest": "B-20261010-378cffe-circle-cctp-v2-plateau-0828.json PLATEAU",
+    "planner_C_latest": "C-20261010-378cffe-context-only-json-blocked-1416.json CONTINUE",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "absent_404",
+      "done": 16,
+      "failed": 16
+    },
+    "queue_change_since_previous_A_filing": "B-20261010-strive-sec-treasury-1429-01 FAILED: Gemini invalid JSON escape; no Specialist commit, not a production defect in existing collectors",
+    "executor_reliability": "Unmitigated Gemini malformed JSON across C and B tasks; prior Kote tasks failed incorrect historical PIT assertion, malformed JSON or generated Python syntax; no retry justified"
+  },
+  "validation": {
+    "method": "authoritative matching executor DONE/PASS",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "executor_status": "PASS",
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_check_runs": 0,
+    "independent_exact_sha_pytest": "NOT_ESTABLISHED"
+  },
+  "decision": {
+    "A": "PLATEAU",
+    "new_executor_task": "NONE",
+    "reason": "All default collectors covered; optional Kote/Glassnode missing PIT integration regression is test-only without proven production defect. Gemini JSON reliability worsened (failed 16 vs prior 15); do not enqueue more.",
+    "overall_promotion": "BLOCKED: C CONTINUE on context_only scoring-eligibility tie, no independent validation, Supervisor NOT PLATEAU",
+    "private_promotion": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; write worker-control planner_status only. No main/private/Railway/prediction/API/broker/execution/secrets/workflows/schedules."
+}
