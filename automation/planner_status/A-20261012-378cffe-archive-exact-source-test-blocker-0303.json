@@ -1,0 +1,99 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T03:03:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "72e1ee6583e94da775d4be313c03876e67f09194",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_last_audit": "2026-10-11 07:51 ICT; historical, not current authority",
+    "planner_status": {
+      "A": "A-20261011-378cffe-archive-cross-run-suppression-1605.json CONTINUE",
+      "B": "B-20261011-378cffe-cleanspark-sep2026-options-vs-spot-plateau-2026.json PLATEAU",
+      "C": "C-20261012-378cffe-production-path-divergence-0217.json CONTINUE"
+    },
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "enumerated_on": "worker-control"
+    }
+  },
+  "recent_specialist_commits": {
+    "head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "head_date_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "head_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "no_new_specialist_commit": true,
+    "inert_specialist_automation": "IGNORED"
+  },
+  "exact_sha_validation": {
+    "method": "authoritative bounded Gemini executor done task",
+    "file": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "tests_declared": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_RUN"
+  },
+  "audit": {
+    "evidence_level": "Exact public source files inspected at matching branch/commit; static source-chain finding, NOT production runtime reproduction, occurrence UNKNOWN.",
+    "files_and_blob_sha": {
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/providers.py": "072581823a815c124d8629afd678196e86fe8840",
+      "part2/capital_flow/tests/test_providers_replay.py": "f31d5467e6962e0c2f0159ae34418ba7f7ac3a16",
+      "part2/capital_flow/tests/test_semantic_audit.py": "4c67fe564f559d1f708b251d96a526efd7bcf316",
+      "part2/capital_flow/evidence_health.py": "22c9fba1aa253a4948d51be191ca0fa3983c1f7f"
+    },
+    "source_path": [
+      "contracts.FlowObservation.observation_id hashes identity/value/clock/revision but not provenance.context_only, data_quality or quality_flags",
+      "providers.JsonlFlowAdapter.collect accepts parsed rows without metadata conflict resolution",
+      "runner.run_once(network=False,external_jsonl=[...]) collects external JSONL and reports successful collector attempt before archive append",
+      "storage.append_observations loads bounded existing archive and computes seen IDs; for seen ID it continues before _semantic_signature check",
+      "runner reloads archive; _scoring_history removes context_only; engine, handoff and evidence_health use retained archive, not rejected metadata",
+      "runner has no append conflict diagnostic; evidence_health consumes source_errors/collection_attempts but not semantic conflict counts"
+    ],
+    "test_gap": "test_providers_replay.py tests exact duplicate and legitimate revision, test_semantic_audit.py tests single external_jsonl run_once, test_evidence_health.py tests context-only freshness; none establishes same-ID conflicting metadata across two JSONL orders or repeated run_once.",
+    "proposed_full_repo_test": {
+      "command": "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_semantic_audit.py part2/capital_flow/tests/test_evidence_health.py && python -m pytest -q part2/capital_flow/tests",
+      "setup": "Use isolated tempfile.TemporaryDirectory per permutation; construct two FlowObservation.to_dict JSONL rows with same identity, value, revision, effective/available/observed clocks but provenance.context_only true vs false, and data_quality 0.82 vs 0.98. Use real run_once(network=False, external_jsonl=[fixture], local_dir=tempdir, as_of_ms=after_available_at). Repeat with row order reversed and separate sequential runs; inspect observations.jsonl, scoring_records_loaded, anata_output.evidence_health, audit_latest.json, anata_latest.json.",
+      "controls": [
+        "exact identical duplicate is idempotent",
+        "quality-only conflicting metadata",
+        "context-only conflicting metadata",
+        "both row permutations",
+        "two sequential run_once calls with same local_dir",
+        "PIT as_of before available_at must not score",
+        "later legitimate revision replay remains legal"
+      ],
+      "expected_from_source_not_executed": "First same-ID row retained; conflicting second skipped without error; order may affect scoring eligibility, quality, health. Must verify against real imports; do not label as full-production proof."
+    },
+    "blocker": {
+      "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening refs/heads/worker-control",
+      "environment": "isolated local container",
+      "error": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+      "effect": "Cannot checkout full repository or run exact-SHA repository pytest here. GitHub connector can fetch source but cannot execute repository tests."
+    },
+    "distinct_from_C": "A archive same-ID short-circuit happens before C normalization equal-rank context_only tie; a C-only normalization repair cannot recover dropped metadata.",
+    "future_repair": "Gemini-only after verified structured JSON mitigation. Detect same-ID semantic conflict using ID->signature, not latest revision signature; preserve exact duplicates, historical revision replay and PIT. Fail closed with observable runner audit/health diagnostic, no blind observation_id hash change."
+  },
+  "executor": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "new_task_enqueued": false,
+    "reason": "16 prior failures and malformed Gemini structured JSON; no repeat task without verified mitigation"
+  },
+  "promotion": "BLOCKED: A and C CONTINUE; independent Supervisor PLATEAU absent",
+  "scope": "PUBLIC_ONLY; ONLY worker-control planner status write; no Specialist/main/private/Railway/workflow/schedule/secret/prediction/API/broker/execution modifications"
+}
