@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-11T13:01:35+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "93de77135edf3006c5b785145acad4cd7bd7d632",
+    "roadmap": "automation/supervisor_roadmap.md (2026-10-11 07:51 ICT)",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_absent",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_successful_A": "A-20261011-378cffe-offline-optin-telemetry-0801.json"
+  },
+  "recent_specialist_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_changes": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "runner_changed": false
+  },
+  "integration_evidence": {
+    "default_collectors": "runner.py:37-47 registers 9 live collectors; previously established deterministic run_once coverage for 9/9; not independently rerun this audit.",
+    "optional_collectors": "runner.py:82-108 gates Kote/Glassnode behind network and opt-in. Kote collects partial rows/errors, Glassnode collection is all-or-nothing on exception. runner.py:120-137 archives, reloads, builds scoring, handoff and evidence_health. test_kote_activation.py covers activation/parser and context_only, test_v1_handoff.py covers Glassnode PIT/handoff, test_evidence_health.py uses offline run_once; complete opt-in run_once->archive->handoff->evidence_health->PIT regression remains unverified and alone is optional test coverage, not a proven optional production failure.",
+    "new_defect": "ARCHIVE_PROVENANCE_ID_COLLISION: contracts.py:219-235 observation_id hashes identity/value/clocks/revision but omits provenance.context_only. storage.py:65,72 skips a same-observation_id row before computing _semantic_signature at line 74, even though _semantic_signature at lines 95-106 includes provenance. Thus identical economic row/clock with changed context_only metadata is discarded without conflict detection; first archived copy determines downstream scoring eligibility. This is a source-established persistence defect distinct from C's normalization.py:156-163 equal-rank tie. Real-provider occurrence not established; deterministic regression not independently executed.",
+    "reproduction": "Construct FlowObservation A and B identical in all observation_id inputs but with provenance={'context_only':True} vs False. Verify A.observation_id==B.observation_id; append A then B into tmp archive; reverse in another archive. The second append returns 0 because of seen-ID guard; each archive retains its first context_only state, and runner._scoring_history differs. Include both within-batch and cross-call variants, and later legitimate corrections. Expected safe behavior: detect conflicting scoring metadata, fail closed/flag rather than silently make eligibility insertion-order dependent. Never backdate availability.",
+    "test_gap": "test_providers_replay.py:78-95 only checks identical ID exact-duplicate suppression; :112-132 checks value revision with differing IDs. No provenance-only same-ID semantic correction regression identified.",
+    "severity": "Production archive logic has deterministic silent metadata loss for the described input. Whether any current provider produces that conflicting pair is unknown; not evidence of a Kote/Glassnode production incident."
+  },
+  "validation": {
+    "method": "matching bounded executor done-task PASS",
+    "file": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_pytest": "NOT_ESTABLISHED"
+  },
+  "executor_reliability": {
+    "status": "UNMITIGATED_INVALID_GEMINI_JSON",
+    "new_task": "NONE",
+    "reason": "Do not retry failed Kote/C JSON tasks or queue new Gemini work before structured-output mitigation verified."
+  },
+  "decision": {
+    "A": "CONTINUE: archive provenance collision",
+    "optional_full_chain": "COVERAGE_GAP_NOT_INDEPENDENTLY_PROMOTION_BLOCKING",
+    "C": "CONTINUE: equal-rank context_only metadata tie",
+    "overall_promotion": "BLOCKED",
+    "private_promotion": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; write status only on worker-control; no Specialist code, main/private, Railway, prediction/API/broker/execution, secrets, workflows or schedules"
+}
