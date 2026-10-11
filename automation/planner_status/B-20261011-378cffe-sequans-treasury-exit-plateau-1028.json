@@ -1,0 +1,80 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-11T10:28:08+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "2bc2b95a83b23e5f5bce0b991ea474369e43a94b",
+  "specialist_latest_commit": {
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "newer_commit": false
+  },
+  "authoritative_control": {
+    "branch": "worker-control",
+    "roadmap": "automation/supervisor_roadmap.md (last updated 2026-10-11 07:51 ICT)",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404 ABSENT (direct fetch)",
+      "done": 16,
+      "failed": 16,
+      "counts_basis": "Latest filed B status and supervisor roadmap; directory fetch does not list contents"
+    },
+    "latest_A": "A-20261011-378cffe-offline-optin-telemetry-0801.json PLATEAU (integration lane)",
+    "latest_B_prior": "B-20261011-378cffe-canaan-6k-treasury-monetization-plateau-0930.json PLATEAU (source breadth)",
+    "latest_C": "C-20261011-378cffe-context-only-json-blocked-0615.json CONTINUE (quality lane)"
+  },
+  "validation": {
+    "method": "matching authoritative done-task executor result",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_ESTABLISHED"
+  },
+  "candidate": {
+    "name": "Sequans Communications S.A. September 2026 final Bitcoin treasury exit, SEC Form 6-K Exhibit 99.1",
+    "issuer": "Sequans Communications S.A.",
+    "cik": "0001383395",
+    "accession": "0001383395-26-000110",
+    "primary_index": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000110/0001383395-26-000110-index.htm",
+    "primary_filing": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000110/form6k-2026xseptemberbitco.htm",
+    "primary_exhibit": "https://www.sec.gov/Archives/edgar/data/1383395/000138339526000110/septemberbitcointreasuryex.htm",
+    "primary_reproduction": "Read accession index accepted 2026-09-24 06:02:06 ET, filing explanatory note, and Exhibit 99.1 headline and highlights (September 24 2026).",
+    "source_facts": {
+      "btc_reported_sold_remaining": 314,
+      "stock_reference_as_of": "2026-06-30",
+      "event": "Company announced final sale of its remaining 314 BTC held as of June 30, completing treasury exit; no cryptocurrency holdings on balance sheet at announcement",
+      "prior_debt_redemption": "May 2026; distinct financing step, not a second BTC sale"
+    },
+    "criteria": {
+      "first_party_machine_readable": "PASS: SEC issuer-filed HTML 6-K and Exhibit 99.1; text and quantity parseable",
+      "immutable_report_identity": "PASS: accession-specific SEC index and archived exhibit",
+      "economic_entity_scope": "PASS for issuer-level treasury exit; venue/counterparty execution scope absent",
+      "effective_clock": "PARTIAL: June 30 stock reference and sale completed by September 24 release, no individual trade date or execution times",
+      "available_clock": "PASS for conservative SEC acceptance anchor 2026-09-24 06:02:06 ET; earlier availability not asserted",
+      "observed_clock": "RESEARCH_ONLY 2026-10-11 10:28 ICT; historical collector observed_at unverified",
+      "non_overlap": "FAIL: 314 BTC issuer sale has no venue, fill IDs, counterparty or trade timestamps; cannot establish independence from existing exchange volume or earlier treasury-sale disclosures",
+      "context_only": "REQUIRED: former 314 BTC treasury stock and current zero BTC are nondirectional inventory snapshots, not fresh standalone buy/sell pressure"
+    },
+    "rejection": "Despite first-party accession and reported final 314 BTC disposal, there is no transaction-level time/identity or proven non-overlap. Do not assign the 314 BTC to September 24 trading, double-count earlier debt-related sales, or treat inventory reduction/zero balance as independent directional flow. Historical observed_at cannot be reconstructed from this retrospective review. No new production source qualifies."
+  },
+  "executor_reliability": {
+    "status": "UNMITIGATED_INVALID_GEMINI_JSON",
+    "failed_task": "automation/executor_queue/failed/B-20261010-strive-sec-treasury-1429-01.json",
+    "action": "NO_RETRY"
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "promotion": "NONE: C CONTINUE and independent exact-SHA pytest not established",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control planner_status only. No Specialist edits, private/main, Railway, prediction/API/broker/execution/secrets, workflows/schedules or promotion"
+}
