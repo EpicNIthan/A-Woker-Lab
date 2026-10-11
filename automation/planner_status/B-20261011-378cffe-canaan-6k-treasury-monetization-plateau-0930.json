@@ -1,0 +1,82 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-11T09:30:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_read": "4f16a962a272ea3390d190eff60a884c618ad2b4",
+  "specialist_latest_commit": {
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "newer_commit": false
+  },
+  "authoritative_control": {
+    "branch": "worker-control",
+    "roadmap": "automation/supervisor_roadmap.md (2026-10-11 07:51 ICT)",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "ABSENT",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_A": "A-20261011-378cffe-offline-optin-telemetry-0801.json PLATEAU (integration lane)",
+    "latest_B_prior": "B-20261011-378cffe-metaplanet-roundtrip-plateau-0326.json PLATEAU (source breadth lane)",
+    "latest_C": "C-20261011-378cffe-context-only-json-blocked-0615.json CONTINUE (quality lane)"
+  },
+  "validation": {
+    "method": "matching authoritative done-task executor result",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_ESTABLISHED"
+  },
+  "candidate": {
+    "name": "Canaan Inc. August 2026 bitcoin mining, treasury monetization and ADS buyback, SEC Form 6-K",
+    "issuer": "Canaan Inc.",
+    "cik": "0001780652",
+    "accession": "0001104659-26-107320",
+    "primary_index": "https://www.sec.gov/Archives/edgar/data/1780652/000110465926107320/0001104659-26-107320-index.html",
+    "primary_exhibit": "https://www.sec.gov/Archives/edgar/data/1780652/000110465926107320/tm2625372d1_ex99-1.htm",
+    "primary_reproduction": "Read SEC index accession and acceptance 2026-09-14 09:15:04 ET; read exhibit 99.1 paragraphs 'Management Commentary', 'August 2026 Bitcoin Mining Updates', footnote 1, and 'Recent Corporate Updates'.",
+    "source_facts": {
+      "btc_mined_august_2026": 44,
+      "btc_sold_late_august_2026": 54,
+      "eth_sold_late_august_2026": 3952,
+      "btc_treasury_stock_as_of_august_31_2026": 1868,
+      "usd_cash_proceeds_combined_approx": 13900000,
+      "ads_repurchased_approx": 13600000,
+      "usd_used_for_ads_buyback_approx": 5400000,
+      "notes": "Treasury balance includes receivables and excludes customer deposits; JV mining metrics separately stated and excluded from reported bitcoin production."
+    },
+    "criteria": {
+      "first_party_machine_readable": "PASS: issuer-signed SEC 6-K Exhibit 99.1 HTML accessible, with parsable reported figures",
+      "immutable_report_identity": "PASS: SEC accession 0001104659-26-107320 and accession-specific exhibit path",
+      "economic_entity_scope": "PARTIAL: issuer treasury and reported non-JV mining defined; 49% JV operations separate, custody/receivables not transaction-attributed",
+      "effective_clock": "PARTIAL: month-end stock 2026-08-31, August production and late-August sale window; no individual BTC/ETH trade timestamps",
+      "available_clock": "PASS for conservative SEC publication anchor 2026-09-14 09:15:04 ET (acceptance); earlier press release time not assumed as verified ingestion",
+      "observed_clock": "RESEARCH_ONLY 2026-10-11 09:30 ICT; no actual historical collector observation timestamp established",
+      "non_overlap": "FAIL: 54 BTC and 3952 ETH sales lack execution IDs, exchange venue or trade timestamps, cannot be distinguished from existing market volume; 44 mined and 1868 treasury stock are different economic concepts and not additive capital inflow",
+      "context_only": "REQUIRED: 1868 BTC balance and mined inventory are nondirectional custody/production context, not independent purchase signal"
+    },
+    "rejection": "First-party immutable filing confirms Canaan monetized 54 BTC and 3952 ETH and reported 44 BTC production and 1868 BTC stock, but exact trade IDs/times, observed-at PIT collection clock and non-overlap are absent. Cash proceeds funded ADS repurchases, not demonstrable new Bitcoin capital. Holdings include receivables and are context_only. Do not count the sale separately from existing market-volume observations or count mining/treasury as fresh directional flow."
+  },
+  "executor_reliability": {
+    "status": "UNMITIGATED_INVALID_GEMINI_JSON",
+    "failed_task": "automation/executor_queue/failed/B-20261010-strive-sec-treasury-1429-01.json",
+    "action": "NO_RETRY"
+  },
+  "action": "NO_TASK_ENQUEUED",
+  "promotion": "NONE: C CONTINUE, independent exact-SHA pytest not established",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; worker-control planner_status only; no Specialist code, private/main, Railway, prediction/API/broker/execution/secrets, workflows/schedules or promotion"
+}
