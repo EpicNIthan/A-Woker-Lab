@@ -1,0 +1,120 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T02:17:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "9a8101d71c67c0eaf19a45c4a3c4cc7808d0b9d9",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_audit_is_historical": true,
+    "planner_status": {
+      "A": "CONTINUE; A-20261011-378cffe-archive-cross-run-suppression-1605.json",
+      "B": "PLATEAU; B-20261011-378cffe-cleanspark-sep2026-options-vs-spot-plateau-2026.json",
+      "C_previous": "CONTINUE; C-20261011-378cffe-context-flag-loss-source-proof-2212.json"
+    },
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "source": "independent worker-control directory enumeration; JSON tasks only"
+    }
+  },
+  "specialist_recent": {
+    "head_commit_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "head_changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "new_commits_since_last_filing": 0,
+    "inert_specialist_automation": "ignored"
+  },
+  "validation": {
+    "method": "matching bounded Gemini executor done-task PASS",
+    "record": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_RUN; local git checkout failed DNS github.com"
+  },
+  "quality_evidence": {
+    "new_production_path_finding": "Two distinct production consumers handle context_only differently: runner.run_once filters context_only before engine normalization, while build_anata_handoff independently normalizes full history before role classification. Equal-rank metadata collisions reaching the latter can toggle handoff scoring/context role and source diagnostics, but this alone does not establish changed runner frame scoring.",
+    "exact_sha_blobs": {
+      "normalization": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+      "contracts": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "engine": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "handoff": "source fetched at exact head",
+      "runner": "source fetched at exact head",
+      "focused_tests": "8bfd0557050ac72a5e45bace98460d536b789e52"
+    },
+    "source_chain": [
+      "contracts.py:215-238 observation_id hashes identity/clocks/revision/value, excludes provenance/data_quality/quality_flags; revision_key includes asset",
+      "normalization.py:145-176 same-rank same-value tie uses (observation_id,value) only and flags value differences, not metadata conflicts",
+      "runner.py:59-60 _scoring_history excludes provenance.context_only; runner.py:122-140 archive -> scoring_history -> CapitalFlowEngineV11.build(scoring_history) and separately build_anata_handoff(frame, history)",
+      "engine.py:126-131 point_in_time_filter then normalize_and_dedup",
+      "handoff.py:25-31 _visible_normalized calls PIT -> normalize_and_dedup on unfiltered observations; handoff.py:305-309 applies to raw history",
+      "handoff.py:238-273 _family_support classifies scoring vs context using selected provenance; handoff.py:278-299 _causal_metadata uses selected scoring-only rows; handoff.py:42-114 source_evidence derives selected quality_flags",
+      "storage.py archive same-observation-id suppression is separate upstream A issue; a normal run_once may discard the second collision before C selection, so live occurrence or changed frame scoring is NOT established"
+    ],
+    "defect": "equal-rank same-value same-record differing provenance.context_only, data_quality, quality_flags can choose input-order-dependent winner with no metadata conflict flag",
+    "proof_levels": {
+      "source": "exact SHA independently fetched",
+      "prior_isolated_reproduction": "faithful Python transcription, not repository import",
+      "exact_repo_pytest": "NOT_ESTABLISHED",
+      "live_occurrence": "NOT_ESTABLISHED",
+      "production_path": "static exact-SHA source-chain verification, not runtime execution"
+    },
+    "regression_feasibility": {
+      "existing_fixtures": "test_contracts_normalization.py obs(**overrides), both-permutation, identical duplicate, later correction, PIT and BTC/ETH controls",
+      "targeted_new_tests": [
+        "both equal-rank permutations: deterministic context_only fail-closed selection, metadata-conflict flag and preexisting SOURCE_UNVERIFIED retained",
+        "exact duplicates: no false metadata conflict",
+        "later correction and PIT cutoff: newer available correction wins only after availability",
+        "BTC and ETH distinct, economic value and event duplicate semantics unchanged",
+        "direct handoff source_evidence/family_support/causal_metadata roles remain deterministic when colliding rows reach normalize_and_dedup"
+      ],
+      "execution": "test feasibility source-verified; no exact-repo pytest run"
+    }
+  },
+  "executor_blocker": {
+    "status": "UNMITIGATED_GEMINI_STRUCTURED_JSON",
+    "failed_tasks": [
+      "C-20261009-context-only-tie-minimal-2252-01: invalid JSON escape",
+      "C-20261009-context-only-metadata-tie-2315-01: missing JSON comma"
+    ],
+    "earlier_failure": "git diff --check",
+    "verified_mitigation": false,
+    "new_task_enqueued": false,
+    "reason": "repeated near-identical Gemini task prohibited until independently verified structured JSON reliability"
+  },
+  "future_repair": {
+    "gate": "verified JSON mitigation AND fresh exact SHA AND pending empty",
+    "schema": "anata-gemini-task-v1",
+    "max_tasks": 1,
+    "max_attempts": 2,
+    "read_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/contracts.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "write_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "post_enqueue": "verify immediate push-triggered Gemini Specialist Executor Queue"
+  },
+  "promotion": "BLOCKED; A and C CONTINUE, independent Supervisor PLATEAU absent",
+  "scope": "PUBLIC worker-control planner-status file only; no Specialist code, main/private, Railway, workflows, schedules, secrets, prediction/API/broker/execution changes"
+}
