@@ -1,0 +1,113 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-11T16:05:07+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "9d537655e8699938cdc1ea8e847e472830ebc5bc",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "planner_status_latest_A": "A-20261011-378cffe-archive-eligibility-quality-repro-1404.json",
+    "planner_status_latest_C": "C-20261011-378cffe-context-only-json-blocked-1510.json",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "absent_404",
+      "done": 16,
+      "failed": 16,
+      "source": "independently enumerated worker-control directory contents"
+    }
+  },
+  "recent_commits": {
+    "head_message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "head_date_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "head_changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "automation_files_on_specialist": "IGNORED_INERT"
+  },
+  "validation": {
+    "method": "matching bounded executor done-task PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_head_pytest": "NOT_ESTABLISHED"
+  },
+  "integration": {
+    "default_collectors": "Nine network default collectors registered in runner.py; previous deterministic run_once 9/9 coverage retained, not independently rerun here.",
+    "optional_kote_glassnode": "Fresh runner.py and test_kote_activation.py/test_v1_handoff.py/test_evidence_health.py review: Kote and Glassnode are network-only opt-ins; partial Kote errors preserve collected rows; Glassnode exceptions do not append its attempt rows. Full optional run_once->archive->handoff->evidence_health->PIT regression unverified; optional coverage gap alone is not a demonstrated production defect.",
+    "new_evidence": {
+      "id": "ARCHIVE_SEEN_ID_PREEMPTS_SEMANTIC_CONFLICT_ACROSS_BATCHES",
+      "source_chain": [
+        "contracts.py:219-236 observation_id SHA256 payload includes value/identity/clocks/revision but omits provenance.context_only and data_quality",
+        "contracts.py:274-317 from_dict parses provenance and data_quality and recomputes observation_id instead of trusting supplied ID",
+        "providers.py:321-342 JsonlFlowAdapter.collect returns each valid row in input order",
+        "runner.py:110-123 network=False still ingests external_jsonl, appends archive, reloads and excludes context_only from scoring",
+        "storage.py:64-82 seen observation_id check executes before _semantic_signature, so same-ID conflicting metadata is silently discarded even on a later run_once",
+        "storage.py:94-108 semantic signature includes data_quality and provenance but is never consulted for seen-ID conflicts",
+        "runner.py:136-153 builds handoff and evidence_health from already-truncated archive, reports successful JSONL collection attempt without archive semantic-conflict error"
+      ],
+      "isolated_reproduction": {
+        "method": "Independent Python isolated faithful transcription of exact observed ID hashing, semantic signature, JSONL read/write and append seen-ID short-circuit; NOT full-repository imports or exact-SHA pytest",
+        "fixture": "same source/record/metric/value/available/observed/revision; context_only True quality .82 vs False quality .98; correct schema cf-observation-v1",
+        "shared_observation_id": "c7dc5ae4774c5994e2d60fe9",
+        "same_batch_context_first": {
+          "input_rows": 2,
+          "appended": 1,
+          "archive_rows": 1,
+          "scoring_rows": 0,
+          "stored_quality": 0.82
+        },
+        "same_batch_scoring_first": {
+          "input_rows": 2,
+          "appended": 1,
+          "archive_rows": 1,
+          "scoring_rows": 1,
+          "stored_quality": 0.98
+        },
+        "exact_duplicate": {
+          "input_rows": 2,
+          "appended": 1,
+          "archive_rows": 1
+        },
+        "quality_only_permutations": {
+          "first_low": 0.82,
+          "first_high": 0.98,
+          "scoring_rows_both": 1
+        },
+        "cross_run": {
+          "first_context_only_append": 1,
+          "second_scoring_append": 0,
+          "final_archive_count": 1
+        },
+        "production_occurrence": "UNKNOWN; no evidence default or optional providers currently emit this collision"
+      },
+      "distinct_from_C": "C normalization equal-rank metadata tie concerns conflicting rows that reach normalize_and_dedup; A archive short-circuit can discard the second row BEFORE normalization, so C-only repair cannot fix A.",
+      "full_repo_reproduction": "NOT_RUN: public repository checkout unavailable in local sandbox (git ls-remote failed DNS github.com); GitHub connector supports source reads but not executing repo pytest. No Specialist files edited.",
+      "proposed_deterministic_test": "In temporary directories, use real run_once(network=False, external_jsonl=[fixture], as_of_ms=after_available_at) with both JSONL permutations and two sequential runs; assert archive metadata conflict is reported/rejected fail-closed, exact duplicate remains idempotent, quality-only conflict detected, pre-availability PIT remains invisible, and scoring/handoff/evidence_health never silently adopt ingestion order.",
+      "repair": "Detect same-ID semantic conflicts before continue; fail closed or explicitly flag conflict without rewriting past PIT availability. Preserve legitimate revisions and exact duplicate dedup; do NOT blindly add metadata to observation_id hash."
+    }
+  },
+  "executor_reliability": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "evidence": "Recent C planner 15:10 reports invalid Gemini JSON still unmitigated",
+    "new_task": "NONE",
+    "reason": "Pending empty but structured JSON reliability not verified; no repetitive failed Kote/C task"
+  },
+  "decision": {
+    "A": "CONTINUE: source-established archive conflict with isolated deterministic JSONL and cross-run reproduction; full repo test outstanding",
+    "C": "CONTINUE: separate equal-rank context_only tie",
+    "optional": "TEST_COVERAGE_GAP_NOT_STANDALONE_BLOCKER",
+    "promotion": "BLOCKED",
+    "private_promotion": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; status filing on worker-control only; no Specialist/main/private/Railway/prediction/API/broker/execution/secrets/workflows/schedules edits."
+}
