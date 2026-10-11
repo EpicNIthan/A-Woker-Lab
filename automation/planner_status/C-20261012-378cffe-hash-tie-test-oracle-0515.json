@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T05:15:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "a290c8ec5ee23416ff437dde694ca28990fc4b8b",
+    "roadmap": "automation/supervisor_roadmap.md (last audit 2026-10-11 07:51 ICT; superseded by current planner_status)",
+    "latest_A": "A-20261012-378cffe-archive-exact-source-test-blocker-0303.json CONTINUE",
+    "latest_B": "B-20261011-378cffe-cleanspark-sep2026-options-vs-spot-plateau-2026.json PLATEAU",
+    "latest_C_prior": "C-20261012-378cffe-health-handoff-role-consistency-0310.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "counts": "enumerated on worker-control"
+    }
+  },
+  "specialist": {
+    "head_commit_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "head_diff_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "recent_commits": [
+      "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "b18dda2930232fb55dc98486dd054a2f4abdcfa3"
+    ],
+    "inert_specialist_automation": "IGNORED"
+  },
+  "exact_sha_validation": {
+    "record": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result_status": "PASS",
+    "executor_result_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_RUN: git ls-remote public repository failed Could not resolve host github.com"
+  },
+  "new_evidence": {
+    "finding": "Current equal-rank conflicting-value regression has a non-general test oracle: test_contracts_normalization.py:171-173 asserts min(value) is selected, but normalization.py:156-163 sorts primarily by observation_id (SHA-256 digest), not numeric value. The test passes for its one 100/200 pair by coincidence. It is not a valid invariant for arbitrary conflicting values; this is separate from the context_only metadata tie.",
+    "source_blobs": {
+      "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/tests/test_contracts_normalization.py": "8bfd0557050ac72a5e45bace98460d536b789e52"
+    },
+    "reproduction": {
+      "method": "Independently executed hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()[:24] using exact-SHA contracts.py observation_id payload fields and test obs defaults; isolated hash execution, NOT exact-repo pytest.",
+      "shared_fields": "schema cf-observation-v1, etf/net_flow_usd/BTC/USD_MILLIONS, effective_at_ms=86400000, available_at_ms=observed_at_ms=86401000, source=src, source_record_id=rec, revision=1",
+      "value_100_observation_id": "79065e51f09ab782176b9adf",
+      "value_201_observation_id": "3dde42e3db2461935cfce875",
+      "selection": "value 201.0 sorts before 100.0 because 3dde < 7906; min(value)=100.0 would be incorrect for this pair.",
+      "limitation": "Hash result reproduces actual hash formula with transcribed payload; no repository import or pytest was executed."
+    },
+    "production_path": "contracts.observation_id omits provenance.context_only, data_quality and quality_flags. select_latest_revisions uses (observation_id,value) and flags only differing economic values. handoff._visible_normalized invokes normalize_and_dedup before _family_support and _source_evidence role classification. runner archive append_observations first suppresses identical observation IDs; this separate A defect limits production reachability of C collision.",
+    "core_C_defect": "Same-value, same-rank, same-record candidates differing in context_only, data_quality or SOURCE_UNVERIFIED still have equal sort keys and no metadata conflict marker. Arrival order can alter normalized handoff role/flags; no claim of live scoring change.",
+    "test_feasibility": "Existing obs(**overrides) factory in test_contracts_normalization.py supports provenance, quality_flags, data_quality and both permutations. Future Gemini regression should assert order-independent fail-closed metadata handling and flag preservation, not an unsupported universal min(value) winner; include identical duplicates, later corrections, PIT, BTC/ETH separation and value conflicts. Keep write scope limited to normalization.py and focused test file.",
+    "proof_level": "Exact-SHA source inspection plus independently executed hash-algorithm transcription. NOT full-repository pytest, NOT live occurrence."
+  },
+  "executor": {
+    "json_mitigation": "NOT_VERIFIED",
+    "prior_failures": {
+      "C-20261009-context-only-tie-minimal-2252-01": "Invalid JSON escape",
+      "C-20261009-context-only-metadata-tie-2315-01": "Expecting comma delimiter"
+    },
+    "task_enqueued": false,
+    "reason": "No verified structured-output reliability mitigation; do not recycle failed task."
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor PLATEAU absent.",
+  "scope": "PUBLIC_ONLY; planner_status write on worker-control only; no Specialist code, either main, private, Railway, workflows, schedules, secrets, prediction/API/broker/execution modifications"
+}
