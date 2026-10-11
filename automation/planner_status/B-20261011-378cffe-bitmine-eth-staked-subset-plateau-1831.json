@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-11T18:31:52+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "ef831044f97110f543df6e85d0864479e2343536",
+    "roadmap": "automation/supervisor_roadmap.md (last edited 2026-10-11 07:51 ICT; older A/B/C statuses superseded by planner_status)",
+    "latest_A": "A-20261011-378cffe-archive-eligibility-quality-repro-1404.json CONTINUE",
+    "latest_B_prior": "B-20261011-378cffe-sequans-treasury-exit-plateau-1028.json PLATEAU",
+    "latest_C": "C-20261011-378cffe-context-only-json-blocked-1510.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 ABSENT on worker-control",
+      "done": 16,
+      "failed": 16,
+      "counts": "independently enumerated via worker-control directory listing"
+    }
+  },
+  "specialist_recent": {
+    "head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "committed_at_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "changed_files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "recent_previous_commits": [
+      "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "b18dda2930232fb55dc98486dd054a2f4abdcfa3",
+      "9549675340a0f4d8ed5b39336a0a97293c7fa121"
+    ],
+    "inert_specialist_automation_files": "ignored"
+  },
+  "validation": {
+    "method": "matching bounded executor done-task PASS",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result_status": "PASS",
+    "executor_result_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_ESTABLISHED"
+  },
+  "candidate": {
+    "name": "Bitmine Immersion Technologies October 5 2026 SEC 8-K Exhibit 99.1 ETH treasury holdings and staking subset",
+    "issuer": "Bitmine Immersion Technologies, Inc.",
+    "cik": "0001829311",
+    "accession": "0001493152-26-045699",
+    "primary_index": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226045699/0001493152-26-045699-index.htm",
+    "primary_exhibit": "https://www.sec.gov/Archives/edgar/data/1829311/000149315226045699/ex99-1.htm",
+    "reproduction": "Read accession index and EX-99.1; compare 6,016,414 ETH total with 5,067,309 ETH staked, 214 BTC treasury and reported 15,112 ETH acquired over the past week. Verify SEC acceptance and October 4 snapshot clock. Do not mistake HTML numeric text for independently tagged XBRL numeric facts.",
+    "source_facts": {
+      "total_eth_holdings": 6016414,
+      "staked_eth_subset": 5067309,
+      "unstaked_or_other_eth_difference": 949105,
+      "btc_treasury_holdings": 214,
+      "weekly_eth_acquired_reported": 15112,
+      "eth_stock_as_of": "2026-10-04T18:30:00-04:00",
+      "sec_acceptance": "2026-10-05T08:52:06-04:00"
+    },
+    "criteria": {
+      "first_party_machine_readable": "PASS for first-party issuer-filed parseable SEC HTML Exhibit 99.1; no claim that the exhibit numeric facts are individually XBRL-tagged",
+      "immutable_report_identity": "PASS SEC accession-specific archived exhibit 0001493152-26-045699",
+      "economic_entity_scope": "PARTIAL: issuer-consolidated treasury stock and MAVAN/partner staking; underlying validator/custodian and trade venue identities not disclosed",
+      "effective_clock": "PARTIAL: stock snapshot October 4 18:30 ET; 15,112 ETH acquisition only a preceding-week aggregate without execution times",
+      "available_clock": "PASS conservative SEC acceptance October 5 08:52:06 ET; earlier publication not assumed",
+      "observed_clock": "RESEARCH_ONLY 2026-10-11 18:31:52 ICT; no historical collector observed_at proof",
+      "non_overlap": "FAIL: 5,067,309 staked ETH is a subset of 6,016,414 total ETH, not additive; 15,112 weekly acquired ETH has no transaction IDs/venues/timestamps and cannot be independently separated from market-volume or other weekly issuer disclosures",
+      "context_only": "REQUIRED: 6,016,414 ETH treasury, its 5,067,309 ETH staked subset and 214 BTC holdings are inventory/custody/staking stock, not new BTC/ETH directional demand; staking is asset disposition not an exchange purchase"
+    },
+    "rejection": "Do not sum total ETH plus staked ETH; 5,067,309 is already included in 6,016,414 (84.23%). Do not infer new BTC capital flow from 214 BTC inventory, or convert staking locks into buys. Issuer's 15,112 ETH acquired in preceding week lacks individual trade identity, timestamps, venue and demonstrated non-overlap. No source qualifies as independent directional capital flow."
+  },
+  "executor_reliability": {
+    "status": "UNMITIGATED_INVALID_GEMINI_JSON",
+    "prior_failed_task": "automation/executor_queue/failed/B-20261010-strive-sec-treasury-1429-01.json",
+    "mitigation_verified": false,
+    "action": "NO_TASK_ENQUEUED"
+  },
+  "decision": {
+    "B": "PLATEAU",
+    "A": "CONTINUE",
+    "C": "CONTINUE",
+    "promotion": "BLOCKED",
+    "new_task": "NONE"
+  },
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; status file on worker-control only; no Specialist edits, main/private/Railway, prediction/API/broker/execution, secrets, workflows, schedules or promotion"
+}
