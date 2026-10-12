@@ -1,0 +1,99 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T08:58:56+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "fa26b2ef1532f0d755968c6e733bd5e8b8a3351c",
+    "roadmap": "automation/supervisor_roadmap.md (2026-10-11 07:51 ICT historical snapshot; latest statuses take precedence)",
+    "planner_status": {
+      "latest_A": "A-20261012-378cffe-archive-horizon-integration-preflight-0800.json CONTINUE",
+      "latest_B": "B-20261011-378cffe-cleanspark-sep2026-options-vs-spot-plateau-2026.json PLATEAU",
+      "latest_C": "C-20261012-378cffe-effective-clock-strict-rank-scope-0814.json CONTINUE"
+    },
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "fresh direct enumeration of all three authoritative worker-control directories"
+    },
+    "specialist_branch_queue": "IGNORED as inert"
+  },
+  "specialist_recent": {
+    "head_message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "head_commit_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "comparison": "parent..HEAD ahead_by=1; only two files modified",
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "exact_sha_validation": {
+    "method": "matching bounded Gemini executor done-task PASS",
+    "file": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result_status": "PASS",
+    "executor_result_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_RUN; no full repository checkout"
+  },
+  "evidence": {
+    "title": "Every run_once performs two complete archive parses despite 100000-row memory window; historical replay can expand archive and worsen the scan cost",
+    "proof_level": "Fresh exact-SHA source-path audit and algorithmic bound; NOT benchmark, exact-repository pytest, full-production run_once reproduction, or confirmed production incident",
+    "source_blobs": {
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/evidence_health.py": "22c9fba1aa253a4948d51be191ca0fa3983c1f7f",
+      "part2/capital_flow/providers.py": "072581823a815c124d8629afd678196e86fe8840"
+    },
+    "exact_chain": [
+      "contracts.py:219-234 observation_id hashes economic identity/value/clocks/revision but omits provenance, data_quality and quality_flags.",
+      "providers.py JsonlFlowAdapter.collect parses external JSONL rows; runner.py:110-118 records successful parse as collector OK before archive append.",
+      "storage.py:49-91 append_observations calls load_observations(max_records=100000) at line 64; load_observations lines 29-45 iterates EVERY physical archive line and JSON-decodes/constructs each FlowObservation before deque retains only last 100000.",
+      "storage.py:72-73 seen-ID skip precedes _semantic_signature comparison at lines 74-78. Thus same-ID metadata-only conflict is not surfaced; first stored version wins for both input permutations across repeated runs.",
+      "runner.py:120-121 calls append_observations then load_observations(max_records=100000) again. Therefore even network=False with zero new rows performs two complete archive scans, not a bounded 100000-row read. Approximate work is >=2N row parse operations per run for N stored rows; memory bound does not imply runtime/IO bound.",
+      "storage.py:64-83 dedup sees only latest 100000 IDs; replay of an older ID outside this window can be appended. Repeated historical replay can grow N, further increasing every-run scan cost. This is a source-level possibility, not measured production growth.",
+      "runner.py:120 has no archive append exception handler; a future fail-closed conflict exception must be reported in audit/health without leaving misleading collector OK or silently losing required output artifacts.",
+      "runner.py:121-144 scoring, handoff, evidence_health and three atomic JSON outputs are downstream of append and second scan. evidence_health.py:31-58 collector status is derived from parse attempts/source errors, not archive admission conflicts."
+    ],
+    "distinct_from_C": "C's normalization equal-rank metadata tie and future-effective PIT filter are downstream; A's first-writer archive conflict and double archive scan occur before normalization and are not solved by C-only normalization changes.",
+    "deterministic_full_repository_test_plan": {
+      "command": "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py && python -m pytest -q part2/capital_flow/tests",
+      "fixture": "Use tempfile local_dir; construct two JSONL rows with identical economic ID, clocks, value and revision but context_only false vs true or data_quality 1.0 vs 0.2; use FlowObservation.to_dict and exact as_of_ms after availability; run_once(network=False,external_jsonl=[...]) in both file orders and sequential calls.",
+      "assertions": [
+        "Verify identical same-ID duplicate yields exactly one archive row, appended=1 then 0, and stable PIT/health.",
+        "For same-ID context_only conflict and quality-only conflict, document current first-writer winner for both permutations and sequential calls; desired repair must surface deterministic semantic conflict rather than silently accept whichever arrived first.",
+        "Check collection_attempts may report both external JSONL sources OK even though archive rejected a conflicting row; require explicit archive conflict diagnostic after repair.",
+        "Check archive/history/scoring counts, source evidence, handoff and evidence_health for both permutations and historical as_of boundaries; no future availability or effective-clock leakage.",
+        "Bounded horizon: append three distinct observations with max_existing_records=2, replay oldest; assert and report whether old ID can re-enter archive; keep historical revision semantics intact.",
+        "Instrument load_observations on full repository run_once(network=False) with existing archive of N rows; verify two full reads for unchanged input, not just two 100000-row tail scans. Add large-N benchmark only after actual checkout; do not infer elapsed latency from source.",
+        "Inject an archive conflict exception after parser success; verify desired fail-closed status and durable audit/health outputs without partial archival mutation."
+      ],
+      "current_result": "NOT_RUN: local git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git fails 'Could not resolve host: github.com'; GitHub connector supports exact-SHA source reads but cannot furnish executable full checkout in local Python environment.",
+      "proof_boundary": "No full-repository run_once, no exact-SHA pytest, no production incident claimed."
+    },
+    "design_constraints": [
+      "Do not blindly add provenance/quality to observation_id: historical identity, availability and legitimate revisions must remain stable.",
+      "Conflict detection must precede seen-ID suppression and cover the intended historical horizon, with bounded CPU/IO strategy and explicit diagnostics.",
+      "Preserve append-only PIT history and exact duplicates; avoid fixing semantic loss by overwriting old records or widening execution authority.",
+      "A fix that raises during append without runner-level failure reporting is incomplete."
+    ]
+  },
+  "executor": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "evidence": "failed C-20261009-context-only-tie-minimal-2252-01 and C-20261009-context-only-metadata-tie-2315-01; no verified bounded mitigation",
+    "new_task_enqueued": false,
+    "reason": "Reliability mitigation absent; do not submit near-identical failing tasks despite pending=0."
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor PLATEAU not established; no private promotion.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; only worker-control planner assessment; no Specialist code, main/private/Railway/workflows/schedules/secrets/prediction/API/broker/execution touched"
+}
