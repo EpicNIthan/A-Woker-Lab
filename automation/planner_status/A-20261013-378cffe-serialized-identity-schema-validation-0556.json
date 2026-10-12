@@ -1,0 +1,73 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 05:56",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "head_at_prewrite": "8e2dec2647631f1f2dc005c125641ce278db83b5",
+    "roadmap": "automation/supervisor_roadmap.md read",
+    "latest_A": "A-20261012-378cffe-availability-correction-admission-1908.json CONTINUE",
+    "latest_B": "B-20261013-378cffe-ethereum-eip1559-eth-basefee-burn-source-plateau-0428.json PLATEAU",
+    "latest_C": "C-20261012-378cffe-mixed-role-causal-gate-1921.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "count_source": "latest B assessment 04:28 ICT; direct directory enumeration unavailable in connector; pending 404 reconfirmed"
+    },
+    "specialist_branch_automation": "ignored inert"
+  },
+  "recent_specialist": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "parent_to_head_commits": 1,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "exact_sha_validation": {
+    "status": "PASS",
+    "record": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Serialized observation identity and schema mismatch accepted by archive reconstruction",
+    "novelty": "Distinct from prior A unknown-to-known availability semantic dedup, historical malformed JSONL, bounded replay, metadata collision and full scans; distinct from C downstream PIT.",
+    "proof_level": "Exact-SHA contracts.py/storage.py source inspection; no exact-repository pytest or production incident",
+    "source_chain": [
+      "FlowObservation.to_dict serializes schema_version and observation_id.",
+      "FlowObservation.from_dict reconstructs without checking either serialized field, and defaults schema_version to cf-observation-v1.",
+      "load_observations parses valid JSONL and calls from_dict; a tampered observation_id or incompatible serialized schema_version is not checked against reconstructed identity/schema.",
+      "Archive replay can therefore silently accept syntactically valid but identity-inconsistent serialized rows."
+    ],
+    "deterministic_oracle": [
+      "Build a valid FlowObservation fixture, serialize with to_dict, mutate only observation_id to a wrong 24-character value; separately mutate only schema_version to cf-observation-v999.",
+      "Write each JSON object to independent temporary archive JSONL; call load_observations. Assert desired integrity contract rejects or emits explicit invalid-identity/schema health diagnostic. Current source predicts silent reconstruction, with canonical observation_id regenerated and schema_version reset.",
+      "Control: original serialized fixture must load, and exact duplicate archive admission must be idempotent.",
+      "For runner path, run_once(network=False,external_jsonl=[fixture_path],local_dir=isolated,as_of_ms=T), inspect observations.jsonl/audit_latest.json/latest.json/anata_latest.json/evidence_health; require explicit mismatch diagnostic and no silently scoring invalid rows.",
+      "Preserve PIT: known availability visible only when as_of>=available_at_ms; unknown availability never scored; do not conflate with admission correction."
+    ],
+    "targeted_tests": "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_contracts_normalization.py part2/capital_flow/tests/test_evidence_health.py",
+    "full_tests": "python -m pytest -q part2/capital_flow/tests",
+    "test_result": "NOT_RUN"
+  },
+  "exact_repo_blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+    "stderr": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+    "consequence": "Cannot clone exact repository to run no-network pytest; connector source inspection is not an executable exact-repo test."
+  },
+  "executor": {
+    "structured_json_mitigation": "UNVERIFIED",
+    "new_task_enqueued": false,
+    "reason": "Recent failed task invalid JSON; no repeat until separately verified mitigation."
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor PLATEAU absent",
+  "scope": "PUBLIC_PLANNER_ONLY; no Specialist/main/private/Railway/workflow/secrets/prediction/API/broker/execution/schedule changes"
+}
