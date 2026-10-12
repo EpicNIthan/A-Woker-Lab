@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T11:13:09+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "head_at_read": "5d73de37fa4199bd01c1c2356377b3e55f4400e7",
+    "roadmap": "automation/supervisor_roadmap.md (2026-10-11 07:51 ICT; historical snapshot)",
+    "latest_A": "A-20261012-378cffe-archive-double-scan-conflict-0858.json CONTINUE",
+    "latest_B": "B-20261011-378cffe-bitmine-eth-staked-subset-plateau-1831.json PLATEAU",
+    "latest_C_before_this": "C-20261012-378cffe-effective-clock-strict-rank-scope-0814.json CONTINUE",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "fresh authoritative worker-control directory enumeration"
+    }
+  },
+  "specialist_recent": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "head_message": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "head_committed_utc": "2026-10-09T08:49:01Z",
+    "parent_to_head_changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "automation_control_files": "IGNORED on Specialist branch"
+  },
+  "exact_sha_validation": {
+    "method": "bounded Gemini executor done-task PASS",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result_status": "PASS",
+    "executor_result_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "title": "Exact-repository PIT boundary test remains blocked; exact-SHA contract-valid fixture and assertion oracle independently inspected",
+    "proof_level": "Exact public-SHA source and test inspection; NOT repository pytest, live occurrence, or a new isolated runtime reproduction",
+    "source_blobs": {
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+      "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/tests/test_causal_quality_handoff.py": "7dcde0837b1f4293d9b87c68d60f3b4338307039",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_contracts_normalization.py": "8bfd0557050ac72a5e45bace98460d536b789e52"
+    },
+    "exact_source_chain": [
+      "contracts.py FlowObservation.__post_init__ requires available_at_ms <= observed_at_ms; visible_at only checks available_at_ms <= as_of; revision_key includes source, source_record_id, family, metric and asset.",
+      "handoff.py:24-27 point_in_time_filter -> normalize_and_dedup -> effective_at_ms <= as_of; the effective cutoff is AFTER revision selection.",
+      "normalization.py:146-153 selects highest (available_at_ms,observed_at_ms,revision_rank) per revision_key, without as_of/effective constraint; a strictly newer available/observed future-effective row wins even without a hash tie.",
+      "handoff.py _family_support and _causal_metadata operate on the post-discard normalized list; absent surviving scoring rows can make family MISSING, provenance_refs empty, and causal_quality unusable.",
+      "test_causal_quality_handoff.py future-revision test covers future availability; test_v1_handoff.py independent-clock fixture uses different source_record_id values, so no same-record revision collision."
+    ],
+    "deterministic_exact_repo_test_plan": {
+      "fixture": "Construct contract-valid past and future FlowObservation rows with identical source/source_record_id/family/metric/asset, revision='1', no economic_event_id; past effective=86400000, available=86401000, observed=86402000; future effective=86405001, available=86403000, observed=86404000; use as_of_ms=86404999,86405000,86405001; all availability<=observed.",
+      "assertions": [
+        "At as_of=86404999 and 86405000, past-only handoff retains one scoring source; past+future must also retain that past row in both permutations, despite future row being available.",
+        "At as_of=86405001, future row is effective and may supersede past; confirm both orders yield the same source_evidence, family scoring counts, provenance_refs, causal_quality and source clocks.",
+        "At as_of just before future availability, past remains selected; at exact availability boundary, past must not disappear.",
+        "Repeat with exact duplicates, later available correction, distinct BTC/ETH assets, different values and existing SOURCE_UNVERIFIED flags; verify no future-effective leakage or role changes.",
+        "Separately test same-rank same-value same-ID provenance.context_only/data_quality/quality_flags conflict in both permutations; desired deterministic fail-closed metadata conflict flag; preserve preexisting quality flags."
+      ],
+      "targeted_commands": [
+        "python -m pytest -q part2/capital_flow/tests/test_causal_quality_handoff.py part2/capital_flow/tests/test_v1_handoff.py part2/capital_flow/tests/test_contracts_normalization.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "test_result": "NOT_RUN: local git ls-remote --heads https://github.com/EpicNIthan/A-Woker-Lab.git anata-local-hardening exited 128: fatal: unable to access ... Could not resolve host: github.com; GitHub connector allowed source inspection but no executable exact checkout."
+    },
+    "scope_decision": "The PIT repair likely requires separately reviewed handoff.py and handoff regression tests; prior normalization-only write allowlist is insufficient. Do not expand or enqueue without reviewed authorization.",
+    "distinct_A_issue": "Archive same-ID metadata suppression precedes normalization; outside C's proposed normalization/handoff test scope."
+  },
+  "executor": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "failed_task_ids": [
+      "C-20261009-context-only-tie-minimal-2252-01",
+      "C-20261009-context-only-metadata-tie-2315-01"
+    ],
+    "new_task_enqueued": false,
+    "reason": "Malformed Gemini structured JSON unmitigated; no approved PIT handoff write scope."
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor PLATEAU absent; exact-SHA done PASS alone insufficient.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; assessment write on worker-control only; no Specialist/main/private/Railway/workflow/schedule/secrets/prediction/API/broker/execution changes"
+}
