@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T19:08:11+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "61299f19139ae2f59d680fb3faaba3eb06f95124",
+    "roadmap": "automation/supervisor_roadmap.md (latest refresh 2026-10-12 16:53 ICT)",
+    "latest_A_prior": "A-20261012-378cffe-legacy-archive-corruption-output-staleness-1307.json CONTINUE",
+    "latest_B": "B-20261012-378cffe-ethereum-validator-withdrawals-context-plateau-1630.json PLATEAU",
+    "latest_C": "C-20261012-378cffe-context-only-real-engine-oracle-1810.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "direct worker-control directory enumeration"
+    },
+    "specialist_branch_control": "ignored"
+  },
+  "recent_specialist": {
+    "head_commit_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "exact_sha_validation": {
+    "method": "matching bounded Gemini executor done-task",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_full_repository_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "title": "Unknown-to-known availability correction is suppressed at archive admission before point-in-time revision selection",
+    "proof_level": "Exact-SHA source inspection and deterministic regression oracle only; NOT full repository pytest or observed incident",
+    "source_chain": [
+      "contracts.py FlowObservation.observation_id includes available_at_ms and observed_at_ms, so two records differing only in availability/observation clocks have different IDs; visible_at rejects available_at_ms=None.",
+      "storage.py append_observations builds latest_signature by revision_key, then skips new IDs when _semantic_signature equals prior signature. _semantic_signature omits available_at_ms and observed_at_ms.",
+      "Therefore first archive row available_at_ms=None followed by same economic row with known available_at_ms and later observed_at_ms can be skipped even though the latter becomes PIT eligible. Reverse input order retains the known row.",
+      "runner.py run_once external_jsonl collection -> append_observations -> load_observations -> _scoring_history -> engine/handoff/health. Collector OK counts do not prove admission of corrected availability.",
+      "Existing test_providers_replay.py test_archive_skips_unchanged_reobservation_but_keeps_real_revision intentionally skips reobserved unchanged economic values but does not test unknown-to-known availability. Normalization's test_later_available_correction_wins does not exercise archive admission."
+    ],
+    "distinct_from_C": "A concerns durable archive admission before normalization. C's equal-rank, future-effective dedup and handoff issues occur after admission.",
+    "deterministic_exact_repo_oracle": {
+      "fixture": "Use FlowObservation(family='etf',metric='net_flow_usd',asset='BTC',value=10,unit='USD',effective_at_ms=T0,available_at_ms=None,observed_at_ms=T1,source='fixture',source_record_id='event-1',revision='1') and dataclasses.replace(first,available_at_ms=T1,observed_at_ms=T2), T0<T1<T2<as_of_ms. Same economic fields/provenance/quality. Assert IDs differ, semantic signatures equal.",
+      "direct_archive": "In TemporaryDirectory, append_observations(path,[unknown]); append_observations(path,[known]); assert loaded archive contains known correction and PIT eligible record (desired); current source predicts second append returns 0. Reverse order must not change PIT eligibility; exact duplicates must remain idempotent.",
+      "run_once": "Write each FlowObservation.to_dict as external JSONL. For two permutations run run_once(network=False,external_jsonl=[pathA,pathB],local_dir=isolated,as_of_ms=T3) and sequential runs run_once(...[unknown]) then run_once(...[known]); assert archive, audit_latest.json, latest.json, anata_latest.json, evidence_health and PIT show corrected known availability independent of order. Also assert collection counts versus appended_observations and preserve no future leakage.",
+      "archive_integrity_separate": "Prior historical malformed JSONL, replay beyond 100k and double parse require separate regression; do not treat this as that proof.",
+      "commands": [
+        "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_contracts_normalization.py part2/capital_flow/tests/test_evidence_health.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "test_result": "NOT_RUN: git ls-remote --heads https://github.com/EpicNIthan/A-Woker-Lab.git anata-local-hardening failed: fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com. GitHub connector source reads do not provide an executable full-repository checkout."
+    }
+  },
+  "executor": {
+    "structured_json_mitigation": "UNVERIFIED",
+    "new_task_enqueued": false,
+    "reason": "Do not repeat malformed Gemini JSON tasks until mitigation is verified."
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor CONTINUE; no four-way PLATEAU.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; no Specialist code/main/private/Railway/workflows/secrets/prediction/API/broker/execution touched; existing hourly schedule unchanged"
+}
