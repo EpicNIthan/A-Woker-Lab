@@ -1,0 +1,96 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_utc": "2026-10-12T21:28:29.086Z",
+  "assessed_at_ict": "2026-10-13, 04:28:29",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "head_at_prewrite": "575957793cee2a5a5d12ca2e816653b0c5c85467",
+    "roadmap": "automation/supervisor_roadmap.md (read, latest Supervisor refresh 2026-10-12 16:53 ICT)",
+    "latest_A": "A-20261012-378cffe-availability-correction-admission-1908.json CONTINUE",
+    "latest_B_prior": "B-20261013-378cffe-aave-v3-liquidationcall-source-coverage-plateau-0334.json PLATEAU",
+    "latest_C": "C-20261012-378cffe-mixed-role-causal-gate-1921.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "fresh worker-control direct directory enumeration"
+    },
+    "specialist_branch_automation": "inert, ignored"
+  },
+  "specialist_recent": {
+    "head_commit_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "parent_to_head_commits": 1,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "exact_sha_validation": {
+    "status": "PASS",
+    "method": "matching bounded Gemini executor done-task",
+    "record": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "associated_push_run": "https://github.com/EpicNIthan/A-Woker-Lab/actions/runs/37907159402",
+    "associated_push_run_conclusion": "success",
+    "independent_exact_repo_pytest": "NOT_ESTABLISHED"
+  },
+  "evidence": {
+    "title": "Ethereum EIP-1559 per-block ETH base-fee burn is native ETH supply-context, not directional spot-market Capital Flow",
+    "novelty": "New ETH protocol fee-burn block-level source coverage, distinct from previously filed validator withdrawals, Aave liquidations, Optimism bridge and ETF/treasury/venue-trade candidates; no claim of a new qualified scoring source.",
+    "search_coverage": [
+      {
+        "source": "Ethereum EIP-1559 canonical first-party protocol specification, immutable Git commit",
+        "url": "https://github.com/ethereum/EIPs/blob/2b3e257fcb4e6c89fbe6d62bf0fabfb7649c2c3f/EIPS/eip-1559.md",
+        "checked": "Spec explicitly burns block base fee; does not define spot buy/sell or exchange order execution."
+      },
+      {
+        "source": "Ethereum execution-apis first-party block JSON-RPC schema, immutable Git commit",
+        "url": "https://github.com/ethereum/execution-apis/blob/34151926fbf395e66797add1f60fd759681678e6/src/schemas/block.yaml",
+        "checked": "Block schema includes hash, number, timestamp, gasUsed, baseFeePerGas and finalized/latest block tags; latest can reorganize."
+      },
+      {
+        "source": "Ethereum execution-apis first-party eth_getBlockByHash / eth_getBlockByNumber methods, immutable Git commit",
+        "url": "https://github.com/ethereum/execution-apis/blob/34151926fbf395e66797add1f60fd759681678e6/src/eth/block.yaml",
+        "checked": "Methods expose the block object; specification example is not a sampled canonical finalized mainnet block."
+      },
+      {
+        "source": "Exact Specialist default collectors and source contracts",
+        "url": "https://github.com/EpicNIthan/A-Woker-Lab/blob/378cffee64e9933b28ed9a40b936724db3beb09e/part2/capital_flow/runner.py",
+        "checked": "Nine default collectors enumerated; no dedicated ETH base-fee-burn collector. Optional JSONL/Glassnode and external market sources can overlap; inventory absence alone does not prove independence."
+      }
+    ],
+    "candidate_contract": {
+      "stable_machine_readable_first_party": "PASS: protocol-defined Ethereum JSON-RPC block object, not a newly captured live dataset",
+      "immutable_event_or_artifact_id": "PARTIAL: (chain_id=1, finalized block_hash) is stable after finality; no independently fetched finalized mainnet block or verified chain_id in this run",
+      "economic_entity_btc_eth_scope": "PASS ETH native gas fee destruction at protocol level; payer is transaction sender; no BTC scope and no exchange trade counterparty",
+      "metric": "ETH base fee burn per block = integer(baseFeePerGas_wei) * integer(gasUsed) / 1e18 ETH; exclude priority tips, blob gas burns and validator withdrawals from this metric",
+      "effective_pit_clock": "PARTIAL: block.timestamp in protocol schema, no independently sampled finalized block timestamp",
+      "available_pit_clock": "FAIL: original historical first-available time not provided by block timestamp or RPC response; do not backdate first collector receipt",
+      "observed_pit_clock": "FAIL: no Anata collector receipt timestamp or append-only observation captured",
+      "independent_nonoverlap": "FAIL: no event-lineage comparison with existing market, on-chain, ETH supply or optional external feeds; absence from default collector list is insufficient",
+      "context_vs_spot": "CONTEXT_ONLY ETH supply/network-usage observation; burned transaction fees are not independently verified BTC/ETH spot purchases, sales or capital inflows",
+      "live_finalized_sample": "NOT_FETCHED; official schema example is illustrative only"
+    },
+    "missing_reopen_proof": [
+      "Fetch and independently validate a real finalized Ethereum mainnet block, chain ID, block hash, number, timestamp, gasUsed and baseFeePerGas; document finality/reorg policy",
+      "Capture collector-observed time and conservative first-available time in append-only revisions, never retroactively backdate a bootstrap",
+      "Independently compare event/block lineage and dependence groups with any existing or optional ETH on-chain/supply sources; avoid double-counting ETH base-fee and blob-fee burns",
+      "Demonstrate a separate BTC/ETH spot execution/ownership economic link before any directional Capital Flow classification; otherwise remain context-only"
+    ],
+    "conclusion": "PLATEAU: new first-party protocol source documented with explicit failed PIT and non-overlap gates. No independent directional spot Capital Flow source qualified; no live block sampled."
+  },
+  "executor": {
+    "new_task_enqueued": false,
+    "reason": "Gemini malformed JSON reliability mitigation remains unverified; no repetitive task permitted."
+  },
+  "promotion": "BLOCKED: A and C CONTINUE; independent Supervisor PLATEAU absent",
+  "restrictions": "PUBLIC ONLY; worker-control planner_status write only. No Specialist/main/private/Railway/workflows/secrets/prediction/API/broker/execution or schedule modifications."
+}
