@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T07:14:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "be31b78b903bf0fba79011ece3ea544a569173b6",
+    "roadmap": "automation/supervisor_roadmap.md (historical 2026-10-11 07:51 ICT)",
+    "latest_A": "A-20261012-378cffe-archive-exact-source-test-blocker-0303.json CONTINUE",
+    "latest_B": "B-20261011-378cffe-cleanspark-sep2026-options-vs-spot-plateau-2026.json PLATEAU",
+    "latest_C_prior": "C-20261012-378cffe-hash-tie-test-oracle-0515.json CONTINUE",
+    "queue": {
+      "pending": "404 absent, 0",
+      "done": 16,
+      "failed": 16,
+      "verification": "pending/done/failed directory existence independently probed on worker-control; 16/16 counts cross-checked against most recent committed authoritative planner statuses, not independently enumerated because GitHub fetch_file rejects directory paths"
+    }
+  },
+  "specialist_recent": {
+    "head_commit": "worker-c: Deterministic handling of same-clock conflicting same-record revisions",
+    "head_changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "prior_commits": [
+      "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "b18dda2930232fb55dc98486dd054a2f4abdcfa3"
+    ],
+    "inert_specialist_control": "IGNORED"
+  },
+  "exact_sha_validation": {
+    "record": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_sha_pytest": "NOT_RUN: isolated container git ls-remote failed Could not resolve host github.com"
+  },
+  "new_evidence": {
+    "title": "Effective-clock filter after equal-rank revision selection can suppress a causally eligible past record",
+    "proof_level": "Fresh exact-SHA source-chain inspection plus isolated Python reproduction of exact hash payload, rank tie ordering and post-selection effective clock filter; NOT exact-repository pytest or confirmed production occurrence.",
+    "source_blobs": {
+      "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+      "part2/capital_flow/tests/test_contracts_normalization.py": "8bfd0557050ac72a5e45bace98460d536b789e52"
+    },
+    "source_chain": [
+      "contracts.FlowObservation.visible_at(as_of) tests available_at_ms <= as_of only; does not filter effective_at_ms.",
+      "handoff._visible_normalized performs point_in_time_filter then normalize_and_dedup then effective_at_ms <= as_of filter.",
+      "normalization.select_latest_revisions groups by source/source_record_id/family/metric/asset and chooses equal available/observed/revision rank by observation_id hash then value; effective_at_ms is not a rank criterion.",
+      "contracts.observation_id includes effective_at_ms; therefore equal rank observations differing only effective clock can select future-effective candidate by digest, then handoff discards it even when a past-effective alternative was present."
+    ],
+    "reproduction": {
+      "common": "schema cf-observation-v1; family etf; metric net_flow_usd; asset BTC; value 100.0; unit USD_MILLIONS; available_at_ms 86401000; observed_at_ms 86402000; source src; source_record_id rec; revision 1; as_of_ms 86405000",
+      "past_effective_at_ms": 86400000,
+      "past_observation_id": "e1d577ebd14e2b43954ff70a",
+      "future_effective_at_ms": 86405001,
+      "future_observation_id": "087e3177bee7cf0772a763f2",
+      "past_only_visible_normalized_count": 1,
+      "both_permutations_visible_normalized_count": 0,
+      "reason": "future hash 087e sorts before past e1d5; selected future is removed by handoff post-selection effective filter.",
+      "caveats": "Future-effective row with earlier available/observed time is allowed by FlowObservation.__post_init__ but its occurrence in current real providers is not established. This is a separate PIT ordering risk, not proof that runner scoring changes. Archive same-ID suppression is a distinct A issue; these rows have different observation IDs and may be archived."
+    },
+    "core_C_defect": "Equal-rank same-value same-record candidates with identical observation_id but differing provenance.context_only, data_quality or quality_flags remain arrival-order-dependent and can erase SOURCE_UNVERIFIED; current focused tests do not assert this metadata conflict.",
+    "test_plan": {
+      "target": "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "full": "python -m pytest -q part2/capital_flow/tests",
+      "cases": [
+        "both input permutations of equal-rank same-value context_only True vs False; deterministic fail-closed winner and conflict flag",
+        "both permutations of metadata quality_flags SOURCE_UNVERIFIED vs no flags; no warning loss",
+        "exact duplicates no spurious conflict; later corrections preserve rank/PIT",
+        "BTC/ETH same source record remain separate; value conflict deterministic and original warnings preserved",
+        "handoff future-effective-vs-past-effective same rank pair at as_of_ms 86405000; past candidate remains visible independent of input order, while future-effective row is not yet counted",
+        "replay as_of before availability excludes both; as_of after future effective checks correction semantics"
+      ],
+      "feasibility": "Tests are implementable using existing obs fixtures, handoff._visible_normalized and point_in_time_filter; not executed. The handoff PIT issue may require scope review if the approved two-file normalization-only repair cannot safely fix it."
+    }
+  },
+  "executor": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "failed_tasks": [
+      "C-20261009-context-only-tie-minimal-2252-01: invalid JSON escape",
+      "C-20261009-context-only-metadata-tie-2315-01: invalid JSON delimiter"
+    ],
+    "new_task_enqueued": false,
+    "reason": "No verified structured-output reliability mitigation; do not repeat failed tasks."
+  },
+  "promotion": "BLOCKED: A and C CONTINUE, independent Supervisor PLATEAU absent",
+  "scope": "PUBLIC_ONLY; status file only; no Specialist/main/private/Railway/workflows/schedules/secrets/prediction/API/broker/execution writes"
+}
