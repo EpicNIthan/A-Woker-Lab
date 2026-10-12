@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T18:10:31+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "head_at_read": "e257f7b335ea553cb7ee1debb0776a4c3fe061ed",
+    "roadmap": "automation/supervisor_roadmap.md (2026-10-12 16:53 ICT refresh)",
+    "latest_A": "A-20261012-378cffe-legacy-archive-corruption-output-staleness-1307.json CONTINUE",
+    "latest_B": "B-20261012-378cffe-ethereum-validator-withdrawals-context-plateau-1630.json PLATEAU",
+    "latest_C_prior": "C-20261012-378cffe-cross-provider-future-effective-dedup-1415.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "fresh direct worker-control directory enumeration"
+    },
+    "specialist_branch_automation": "ignored as inert"
+  },
+  "recent_specialist": {
+    "head_commit_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "comparison": "ahead_by=1, behind_by=0; only part2/capital_flow/normalization.py and part2/capital_flow/tests/test_contracts_normalization.py changed"
+  },
+  "exact_sha_validation": {
+    "status": "PASS",
+    "method": "matching bounded Gemini executor done task, NOT independent pytest",
+    "done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "push_run_id": 37907159402,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "title": "Real engine includes context-only history in family scoring while handoff excludes it from scoring support and causal provenance",
+    "novelty": "Different from cross-provider future-effective PIT suppression, same-source revision suppression and same-rank metadata tie. This concerns even a single provider with 65 days of otherwise valid context-only history; no duplicate collision required.",
+    "proof_level": "Independent exact-SHA production-path source and existing test-fixture inspection. No exact-repository pytest, live incident or measured prediction impact.",
+    "source_chain": [
+      "part2/capital_flow/engine.py lines 137-149: available -> normalize_and_dedup -> effective filter -> build_all_family_states(normalized), with no provenance.context_only exclusion.",
+      "part2/capital_flow/features.py has no context_only/provenance branch; its window builders consume eligible metric values.",
+      "part2/capital_flow/handoff.py lines 237-273: scoring_observation_count excludes context_only; status becomes ACTIVE if frame.family_scores[family] is non-null regardless of scoring count.",
+      "part2/capital_flow/handoff.py lines 278-301: causal scoring clocks and provenance exclude context_only; context rows remain source_evidence role=context.",
+      "part2/capital_flow/tests/test_features_engine.py lines 49-79 supplies 65-day etf/stablecoin/exchange_btc history with distinct record IDs; lines 129-139 demonstrate non-null real-engine axes. Existing test_causal_quality_handoff.py lines 62-76 uses a fake frame with all scores None and therefore cannot detect engine-to-handoff role disagreement."
+    ],
+    "deterministic_exact_repo_test_oracle": {
+      "file_candidates": [
+        "part2/capital_flow/tests/test_features_engine.py",
+        "part2/capital_flow/tests/test_causal_quality_handoff.py",
+        "part2/capital_flow/tests/test_v1_handoff.py"
+      ],
+      "fixture": "from dataclasses import replace; from part2.capital_flow.tests.test_features_engine import history, BASE, DAY, HOUR; base=history(65); as_of=BASE+64*DAY+12*HOUR; context=[replace(x,provenance={**dict(x.provenance),'context_only':True}) for x in base]; use CapitalFlowEngine().build and build_anata_handoff.",
+      "current_source_predicted": [
+        "baseline=CapitalFlowEngine().build(base,as_of_ms=as_of); context_frame=CapitalFlowEngine().build(context,as_of_ms=as_of); family_scores equal, with at least one non-null family score.",
+        "handoff=build_anata_handoff(context_frame,context); for non-null family, status ACTIVE despite scoring_observation_count=0 and context_observation_count=65.",
+        "source_evidence contains context role but no scoring role; top-level available_at_ms/observed_at_ms are None and provenance_refs empty; causal_quality usable False."
+      ],
+      "desired_contract": [
+        "Context-only rows must never alone make a family ACTIVE or produce a scoring family score; remain visible as context evidence.",
+        "No scoring provenance or clocks may be fabricated; normal scoring-only baseline remains unchanged.",
+        "Test mixed scoring/context histories, both input permutations, distinct source_record_id, flags and BTC/ETH isolation; separately retain prior PIT boundary matrix 86402999/86403000/86405000/86405001."
+      ],
+      "test_commands": [
+        "python -m pytest -q part2/capital_flow/tests/test_features_engine.py part2/capital_flow/tests/test_causal_quality_handoff.py part2/capital_flow/tests/test_v1_handoff.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "status": "PLAN_NOT_EXECUTED"
+    },
+    "test_blocker": {
+      "operation": "git ls-remote --heads https://github.com/EpicNIthan/A-Woker-Lab.git anata-local-hardening",
+      "exit_code": 128,
+      "stderr": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+      "consequence": "No exact-SHA checkout or independent full-repository pytest. GitHub connector exact-SHA source inspection succeeded."
+    }
+  },
+  "execution_decision": {
+    "gemini_structured_json_mitigation": "UNVERIFIED; two failed context-only tasks show invalid JSON",
+    "queued_task": false,
+    "reason": "Do not repeat malformed-JSON failures; any repair touching engine/handoff requires separately reviewed allowlist; no write-scope expansion.",
+    "promotion": "BLOCKED",
+    "worker_A": "CONTINUE",
+    "worker_B": "PLATEAU",
+    "worker_C": "CONTINUE",
+    "supervisor": "CONTINUE",
+    "schedules": "unchanged",
+    "specialist_code_changed": false
+  }
+}
