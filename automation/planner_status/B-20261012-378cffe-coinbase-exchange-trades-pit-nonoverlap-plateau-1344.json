@@ -1,0 +1,100 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-12T13:44:24+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "head_at_read": "5553baffd3e47dd1c99721a4185527124530ad04",
+    "roadmap": "automation/supervisor_roadmap.md (historical 2026-10-11 07:51 ICT; later status supersedes)",
+    "latest_A": "A-20261012-378cffe-legacy-archive-corruption-output-staleness-1307.json CONTINUE",
+    "latest_B_prior": "B-20261012-378cffe-sec-rss-cftc-structured-discovery-plateau-1232.json PLATEAU",
+    "latest_C": "C-20261012-378cffe-exact-repo-pit-test-blocker-1113.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "fresh direct GitHub contents directory enumeration"
+    },
+    "specialist_branch_control": "ignored as inert"
+  },
+  "specialist_recent": {
+    "head_committed_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "parent_to_head_changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "compare_to_ref": "identical, ahead=0 behind=0",
+    "collector_audit": "runner._collect_live at exact SHA lists nine default collectors, none Coinbase Exchange trades; providers.py no Coinbase trade source"
+  },
+  "validation": {
+    "method": "matching bounded Gemini executor done-task PASS",
+    "file": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_ESTABLISHED"
+  },
+  "evidence": {
+    "title": "Coinbase Exchange first-party BTC-USD trade IDs improve event identity but publication/observation PIT, immutable revisions, and independent directional-flow non-overlap are unproven",
+    "new_candidate": "Coinbase Exchange REST product trades: BTC-USD and potentially ETH-USD, venue-specific executed spot trades, not treasury/derivatives or an inferred stock delta",
+    "primary": [
+      "https://docs.cdp.coinbase.com/api-reference/exchange-api/rest-api/products/get-product-trades",
+      "https://docs.cdp.coinbase.com/coinbase-app/introduction/changelog"
+    ],
+    "api_endpoint_template": "https://api.exchange.coinbase.com/products/{product_id}/trades",
+    "proof_level": "First-party current API schema and Coinbase changelog inspected, exact-SHA existing collectors read; NOT a live returned trade row, historical collector observation, venue-to-provider overlap reconciliation, or end-to-end pytest",
+    "documented_fields": [
+      "trade_id",
+      "time",
+      "price",
+      "size",
+      "side"
+    ],
+    "documented_pagination": [
+      "limit (default 1000)",
+      "before",
+      "after"
+    ],
+    "contract": {
+      "first_party_machine_readable": "PASS documented public Coinbase Exchange JSON REST trades endpoint; live response NOT independently retrieved",
+      "immutable_artifact_or_event_id": "PARTIAL: product_id + trade_id is a plausible stable venue-scoped logical execution key, but no actual response, immutable signed artifact, revision history or ID reuse proof was verified",
+      "economic_entity_and_btc_eth_scope": "PASS at schema level for Coinbase Exchange venue and BTC-USD spot product; ETH-USD product response not tested; no beneficial owner/counterparty identity",
+      "effective_clock": "PASS at schema level for per-trade ISO-8601 time, but no live event sampled; do not conflate trade time with first-publication",
+      "available_clock": "FAIL: first-publication/per-trade availability is not supplied in the REST schema, historical pagination cannot establish first availability; only future live polling could capture a conservative first-seen bound",
+      "observed_clock": "FAIL: no Anata live collector or historical observation timestamps; research check time is NOT an observed_at for any trade",
+      "non_overlap": "FAIL: no independently verified venue-trade ID mapping to any aggregated exchange volume, third-party feeds or ETF/treasury spot executions; absence from nine default collectors is NOT proof of non-overlap",
+      "side_semantics": "CRITICAL: Coinbase says side is MAKER order side, so side=sell corresponds to buyer-initiated taker execution and side=buy to seller-initiated taker execution; never label maker side directly as taker buy/sell",
+      "directional_flow": "FAIL for independent market-wide net capital inflow/outflow; each exchange match has both buyer and seller, and venue-specific aggressor imbalance is not net BTC creation or ETF/treasury independent demand",
+      "context_only": "Treasury, custody, inventory, collateral, ETF in-kind flows and derivatives remain context_only; candidate itself is spot-trade microstructure, but must not be merged into treasury flow totals"
+    },
+    "access_attempts": [
+      "Official Coinbase documentation opened successfully on 2026-10-12; page describes trade_id/time/price/size/maker side and pagination.",
+      "GET https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=2 via sandbox requests failed DNS resolution (NameResolutionError), not an HTTP 200 or 404; web fetch also inaccessible. No live trade IDs or amounts claimed."
+    ],
+    "search_coverage": "New category relative to last B filing: direct venue-native spot execution tape, versus prior SEC EDGAR/CFTC filings/derivatives and existing nine default collectors. Reviewed official Coinbase Exchange trade endpoint and official Coinbase maker-side changelog.",
+    "missing_before_reopen": [
+      "Successful reproducible live first-party BTC-USD and ETH-USD responses with stable product-scoped trade IDs, cursor-gap/backfill and duplicate-replay tests.",
+      "Capture actual collector observed_at and conservative available_at at first sight, without backdating historical pages.",
+      "Verify trade correction/immutability behavior, venue-scoped identity, and mapping against any other provider/aggregate source to prove non-overlap.",
+      "Explicit separation of venue aggressor imbalance from net capital inflow; map maker-side inversion safely and do not silently alter frozen family taxonomy."
+    ],
+    "outcome": "PLATEAU: promising new first-party event-level spot feed, but current contract is not fully verified; do not admit to directional Capital Flow or enqueue implementation."
+  },
+  "executor": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "new_task_enqueued": false,
+    "reason": "No fully qualified source and malformed Gemini structured JSON mitigation remains unverified; pending empty does not itself authorize a task."
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE and independent Supervisor PLATEAU absent, despite exact-SHA bounded done PASS.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; new worker-control assessment only; no Specialist/main/private/Railway/workflows/schedules/secrets/prediction/API/broker/execution changes"
+}
