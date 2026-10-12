@@ -1,0 +1,148 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T14:15:33+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "head_at_read": "71cf6c66eb3de98d7ba4ff7d166056e29529fce8",
+    "roadmap": "automation/supervisor_roadmap.md; dated 2026-10-11 and superseded by current planner statuses",
+    "latest_A": "A-20261012-378cffe-legacy-archive-corruption-output-staleness-1307.json CONTINUE",
+    "latest_B": "B-20261012-378cffe-coinbase-exchange-trades-pit-nonoverlap-plateau-1344.json PLATEAU",
+    "latest_C_prior": "C-20261012-378cffe-exact-repo-pit-test-blocker-1113.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "independent direct GitHub worker-control directory enumeration"
+    },
+    "specialist_branch_queue_control": "ignored as inert"
+  },
+  "specialist_recent": {
+    "head_commit_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "parent_to_head_compare": {
+      "ahead_by": 1,
+      "behind_by": 0,
+      "changed_paths": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    }
+  },
+  "exact_sha_validation": {
+    "method": "matching bounded Gemini executor done-task PASS",
+    "file": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "title": "Cross-provider economic_event_id duplicate suppression can independently create future-effective evidence blackout before both engine scoring and handoff",
+    "novelty": "Distinct from previously filed same-source revision-key future-effective suppression. Here source and source_record_id differ, so select_latest_revisions preserves both; suppress_duplicates discards the past-effective row solely because a future-effective cross-provider representation shares economic_event_id and has higher data_quality.",
+    "proof_level": "Exact-SHA contracts.py/normalization.py/engine.py/handoff.py and focused test source inspection, plus independently executed isolated source-faithful Python reproduction; NOT full exact-repository pytest, live incident, or measured scoring impact.",
+    "source_chain": [
+      "contracts.FlowObservation.revision_key includes source/source_record_id/family/metric/asset; different provider records do not collide during revision selection.",
+      "normalization.suppress_duplicates groups by (family,metric,asset,economic_event_id), ranks descending by data_quality then attribution_quality, observed_at, source, record, revision, observation_id; effective_at is not a filter or rank key.",
+      "engine.CapitalFlowEngine.build and handoff._visible_normalized both apply availability point_in_time_filter, then normalize_and_dedup (including cross-provider economic-event suppression), and only then exclude effective_at_ms > as_of_ms.",
+      "With a higher-quality future-effective representation already available, dedup chooses it, suppresses the eligible past-effective representation, then effective-time filter drops the winner; no observation remains for family scoring or handoff."
+    ],
+    "reproduction": {
+      "rows": [
+        {
+          "label": "past",
+          "source": "provider-a",
+          "source_record_id": "past-001",
+          "economic_event_id": "event-shared",
+          "family": "etf",
+          "metric": "net_flow_usd",
+          "asset": "BTC",
+          "value": 100,
+          "effective_at_ms": 86400000,
+          "available_at_ms": 86401000,
+          "observed_at_ms": 86402000,
+          "data_quality": 0.8
+        },
+        {
+          "label": "future",
+          "source": "provider-b",
+          "source_record_id": "future-001",
+          "economic_event_id": "event-shared",
+          "family": "etf",
+          "metric": "net_flow_usd",
+          "asset": "BTC",
+          "value": 100,
+          "effective_at_ms": 86405001,
+          "available_at_ms": 86403000,
+          "observed_at_ms": 86403000,
+          "data_quality": 0.95
+        }
+      ],
+      "as_of_results": [
+        {
+          "as_of_ms": 86402999,
+          "past_only": 1,
+          "past_plus_future": 1,
+          "future_plus_past": 1
+        },
+        {
+          "as_of_ms": 86403000,
+          "past_only": 1,
+          "past_plus_future": 0,
+          "future_plus_past": 0
+        },
+        {
+          "as_of_ms": 86405000,
+          "past_only": 1,
+          "past_plus_future": 0,
+          "future_plus_past": 0
+        },
+        {
+          "as_of_ms": 86405001,
+          "past_only": 1,
+          "past_plus_future": 1,
+          "future_plus_past": 1
+        }
+      ],
+      "method": "Isolated faithful reimplementation of select_latest_revisions identity grouping, suppress_duplicates quality ranking, and exact filter ordering; no executable exact-repository package claimed."
+    },
+    "test_gap": "test_contracts_normalization.py cross-provider economic duplicate test checks quality preference at one effective time; current future-availability regression does not test future-effective duplicate with same economic_event_id; engine/handoff boundary end-to-end tests for this cross-provider case not found in inspected focused files.",
+    "deterministic_exact_repo_test_plan": {
+      "fixture": "Two contract-valid same-family/metric/asset/event rows from distinct providers/record IDs, past effective=86400000 available=86401000 observed=86402000 quality=0.80, future effective=86405001 available=observed=86403000 quality=0.95. Include exact both input orders.",
+      "assertions": [
+        "At as_of=86402999, past-only and combined retain past; at as_of=86403000 and 86405000, combined must retain past scoring/handoff evidence (current source-derived behavior predicts zero); at as_of=86405001 future representation may replace past with no double count.",
+        "Inspect engine family states, coverage, normalized_observation_count, dedup_decisions and unknown_reasons, plus handoff family_support, scoring_observation_count, source_evidence, causal_quality and provenance_refs.",
+        "Repeat with equal-quality provider tie, reversed quality, identical duplicates, later corrections, BTC vs ETH asset separation, distinct economic_event_id, context_only, SOURCE_UNVERIFIED flags, and equal-rank same-value metadata permutations.",
+        "Keep A archive same-ID admission suppression separate; no false assertion that this test reaches archive via run_once without verifying archive identity behavior."
+      ],
+      "commands": [
+        "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py part2/capital_flow/tests/test_features_engine.py part2/capital_flow/tests/test_v1_handoff.py part2/capital_flow/tests/test_causal_quality_handoff.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "test_result": "NOT_RUN: git ls-remote --heads https://github.com/EpicNIthan/A-Woker-Lab.git anata-local-hardening exited 128: Could not resolve host: github.com; connector source inspection available but no executable full checkout."
+    },
+    "scope_decision": "A normalization-only change is not pre-approved for this cross-provider PIT repair. Engine and handoff both perform post-normalization effective filtering; any fix needs separate reviewed exact task and narrow authorized path list, not automatic expansion.",
+    "distinct_prior_C": "Same-source revision-key future-effective suppression and equal-rank same-value metadata tie remain separate unresolved defects.",
+    "distinct_A": "Archive same-ID admission/metadata suppression occurs before normalization and is outside this C reproduction."
+  },
+  "executor": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "failed_task_ids": [
+      "C-20261009-context-only-tie-minimal-2252-01",
+      "C-20261009-context-only-metadata-tie-2315-01"
+    ],
+    "new_task_enqueued": false,
+    "reason": "Unmitigated malformed Gemini JSON; cross-provider PIT repair scope not separately reviewed; no pending task."
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor PLATEAU absent; exact-SHA bounded done PASS alone insufficient.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; create this worker-control planner_status assessment only; no Specialist/main/private/Railway/workflow/schedule/secrets/prediction/API/broker/execution writes"
+}
