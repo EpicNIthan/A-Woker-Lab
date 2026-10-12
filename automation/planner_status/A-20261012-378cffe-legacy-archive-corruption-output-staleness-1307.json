@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T13:07:22+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_read": "ceaf7a59c38b9b18d6fab1cca6b45142942ea643",
+    "roadmap": "automation/supervisor_roadmap.md (historical 2026-10-11 snapshot; latest statuses supersede)",
+    "latest_A": "A-20261012-378cffe-archive-double-scan-conflict-0858.json CONTINUE",
+    "latest_B": "B-20261012-378cffe-sec-rss-cftc-structured-discovery-plateau-1232.json PLATEAU",
+    "latest_C": "C-20261012-378cffe-exact-repo-pit-test-blocker-1113.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "fresh worker-control direct directory enumeration"
+    },
+    "specialist_branch_control": "ignored"
+  },
+  "specialist_recent": {
+    "head_committed_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "parent_to_head_changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "compare_to_ref": "identical ahead=0 behind=0"
+  },
+  "exact_sha_validation": {
+    "method": "bounded Gemini executor done-task PASS",
+    "file": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_full_repository_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "title": "Historical JSONL corruption outside 100000-row retention horizon still aborts run_once before refreshing scoring, handoff and evidence health",
+    "proof_level": "Exact-SHA source/test inspection and deterministic test oracle only; NOT a full-repository run, measured incident or benchmark",
+    "exact_chain": [
+      "storage.py load_observations(path,max_records) iterates all physical lines, json.loads and FlowObservation.from_dict occur before deque retention; malformed old line raises ValueError with source path and line number even if older than max_records=100000.",
+      "storage.py append_observations invokes load_observations(max_records=100000) before duplicate filtering, including when collected list is empty; a malformed archive line therefore blocks a no-network/no-input scan.",
+      "runner.py run_once calls append_observations, then load_observations again, then scoring/handoff/evidence_health and three atomic_write_json outputs. Archive exceptions are not caught or converted to source_errors/collection_attempts.",
+      "Result: after one successful run, a later archive parse error can leave latest.json, audit_latest.json and anata_latest.json from the previous run in place, with no new run health artifact. This is a failure-mode possibility; downstream consumers' behavior was not audited.",
+      "Current test_providers_replay.py checks valid bounded-tail loads and same-ID dedup, while test_evidence_health.py checks empty no-network run; inspected tests do not exercise malformed historical line beyond retention."
+    ],
+    "distinct_from_C": "Archive loading/admission and reporting failure occurs before C's normalization/handoff equal-rank or future-effective PIT issue.",
+    "deterministic_full_repo_regression": {
+      "setup": "In a TemporaryDirectory create a valid JSONL archive of 3 FlowObservation.to_dict rows, insert malformed line as first physical line, set load_observations(max_records=2); verify exact ValueError includes path and line 1. For run_once(network=False,external_jsonl=[],local_dir=tmp,as_of_ms=T), first generate valid latest/audit/handoff artifacts, then corrupt historical line and rerun; assert explicit exception and compare artifact hashes/mtimes. Instrument load_observations to count all parsed lines. Repeat with a valid row and same-ID metadata conflict in both input orders and sequential calls, identical duplicate, old-ID replay with max_existing_records=2, PIT and evidence_health.",
+      "expected_current_behavior": "Malformed older line raises despite bounded deque; run_once raises before writing refreshed output artifacts. Full repository test has not executed; these are predictions from source.",
+      "desired_repair_criteria": "Fail closed without silently skipping or backdating corrupt history; produce explicit durable archive-integrity failure diagnostic and prevent stale outputs being mistaken for fresh. Preserve append-only PIT, exact duplicates, provenance and quality metadata; regression both permutations and sequential runs.",
+      "commands": [
+        "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "test_result": "NOT_RUN: git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening failed 'Could not resolve host: github.com'; connected GitHub read-only file access cannot supply local executable full repository checkout."
+    }
+  },
+  "executor": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "new_task_enqueued": false,
+    "reason": "Failed Gemini malformed structured JSON tasks unresolved; do not enqueue near-identical tasks."
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor PLATEAU absent.",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; only new worker-control planner_status file; no Specialist/main/private/Railway/workflows/schedules/secrets/prediction/API/broker/execution changed"
+}
