@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-12T19:21:31+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "branch": "worker-control",
+    "head_at_prewrite": "fdec2e8d4db3ea9716b3a595aa922700fb5840f9",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "latest_prior_C": "C-20261012-378cffe-context-only-real-engine-oracle-1810.json",
+    "latest_A": "A-20261012-378cffe-availability-correction-admission-1908.json CONTINUE",
+    "latest_B": "B-20261012-378cffe-ethereum-validator-withdrawals-context-plateau-1630.json PLATEAU",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "source": "direct worker-control directory enumeration"
+    },
+    "specialist_branch_control": "ignored inert automation/**"
+  },
+  "recent_specialist": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "parent_to_head_ahead_by": 1,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "source": "independent current branch/commits/compare fetch"
+  },
+  "exact_sha_validation": {
+    "status": "PASS",
+    "method": "bounded Gemini executor done-task read at worker-control",
+    "done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "title": "One genuine scoring row can make top-level causal_quality usable while context-only histories determine core family scores and ACTIVE status",
+    "novelty": "Prior C 18:10 assessment showed all-context-only history yields family ACTIVE despite zero scoring provenance, but causal_quality remains unusable. This new mixed-role boundary can pass the causal metadata gate with a single recent scoring row while other core families remain entirely context-only and scored.",
+    "proof_level": "Independent exact-SHA production-path and existing 65-day fixture inspection. This is a source-derived testable hypothesis; no full exact-repository pytest, measured prediction impact or production incident.",
+    "source_chain": [
+      "part2/capital_flow/engine.py lines 137-149 passes all normalized observations, including provenance.context_only, into build_all_family_states; lines 190-192 derive known without checking role.",
+      "part2/capital_flow/handoff.py lines 237-275 marks a family ACTIVE when frame.family_scores[family] is non-null even if its scoring_observation_count=0; lines 278-301 aggregate top-level causal provenance from any non-context observation across families.",
+      "specialist_evidence/snapshot_quality.py assess_handoff_quality requires non-null causal availability and provenance but does not bind them to the family score or ensure each contributing family has scoring support; test_causal_quality_handoff.py lines 30-38 already expects usable=True with one scoring observation and missing families limitations.",
+      "part2/capital_flow/tests/test_features_engine.py history(65) lines 49-79 has 65 days of etf/stablecoin/exchange_btc records with distinct source_record_id, and lines 129-139 confirm real-engine non-null core axes."
+    ],
+    "deterministic_exact_repo_oracle": {
+      "fixture": "from dataclasses import replace; from part2.capital_flow.tests.test_features_engine import history, BASE, DAY, HOUR; base=history(65); as_of=BASE+64*DAY+12*HOUR; all_context=[replace(o,provenance={**dict(o.provenance),'context_only':True}) for o in base]; mixed=list(all_context); replace exactly the latest ETF row (day=64, source_record_id='etf:net_flow_usd:64') with replace(row,provenance={}) to make only this row scoring eligible.",
+      "compare": [
+        "Run CapitalFlowEngine().build(all_context,as_of_ms=as_of) and .build(mixed,as_of_ms=as_of), then build_anata_handoff(frame,rows) for each.",
+        "Source predicts family_scores, known and core axes equal between all_context and mixed because engine ignores provenance.context_only; require non-null stablecoin and exchange_btc family scores before interpreting result.",
+        "All-context handoff should have causal_quality.usable=False; mixed handoff source predicts causal_quality.usable=True from one recent ETF scoring row, while stablecoin and exchange_btc each have scoring_observation_count=0 and status ACTIVE with non-null score.",
+        "Assert mixed top-level provenance_refs includes only ETF scoring source, while stablecoin/exchange_btc source_evidence entries are context role. Repeat mixed in reversed input order and with exact duplicate to detect instability."
+      ],
+      "desired_contract": "No family score/ACTIVE state may be treated as scoring-supported solely from context-only rows, even when a different family supplies valid top-level causal provenance. Family-level role-scoped evidence and top-level usable must be consistent. Preserve context visibility and PIT, value/asset isolation, flags and correction precedence.",
+      "adjacent_regression": "Keep distinct future-effective cross-provider and same-source PIT boundary matrix as_of=86402999/86403000/86405000/86405001, both input orders, plus metadata tie; do not conflate with this role-gating test.",
+      "targeted_tests": "python -m pytest -q part2/capital_flow/tests/test_features_engine.py part2/capital_flow/tests/test_causal_quality_handoff.py part2/capital_flow/tests/test_v1_handoff.py",
+      "full_tests": "python -m pytest -q part2/capital_flow/tests",
+      "status": "PLAN_NOT_EXECUTED"
+    },
+    "exact_repo_test_blocker": {
+      "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+      "stderr": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+      "consequence": "No independent exact-SHA executable checkout or pytest. GitHub connector source and fixture inspection succeeded."
+    }
+  },
+  "executor": {
+    "gemini_structured_json_mitigation": "UNVERIFIED",
+    "failure_example": "automation/executor_queue/failed/C-20261009-context-only-metadata-tie-2315-01.json invalid JSON",
+    "task_enqueued": false,
+    "reason": "Do not repeat failed task before verified structured-output mitigation and separately reviewed engine/handoff/normalization write scope. Authoritative pending is empty; no new pending task requiring immediate push-trigger."
+  },
+  "safety": {
+    "scope": "PUBLIC_ONLY_PLANNER_ONLY",
+    "specialist_code_modified": false,
+    "main_private_railway_workflows_secrets_prediction_api_broker_execution_modified": false,
+    "schedule_modified": false,
+    "private_promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor CONTINUE; no same-SHA four-way PLATEAU"
+  }
+}
