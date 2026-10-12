@@ -1,0 +1,106 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at": "2026-10-12T21:33:18+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "authoritative_control": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "head_at_prewrite": "d5b995f1d9d50f12190fc72a0060e576f389f031",
+    "roadmap": "automation/supervisor_roadmap.md; read from worker-control; latest text refresh 2026-10-12 16:53 ICT",
+    "latest_A": "A-20261012-378cffe-availability-correction-admission-1908.json CONTINUE",
+    "latest_B_prior": "B-20261012-378cffe-ethereum-validator-withdrawals-context-plateau-1630.json PLATEAU",
+    "latest_C": "C-20261012-378cffe-mixed-role-causal-gate-1921.json CONTINUE",
+    "executor_queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 16,
+      "failed": 16,
+      "method": "direct fresh worker-control directory reads"
+    },
+    "specialist_branch_control": "inert automation/** ignored"
+  },
+  "specialist_recent": {
+    "head_commit_utc": "2026-10-09T08:49:01Z",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "parent_to_head_ahead_by": 1,
+    "behind_by": 0,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "exact_sha_validation": {
+    "method": "matching bounded Gemini executor done-task PASS",
+    "file": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "declared_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_exact_sha_pytest": "NOT_ESTABLISHED"
+  },
+  "evidence": {
+    "title": "New primary-source coverage plateau: CME crypto Daily Bulletin vs iShares IBIT issuer holdings are derivatives aggregates and BTC custody stock, not separately proven directional spot transactions",
+    "proof_level": "Opened primary issuer/exchange documentation and checked dated pages; did not download immutable report snapshots, validate any event row, run collector or PIT replay, or execute tests",
+    "first_party_pages_checked": [
+      {
+        "url": "https://www.cmegroup.com/market-data/daily-bulletin.html",
+        "observed_claims": "CME publishes previous-trade-date preliminary bulletin approximately 00:00 CT and final approximately 10:00 CT next business day; cryptocurrency futures/options PG74; these are planned update times, not verified first-publication logs."
+      },
+      {
+        "url": "https://www.cmegroup.com/market-data/browse-data/cryptocurrency-data.html",
+        "observed_claims": "CME distinguishes BTC/ETH futures/options and indicative spot/cross-rate benchmark datasets; no individually identified BTC/ETH spot purchase/sale event was found on this page."
+      },
+      {
+        "url": "https://www.ishares.com/us/products/333011/ishares-bitcoin-trust-etf?source=brokerage",
+        "observed_claims": "Issuer shows dated IBIT BTC holdings, basket amount, shares outstanding, and download latest holdings CSV; as-of Oct 09 2026; issuer explicitly calls quantity total BTC held and warns investment book of record may differ from accounting book. The latest CSV is mutable and was not independently archived."
+      }
+    ],
+    "contract_by_source": {
+      "CME daily crypto bulletin": {
+        "first_party_machine_readable": "PARTIAL: public product/day report index, but a dated PG74 machine-readable row was not downloaded or verified",
+        "immutable_artifact_event_id": "FAIL: trade-date + product + bulletin page is a plausible logical key, not an independently hashed immutable preliminary/final artifact ID; revisions may occur",
+        "economic_entity_btc_eth_scope": "PARTIAL: exchange and BTC/ETH derivative product identifiers, no verified individual beneficial owner or spot counterparty",
+        "effective_clock": "PARTIAL: report trade date, not spot execution time",
+        "available_clock": "FAIL: scheduled preliminary/final update times are not actual publication timestamps for a verified artifact",
+        "observed_clock": "FAIL: no local first-seen collector observation",
+        "non_overlap": "FAIL: no instrument-level or trade-level reconciliation to existing market derivatives, volume or spot evidence",
+        "role": "DERIVATIVES_CONTEXT_ONLY: futures/options volume/open interest cannot be counted as BTC/ETH spot inflow or outflow"
+      },
+      "iShares IBIT issuer holdings": {
+        "first_party_machine_readable": "PARTIAL: issuer advertises downloadable holdings CSV, but exact dated bytes were not retrieved/hashed",
+        "immutable_artifact_event_id": "FAIL: IBIT ticker/CUSIP + as-of date are fund identifiers/date, not immutable creation/redemption or spot execution IDs",
+        "economic_entity_btc_eth_scope": "PARTIAL: identifiable IBIT fund and BTC quantity, but no trade counterparty, venue or specific economic purchase event",
+        "effective_clock": "PARTIAL: issuer as-of Oct 09 2026 date, not execution time of any purchase",
+        "available_clock": "FAIL: no immutable version-specific first-publication timestamp",
+        "observed_clock": "FAIL: no Anata collector first-seen observation",
+        "non_overlap": "FAIL: no mapping to ETF primary-market creation/redemption and venue spot trades; shares, baskets and custody holdings risk overlapping interpretations",
+        "role": "CUSTODY_TREASURY_STOCK_CONTEXT_ONLY: a change in BTC holdings is not independently demonstrated directional spot buying/selling"
+      }
+    },
+    "missing_contract_elements": [
+      "Immutable byte-addressed historical CME preliminary/final bulletin and IBIT dated holdings versions with reproducible IDs and revision/correction history",
+      "Event-level BTC/ETH economic actor and actual spot transaction or creation/redemption execution, not aggregate derivatives or inventory delta",
+      "Event effective_at, actual first available_at, and local observed_at captured in PIT-safe ingest without retroactive backdating",
+      "Independent source-to-source transaction ID/venue reconciliation demonstrating non-overlap and no duplicate inclusion in existing Capital Flow/Market Driver"
+    ],
+    "reopen_only_if": [
+      "Produce dated immutable issuer or exchange primary artifacts with hashes/version provenance and a reproducible machine-readable sample",
+      "Provide actual publication/first-seen clocks and deterministic historical PIT replay with revision-safe correction handling",
+      "Prove specific economic BTC/ETH spot execution and reconcile non-overlap with market feeds and ETF creations/redemptions; otherwise keep context_only"
+    ],
+    "outcome": "PLATEAU: new checked official source categories add no independently proven directional spot capital flow; no Specialist implementation task warranted"
+  },
+  "executor": {
+    "structured_json_mitigation": "NOT_VERIFIED",
+    "new_task_enqueued": false,
+    "reason": "Gemini malformed JSON reliability remains unverified; source contract not qualified; authoritative pending empty alone is insufficient"
+  },
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE and independent Supervisor CONTINUE; exact-SHA validation alone insufficient",
+  "scope": "PUBLIC_ONLY_PLANNER_STATUS_WRITE_ONLY; no Specialist/main/private/Railway/workflow/secrets/schedule/prediction/API/broker/execution modifications"
+}
