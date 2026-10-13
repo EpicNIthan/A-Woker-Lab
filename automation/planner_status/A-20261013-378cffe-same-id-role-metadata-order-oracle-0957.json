@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 09:57",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_prewrite": "2515ff02a6c5ae57840bd5363806d6111a3e6a3b",
+  "recent_specialist": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_queue": {
+    "branch": "worker-control",
+    "pending": 0,
+    "pending_dir": "404 absent",
+    "done": 16,
+    "failed": 16,
+    "source": "direct directory enumeration"
+  },
+  "planner_verdicts": {
+    "A": "CONTINUE",
+    "B": "PLATEAU",
+    "C": "CONTINUE"
+  },
+  "exact_sha_validation": {
+    "status": "PASS",
+    "source": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_repo_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "title": "Same observation_id suppresses metadata-only correction before role-scoped scoring history",
+    "level": "EXECUTED_ISOLATED_SOURCE_FAITHFUL_REPRO_NOT_EXACT_REPOSITORY",
+    "pinned_source": [
+      "part2/capital_flow/contracts.py observation_id lines 219-235, revision_key lines 209-210",
+      "part2/capital_flow/storage.py append_observations lines 64-91, _semantic_signature lines 94-107",
+      "part2/capital_flow/runner.py _scoring_history lines 59-60 and archive read lines 119-125"
+    ],
+    "fixture": "Same family=etf, metric=net_flow_usd, asset=BTC, value=100, source_record_id=same-id, revision=1, effective=1000, available=2000, observed=3000; A provenance.context_only=true, data_quality=.4, quality_flags=LOW_QUALITY; B provenance.context_only=false, data_quality=.99, no quality_flags. All identity fields equal.",
+    "executed": {
+      "identity_equal": true,
+      "semantic_signature_equal": false,
+      "context_then_scoring": {
+        "append_counts": [
+          1,
+          0
+        ],
+        "exact_duplicate_retry": 0,
+        "archive_records": 1,
+        "scoring_count": 0,
+        "saved_data_quality": 0.4
+      },
+      "scoring_then_context": {
+        "append_counts": [
+          1,
+          0
+        ],
+        "exact_duplicate_retry": 0,
+        "archive_records": 1,
+        "scoring_count": 1,
+        "saved_data_quality": 0.99
+      },
+      "pit_boundary": "as_of=1999 invisible; as_of=2000 visible, both orders",
+      "result": "PASS isolated source-faithful reproduction; not full repo pytest or production incident"
+    },
+    "mechanism": "seen observation_id guard precedes semantic_signature comparison; provenance, quality flags and data_quality affect signature but are omitted from observation_id. First metadata version wins and later correction is never archived.",
+    "exact_repo_deterministic_oracle": "At exact SHA use real FlowObservation, storage.append_observations and load_observations in tmp_path, both arrival orders and exact duplicate; assert identical observation_id, different signatures, order-dependent archive metadata and _scoring_history. Then two sequential runner.run_once(network=False, external_jsonl=[fixture], local_dir=tmp_path, as_of_ms=T), inspect observations.jsonl, latest.json, audit_latest.json, anata_latest.json, evidence_health at as_of=available-1, available, available+1; ensure no future leak, verify corrected role/quality propagation, test reversed order, run targeted pytest and full python -m pytest -q part2/capital_flow/tests.",
+    "separation": "A archive-admission identity collision, not C downstream context-only normalization/PIT, not B source breadth."
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+    "exit_code": 128,
+    "stderr": "Could not resolve host: github.com",
+    "exact_repo_pytest": "NOT_RUN"
+  },
+  "executor": {
+    "gemini_structured_json_mitigation": "UNVERIFIED",
+    "task_enqueued": false
+  },
+  "promotion": "BLOCKED: A and C CONTINUE; independent Supervisor not PLATEAU",
+  "safety": {
+    "specialist_code_modified": false,
+    "private_main_railway_workflows_secrets_prediction_broker_execution_modified": false,
+    "schedules_modified": false
+  }
+}
