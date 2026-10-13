@@ -1,0 +1,25 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "verdict": "BLOCKED_WRITE_SAFETY",
+  "assessed_at_ict": "2026-10-13 21:29",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "ca831db76781a7890b78d30f69f7ef998723d804",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "operation": "mcp__GitHub__create_file",
+  "target": "EpicNIthan/A-Woker-Lab worker-control automation/planner_status/B-20261013-378cffe-bullish-published-clock-spot-plateau-2129.json",
+  "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending.",
+  "sources_checked": [
+    "https://docs.exchange.bullish.com/rest/api/get-historical-market-trades/index.html",
+    "https://docs.exchange.bullish.com/websocket/public/market-data/trades/index.html",
+    "https://docs.exchange.bullish.com/rest/api/get-market-by-symbol/index.html",
+    "https://exchange-developer.crypto.com/exchange/v1/docs/api/rest-single-page/"
+  ],
+  "assessment": "PLATEAU: Bullish documented tradeId and execution/published clocks; no sampled real event, collector observation clock, first-availability verification or independent non-overlap. No directional net BTC/ETH flow established.",
+  "gemini_tasks": 0,
+  "promotion": "BLOCKED"
+}
