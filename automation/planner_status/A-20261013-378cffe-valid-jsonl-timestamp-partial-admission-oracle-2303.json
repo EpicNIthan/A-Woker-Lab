@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 23:03",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "specialist_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "specialist_recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "df726492d42882c55f81d60d24b98e1cb3f109f4",
+  "authoritative_roadmap": "automation/supervisor_roadmap.md",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "method": "direct recursive worker-control Git tree; no pending blobs"
+  },
+  "latest_durable_before_write": {
+    "A": "A-20261013-378cffe-no-input-retry-source-oracle-2203.json CONTINUE",
+    "B": "B-20261013-378cffe-bitget-mexc-spot-pit-overlap-plateau-2226.json PLATEAU",
+    "C": "C-20261013-378cffe-stablecoin-quality-tie-source-order-2011.json CONTINUE"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Valid JSONL out-of-range effective timestamp gives concrete external_jsonl trigger for partial archive admission",
+    "proof_level": "SOURCE_DERIVED_DETERMINISTIC_ORACLE_NOT_EXECUTED_IN_EXACT_REPO",
+    "exact_source_blobs": {
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/providers.py": "072581823a815c124d8629afd678196e86fe8840",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c"
+    },
+    "mechanism": "JsonlFlowAdapter.collect parses both syntactically valid JSONL rows with FlowObservation.from_dict. The contract casts effective_at_ms to int but does not enforce datetime representability; the archive's _semantic_signature and observation_id accept 1000000000000000000. During append_observations, row G1 is written first, then G2.to_dict calls ms_to_iso(1000000000000000000), where datetime.fromtimestamp(..., tz=UTC) raises ValueError for an out-of-range year. runner.run_once appends before loading history and before writing latest.json/audit_latest.json/anata_latest.json.",
+    "oracle": {
+      "fixture": "Create baseline G0 via run_once(network=False, as_of_ms=T). Then one external_jsonl with valid G1 and G2, both family=etf metric=net_flow_usd asset=BTC unit=USD, distinct source_record_id, observed_at_ms=T, available_at_ms=T, and valid fields; G1 effective_at_ms=T, G2 effective_at_ms=1000000000000000000. Use T=1791900000000. No malformed JSON or monkeypatched to_dict needed.",
+      "current_source_predicted": "G1,G2 ordering: ValueError year out of range, archive physically contains G0 and G1, three output files retain G0. G2,G1 ordering: ValueError before G1, archive retains G0. No-input retry after G1,G2: appended_observations=0, archive_records_loaded=2 and outputs may publish G1 with no retry collection_attempts or source_errors. A retry with only G1 is an exact duplicate and appends 0.",
+      "failing_expected_assertions": [
+        "After any failed run_once, archive contents and three published outputs must represent one committed generation (G1,G2 case currently violates archive atomicity).",
+        "Reversing input order must not change the set of committed observations after failure (source predicts different committed sets).",
+        "No-input retry must not silently publish an observation from an aborted prior batch without explicit recovery provenance or rollback."
+      ],
+      "commands": [
+        "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "execution": "NOT_RUN",
+      "proof_limits": "Only exact-source inspection plus isolated standard-library datetime range check; no exact-repository pytest and no production incident claim."
+    },
+    "distinctness": "Unlike previous abstract injected G2.to_dict TypeError, this specifies a concrete syntactically valid external_jsonl fixture that can reach archive serialization and distinguishes it from malformed JSONL rejected by JsonlFlowAdapter before append. No C downstream context-quality or B source breadth overlap."
+  },
+  "blocker": {
+    "operation": "git ls-remote --heads https://github.com/EpicNIthan/A-Woker-Lab.git anata-local-hardening",
+    "exit_code": 128,
+    "stderr": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+    "impact": "No exact repository checkout; no deterministic exact-repository pytest executed."
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "executor_tasks_queued": 0,
+  "private_promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor PLATEAU absent",
+  "safety": "Public worker-control Planner A status only; no Specialist code, either main, private code, Railway, workflows, secrets, prediction/API/Telegram/MT5/broker/execution or schedules modified."
+}
