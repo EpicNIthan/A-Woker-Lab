@@ -1,0 +1,48 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-13 12:25",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_head_at_prewrite": "6324f9a96108d1db04d52c1e6c0bb87c9a5acb0d",
+  "audit": {
+    "specialist_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "specialist_diff": "one commit; part2/capital_flow/normalization.py and part2/capital_flow/tests/test_contracts_normalization.py only",
+    "supervisor_roadmap": "automation/supervisor_roadmap.md read on worker-control; last header 2026-10-12 16:53 ICT, stale against newer status records",
+    "planner_status": {
+      "A": "A-20261013-378cffe-replay-horizon-duplicate-admission-1103.json CONTINUE (fetched)",
+      "B": "B-20261013-378cffe-kraken-posttrade-bitstamp-pit-source-coverage-plateau-1026.json PLATEAU (fetched)",
+      "C": "C-20261012-378cffe-mixed-role-causal-gate-1921.json CONTINUE (fetched; no directory enumeration)"
+    },
+    "queue": {
+      "pending": "404 absent (0 pending)",
+      "done": "directory exists; connector cannot enumerate; latest A/B reports say 16, not independently recounted",
+      "failed": "directory exists; connector cannot enumerate; latest A/B reports say 16, not independently recounted",
+      "exact_sha_validation": "PASS via fetched done/C-20261009-same-revision-conflict-1547-01.json executor_result.status=PASS and commit_sha equal to current public HEAD, attempt 2; independent exact-repo pytest NOT RUN",
+      "malformed_gemini_json": "unmitigated; fetched failed/C-20261009-context-only-metadata-tie-2315-01.json invalid JSON error"
+    }
+  },
+  "source_coverage": [
+    {
+      "provider": "Uniswap v4 first-party contracts",
+      "sources": [
+        "https://github.com/Uniswap/v4-core/blob/main/src/interfaces/IPoolManager.sol",
+        "https://github.com/Uniswap/v4-core/blob/main/src/PoolManager.sol",
+        "https://github.com/Uniswap/v4-core/blob/main/src/interfaces/IHooks.sol"
+      ],
+      "source_checks": "IPoolManager.Swap defines PoolId, sender, signed amount0/amount1, price, liquidity, tick and fee; PoolManager emits Swap, with hooks capable of modifying swap deltas.",
+      "immutable_event_id": "Proposed finalized (chain_id, block_hash, transaction_hash, log_index) plus PoolManager address and PoolId; NOT independently sampled; PoolId alone is not an event ID.",
+      "economic_entity": "ETH/WETH spot swaps only when actual PoolKey currencies independently resolve to native ETH or canonical WETH and other currency is known; no BTC/ETH live pool sample.",
+      "effective_pit_clock": "Canonical finalized block timestamp needed; no block sampled.",
+      "available_pit_clock": "First historical event visibility/finality publication time not independently measured; block timestamp must not substitute.",
+      "observed_pit_clock": "No collector capture, hence no observed_at.",
+      "non_overlap": "Not demonstrated against Uniswap router/hook duplicate events, same-tx multihop swaps, existing Market Driver/DEX feeds or other cross-chain wrapped-token data.",
+      "role": "DEX spot swap activity conditional on verified pool/asset mapping; signed pool deltas do not establish net capital entering/leaving BTC or ETH markets. Not directional net Capital Flow admission.",
+      "outcome": "NOT_ADMITTED"
+    }
+  ],
+  "plateau": "First-party interface and emission path checked. No finalized immutable event sample, BTC/ETH economic mapping, historical availability/observation clocks or independent non-overlap proof. Do not claim fresh directional Capital Flow.",
+  "reopen_proof": "Pin deployed PoolManager version and chain; sample a finalized ETH/WETH pool Swap with block_hash, tx_hash, log_index and PoolKey mapping; record effective, first-visible and collector-observed clocks; reconcile router/hook/multihop logs and existing feeds at event level; show unique economic movement and role before proposing any admission.",
+  "actions": "No Gemini task queued; no Specialist code edits; no promotion. A and C CONTINUE, independent Supervisor PLATEAU absent. Preserve original schedules and enabled state."
+}
