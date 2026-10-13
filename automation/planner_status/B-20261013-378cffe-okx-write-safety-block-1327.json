@@ -1,0 +1,28 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-13 13:27",
+  "specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "6d44fb66425aa1e20b023c6d377fad761d2e8af5",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "matching bounded executor PASS; independent pytest not run",
+  "latest_A": "CONTINUE",
+  "latest_C": "CONTINUE",
+  "source_checked": "OKX first-party REST recent/history spot trades and WS aggregated trades/trades-all; raw tradeId and taker side documented; first-publication/observed clocks and independent overlap proof absent; context-vs-spot distinction unresolved for net capital flow",
+  "source_url": "https://www.okx.com/docs-v5/en/",
+  "filing_error": {
+    "operation": "mcp__GitHub__create_file",
+    "branch": "worker-control",
+    "target": "automation/planner_status/B-20261013-378cffe-okx-spot-trade-aggregation-pit-plateau-1327.json",
+    "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending."
+  },
+  "tasks_created": 0,
+  "promotion": "BLOCKED",
+  "schedules": "UNCHANGED"
+}
