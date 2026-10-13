@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-13 23:28 (run start)",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "specialist_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "specialist_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "aeba8a9861fa3e5147ac882d1f069510d97fcb76",
+  "authoritative_control": {
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_embedded_refresh": "2026-10-12 16:53 ICT (stale; direct branch reads override)",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "method": "direct worker-control directory enumeration; pending directory 404"
+    },
+    "latest_A": "A-20261013-378cffe-valid-jsonl-timestamp-partial-admission-oracle-2303.json CONTINUE",
+    "latest_B": "B-20261013-378cffe-bitget-mexc-spot-pit-overlap-plateau-2226.json PLATEAU",
+    "latest_C": "C-20261013-378cffe-zero-weight-peg-denominator-2317.json CONTINUE",
+    "specialist_branch_queue_ignored": true
+  },
+  "exact_sha_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "source_coverage": {
+    "family": "Uniswap V2 Ethereum mainnet AMM Pair Swap event; distinct from previously reviewed Uniswap V4 hooks",
+    "primary_sources_actually_checked": [
+      {
+        "url": "https://github.com/Uniswap/v2-core/blob/6a9e7c97860676e0992f22a49665760444c1cdf5/contracts/UniswapV2Pair.sol",
+        "proof": "Pair token0/token1 and Swap(sender,amount0In,amount1In,amount0Out,amount1Out,to) emitted by swap()"
+      },
+      {
+        "url": "https://github.com/Uniswap/v2-core/blob/6a9e7c97860676e0992f22a49665760444c1cdf5/contracts/UniswapV2Factory.sol",
+        "proof": "PairCreated(token0,token1,pair) supports pool token-identity verification"
+      },
+      {
+        "url": "https://ethereum.org/developers/docs/apis/json-rpc/",
+        "proof": "eth_getLogs and transaction receipts expose block/transaction log identity; finalized tag exists"
+      }
+    ],
+    "immutable_event_id": "PROPOSED chain_id + pair_contract + transaction_hash + log_index + canonical_block_hash; no real finalized Swap log sampled, so no independently verified immutable event/artifact ID",
+    "btc_eth_economic_entity": "ETH exposure only via verified WETH token0/token1; BTC exposure only via verified WBTC/other wrapper and issuer mapping, not native BTC on Ethereum; neither pair nor token addresses independently sampled",
+    "pit_clocks": {
+      "effective": "canonical finalized block.timestamp candidate, no real sampled event",
+      "available": "first public log/receipt availability at finalized/safe horizon NOT OBSERVED; block timestamp is not first-publication time",
+      "observed": "local collector observation clock NOT CAPTURED; no collector run"
+    },
+    "non_overlap": "NOT DEMONSTRATED: multi-hop router transactions emit multiple Pair Swap logs; ERC20 Transfer logs represent same swap legs; DEX aggregators, V4 and any Market Driver onchain data require event/transaction-level reconciliation",
+    "context_vs_spot": "Pair Swap is onchain AMM spot execution in wrapped tokens, not independently demonstrated native BTC/ETH net inflow/outflow; venue-level directional turnover candidate only, not an admitted independent Capital Flow signal",
+    "admission": "REJECTED_CONTEXT_ONLY_UNTIL_PROOF",
+    "reopen_proof": "Sample finalized immutable WETH/WBTC pool Swap logs with verified pair and token contracts, record effective/first-available/local-observed PIT timestamps, reorg handling, router multi-hop and Transfer dedup against existing sources, and prove distinct economic directional flow rather than matched swap turnover."
+  },
+  "gemini_malformed_json_mitigation": "UNVERIFIED",
+  "new_gemini_tasks": 0,
+  "promotion": "BLOCKED: A CONTINUE, C CONTINUE, independent Supervisor PLATEAU absent",
+  "lane_boundary": "B source breadth only; A archive integration, C downstream quality",
+  "safety": "PUBLIC worker-control status only; no Specialist code, either main, private, Railway, workflows, secrets, prediction/API/broker/execution or schedules touched"
+}
