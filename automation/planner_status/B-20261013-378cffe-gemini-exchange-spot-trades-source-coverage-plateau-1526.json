@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-13 15:26",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "cae0b9acc1b058b87572fcce38cd0ac193e8ed68",
+  "specialist_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "specialist_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "authoritative_control": "worker-control/automation/supervisor_roadmap.md",
+  "executor_queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "method": "direct authoritative worker-control recursive tree enumeration; pending directory absent"
+  },
+  "validation": {
+    "status": "PASS",
+    "method": "bounded executor done task",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_sha_pytest": "NOT_RUN"
+  },
+  "other_planners": {
+    "A": "CONTINUE (2026-10-13 15:00)",
+    "C": "CONTINUE (2026-10-12 19:21)"
+  },
+  "source_coverage": {
+    "candidate": "Gemini cryptocurrency exchange public BTCUSD/ETHUSD spot trade tape; separate from Google Gemini code executor",
+    "first_party_sources": [
+      {
+        "url": "https://developer.gemini.com/trading/rest-api/market-data/list-trades",
+        "checked": "REST v1 trades symbol; tid, timestampms, price, amount, type, broken; seven-day public window; 500 records/request; include_breaks option"
+      },
+      {
+        "url": "https://developer.gemini.com/websocket/streams",
+        "checked": "public symbol@trade stream; event time E (nanoseconds), trade ID t, price p, quantity q, buyer-is-maker m"
+      }
+    ],
+    "economic_entity": "Gemini BTCUSD and ETHUSD spot matched trades; maker/taker directional execution, NOT net BTC/ETH capital inflow or outflow",
+    "immutable_event_id": "REST tid / WS t specified by vendor, but no live immutable event independently sampled or cross-feed ID reconciliation performed",
+    "pit_clocks": {
+      "effective": "REST timestampms / WS E specified for trade event",
+      "available": "historical first-publication timestamp NOT documented/proven; WS E is event time, not independently proven availability",
+      "observed": "collector receipt timestamp NOT collected"
+    },
+    "overlap": "NOT PROVEN: REST and WS can expose the same economic executions; no sampled REST tid-to-WS t join and no lineage comparison against existing Market Driver/Capital Flow inputs",
+    "admission": "REJECT as independent Capital Flow source; potential spot taker-pressure context only, not net capital-flow proof",
+    "reopen": "Sample same finalized BTCUSD and ETHUSD trade IDs from REST and WS, record collector receipt time, establish historical first-available bound and broken-trade corrections, reconcile REST/WS duplicates and existing source lineage, and independently demonstrate incremental non-overlapping directional economic evidence"
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "new_executor_tasks": 0,
+  "promotion": "BLOCKED: A/C CONTINUE and independent Supervisor PLATEAU absent",
+  "schedules": "UNCHANGED",
+  "writes_scope": "ONLY this worker-control planner_status file"
+}
