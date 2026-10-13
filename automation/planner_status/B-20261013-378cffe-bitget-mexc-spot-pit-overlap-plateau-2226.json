@@ -1,0 +1,74 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-13 22:26",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "8490d7efb687522eba86fe3c6a6e14c532771194",
+  "specialist_latest": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_control": {
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_embedded_refresh": "2026-10-12 16:53 ICT (stale snapshot)",
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "method": "worker-control direct GitHub directory reads; pending 404",
+    "latest_A": "A-20261013-378cffe-no-input-retry-source-oracle-2203.json CONTINUE",
+    "latest_B": "B-20261013-378cffe-bullish-write-safety-error-2129.json BLOCKED_WRITE_SAFETY",
+    "latest_C": "C-20261013-378cffe-stablecoin-quality-tie-source-order-2011.json CONTINUE",
+    "specialist_branch_control_files_ignored": true
+  },
+  "exact_sha_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "sources_actually_checked": [
+    {
+      "provider": "Bitget",
+      "first_party": "https://www.bitget.com/docs/catalog/market/market-data",
+      "endpoint": "GET /api/v3/market/fills?category=SPOT&symbol=BTCUSDT",
+      "immutable_id": "execId scoped by category/symbol; documentation sample execId=1 is NOT a real sampled event",
+      "economic_entity": "BTC/USDT spot fill; ETH/USDT must be separately confirmed",
+      "effective_clock": "ts Unix milliseconds per fill",
+      "available_clock": "NO first publication timestamp per fill; requestTime is response request time, not first publication",
+      "observed_clock": "NOT_CAPTURED; no live collector",
+      "non_overlap": "NOT_DEMONSTRATED vs Bitget v2 spot fills, any existing Market Driver, or cross-venue economic event representations",
+      "role": "venue spot execution activity and trade side, not independent net BTC/ETH capital inflow",
+      "verdict": "NOT_ADMITTED"
+    },
+    {
+      "provider": "MEXC",
+      "first_party": "https://mexcdevelop.github.io/apidocs/spot_v3_en/",
+      "endpoints": [
+        "GET /api/v3/trades",
+        "GET /api/v3/aggTrades",
+        "spot@public.aggre.deals.v3.api.pb@100ms@BTCUSDT"
+      ],
+      "immutable_id": "REST id / aggregate a,f,l documented but examples show null; WebSocket sample has no per-fill ID; NO real immutable event sampled",
+      "economic_entity": "BTC/USDT spot execution; ETH/USDT not independently sampled",
+      "effective_clock": "REST time / aggTrades T / WebSocket deal time",
+      "available_clock": "WebSocket sendtime is message event-time candidate, NOT verified first-publication clock for underlying fill",
+      "observed_clock": "NOT_CAPTURED",
+      "non_overlap": "NOT_DEMONSTRATED; aggregate f-l covers raw executions and WebSocket deals may repeat same fills; avoid double-count",
+      "role": "spot taker-side activity, not independently demonstrated net inflow/outflow",
+      "verdict": "NOT_ADMITTED"
+    }
+  ],
+  "reopening_proof": "Capture immutable live BTC/ETH execution IDs with venue+market scope; persist execution, first-available and local observed PIT clocks, prove REST/WS/aggregate and Market Driver non-overlap via event-level reconciliation, and demonstrate independently directional net capital flow rather than matched turnover.",
+  "source_role_boundary": "B source breadth only; A owns archive/integration; C owns downstream causal/quality gates",
+  "gemini_malformed_json_mitigation": "UNVERIFIED",
+  "gemini_tasks_queued": 0,
+  "promotion": "BLOCKED; A and C CONTINUE and independent Supervisor PLATEAU absent",
+  "safety": "PUBLIC worker-control status only; no Specialist code, private, main, workflows, secrets, Railway, prediction, API, broker, execution or schedules modified"
+}
