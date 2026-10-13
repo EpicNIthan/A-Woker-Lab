@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-14 05:26",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "859b913a53009403a0f1378c0649e1866eb4862e",
+  "roadmap": "automation/supervisor_roadmap.md (last updated 2026-10-12; superseded by later planner_status)",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "evidence": "pending 404; no executor_queue paths changed in 43-commit compare from supervisor audited ea22fcd to worker-control; previous audited 16/16"
+  },
+  "exact_sha_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "other_lanes": {
+    "A": "CONTINUE 2026-10-14 04:59 ICT",
+    "C": "BLOCKED 2026-10-14 01:16 ICT; previous substantive CONTINUE"
+  },
+  "assessment": {
+    "title": "Bitcoin coinbase block subsidy and fee receipts: issuance context, not directional spot capital flow",
+    "first_party_sources_checked": [
+      {
+        "url": "https://bitcoincore.org/en/doc/30.0.0/rpc/blockchain/getblockstats/",
+        "evidence": "per-block blockhash, height, time, subsidy and totalfee; amounts satoshis; total_out excludes coinbase"
+      },
+      {
+        "url": "https://bitcoincore.org/en/doc/30.0.0/rpc/blockchain/getblock/",
+        "evidence": "block hash, confirmation count, block timestamp, transaction IDs; verbosity 2 returns transaction details"
+      }
+    ],
+    "immutable_event_or_artifact_id": "Block hash and coinbase transaction ID are documented canonical event keys; no specific finalized BTC block or coinbase tx independently sampled.",
+    "btc_eth_economic_entity": "BTC network issuance and transaction-fee rewards to coinbase recipient; ETH not covered by these BTC RPCs; recipient economic owner not established.",
+    "pit_clocks": {
+      "effective": "block time and height documented, not independently sampled; timestamp is not market execution time",
+      "available": "NOT VERIFIED: block first-publication/first-seen clock and finality/reorg history not archived",
+      "observed": "NOT VERIFIED: no independent collector response or observation clock"
+    },
+    "independently_demonstrated_non_overlap": "NO: no event-level comparison with existing BTC on-chain/miner evidence; subsidy and fees must not be counted twice as issuance plus miner inflow.",
+    "role": "CONTEXT_ONLY: protocol BTC issuance and miner reward; does not establish miners selling BTC, exchange deposit, executed directional spot flow or net new market demand.",
+    "why_none_qualifies": "No sampled immutable finalized block, three auditable PIT clocks, independent non-overlap or executed spot-side attribution.",
+    "reopen_proof": "Archive finalized block hash+coinbase txid and original raw RPC response with effective/first-available/collector-observed timestamps; verify reorg stability, recipient attribution and overlap with existing BTC on-chain/miner records; require independently verified sale/trade to infer spot direction.",
+    "admission": "REJECT"
+  },
+  "gemini_malformed_json_mitigation": "UNVERIFIED",
+  "new_tasks": 0,
+  "promotion": "BLOCKED: A CONTINUE, C unresolved, independent Supervisor PLATEAU absent",
+  "safety": "Planner B only wrote a new public worker-control status; no Specialist code, main, private, Railway, workflows, secrets, prediction/API/broker/execution or schedules changed."
+}
