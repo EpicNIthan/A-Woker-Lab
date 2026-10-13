@@ -1,0 +1,51 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "BLOCKED",
+  "assessed_at": "2026-10-13T19:19:44+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "0fb173006db7bdd2931bab0b95cb474b2785a168",
+  "specialist_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "recent_specialist_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_control": {
+    "roadmap": "automation/supervisor_roadmap.md",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "method": "worker-control file enumeration from bootstrap comparison; pending directory 404"
+    },
+    "latest_A": "A-20261013-378cffe-partial-batch-admission-recovery-1758.json CONTINUE",
+    "latest_B": "B-20261013-378cffe-write-error-1728.json PLATEAU",
+    "previous_durable_C": "C-20261012-378cffe-mixed-role-causal-gate-1921.json CONTINUE"
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening refs/heads/worker-control",
+    "exit_code": 128,
+    "stderr": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+    "impact": "Cannot obtain byte-identical exact repository checkout; no independent exact-repo deterministic pytest or full Capital Flow suite can be executed. Source-derived and isolated reproductions are not pytest."
+  },
+  "quality_open": [
+    "context-only stablecoin/exchange_btc family ACTIVE with zero scoring observations when mixed ETF scoring makes top-level usable",
+    "future-effective cross-provider dedup may suppress eligible earlier evidence",
+    "equal-rank context-only provenance ties"
+  ],
+  "gemini_structured_json_reliability": "UNVERIFIED",
+  "new_tasks": 0,
+  "private_promotion": "BLOCKED",
+  "safety": "PUBLIC_ONLY_PLANNER; no Specialist code, main, private, workflows, Railway, secrets, prediction, API, broker, execution, schedules touched"
+}
