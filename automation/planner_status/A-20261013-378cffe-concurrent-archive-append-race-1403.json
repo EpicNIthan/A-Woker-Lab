@@ -1,0 +1,49 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 14:03",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "4393d08bc450f92ecc1b2d8b86151013d724f006",
+  "recent_specialist_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "roadmap": "automation/supervisor_roadmap.md (last refresh Oct 12; status records newer)",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "method": "direct recursive worker-control tree"
+  },
+  "validation": {
+    "method": "bounded done C-20261009-same-revision-conflict-1547-01.json",
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "other_planners": {
+    "B": "PLATEAU (2026-10-13 13:27)",
+    "C": "CONTINUE (2026-10-12 19:21)"
+  },
+  "finding": {
+    "title": "Concurrent archive appends admit the same observation ID twice",
+    "source": "part2/capital_flow/storage.py Git blob e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "proof": "Executed isolated test against byte-identical storage.py (git hash-object verified), with stub FlowObservation contracts. Two threads synchronized after independent archive loads, before append; sequential exact retry appended 1 then 0, archive rows 1; concurrent same-ID append returned 1 and 1, archive rows 2 with one distinct ID, no errors. Source has no lock/transaction spanning read-dedup-append. No production incident or exact-repo pytest claimed.",
+    "distinct": "Concurrency race across writers, not prior sequential availability correction, metadata collision, bounded replay, malformed horizon or nontransactional three-output publication.",
+    "oracle": "At exact HEAD, real FlowObservation and tempfile local_dir; baseline sequential append_observations identical input yields 1,0 and one row. Run two threads/processes with deterministic barrier after each load_observations in append_observations; assert duplicate archive admission is reproduced pre-fix, then require exactly one archived ID and no lost distinct rows after repair. Also concurrently run_once(network=False, external_jsonl=[same fixture], as_of_ms=fixed) with shared local_dir; audit archive/latest/audit_latest/anata_latest/handoff/evidence_health and PIT, exact duplicate retry, crash recovery and bounded lock timeout. Targeted python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py then full python -m pytest -q part2/capital_flow/tests. This oracle is planned, NOT EXECUTED."
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+    "error": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+    "consequence": "Exact-repository checkout and pytest NOT RUN; isolated byte-identical storage module with stub contract only."
+  },
+  "executor": {
+    "structured_json_mitigation": "UNVERIFIED",
+    "tasks_created": 0
+  },
+  "promotion": "BLOCKED; A CONTINUE/C CONTINUE, no independent Supervisor PLATEAU",
+  "scope": "PUBLIC_ONLY_PLANNER_ONLY; no Specialist/main/private/Railway/workflows/secrets/prediction/API/broker/execution/schedules changed"
+}
