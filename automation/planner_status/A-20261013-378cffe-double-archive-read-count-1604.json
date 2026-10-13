@@ -1,0 +1,45 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 16:04",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "d9ef92a803a3747c6a8cde4cd3701ebbdab21acd",
+  "recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "counts": "B 15:26 assessment; pending direct 404"
+  },
+  "validation": {
+    "status": "PASS",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "No-new-data refresh deserializes entire JSONL archive twice",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "evidence": "Executed isolated byte-identical storage.py with stub observation. append_observations([], path) then load_observations(path,100000): rows 10->20 json.loads, 250->500, 1200->2400; zero new rows. No exact repo pytest or production timing claim.",
+    "oracle": "Exact repo no-network run_once on temp archives N=10,250,1200,100001; instrument parsed rows and bytes; validate archive/latest/audit/handoff/evidence_health/PIT, duplicate retries, corrections. Targeted tests test_providers_replay.py test_evidence_health.py test_v1_handoff.py and full python -m pytest -q part2/capital_flow/tests."
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+    "exit_code": 128,
+    "error": "Could not resolve host: github.com"
+  },
+  "other_planners": {
+    "B": "PLATEAU 15:26",
+    "C": "CONTINUE 2026-10-12 19:21"
+  },
+  "gemini_json": "UNVERIFIED",
+  "new_tasks": 0,
+  "promotion": "BLOCKED",
+  "schedules": "UNCHANGED"
+}
