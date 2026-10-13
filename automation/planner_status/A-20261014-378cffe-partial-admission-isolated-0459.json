@@ -1,0 +1,86 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 04:59",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_public_commit": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_specialist_automation_ignored": true
+  },
+  "worker_control_prewrite": "82b554e25dc46144fb70d6210f77c318fa76b7d5",
+  "roadmap": "automation/supervisor_roadmap.md (last supervisor refresh 2026-10-12 16:53 ICT; superseded by newer durable assessments)",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control main...worker-control compare file inventory; pending absent"
+  },
+  "newest_other_planners": {
+    "A": "A-20261014-378cffe-dns-blocked-0405.json BLOCKED_CONTINUE",
+    "B": "B-20261014-378cffe-thorchain-write-safety-error-0325.json BLOCKED_PLATEAU; last substantive B 02:30 PLATEAU",
+    "C": "C-20261014-378cffe-checkout-write-blocker-0116.json BLOCKED; last substantive C CONTINUE"
+  },
+  "exact_sha_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Order-dependent partial archive admission with valid JSONL extreme timestamp, now executed in an isolated source-faithful test",
+    "source_paths": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/contracts.py",
+      "part2/capital_flow/runner.py"
+    ],
+    "source_blobs": {
+      "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "contracts": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c"
+    },
+    "mechanism": "storage.append_observations writes each to_dict row in append mode; contracts.ms_to_iso converts timestamp via datetime.fromtimestamp; valid integer effective_at_ms=10**18 raises during serialization after prior valid row may already be persisted. runner.run_once only publishes latest/audit/handoff after append returns.",
+    "proof_level": "EXECUTED_ISOLATED_SOURCE_FAITHFUL_FUNCTION_COPY_WITH_STUB_NOT_EXACT_REPO_PYTEST",
+    "isolated_test": {
+      "command": "python -m pytest -q /tmp/test_planner_a_partial_archive.py",
+      "result": "3 passed in 0.06s",
+      "assertions": [
+        "[GOOD,BAD] raises; archive contains GOOD despite failed batch; retry GOOD appends 0",
+        "[BAD,GOOD] raises; archive empty; retry GOOD appends 1",
+        "after [GOOD,BAD] failure, no-input append returns 0 while archive still contains GOOD"
+      ],
+      "limitations": "Temporary isolated copy of storage functions with minimal FlowObservation stub; no exact-repo checkout, run_once, archive/latest/audit/handoff/evidence_health integration, or production proof."
+    },
+    "exact_repo_oracle": {
+      "execution": "NOT_RUN",
+      "setup": "Pinned exact SHA, tmp_path, real FlowObservation/from_dict; baseline G0; run_once(network=False, external_jsonl=[GOOD,BAD]) and reversed input with valid JSONL but BAD effective_at_ms=10**18; then corrected retry and no-input retry.",
+      "expected_assertions": [
+        "Failed batch must not partially publish archive, or must expose an explicit recoverable incomplete-generation marker",
+        "Both row orders yield consistent archive and three outputs",
+        "Corrected retry and exact duplicate preserve IDs, provenance and appended counts",
+        "PIT available_at_ms, evidence_health and audit/handoff reflect one generation"
+      ],
+      "commands": [
+        "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ]
+    }
+  },
+  "blocker": {
+    "operation": "git ls-remote --heads https://github.com/EpicNIthan/A-Woker-Lab.git anata-local-hardening worker-control",
+    "exit_code": 128,
+    "stderr": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+    "consequence": "Exact-repository checkout and deterministic pytest NOT_RUN"
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "new_executor_tasks": 0,
+  "private_promotion": "BLOCKED: A CONTINUE, C unresolved, independent Supervisor PLATEAU absent",
+  "safety": "Only a new public worker-control A assessment is authorized; no Specialist code, main, private code, Railway, workflows, secrets, prediction/API/Telegram/MT5/broker/execution or schedules changed."
+}
