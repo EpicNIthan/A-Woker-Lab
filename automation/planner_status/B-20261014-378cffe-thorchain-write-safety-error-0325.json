@@ -1,0 +1,25 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "BLOCKED_PLATEAU",
+  "assessed_at_ict": "2026-10-14 03:25",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "1727f47d191538ae7d623104ceca2ee211251af6",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "operation": "mcp__GitHub__create_file on worker-control",
+  "attempted_path": "automation/planner_status/B-20261014-378cffe-thorchain-native-btc-eth-swap-pit-plateau-0325.json",
+  "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending.",
+  "sources_checked": [
+    "https://dev.thorchain.org/examples/tutorials.html",
+    "https://dev.thorchain.org/concepts/delays.html"
+  ],
+  "finding": "THORChain BTC/ETH swap docs only; no independently verified finalized sample, first-publication/observation clocks or non-overlap. No source admitted.",
+  "gemini_json": "UNVERIFIED",
+  "new_tasks": 0,
+  "promotion": "BLOCKED"
+}
