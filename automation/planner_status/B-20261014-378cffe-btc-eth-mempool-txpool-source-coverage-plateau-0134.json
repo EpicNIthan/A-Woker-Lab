@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-14 01:34",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "8b602c8ff7b0ae14fc95b270cf687b0b4296e765",
+  "authoritative_roadmap": "automation/supervisor_roadmap.md",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control direct directory enumeration; pending directory absent"
+  },
+  "exact_sha_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "other_lanes": {
+    "A": "CONTINUE 2026-10-13 23:03 ICT",
+    "C": "BLOCKED 2026-10-14 01:16 ICT; prior substantive CONTINUE 2026-10-13 23:17 ICT"
+  },
+  "assessment": {
+    "title": "BTC and ETH node mempool/txpool visibility is unconfirmed context, not directional spot flow",
+    "first_party_sources_checked": [
+      {
+        "source": "Bitcoin Core",
+        "url": "https://bitcoincore.org/en/doc/25.0.0/rpc/blockchain/getrawmempool/",
+        "evidence": "RPC returns transaction IDs currently in node memory pool; verbose and sequence options"
+      },
+      {
+        "source": "Bitcoin Core",
+        "url": "https://bitcoincore.org/en/doc/25.0.0/rpc/blockchain/getmempoolentry/",
+        "evidence": "Per-tx entry documents node-local arrival time, txid/wtxid, replaceability and unconfirmed dependencies"
+      },
+      {
+        "source": "go-ethereum Geth",
+        "url": "https://geth.ethereum.org/docs/interacting-with-geth/rpc/ns-txpool",
+        "evidence": "txpool_content returns pending/queued transactions grouped by sender and nonce; multiple competing transactions per sender+nonce possible"
+      }
+    ],
+    "immutable_event_or_artifact_id": "Only transaction-hash schema documented; no sampled finalized immutable BTC/ETH event/artifact ID. Pending transactions can be replaced, dropped, or never confirmed.",
+    "btc_eth_economic_entity": "BTC on-chain pending transfers and ETH on-chain pending transactions; no verified buyer/seller spot-exchange economic entity",
+    "pit_clocks": {
+      "effective": "Unconfirmed pending inclusion, not finalized economic execution; Bitcoin node-local mempool entry time is not settlement",
+      "available": "No independently proven historical first-publication clock; node-local first-seen is not global first availability",
+      "observed": "No collector observations or recorded timestamps sampled"
+    },
+    "independent_non_overlap": "NOT_DEMONSTRATED; mempool events can reappear in confirmed-chain feeds, repeat across nodes and be replaced by same-input/same-nonce transactions; no event-level reconciliation",
+    "role": "CONTEXT_ONLY pending transaction pressure; NOT executed spot directional BTC/ETH capital flow",
+    "admission": "REJECT",
+    "why_none_qualifies": "No immutable finalized sample, no three auditable PIT clocks, no demonstrated non-overlap, and no economic evidence of directional spot buys/sells",
+    "reopen_proof": "Sample immutable finalized tx hashes with canonical block IDs and BTC/ETH asset mapping; retain collector observed and first-publication clocks; reconcile pending-to-finalized and replacements across nodes/confirmed feeds; independently link to executed spot trade and exclude duplicated economic events."
+  },
+  "gemini_malformed_json_mitigation": "UNVERIFIED",
+  "new_tasks": 0,
+  "promotion": "BLOCKED; no same-SHA A/B/C and independent Supervisor PLATEAU",
+  "safety": "Only new worker-control planner_status file; no Specialist code, main, private, Railway, workflows, secrets, prediction, API, broker, execution or schedules modified."
+}
