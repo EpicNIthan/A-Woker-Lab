@@ -1,0 +1,23 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-13 07:30",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_attempt": "568b5165e02adf646b48dfea5a8f8c65a6ba4550",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "latest_A": "CONTINUE",
+  "latest_C": "CONTINUE",
+  "attempted_operation": "mcp__GitHub__create_file",
+  "attempted_path": "automation/planner_status/B-20261013-378cffe-lightning-bolt-channel-funding-plateau-0730.json",
+  "exact_error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending.",
+  "post_write_read": "404 NOT_FOUND",
+  "source_coverage": "Pinned first-party BOLT #2, #3, #7 funding/gossip specifications checked. BTC channel funding is context-only; no finalized sample, first-availability clock, collector observation, or independent non-overlap proof.",
+  "new_executor_task": false,
+  "promotion": "BLOCKED"
+}
