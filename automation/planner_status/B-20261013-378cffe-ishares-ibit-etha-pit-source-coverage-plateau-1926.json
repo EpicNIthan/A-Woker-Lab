@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "verdict": "PLATEAU",
+  "assessed_at_utc": "2026-10-13T12:28:07.598Z",
+  "exact_public_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "specialist_latest_commit": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "specialist_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "specialist_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "f4235a83edc6a405f899e4249786c9ef5b0f3c78",
+  "authoritative_roadmap": "automation/supervisor_roadmap.md",
+  "executor_queue": {
+    "pending": 0,
+    "pending_directory": "404 absent",
+    "done": 16,
+    "failed": 16,
+    "method": "fresh direct worker-control directory enumeration"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_ESTABLISHED"
+  },
+  "first_party_search_coverage": [
+    {
+      "source": "iShares Bitcoin Trust ETF IBIT issuer holdings",
+      "url": "https://www.ishares.com/us/products/333011/ishares-bitcoin-tr",
+      "economic_entity": "BTC held by IBIT",
+      "product_id": "CUSIP 46438F101 (product identifier; NOT immutable event/snapshot ID)",
+      "effective_pit": "2026-10-09 as-of holdings and shares outstanding",
+      "first_available_pit": "NOT ESTABLISHED: mutable webpage lacks versioned first-publication clock",
+      "collector_observed_pit": "NOT ESTABLISHED: no instrumented timestamped collector receipt; this manual assessment time is not collector proof",
+      "non_overlap": "NOT DEMONSTRATED vs existing ETF aggregate/issuer reports, custody or spot venue feeds",
+      "role": "ETF inventory/context only; not independently executed directional BTC spot flow"
+    },
+    {
+      "source": "iShares Ethereum Trust ETF ETHA issuer holdings",
+      "url": "https://www.ishares.com/us/products/overview-v3-ishares-fund-data?portfolioId=337614&seoSlug=ishares-",
+      "economic_entity": "ETH held by ETHA",
+      "product_id": "CUSIP 46438R204 (product identifier; NOT immutable event/snapshot ID)",
+      "effective_pit": "2026-10-09 as-of holdings and shares outstanding",
+      "first_available_pit": "NOT ESTABLISHED: mutable webpage lacks versioned first-publication clock",
+      "collector_observed_pit": "NOT ESTABLISHED: no instrumented timestamped collector receipt",
+      "non_overlap": "NOT DEMONSTRATED vs existing ETF aggregate/issuer reports, custody or spot venue feeds",
+      "role": "ETF inventory/context only; not independently executed directional ETH spot flow"
+    }
+  ],
+  "finding": "Both issuer pages expose dated BTC/ETH holdings and shares outstanding but explicitly distinguish holdings investment book from accounting book and vendor valuation from NAV valuation. CUSIPs are fund identities, not immutable event IDs. Holdings/share changes may reflect creations, redemptions, fees and valuation; without executed underlying trade/settlement evidence, do not infer independent spot buy/sell flow. No immutable dated holdings artifact sampled, no demonstrated non-overlap.",
+  "reopen_proof": "Acquire immutable versioned dated holdings snapshots (artifact hash and issuer publication time), instrument collector observed_at, identify creation/redemption basket and settlement event IDs, distinguish economic effective vs first-publication vs observation, reconcile with ETF aggregate and venue evidence event-by-event, separate inventory/context from proven underlying spot execution.",
+  "lane_separation": "B source breadth only; A archive integration and C downstream causal quality remain separate.",
+  "other_lanes": {
+    "A": "CONTINUE per A-20261013-378cffe-partial-batch-admission-recovery-1758.json",
+    "C": "BLOCKED/CONTINUE quality open per C-20261013-378cffe-exact-repo-dns-checkout-blocker-1919.json",
+    "supervisor": "CONTINUE per authoritative roadmap"
+  },
+  "gemini_malformed_json_mitigation": "UNVERIFIED",
+  "new_tasks": 0,
+  "promotion": "BLOCKED",
+  "safety": "No Specialist code, main/private, Railway, workflows, secrets, prediction/API/broker/execution or schedules modified"
+}
