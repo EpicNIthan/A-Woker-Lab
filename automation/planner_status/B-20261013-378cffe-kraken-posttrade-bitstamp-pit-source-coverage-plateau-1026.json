@@ -1,0 +1,83 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-13 10:26",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_head_at_prewrite": "39358bc39109e437b3318c73085ffef5725a16f2",
+  "specialist_latest": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_control": {
+    "roadmap": "automation/supervisor_roadmap.md",
+    "pending": 0,
+    "pending_directory": "404 absent",
+    "done": 16,
+    "failed": 16,
+    "latest_A": "A-20261013-378cffe-same-id-role-metadata-order-oracle-0957.json CONTINUE",
+    "latest_B_before_write": "B-20261013-378cffe-balancer-source-assessment-write-safety-block-0931.json PLATEAU",
+    "latest_C": "C-20261012-378cffe-mixed-role-causal-gate-1921.json CONTINUE",
+    "inert_specialist_branch_automation_ignored": true
+  },
+  "exact_sha_validation": {
+    "status": "PASS",
+    "method": "matching bounded Gemini done-task executor_result",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "source_coverage": [
+    {
+      "provider": "Kraken",
+      "first_party": "https://docs.kraken.com/api-reference/transparency/post-trade-data",
+      "endpoint": "GET /0/public/PostTrade",
+      "economic_entity": "BTC/USD spot execution; ETH pairs require independent sample",
+      "immutable_id": "trade_id scoped by trade_venue and symbol; TGBB7L-HT5LX-J3BZ4A is DOCUMENTATION EXAMPLE ONLY, not sampled",
+      "effective_clock": "trade_ts matching-engine timestamp",
+      "available_clock": "publication_ts documented; earliest actual visibility and revision history NOT independently proven",
+      "observed_clock": "collector ingestion timestamp NOT captured",
+      "non_overlap": "No independent event-level reconciliation against Kraken /public/Trades or existing Market Driver / venue feeds",
+      "role": "spot trade activity, but no documented aggressor side in PostTrade; not proven directional net BTC inflow",
+      "verdict": "NOT_ADMITTED"
+    },
+    {
+      "provider": "Kraken",
+      "first_party": "https://docs.kraken.com/api-reference/market-data/get-recent-trades",
+      "endpoint": "GET /0/public/Trades",
+      "economic_entity": "BTC/USD spot trade",
+      "immutable_id": "numeric trade ID in documented tuple; documentation example only",
+      "effective_clock": "tuple trade timestamp",
+      "available_clock": "historical first-publication timestamp absent in documented response",
+      "observed_clock": "not collected",
+      "non_overlap": "Not reconciled against PostTrade or Market Driver",
+      "role": "side field in documented tuple is not independently linked to PostTrade trade_id; counting both would risk duplicates",
+      "verdict": "NOT_ADMITTED"
+    },
+    {
+      "provider": "Bitstamp",
+      "first_party": "https://www.bitstamp.net/api/",
+      "endpoint": "GET /api/v2/transactions/{market_symbol}/",
+      "economic_entity": "BTC/USD and potentially ETH/USD venue trades",
+      "immutable_id": "tid within market; 220744838 is DOCUMENTATION EXAMPLE ONLY",
+      "effective_clock": "date field",
+      "available_clock": "historical publication clock absent",
+      "observed_clock": "not collected",
+      "non_overlap": "No event-level reconciliation against existing venue feeds",
+      "role": "spot venue activity; trade type semantics and directional attribution not independently validated",
+      "verdict": "NOT_ADMITTED"
+    }
+  ],
+  "coverage_result": "New first-party Kraken transparency endpoint documents trade_ts AND publication_ts, materially better PIT candidate than simple recent-trades feeds. Nonetheless no live immutable event sample, actual collector observation, proven immutability or independently demonstrated non-overlap. Bitstamp also lacks publication clock. No source is admissible as new independent directional Capital Flow evidence.",
+  "reopen_proof": "Sample and persist real BTC/ETH venue trade IDs, trade_ts/publication_ts/collector_observed_at, verify revision stability and PIT replay at before/after publication; reconcile per-event IDs with Kraken Trades and existing Market Driver feeds, document non-overlap or context-only role; verify trade-side semantics before any directional scoring.",
+  "task_enqueued": false,
+  "gemini_malformed_json_mitigation": "UNVERIFIED",
+  "promotion": "BLOCKED: A and C CONTINUE and independent Supervisor PLATEAU absent",
+  "safety": "Only worker-control planner_status filing; no Specialist code or other repository/branch/workflow/schedule/execution changes."
+}
