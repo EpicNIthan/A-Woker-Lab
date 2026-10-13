@@ -1,0 +1,10 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "verdict": "CONTINUE",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "evidence": "Isolated deterministic replay-horizon test PASS: bounded index 3, four distinct records, replay oldest appended 1 duplicate ID, immediate retry 0. Exact-repo pytest NOT RUN: GitHub DNS resolution failed.",
+  "oracle": "Repeat with real FlowObservation, 100001 distinct records, then retry oldest; require zero appended and no duplicate IDs.",
+  "queue": "0 pending, 16 done, 16 failed",
+  "promotion": "BLOCKED"
+}
