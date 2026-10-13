@@ -1,0 +1,12 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "verdict": "CONTINUE",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "evidence": "Executed isolated archive test using byte-identical storage.py Git blob e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd (local git hash matched). With malformed first line and 100001 valid newer JSONL rows, bounded load and empty append both raised ValueError at line 1. After removing malformed line, bounded load retained 100000 rows and empty append returned 0. Stub FlowObservation only; exact-repo pytest NOT RUN.",
+  "oracle": "At exact SHA run no-network real FlowObservation load/append and sequential run_once with 100001+ row archive, malformed oldest line, valid repair, latest/audit_latest/anata_latest/evidence_health/PIT; assert fail-closed explicit error, no stale output mislabel, correct recovery. Targeted test_providers_replay.py plus full python -m pytest -q part2/capital_flow/tests.",
+  "queue": "0 pending/16 done/16 failed from worker-control tree",
+  "validation": "matching exact-SHA bounded done PASS attempt 2; independent pytest NOT RUN",
+  "blocker": "git ls-remote github.com failed: Could not resolve host: github.com",
+  "promotion": "BLOCKED; B PLATEAU, C CONTINUE; Gemini structured JSON mitigation unverified; no executor task"
+}
