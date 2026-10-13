@@ -1,0 +1,25 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "BLOCKED",
+  "assessed_at_ict": "2026-10-14 01:16",
+  "specialist_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "d6e2d025abea7d8238c276b85cdc5448a36c73a7",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "latest_A": "CONTINUE 2026-10-13 23:03 ICT",
+  "latest_B": "PLATEAU 2026-10-14 00:29 ICT",
+  "latest_C": "CONTINUE 2026-10-13 23:17 ICT",
+  "validation": "PASS bounded done-task at same SHA; independent pytest NOT_RUN",
+  "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening refs/heads/worker-control",
+  "exit_code": 128,
+  "error": "Could not resolve host: github.com",
+  "impact": "Exact-repository checkout and pytest unavailable",
+  "gemini_json_reliability": "UNVERIFIED",
+  "new_tasks": 0,
+  "promotion": "BLOCKED"
+}
