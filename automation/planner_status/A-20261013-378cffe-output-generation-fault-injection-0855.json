@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 08:55",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_at_prewrite": "96cbd0dc6c4b02ba5fd2209e65c45e4b058e4076",
+  "recent_specialist": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_directory": "404 absent",
+    "done": 16,
+    "failed": 16,
+    "source": "direct worker-control directory enumeration"
+  },
+  "planner_verdicts": {
+    "A": "CONTINUE",
+    "B": "PLATEAU",
+    "C": "CONTINUE"
+  },
+  "validation": {
+    "executor_status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "source": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "title": "Three output files can expose mixed generations after mid-publication failure",
+    "kind": "EXECUTED_ISOLATED_EXACT_FUNCTION_COPY_NOT_EXACT_REPOSITORY",
+    "source": [
+      "part2/capital_flow/storage.py atomic_write_json",
+      "part2/capital_flow/runner.py run_once writes latest.json then audit_latest.json then anata_latest.json"
+    ],
+    "oracle_executed": "Temporary-directory baseline G0, then G1 using exact storage.py atomic_write_json function copied at pinned SHA and runner publication order; injected RuntimeError before second and third write.",
+    "results": {
+      "fail_before_second": {
+        "latest": "G1",
+        "audit_latest": "G0",
+        "anata_latest": "G0"
+      },
+      "fail_before_third": {
+        "latest": "G1",
+        "audit_latest": "G1",
+        "anata_latest": "G0"
+      }
+    },
+    "assertions": "Both mixed-generation states reproduced and asserted; each file individually atomic, three-file group not transactional.",
+    "exact_repo_oracle": "At exact SHA use monkeypatch runner.atomic_write_json to raise before second/third write after baseline run_once(network=False, external_jsonl=fixture, as_of_ms=T), compare bytes/generation of latest/audit_latest/anata_latest, then recovery run; test handoff/evidence_health PIT consistency and no future leak. Run targeted pytest plus python -m pytest -q part2/capital_flow/tests.",
+    "scope_limit": "No full-repository execution, no live incident, no proven actual consumer failure."
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+    "exit_code": 128,
+    "stderr": "Could not resolve host: github.com",
+    "exact_repo_pytest": "NOT_RUN"
+  },
+  "separation": "Archive-admission availability correction is separate A finding; downstream context-only/PIT belongs C; source breadth belongs B.",
+  "executor": {
+    "gemini_malformed_json_mitigation": "UNVERIFIED",
+    "task_enqueued": false
+  },
+  "promotion": "BLOCKED: A and C CONTINUE, independent Supervisor not PLATEAU",
+  "safety": {
+    "specialist_code_modified": false,
+    "private_or_main_or_railway_modified": false,
+    "workflows_or_secrets_modified": false,
+    "schedules_modified": false
+  }
+}
