@@ -1,0 +1,73 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at": "2026-10-13T20:11:00+07:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "992b5eab9cf99073c7632bda57a2f76fc29e3ab1",
+  "recent_specialist_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "changed_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ahead_by": 1
+  },
+  "authoritative_control": {
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_last_embedded_refresh": "2026-10-12 16:53 ICT (stale; not current verdict authority)",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "method": "direct worker-control GitHub contents enumeration; pending directory 404"
+    },
+    "latest_A": "A-20261013-378cffe-partial-batch-admission-recovery-1758.json CONTINUE",
+    "latest_B": "B-20261013-378cffe-ishares-ibit-etha-pit-source-coverage-plateau-1926.json PLATEAU",
+    "previous_durable_C": "C-20261013-378cffe-exact-repo-dns-checkout-blocker-1919.json BLOCKED"
+  },
+  "specialist_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Stablecoin supply context equal-clock source tie ignores data_quality and changes under source-label renaming",
+    "evidence_level": "SOURCE_DERIVED_ONLY; EXACT_REPO_PYTEST_NOT_RUN; NO_PRODUCTION_INCIDENT_CLAIM",
+    "source_paths": [
+      "part2/capital_flow/handoff.py:24-28,119-138 (PIT normalize and latest_supply rank)",
+      "part2/capital_flow/normalization.py:179-229 (distinct no-event-ID passthrough and source-lexical sorting)",
+      "part2/capital_flow/contracts.py:150-203 (FlowObservation contract/data_quality)"
+    ],
+    "mechanism": "For two visible stablecoin component_supply_usd rows for USDT with equal effective_at_ms, available_at_ms, observed_at_ms but distinct source/source_record_id and no economic_event_id, normalize_and_dedup keeps both and sorts by source. build_stablecoin_context latest_supply chooses only strict rank >, so first lexical source wins without inspecting data_quality. Merely swapping source labels can change selected tracked_supply_usd with economic values, timestamps and qualities held fixed.",
+    "minimal_exact_repo_pytest_oracle": {
+      "target_file": "part2/capital_flow/tests/test_v1_handoff.py",
+      "setup": "Construct FlowObservation A: family=stablecoin, metric=component_supply_usd, asset=USDT, value=1000, unit=USD, source=a_low, source_record_id=rec-a, data_quality=0.10, effective_at_ms=T, available_at_ms=T, observed_at_ms=T, economic_event_id=None. Construct B with same family/metric/asset/unit/clocks, value=1200, source=z_high, source_record_id=rec-b, data_quality=1.00, economic_event_id=None. Choose T<=as_of_ms and both PIT-visible. All other fields default.",
+      "calls": "Build contexts for [A,B], [B,A], and [A',B'] with only the two source strings swapped between A and B.",
+      "source_derived_current_outputs": "[A,B] -> tracked_supply_usd=1000, [B,A] -> 1000; source-label-swapped pair -> tracked_supply_usd=1200.",
+      "expected_assertions": [
+        "PIT-visible contexts must be input-order independent",
+        "Economic supply result must not change merely because source labels are renamed while economic evidence/quality/clocks are unchanged; assert original.tracked_supply_usd == renamed.tracked_supply_usd (source predicts FAIL)",
+        "If equal-clock cross-source disagreement is unresolved, expose an explicit conflict/ambiguity quality flag instead of silently treating lexical source name as quality ranking",
+        "Do not modify frozen scoring or conflate stablecoin context with independent directional flow"
+      ],
+      "targeted_command": "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+      "full_command": "python -m pytest -q part2/capital_flow/tests",
+      "execution": "NOT_RUN"
+    },
+    "lane_separation": "C downstream selection/quality only; separate from A archive/integration and B source breadth."
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening refs/heads/worker-control",
+    "exit_code": 128,
+    "stderr": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+    "impact": "No exact repository checkout; independent deterministic pytest and full suite NOT_RUN"
+  },
+  "gemini_structured_json_reliability": "UNVERIFIED",
+  "new_executor_tasks": 0,
+  "private_promotion": "BLOCKED",
+  "safety": "PUBLIC_WORKER_CONTROL_ASSESSMENT_ONLY; no Specialist code, either main, private code, workflows, Railway, secrets, prediction, API, Telegram, MT5, broker, execution or schedules modified"
+}
