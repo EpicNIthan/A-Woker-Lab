@@ -1,0 +1,44 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 15:00",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "a7157f356d2ecb870e052cf2f3791805c36cdda1",
+  "recent_specialist_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "authoritative_roadmap": "automation/supervisor_roadmap.md",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS",
+    "source": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Appending to a valid JSONL archive without terminal newline corrupts the archive",
+    "source": "part2/capital_flow/storage.py",
+    "source_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "proof": "Executed isolated test using byte-identical storage.py (git hash-object matched), stub FlowObservation. First append=1; strip terminal newline; load=1; duplicate retry=0; distinct second append=1; physical lines=1; subsequent load raises ValueError Extra data. Control with newline: two appends, load=2. No exact-repo pytest or production incident claimed.",
+    "distinct": "Valid unterminated JSONL row plus append causes new corruption; not prior malformed historical row, concurrency race, or replay horizon.",
+    "oracle": "At pinned HEAD with real FlowObservation and tempfile: append row A; remove ONLY terminal newline (valid JSONL); assert load A succeeds and duplicate retry is 0; append distinct B; assert archive remains two independently parseable records and sequential run_once(network=False,external_jsonl=[B],as_of_ms=fixed) refreshes latest/audit_latest/anata_latest/evidence_health/PIT. Pre-fix expect ValueError after B. Include no-newline and newline controls, repair/retry. Targeted python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py and full python -m pytest -q part2/capital_flow/tests."
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+    "error": "Could not resolve host: github.com",
+    "impact": "Exact-repository checkout and pytest NOT RUN"
+  },
+  "other_planners": {
+    "B": "PLATEAU (latest 2026-10-13 13:27)",
+    "C": "CONTINUE (latest 2026-10-12 19:21)"
+  },
+  "promotion": "BLOCKED: A/C not PLATEAU, Gemini structured-JSON mitigation unverified; no executor task queued; no code, workflow, schedule or private writes."
+}
