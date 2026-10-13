@@ -1,0 +1,45 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 22:03",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "e30fbdbebf03491a1b910352e9d138f09c01cda5",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "No-input retry may publish a row from an earlier failed archive batch",
+    "source": [
+      "part2/capital_flow/storage.py@e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py@61a792aafcb8b8ff4b1c9e4460cf93e51d59203c"
+    ],
+    "proof": "SOURCE_DERIVED_NOT_EXECUTED",
+    "oracle": "Seed G0 and outputs; run two-row G1,G2 external_jsonl with injected G2.to_dict TypeError. Expected archive contains G0,G1 while outputs remain G0. Retry with no external_jsonl and network=False: expected appended_observations=0, archive_records_loaded=2, outputs republished from G0,G1 without recovery provenance. Assert recovery attribution or atomic rollback. Reverse row order and check duplicate retries and PIT.",
+    "commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "execution": "NOT_RUN"
+  },
+  "blocker": {
+    "operation": "git ls-remote --heads https://github.com/EpicNIthan/A-Woker-Lab.git anata-local-hardening",
+    "exit_code": 128,
+    "error": "Could not resolve host: github.com"
+  },
+  "other_lanes": {
+    "B": "BLOCKED_WRITE_SAFETY",
+    "C": "CONTINUE"
+  },
+  "gemini_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED",
+  "schedules": "UNCHANGED"
+}
