@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 02:04",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "specialist_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "7ea3e6bcd24ee695c54692451bb3f05742e7e935",
+  "roadmap": "automation/supervisor_roadmap.md",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "method": "authoritative worker-control recursive Git tree"
+  },
+  "newest_durable_before_write": {
+    "A": "A-20261013-378cffe-valid-jsonl-timestamp-partial-admission-oracle-2303.json CONTINUE",
+    "B": "B-20261014-378cffe-btc-eth-mempool-txpool-source-coverage-plateau-0134.json PLATEAU",
+    "C": "C-20261014-378cffe-checkout-write-blocker-0116.json BLOCKED; prior substantive CONTINUE"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Concurrent reader sees mixed output generations during an otherwise successful refresh",
+    "distinction": "Prior A output-generation fault injection required a failed second/third write; this test pauses a successful writer after its first write and proves the transient mixed snapshot is externally readable without any write exception.",
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c"
+    },
+    "source_mechanism": "storage.atomic_write_json atomically replaces each single file; runner.run_once writes latest.json, audit_latest.json, anata_latest.json sequentially with no common publication commit marker or cross-file read barrier.",
+    "proof_level": "EXECUTED_ISOLATED_SOURCE_FAITHFUL_FUNCTION_COPY_NOT_EXACT_REPO_PYTEST",
+    "isolated_test": {
+      "fixture": "Three G0 JSON files; background writer calls copied storage.atomic_write_json for G1 latest, blocks at Event; reader opens all three files; writer then completes remaining G1 writes.",
+      "assertions": [
+        "At deterministic interleave reader sees [G1,G0,G0].",
+        "After writer completes without exception all three are [G1,G1,G1]."
+      ],
+      "result": "PASS",
+      "writer_errors": 0
+    },
+    "exact_repo_oracle": {
+      "execution": "NOT_RUN",
+      "setup": "At pinned SHA use real runner.run_once(network=False,external_jsonl=[G1],local_dir=tmp_path,as_of_ms=T1) after G0 baseline. Monkeypatch runner.atomic_write_json with a deterministic barrier after first file replacement; concurrent reader opens latest.json,audit_latest.json,anata_latest.json while writer is paused.",
+      "expected_failure": "A single reader snapshot must not mix generations or must explicitly detect/retry an incomplete generation; current sequential publication permits G1 latest with G0 audit/handoff.",
+      "extra_assertions": [
+        "Writer completes successfully and all three files then reflect G1.",
+        "Archive admission and retry remain idempotent and order-independent after partial-batch failure.",
+        "Audit, handoff and evidence_health PIT fields reflect a single as_of and provenance generation.",
+        "No future-available observations become scoring-eligible."
+      ],
+      "commands": [
+        "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ]
+    },
+    "proof_limits": "The isolated test reproduces publication ordering with a verbatim function copy; no exact-repository pytest, no actual consumer race or production incident demonstrated."
+  },
+  "blocker": {
+    "operation": "git ls-remote --heads https://github.com/EpicNIthan/A-Woker-Lab.git anata-local-hardening",
+    "exit_code": 128,
+    "stderr": "fatal: unable to access 'https://github.com/EpicNIthan/A-Woker-Lab.git/': Could not resolve host: github.com",
+    "consequence": "Exact-repository checkout and independent deterministic pytest NOT_RUN."
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "private_promotion": "BLOCKED: A CONTINUE, C unresolved, independent Supervisor PLATEAU absent",
+  "safety": "Only worker-control Planner A assessment; no Specialist code, either main, private code, Railway, workflows, secrets, prediction/API/Telegram/MT5/broker/execution, or schedules changed."
+}
