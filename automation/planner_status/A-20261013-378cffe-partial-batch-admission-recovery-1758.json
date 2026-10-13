@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 17:58",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "78f2e3a2331a69f19125fa5013355c2bb535c2f0",
+  "recent_specialist_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "pending_directory": "404 absent",
+    "done": 16,
+    "failed": 16,
+    "method": "direct worker-control directory enumeration"
+  },
+  "validation": {
+    "status": "PASS",
+    "method": "matching bounded done-task",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Partial archive batch admission on second-record serialization exception",
+    "source": {
+      "storage_path": "part2/capital_flow/storage.py",
+      "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "storage_lines": "70-91",
+      "runner_path": "part2/capital_flow/runner.py",
+      "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "runner_lines": "120-144"
+    },
+    "isolated_oracle": {
+      "status": "PASS_ISOLATED_NOT_REPOSITORY",
+      "method": "Executed local Python source-faithful append loop with stub observation and deterministic second-record to_dict TypeError",
+      "good_then_bad": "TypeError; first record remains archived",
+      "bad_then_good": "TypeError; no record archived",
+      "retry_after_first_partial": "first skipped, corrected second appended once, exact duplicate retry appends zero",
+      "limits": "Not byte-identical full module; not production incident; crash durability and run_once outputs untested"
+    },
+    "risk": "Archive may advance partially before run_once outputs publish; retry and order dependence must be checked on exact repo",
+    "exact_repo_oracle": "In temporary local_dir run baseline run_once(network=False,external_jsonl=[G0],as_of_ms=fixed) and save latest/audit/anata. Then two valid rows in external_jsonl; monkeypatch FlowObservation.to_dict only for chosen second observation to raise TypeError during append. Assert exception, first archive row persisted, all three outputs unchanged; reverse order; remove injection and retry; assert both rows once, duplicate retry zero, compare archive/latest/audit/handoff/evidence_health/PIT to clean run; no network. Targeted python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_evidence_health.py part2/capital_flow/tests/test_v1_handoff.py then full python -m pytest -q part2/capital_flow/tests."
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+    "exit_code": 128,
+    "stderr": "Could not resolve host: github.com",
+    "consequence": "No exact-repository checkout or independent pytest"
+  },
+  "other_planners": {
+    "B": "PLATEAU (2026-10-13 17:28 filing)",
+    "C": "CONTINUE (2026-10-12 19:21 latest durable)"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "new_tasks": 0,
+  "promotion": "BLOCKED; A/C and independent Supervisor not PLATEAU",
+  "safety": "PUBLIC_PLANNER_ONLY; no Specialist code, private/main, workflows, secrets, Railway, prediction, API, broker, execution or schedules changed"
+}
