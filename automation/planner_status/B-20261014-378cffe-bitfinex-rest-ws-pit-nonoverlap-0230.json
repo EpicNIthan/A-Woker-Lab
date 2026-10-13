@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "B",
+  "lane": "SOURCE_BREADTH",
+  "verdict": "PLATEAU",
+  "assessed_at_ict": "2026-10-14 02:30",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "b15e93ed0ec7cf53a9c93f851db3069ce878f50d",
+  "authoritative_roadmap": "automation/supervisor_roadmap.md",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control direct directory enumeration; pending absent"
+  },
+  "exact_sha_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "other_lanes": {
+    "A": "CONTINUE 2026-10-14 02:04 ICT",
+    "C": "BLOCKED 2026-10-14 01:16 ICT; prior substantive CONTINUE"
+  },
+  "assessment": {
+    "title": "Bitfinex BTC/ETH public REST and WebSocket trades: candidate venue executions without verified PIT or independent flow",
+    "first_party_sources_checked": [
+      {
+        "source": "Bitfinex REST public trades",
+        "url": "https://docs.bitfinex.com/reference/rest-public-trades",
+        "evidence": "tBTCUSD/tETHUSD pair symbols; trade ID, millisecond MTS, signed AMOUNT, PRICE; historical time range and limit documented"
+      },
+      {
+        "source": "Bitfinex WebSocket public trades",
+        "url": "https://docs.bitfinex.com/reference/ws-public-trades",
+        "evidence": "pair-specific snapshots and te/tu updates; trade ID, MTS, signed AMOUNT, PRICE; taker determines sign; funding f-symbol records are distinct"
+      },
+      {
+        "source": "Bitfinex WebSocket general",
+        "url": "https://docs.bitfinex.com/docs/ws-general",
+        "evidence": "optional per-event timestamp and sequence configuration; no verified historical first-publication SLA"
+      }
+    ],
+    "immutable_event_or_artifact_id": "Documented pair-scoped trade ID; no live immutable execution sampled; example IDs are documentation fixtures, not verified evidence.",
+    "btc_eth_economic_entity": "BTC and ETH trade-pair executions (tBTCUSD/tETHUSD); exact exchange-vs-margin classification and executed spot-only economic attribution not independently demonstrated.",
+    "pit_clocks": {
+      "effective": "MTS execution timestamp documented, not independently sampled",
+      "available": "NOT VERIFIED: docs and optional WS event timestamps do not prove historical first public availability",
+      "observed": "NOT VERIFIED: no actual collector sample or observation timestamp"
+    },
+    "independent_non_overlap": "NOT DEMONSTRATED: REST history, WS snapshots, te and tu updates can reference the same trade ID; no event-level dedup/reconciliation with Market Driver or existing venue feeds.",
+    "role": "POTENTIAL venue-executed taker-side flow after classification and validation; NOT admitted independent directional spot net Capital Flow; funding and margin must not be silently counted as spot.",
+    "admission": "REJECT",
+    "why_none_qualifies": "No sampled immutable BTC/ETH spot event, complete effective/available/observed PIT proof, venue-market-type classification, or independently demonstrated non-overlap.",
+    "reopen_proof": "Capture and archive real BTC/ETH trade IDs with immutable raw payloads and observed timestamps; independently establish publication clocks; reconcile REST vs WS te/tu and existing Market Driver by pair+ID; verify taker sign and exchange-vs-margin role before netting."
+  },
+  "gemini_malformed_json_mitigation": "UNVERIFIED",
+  "new_tasks": 0,
+  "promotion": "BLOCKED: A CONTINUE, C unresolved, independent Supervisor PLATEAU absent",
+  "safety": "Only new public worker-control planner_status file; no Specialist code, main, private, Railway, workflows, secrets, prediction, API, broker, execution, or schedules changed."
+}
