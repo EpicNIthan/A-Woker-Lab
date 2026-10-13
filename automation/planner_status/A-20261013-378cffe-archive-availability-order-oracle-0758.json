@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-13 07:58",
+  "exact_specialist_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_head": "d9b03ae749faa9bf1b6ef8ecec34b676c455e05c",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "direct_enumeration": "unavailable; counts from worker-control B status"
+  },
+  "planners": {
+    "A": "CONTINUE",
+    "B": "PLATEAU",
+    "C": "CONTINUE"
+  },
+  "validation": {
+    "status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_pytest": "NOT_RUN"
+  },
+  "evidence": {
+    "source": "part2/capital_flow/storage.py pinned at 378cffee; blob e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "type": "executed isolated source-faithful reproduction with stub FlowObservation, NOT exact repo",
+    "fixture": "unknown available_at=None vs known available_at=1500, observed_at=2000, as_of=1600, same economic value/revision",
+    "unknown_then_known": {
+      "append_counts": [
+        1,
+        0,
+        0
+      ],
+      "archive_availability": [
+        null
+      ],
+      "visible_count": 0
+    },
+    "known_then_unknown": {
+      "append_counts": [
+        1,
+        0,
+        0
+      ],
+      "archive_availability": [
+        1500
+      ],
+      "visible_count": 1
+    },
+    "oracle": "Use genuine FlowObservation and storage.append_observations in both orders; sequential runner.run_once(network=False,external_jsonl=...) at as_of 1400/1600/2100; inspect archive/latest/audit_latest/anata_latest/evidence_health; assert idempotence and no future leak."
+  },
+  "blocker": {
+    "operation": "git ls-remote https://github.com/EpicNIthan/A-Woker-Lab.git refs/heads/anata-local-hardening",
+    "exit": 128,
+    "error": "Could not resolve host: github.com",
+    "exact_repo_pytest": "NOT_RUN"
+  },
+  "executor": {
+    "json_mitigation": "UNVERIFIED",
+    "task_enqueued": false
+  },
+  "promotion": "BLOCKED"
+}
