@@ -1,0 +1,98 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 15:57",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "0a1c83de0bb81cf25808d3efb7cb415ae766b3e0",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob_sha": "4bb89f83155354d7658e28d51c8380fd6c5b5263",
+    "stale": true
+  },
+  "queue": {
+    "pending": 0,
+    "pending_path": "404",
+    "done": 16,
+    "failed": 16,
+    "counts_last_reported_at_ict": "2026-10-14 15:45"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "latest_reports": {
+    "A": "A-20261014-378cffe-concurrent-refresh-permanent-mixed-1357.json",
+    "B": "B-20261014-378cffe-publication-blocker-1529.json",
+    "C": "C-20261014-378cffe-missing-asset-btc-fallback-1414.json",
+    "supervisor": "SUPERVISOR-20261014-378cffe-1545-roadmap-write-blocked.json"
+  },
+  "finding": {
+    "title": "Deterministic no-network two-successful-writer output-generation test brief",
+    "kind": "REFINEMENT_OF_1357_ORACLE_NOT_NEW_DEFECT",
+    "proof_level": "EXACT_SHA_PINNED_SOURCE_DERIVED_NOT_EXECUTED",
+    "blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "part2/capital_flow/engine.py": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+      "part2/capital_flow/tests/test_providers_replay.py": "f31d5467e6962e0c2f0159ae34418ba7f7ac3a16"
+    },
+    "proposed_test": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "fixture": {
+      "local_dir": "tmp_path",
+      "archive_row": {
+        "family": "etf",
+        "metric": "net_flow_usd",
+        "asset": "BTC",
+        "value": 100,
+        "unit": "USD",
+        "effective_at_ms": 1799996400000,
+        "available_at_ms": 1799999940000,
+        "observed_at_ms": 1799999940000,
+        "source": "fixture",
+        "source_record_id": "row1",
+        "provenance": {
+          "collector": "fixture"
+        }
+      },
+      "A_as_of_ms": 1800000000000,
+      "B_as_of_ms": 1800000060000,
+      "network": false,
+      "external_jsonl": []
+    },
+    "steps": [
+      "Seed archive once via append_observations before concurrency; assert one valid row.",
+      "Monkeypatch runner.atomic_write_json, forwarding to original; in thread A, AFTER latest.json was written and BEFORE audit_latest.json, set A_paused event and await release_A with timeout=10.",
+      "Start A; assert A_paused.wait(10). Start B on same local_dir; join B timeout=10, assert success; release_A in finally; join A timeout=10, assert success.",
+      "Read latest.json, audit_latest.json, anata_latest.json with json.loads and compare their top-level as_of_ms.",
+      "Sequentially run C at as_of_ms=1800000120000 to establish control case; verify all three C generations match and archive unchanged."
+    ],
+    "expected_assertions": [
+      "All final as_of_ms values must be identical and belong to {A,B}, otherwise coherent-generation contract fails.",
+      "Source-derived current interleaving predicts latest=B, audit=A, anata=A; this is a FAILING EXPECTED ASSERTION, not executed proof.",
+      "Both runs return normally with appended_observations=0; archive exactly one row, original observation_id, timestamps and provenance preserved.",
+      "Sequential C outputs all C; JSONL parses and contains no duplicates."
+    ],
+    "commands": {
+      "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+      "full": "python -m pytest -q part2/capital_flow/tests"
+    },
+    "exact_repo_pytest": "NOT_RUN"
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED: A/C CONTINUE, Supervisor CONTINUE",
+  "protected_changes": 0
+}
