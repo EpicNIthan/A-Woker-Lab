@@ -1,0 +1,38 @@
+{
+  "schema": "anata-planner-b-source-assessment-v1",
+  "worker": "B",
+  "at_ict": "2026-10-14 18:32",
+  "verdict": "PLATEAU",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "32a3fb5d4629a9c0fff1bdde2d9a91a0f5f5af31",
+  "candidate": "Ethereum ERC-20 Transfer event, token transfer context",
+  "first_party_source": "https://github.com/ethereum/ercs/blob/8358b94b5ed4009473cb4c3040d9bba60e7bb786/ERCS/erc-20.md",
+  "immutable_spec_blob_sha": "cdd8a14d501bb5589a218c64c6738fe84cb12f56",
+  "economic_entity": "BTC/ETH economic relevance not established: ERC-20 transfers require independently verified token contract attribution; native ETH is not an ERC-20 token",
+  "immutable_event_id": "Not sampled; candidate receipt identifier is chain_id + tx_hash + log_index + token_address",
+  "pit_clocks": {
+    "effective": "block timestamp not sampled",
+    "available": "first-publication timestamp not established",
+    "observed": "collector-observation timestamp not established"
+  },
+  "nonoverlap": "Not demonstrated versus existing DEX/Market Driver evidence; transfer event may describe swap settlement, bridge, internal custody or mint/burn",
+  "role": "context-only; no directional spot buy/sell inference from a Transfer event",
+  "no_network_contract": "Proposed only, NOT_RUN: fixed finalized receipt fixture, token address/chain mapping, tx_hash+log_index dedup, three-clock PIT rejection, context_only=true, and no directional spot scoring",
+  "checked": "First-party ERC-20 Transfer specification; no finalized transaction receipt, collector logs or cross-feed reconciliation checked",
+  "reopen": "Provide finalized BTC/ETH-linked receipt, canonical event ID, verified token attribution, effective/available/observed PIT clocks and independently replayable non-overlap evidence",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "exact_sha_validation": "PASS_BOUNDED_DONE_TASK; independent exact-repository pytest NOT_RUN",
+  "planner_status": {
+    "A": "CONTINUE or blocked publication",
+    "B": "PLATEAU",
+    "C": "CONTINUE or blocked publication",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_json_reliability": "UNVERIFIED",
+  "new_executor_tasks": 0,
+  "promotion": "BLOCKED"
+}
