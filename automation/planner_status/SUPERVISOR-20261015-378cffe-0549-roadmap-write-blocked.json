@@ -1,0 +1,24 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-15 05:49",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "df633f6c2b0b5d9175fb9394468a91fd8fae078d",
+  "private_specialist_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "A": "BLOCKED_PLATEAU_NO_NEW_DEFECT; output generation test not executed",
+  "B": "BLOCKED_PUBLICATION; EIP-1559 source not admitted",
+  "C": "CONTINUE; unsupported ETF metric can mask stale core evidence; tests not run",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "gemini_json": "UNVERIFIED",
+  "roadmap_update": "REJECTED_BY_GITHUB_WRITE_SAFETY",
+  "workers": "A/B/C enabled; schedules unchanged",
+  "specialist_changes": 0,
+  "private_changes": 0,
+  "main_changes": 0
+}
