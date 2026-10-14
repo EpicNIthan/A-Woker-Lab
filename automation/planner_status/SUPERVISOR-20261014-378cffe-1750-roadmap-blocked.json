@@ -1,0 +1,26 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-14 17:50",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite": "b18adfecba78e93bd6c9ed44d8413efb2bf707cc",
+  "validation": "PASS_BOUNDED_DONE_TASK",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "lanes": {
+    "A": "CONTINUE",
+    "B": "PLATEAU_PUBLICATION_BLOCKED",
+    "C": "CONTINUE_PUBLICATION_BLOCKED"
+  },
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "roadmap_update": {
+    "operation": "update_file",
+    "path": "automation/supervisor_roadmap.md",
+    "status": "BLOCKED",
+    "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending."
+  },
+  "next": "Verify Gemini structured JSON mitigation; execute exact-repository A/C deterministic regressions before queueing a fresh task."
+}
