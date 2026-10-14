@@ -1,0 +1,58 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 11:00",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "330f9120100ca8b28cabe559020b260cd513ca87",
+  "roadmap": "automation/supervisor_roadmap.md@4bb89f83155354d7658e28d51c8380fd6c5b5263",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "latest_durable": {
+    "A": "A-20261014-378cffe-provenance-nonfinite-jsonl-oracle-0900.json",
+    "B": "B-20261014-378cffe-write-safety-error-1030.json",
+    "C": "C-20261014-378cffe-btc-unit-oracle-1018.json"
+  },
+  "finding": {
+    "title": "Interrupted JSONL record newline can poison the next append and block output refresh",
+    "proof_level": "PINNED_SOURCE_DERIVED_ORACLE_NOT_EXECUTED",
+    "pinned_sources": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/tests/test_providers_replay.py": "f31d5467e6962e0c2f0159ae34418ba7f7ac3a16"
+    },
+    "mechanism": "storage.append_observations writes each json.dumps(record) and '\\n' in separate handle.write calls. A write error between them may leave a syntactically valid but unterminated JSON object at EOF; load_observations accepts it. A later append of a different observation writes directly after the old object, creating concatenated JSON objects on one line; subsequent load_observations raises ValueError. runner.run_once loads archive before publishing latest/audit/anata, so outputs can remain stale.",
+    "deterministic_fixture": "In tempfile seed G0 output files; create two distinct valid FlowObservation rows X,Y with finite values and legal timestamps. Inject OSError on the first newline write only, after complete JSON body X has been written and close has flushed it. Verify archive ends in '}' not '\\n'. Retry append with Y and restore normal writes; also test retry [X,Y] and reverse X/Y. Use network=False and fixed as_of_ms.",
+    "expected_assertions": [
+      "Recovery must never leave concatenated JSON objects on one line; every archived record must strict-json-parse separately.",
+      "A failed newline write must not result in a silently admitted or unrepairable half-committed record.",
+      "After corrected retry X and Y each appear exactly once, regardless of order, with provenance and original availability clocks intact.",
+      "latest.json, audit_latest.json and anata_latest.json must agree on one archive generation after recovery; no stale G0 outputs presented as current.",
+      "Unchanged exact-duplicate retry adds zero records; no change to point-in-time eligibility."
+    ],
+    "target_pytest": "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_v1_handoff.py",
+    "full_pytest": "python -m pytest -q part2/capital_flow/tests",
+    "exact_repo_pytest": "NOT_RUN",
+    "distinct_from": "04:59 second-row to_dict TypeError and 09:00 nonfinite provenance: this tests interruption between two writes of one otherwise valid row and subsequent archive recovery."
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED; A/C CONTINUE, no four-way PLATEAU",
+  "safety": "Only worker-control assessment; no Specialist code or protected resources changed."
+}
