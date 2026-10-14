@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 12:58",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "3c377708d5ad418c085c2a463b03d5ed7e6caa73",
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob_sha": "4bb89f83155354d7658e28d51c8380fd6c5b5263",
+    "note": "roadmap older than current durable reports"
+  },
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "pending_evidence": "authoritative worker-control pending directory absent (404)"
+  },
+  "latest_durable_before_write": {
+    "A": "A-20261014-378cffe-archive-fsync-uncertain-commit-oracle-1158.json",
+    "B": "B-20261014-378cffe-write-safety-error-1030.json",
+    "C": "C-20261014-378cffe-cross-unit-oracle-1218.json",
+    "supervisor": "SUPERVISOR-20261014-378cffe-exact-state-1252.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Out-of-order archive revisions make unchanged rescrape admission depend on input order",
+    "proof_level": "EXACT_SHA_PINNED_SOURCE_DERIVED_ORACLE_NOT_EXECUTED",
+    "pinned_blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/tests/test_providers_replay.py": "f31d5467e6962e0c2f0159ae34418ba7f7ac3a16"
+    },
+    "mechanism": "append_observations initializes latest_signature by overwriting each revision_key in archive line order, not by observation availability/revision clock. _semantic_signature intentionally excludes available_at_ms, observed_at_ms and revision. A batch [newer,older] leaves the older value as latest_signature; a later unchanged rescrape of newer semantics is admitted, whereas [older,newer] suppresses it. Existing replay test covers chronological base->unchanged->changed, not reversed batch order.",
+    "fixture": "Use tempfile observations.jsonl; FlowObservation family=etf, metric=net_flow_usd, asset=BTC, unit=USD, source=fixture, source_record_id=day1, effective_at_ms=86400000, provenance={collector:fixture}. older: value=10, revision=r1, available_at_ms=864000000, observed_at_ms=864000000. newer: value=12, revision=r2, available_at_ms=1036800000, observed_at_ms=1036800000. rescrape: value=12, revision=r2, available_at_ms=1123200000, observed_at_ms=1123200000. Seed each order in separate fresh archives; append rescrape after seeding.",
+    "expected_assertions": [
+      "Both initial orderings admit exactly two distinct semantic revisions and preserve original available/observed timestamps and provenance.",
+      "Appending rescrape after either order returns zero, with exactly two archived rows; no synthetic same-value revision merely from a later scrape clock.",
+      "Existing source implementation is expected to violate the preceding assertion only for [newer,older]: it returns one and grows archive to three; record as expected regression failure, not an executed test.",
+      "Strict JSONL reload succeeds; replay at time between older and newer availability sees older value, after newer availability sees newer value, independent of input order.",
+      "Subsequent no-network run_once/retry publishes latest.json, audit_latest.json and anata_latest.json coherently without order-dependent archive inflation; exact duplicates append zero."
+    ],
+    "targeted_pytest": "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py",
+    "full_pytest": "python -m pytest -q part2/capital_flow/tests",
+    "exact_repo_pytest": "NOT_RUN",
+    "distinct_from": "04:59 partial second-row TypeError, 09:00 nonfinite provenance, 11:00 torn newline, 11:58 fsync uncertainty; this case uses only valid complete records, no exception or concurrency, and exposes archive-order-dependent semantic retry admission."
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED; A/C CONTINUE and no independent four-way exact-SHA PLATEAU",
+  "scope": "Only worker-control planner assessment. No Specialist code, private/main, Railway, workflows, secrets, prediction/API/Telegram/MT5/broker/execution, or schedules modified."
+}
