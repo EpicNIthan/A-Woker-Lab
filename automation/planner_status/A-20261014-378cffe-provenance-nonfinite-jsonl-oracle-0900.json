@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 09:00",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite": "b0bc9ccf84f5e8764d807320a9e2f14f16ad00a6",
+  "roadmap": "automation/supervisor_roadmap.md@4bb89f83155354d7658e28d51c8380fd6c5b5263",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control recursive tree direct count"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "planners": {
+    "A": "CONTINUE 2026-10-14 04:59 ICT",
+    "B": "BLOCKED_PLATEAU 2026-10-14 08:30 ICT",
+    "C": "CONTINUE 2026-10-14 07:11 ICT"
+  },
+  "finding": {
+    "title": "Valid numeric-overflow provenance input can be re-emitted as nonstandard Infinity in append-only JSONL archive",
+    "proof_level": "SOURCE_DERIVED_ORACLE_NOT_EXACT_REPO_PYTEST",
+    "pinned_sources": {
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/tests/test_providers_replay.py": "f31d5467e6962e0c2f0159ae34418ba7f7ac3a16"
+    },
+    "fixture": "Two valid JSONL FlowObservation records with finite value/timestamps; first provenance={'scale':1}, second provenance={'scale':1e309} as literal JSON numeric exponent, distinct source_record_id; run_once(network=False, external_jsonl=[file], as_of_ms=1800000000000). Reverse row order and retry. Python json.loads parses 1e309 as inf.",
+    "mechanism": "FlowObservation.from_dict copies provenance without finite-value validation; storage._semantic_signature and append_observations json.dumps use default allow_nan=True, so second row can serialize Infinity token, which is not RFC-compliant JSON, while Python's permissive loader may accept it.",
+    "oracle_expected_assertions": [
+      "Archive lines must parse with strict JSON constant rejection; no NaN/Infinity tokens in observations.jsonl.",
+      "Overflowed provenance must fail closed before any archive row is admitted, or be explicitly normalized with a documented provenance quality marker.",
+      "On rejection, baseline archive and latest/audit_latest/anata_latest must remain one generation; no silent partial admission.",
+      "Both permutations, corrected retry, exact duplicate retry and point-in-time provenance preserve deterministic counts and outputs."
+    ],
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_v1_handoff.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "exact_repo_pytest": "NOT_RUN",
+    "primitive_check": "isolated Python stdlib json.loads('1e309') -> inf; json.dumps -> Infinity; not an exact-repository test",
+    "separate_from": "Prior 04:59 TypeError partial-admission isolated 3-pass evidence; this is a distinct silent nonstandard-archive serialization path, not a repeat."
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "private_promotion": "BLOCKED; A and C not PLATEAU, independent Supervisor not PLATEAU",
+  "safety": "Public worker-control Planner A assessment only; no Specialist code, private/main, Railway, workflows, secrets, execution or schedules touched."
+}
