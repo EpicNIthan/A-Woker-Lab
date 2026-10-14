@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "at_ict": "2026-10-14 14:14",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "adccd874519df4d4e4380d1b6dc550ceb924e595",
+  "recent_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "queue": {
+    "pending": 0,
+    "pending_path": "absent_404",
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "4bb89f83155354d7658e28d51c8380fd6c5b5263",
+    "latest_supervisor_refresh_ict": "2026-10-12 16:53",
+    "stale": true
+  },
+  "latest_prior_durable": {
+    "A": "A-20261014-378cffe-concurrent-refresh-permanent-mixed-1357.json",
+    "B": "B-20261014-378cffe-connector-error-1327.json",
+    "C": "C-20261014-378cffe-boolean-peg-price-coercion-1317.json",
+    "Supervisor": "SUPERVISOR-20261014-378cffe-exact-state-1348.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Missing asset/currency is silently deserialized as BTC, bypassing required asset validation",
+    "evidence": "SOURCE_ONLY",
+    "source": {
+      "path": "part2/capital_flow/contracts.py",
+      "blob": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "lines": "177-185,268-299"
+    },
+    "regression_target": {
+      "path": "part2/capital_flow/tests/test_contracts_normalization.py",
+      "blob": "8bfd0557050ac72a5e45bace98460d536b789e52",
+      "lines": "11-33"
+    },
+    "fixture": {
+      "family": "stablecoin",
+      "metric": "component_supply_usd",
+      "value": 1000,
+      "unit": "USD",
+      "effective_at_ms": 1787520000000,
+      "available_at_ms": 1787520123456,
+      "observed_at_ms": 1787520123456,
+      "source": "fixture",
+      "source_record_id": "stablecoin-no-asset",
+      "provenance": {
+        "context_only": true
+      }
+    },
+    "source_derived_current": "FlowObservation.from_dict(payload) assigns asset='BTC' when both asset and currency are absent; FlowObservation.__post_init__ then accepts it, silently fabricating BTC identity for a stablecoin supply row.",
+    "expected_assertions": [
+      "Missing both asset and currency in a stablecoin component row must fail closed (ValueError or explicit invalid-record quarantine), never silently assign BTC.",
+      "An explicit asset='USDT' round-trips unchanged, preserving timestamps, source, provenance and value.",
+      "Explicit currency='USDC' remains a supported alias if intended; explicit BTC asset on BTC-denominated metrics remains valid.",
+      "No legacy BTC fallback may be applied to non-BTC family/metric without explicit opt-in and provenance flag."
+    ],
+    "targeted_pytest": "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+    "full_pytest": "python -m pytest -q part2/capital_flow/tests",
+    "exact_repo_pytest": "NOT_RUN",
+    "distinct_from": "BTC-to-USD dimensional conversion, cross-asset dedup, stablecoin symbol/ID collision, invalid/boolean price, zero denominator, quality tie, and cross-unit dedup"
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED; A/C CONTINUE and independent Supervisor PLATEAU absent",
+  "scope": "Only worker-control planner status. No Specialist code, main/private, workflows, schedules, or execution systems modified."
+}
