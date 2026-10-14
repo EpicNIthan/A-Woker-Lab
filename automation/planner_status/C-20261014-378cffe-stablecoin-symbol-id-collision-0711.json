@@ -1,0 +1,74 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 07:11",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "cdd4bb7d2a96d11af52da3244036f7939c4418ad",
+  "recent_public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": "automation/supervisor_roadmap.md; last supervisor refresh 2026-10-12 16:53 ICT",
+  "latest_planners": {
+    "A": "CONTINUE 2026-10-14 04:59 ICT",
+    "B": "BLOCKED_PLATEAU 2026-10-14 06:30 ICT",
+    "C": "BLOCKED 2026-10-14 01:16 ICT"
+  },
+  "exact_sha_validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Same-symbol distinct stablecoin IDs silently overwrite each other by input order",
+    "evidence_level": "SOURCE_ONLY",
+    "source": [
+      {
+        "path": "part2/capital_flow/providers_v1.py",
+        "blob_sha": "59236347b6c5a262335287ca1e375fb5ad1307b2",
+        "lines": "119-126,131-173"
+      },
+      {
+        "path": "part2/capital_flow/handoff.py",
+        "blob_sha": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+        "lines": "119-150"
+      },
+      {
+        "path": "part2/capital_flow/contracts.py",
+        "blob_sha": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+        "lines": "154-201"
+      },
+      {
+        "path": "part2/capital_flow/tests/test_v1_handoff.py",
+        "blob_sha": "341851b2d03ddd642d4199ac7d96badd1808e026",
+        "lines": "32-92"
+      }
+    ],
+    "mechanism": "DefiLlama parser by_symbol[symbol]=row replaces distinct IDs; downstream handoff latest_supply[sym] also keys solely by symbol despite anchor checking stablecoin_id.",
+    "fixture": "peggedAssets=[{id:'A',symbol:'USDT',circulating:{peggedUSD:1000}},{id:'B',symbol:'USDT',circulating:{peggedUSD:250}}], observed_at_ms=1787520123456, symbols=('USDT',); repeat with reversed rows.",
+    "source_derived_current": "Forward row order retains B supply 250; reversed retains A supply 1000. Both report one tracked component, rather than distinguishing two stablecoin IDs or declaring collision.",
+    "expected_assertions": [
+      "Permuting distinct-ID same-symbol rows cannot silently change tracked supply from 250 to 1000",
+      "Either preserve both stablecoin_id identities with tracked supply 1250 and count 2, or fail closed with explicit stablecoin_symbol_collision quality status",
+      "Do not merge price or changes across distinct stablecoin_id; preserve PIT and valid unique-symbol behavior"
+    ],
+    "regression_target": "part2/capital_flow/tests/test_v1_handoff.py",
+    "targeted_test": "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+    "full_test": "python -m pytest -q part2/capital_flow/tests",
+    "exact_repo_pytest": "NOT_RUN",
+    "scope": "C quality correctness, not A archive/integration or B source breadth"
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "new_executor_tasks": 0,
+  "private_promotion": "BLOCKED: A CONTINUE, C unresolved, independent Supervisor PLATEAU absent",
+  "safety": "Planner-only worker-control assessment; no Specialist code, main, private, workflows, secrets, execution or schedules changed."
+}
