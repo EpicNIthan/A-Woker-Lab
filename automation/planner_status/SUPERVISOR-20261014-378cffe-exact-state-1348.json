@@ -1,0 +1,55 @@
+{
+  "schema": "anata-supervisor-audit-v1",
+  "at_ict": "2026-10-14 13:48",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "9a61a06ba05f7587b40c40dda788088fb493924c",
+  "private_readonly_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "public_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK",
+    "task": "C-20261009-same-revision-conflict-1547-01",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": {
+      "verdict": "CONTINUE",
+      "report": "A-20261014-378cffe-out-of-order-rescrape-oracle-1258.json",
+      "test": "NOT_RUN"
+    },
+    "B": {
+      "verdict": "BLOCKED_PLATEAU",
+      "report": "B-20261014-378cffe-connector-error-1327.json"
+    },
+    "C": {
+      "verdict": "CONTINUE",
+      "report": "C-20261014-378cffe-boolean-peg-price-coercion-1317.json",
+      "test": "NOT_RUN"
+    }
+  },
+  "workers": "A/B/C enabled original schedules",
+  "executor": {
+    "latest_push_queue_run": "38034687421",
+    "latest_push_result": "FAILURE",
+    "latest_scheduled_run": "38516071825",
+    "latest_scheduled_result": "SUCCESS_NO_PUBLIC_HEAD_ADVANCE",
+    "structured_json_mitigation": "UNVERIFIED"
+  },
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "next": "Verify Gemini structured JSON reliability; exact-repo A/C deterministic tests; then at most one bounded fresh-base task if pending empty",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "main_private_execution_changes": "NONE"
+}
