@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-15 05:01",
+  "verdict": "BLOCKED_PLATEAU_NO_NEW_DEFECT",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "58e10148aea6c583174c68236a28e61c123ef88e",
+  "recent_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "4bb89f83155354d7658e28d51c8380fd6c5b5263",
+    "last_substantive": "2026-10-12"
+  },
+  "latest_durable": {
+    "A": "A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+    "B": "B-20261015-378cffe-blocked-0432.json",
+    "C": "C-20261015-378cffe-write-blocker-0414.json",
+    "Supervisor": "SUPERVISOR-20261015-378cffe-0145-roadmap-write-blocked.json"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "execution_gate": {
+    "status": "BLOCKED_PLATEAU",
+    "why": "Existing deterministic no-network two-writer test brief is already complete and source-consistent; no new test variation adds evidence until executed. Proposed test absent from pinned Specialist HEAD; planner has no exact-SHA runnable checkout and is not authorized to change Specialist code.",
+    "missing_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "fetch_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/engine.py": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+    },
+    "existing_executable_brief": "automation/planner_status/A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+    "fixture": "shared empty tmp_path, network=False, external_jsonl=(), as_of_ms A=1800000000000 and B=1800000060000; gate writer A after latest.json, finish B, release A",
+    "source_predicted_persisted_as_of_ms": [
+      1800000060000,
+      1800000000000,
+      1800000000000
+    ],
+    "assertions": "both run_once return; archive absent; all three persisted files must share same as_of_ms; expected mismatch is unexecuted source prediction",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests"
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED: no A/B/C plus independent Supervisor PLATEAU consensus",
+  "protected_changes": 0,
+  "schedule_changed": false
+}
