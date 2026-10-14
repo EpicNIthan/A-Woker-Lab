@@ -1,0 +1,20 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-14 15:45",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "9dced4f809b068a38c4862ebd59ba3b2f0fddd8d",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_ONLY",
+  "A": "CONTINUE archive output-generation race; exact pytest NOT_RUN",
+  "B": "BLOCKED_PLATEAU publication safety",
+  "C": "CONTINUE missing asset defaults to BTC; exact pytest NOT_RUN",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "tasks_enqueued": 0,
+  "private_changes": 0
+}
