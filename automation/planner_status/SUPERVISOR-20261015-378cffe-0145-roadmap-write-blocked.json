@@ -1,0 +1,21 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-15 01:45",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "9cd828c4a0d9de12d70b8502c63966425d59a8a7",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "A": "BLOCKED_EXACT_REPO_TEST",
+  "B": "PLATEAU",
+  "C": "CONTINUE_SOURCE_ONLY",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "roadmap_update": "BLOCKED_BY_REPOSITORY_WRITE_SAFETY_CHECK",
+  "gemini_json": "UNVERIFIED",
+  "next": "Resolve bounded executor JSON reliability, then execute narrow deterministic A/C regression tests",
+  "protected_changes": 0
+}
