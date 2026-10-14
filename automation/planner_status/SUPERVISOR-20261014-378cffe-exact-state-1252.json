@@ -1,0 +1,21 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-14 12:52",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "4570c18e906a06bab9af8254251ef3db40ecbce5",
+  "private_anata_local_hardening": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS matching bounded done task C-20261009-same-revision-conflict-1547-01",
+  "A": "CONTINUE fsync uncertain commit 11:58",
+  "B": "BLOCKED_PLATEAU write-safety 10:30",
+  "C": "CONTINUE cross-unit event dedup 12:18",
+  "gemini_structured_json": "UNVERIFIED",
+  "promotion": "BLOCKED no exact-SHA four-way PLATEAU",
+  "roadmap_update": "BLOCKED_BY_SAFETY_FILTER",
+  "private_write": false,
+  "main_touched": false
+}
