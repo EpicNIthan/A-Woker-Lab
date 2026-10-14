@@ -1,0 +1,38 @@
+{
+  "schema": "anata-planner-b-source-assessment-v1",
+  "worker": "B",
+  "at_ict": "2026-10-14 19:32",
+  "verdict": "PLATEAU",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "f644fe979a8f186dd6652e8e69f5f8f51122e38c",
+  "candidate": "Bitcoin Core getblock verbosity=3 prevout data",
+  "first_party_source": "https://bitcoincore.org/en/doc/30.0.0/rpc/blockchain/getblock/",
+  "immutable_first_party_release_commit": "d0f6d9953a15d7c7111d46dcb76ab2bb18e5dee3",
+  "economic_entity": "BTC UTXO spends; ownership, venue, and buy/sell side not established",
+  "immutable_event_id": "Not sampled. Candidate identity: canonical block_hash + txid + vin_index + referenced_prevout_txid:vout",
+  "pit_clocks": {
+    "effective": "Block time exists in RPC but no finalized block sampled",
+    "available": "First public availability not established",
+    "observed": "Collector observation not established"
+  },
+  "nonoverlap": "Not demonstrated against existing BTC on-chain, archive, or Market Driver observations",
+  "role": "On-chain settlement context only; never directional spot buy/sell without independent venue execution evidence",
+  "checked": "Bitcoin Core 30.0 getblock RPC documentation, including verbosity=3 prevout fields, plus signed release tag reference; no chain sample, collector log, or cross-source reconciliation checked",
+  "no_network_contract": "Proposed, NOT_RUN: fixed confirmed block/prevout fixture; deterministic input ordering and outpoint dedup; reorg and three-clock PIT rejection; context_only=true; no directional spot scoring",
+  "reopen": "Provide finalized canonical block/transaction, exact event identity, verified ownership/venue attribution, first-available and observed clocks, and independently replayable overlap test",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK at exact public SHA; independent pytest NOT_RUN",
+  "lanes": {
+    "A": "CONTINUE; latest detailed publication blocked",
+    "B": "PLATEAU",
+    "C": "CONTINUE; latest detailed publication blocked",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "new_executor_tasks": 0,
+  "promotion": "BLOCKED"
+}
