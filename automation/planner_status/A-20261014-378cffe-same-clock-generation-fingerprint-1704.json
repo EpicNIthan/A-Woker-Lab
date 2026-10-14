@@ -1,0 +1,111 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "at_ict": "2026-10-14 17:04",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "0fca8b2fb66fdfa6e6eefe32ef058861bfdc82e5",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "4bb89f83155354d7658e28d51c8380fd6c5b5263",
+    "last_update_ict": "2026-10-12 16:53",
+    "stale": true
+  },
+  "queue": {
+    "pending": 0,
+    "pending_path": "404",
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "latest_reports": {
+    "A": "A-20261014-378cffe-two-writer-generation-test-1557.json (CONTINUE)",
+    "B": "B-20261014-378cffe-eip4844-blob-gas-plateau-1627.json (PLATEAU)",
+    "C": "C-20261014-378cffe-price-record-id-overwrite-1611.json (CONTINUE)"
+  },
+  "finding": {
+    "title": "Same-clock cross-output generation fingerprint regression: as_of-only coherence check is insufficient",
+    "distinction": "Narrow extension of 15:57 two-writer test: both runs use identical as_of_ms, so all three timestamps agree while underlying archive snapshots differ. Adds an independent content-level generation invariant, not a claim of a second confirmed defect.",
+    "proof_level": "EXACT_SHA_SOURCE_DERIVED_NOT_EXECUTED",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/providers.py": "072581823a815c124d8629afd678196e86fe8840",
+      "part2/capital_flow/engine.py": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "part2/capital_flow/engine_v1_1.py": "4204bf4fb9db88386bc5ce0b54c332c391166c7b",
+      "part2/capital_flow/features.py": "af20e0ced4df0f5af3c73553dc2ad0b1b6cc072c",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+    },
+    "test_path_proposed": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "fixture": {
+      "shared_dir": "tmp_path / capital_flow",
+      "same_as_of_ms": 1800000000000,
+      "A": {
+        "network": false,
+        "external_jsonl": []
+      },
+      "B": {
+        "network": false,
+        "external_jsonl": [
+          "tmp_path/b.jsonl"
+        ]
+      },
+      "b_jsonl_row": {
+        "family": "etf",
+        "metric": "net_flow_usd",
+        "asset": "BTC",
+        "value": 100,
+        "unit": "USD",
+        "source": "fixture",
+        "source_record_id": "rowB",
+        "effective_at_ms": 1799999940000,
+        "available_at_ms": 1799999940000,
+        "observed_at_ms": 1799999940000,
+        "data_quality": 1,
+        "attribution_quality": 1,
+        "provenance": {
+          "collector": "fixture"
+        }
+      }
+    },
+    "procedure": [
+      "Start with absent archive. Write B JSONL using json.dumps(FlowObservation(**b_jsonl_row).to_dict()) + newline. B row is available and effective before as_of, and ETF FLOW horizon supports one row.",
+      "Monkeypatch runner.atomic_write_json with a wrapper that invokes the original and, ONLY in A after latest.json write, sets A_paused and waits on release_A (10-second timeout). Do not pause B.",
+      "Start A with no input. Wait for A_paused (A already computed empty-archive frame). Start B with B JSONL and identical as_of_ms; join B with 10-second timeout, assert B returned normally. Release A in finally; join A with 10-second timeout and assert normal return.",
+      "Read latest.json, audit_latest.json, anata_latest.json; compare timestamps AND coverage values: latest['coverage'], audit['coverage'], handoff['quality']['coverage']. Read archive with load_observations.",
+      "Run a sequential control C with network=False and no new input at same as_of_ms; assert all three coverage values converge and archive remains one row."
+    ],
+    "failing_expected_assertions": [
+      "All three as_of_ms == 1800000000000 (this timestamp-only assertion PASSES despite mixing).",
+      "All three coverage values must be equal (source-predicted FAIL: latest=1/3 from B, audit=0 from A, handoff.quality=0 from A).",
+      "The final handoff source_evidence must agree with latest/audit ETF evidence, not represent A's empty history when latest is B.",
+      "Both runs succeed; B appends exactly one row, A zero; archive retains exactly one row with source_record_id=rowB and original provenance.",
+      "After sequential C, coverage matches across all three files (1/3), archive count remains one."
+    ],
+    "why_distinct": "The 15:57 oracle detects mixed generations by differing as_of_ms. This variant defeats that check with equal timestamps and verifies content-level snapshot coherence. No new Specialist code has been written.",
+    "commands": {
+      "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+      "full": "python -m pytest -q part2/capital_flow/tests"
+    },
+    "exact_repo_pytest": "NOT_RUN"
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED_A_C_SUPERVISOR_CONTINUE",
+  "protected_changes": 0
+}
