@@ -1,0 +1,38 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 10:18",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_ONLY; independent exact-repo pytest NOT_RUN",
+  "finding": {
+    "title": "BTC quantity silently relabeled USD",
+    "evidence": "SOURCE_ONLY",
+    "source": "part2/capital_flow/normalization.py",
+    "blob": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+    "lines": "27-50,73-86,229-234",
+    "test": "part2/capital_flow/tests/test_contracts_normalization.py",
+    "test_blob": "8bfd0557050ac72a5e45bace98460d536b789e52",
+    "test_lines": "11-45",
+    "fixture": "FlowObservation family=etf metric=net_flow_usd asset=BTC value=2 unit=BTC, valid PIT clocks",
+    "current": "normalize_observation returns value=2 unit=USD",
+    "expected": [
+      "BTC-to-USD without exchange rate raises ValueError",
+      "normalize_and_dedup rejects same input",
+      "USD_MILLIONS 2 -> USD 2000000",
+      "btc_netflow 2 BTC stays 2 BTC"
+    ],
+    "targeted_pytest": "python -m pytest -q part2/capital_flow/tests/test_contracts_normalization.py",
+    "full_pytest": "python -m pytest -q part2/capital_flow/tests",
+    "exact_repo_pytest": "NOT_RUN"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED"
+}
