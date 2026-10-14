@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "verdict": "CONTINUE",
+  "assessed_at_ict": "2026-10-14 13:57",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite": "49b6a4f01781e3c7f178e7dff47d817ddb027fdc",
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob_sha": "4bb89f83155354d7658e28d51c8380fd6c5b5263",
+    "stale_relative_to_reports": true
+  },
+  "recent_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "authoritative_queue": {
+    "pending": 0,
+    "pending_path": "absent_404",
+    "done": 16,
+    "failed": 16
+  },
+  "latest_durable_before_write": {
+    "A": "A-20261014-378cffe-out-of-order-rescrape-oracle-1258.json",
+    "B": "B-20261014-378cffe-connector-error-1327.json",
+    "C": "C-20261014-378cffe-boolean-peg-price-coercion-1317.json",
+    "supervisor": "SUPERVISOR-20261014-378cffe-exact-state-1348.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "finding": {
+    "title": "Two fully successful concurrent run_once refreshes can leave permanently mixed output generations",
+    "proof_level": "EXACT_SHA_PINNED_SOURCE_DERIVED_ORACLE_NOT_EXECUTED",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/tests/test_providers_replay.py": "f31d5467e6962e0c2f0159ae34418ba7f7ac3a16"
+    },
+    "mechanism": "run_once builds each output from its own as_of_ms, then writes latest.json, audit_latest.json, anata_latest.json via three independent atomic_write_json calls; no shared generation lock or publication commit. Per-file os.replace atomicity does not make the three-file set atomic.",
+    "fixture": "tmp_path local_dir; seed archive with one valid ETF FlowObservation (effective=10*DAY, available=observed=11*DAY, source=fixture, source_record_id=day11, value=100, provenance={collector:fixture}). Run A with network=False,external_jsonl=(),as_of_ms=10*DAY and B with same local_dir and as_of_ms=12*DAY. Instrument runner.atomic_write_json with thread events: A writes latest A and pauses; B writes latest B,audit B,handoff B and returns success; A resumes, writes audit A,handoff A and returns success.",
+    "expected_assertions": [
+      "Both run_once calls return without error and archive remains exactly one valid row, with unchanged provenance/available_at/observed_at.",
+      "All three final files must represent one coherent generation, or a reader must detect a mismatch and fail closed.",
+      "Source ordering predicts permanent latest.json=B, audit_latest.json=A, anata_latest.json=A; expected failure of the coherence assertion even though both runs succeed.",
+      "Re-run sequentially and confirm coherent generation; no duplicate archive admission. Verify both observation visibility cutoffs and strict JSON parse."
+    ],
+    "targeted_pytest": "python -m pytest -q part2/capital_flow/tests/test_providers_replay.py part2/capital_flow/tests/test_v1_handoff.py",
+    "full_pytest": "python -m pytest -q part2/capital_flow/tests",
+    "exact_repo_pytest": "NOT_RUN",
+    "distinct_from": "02:04 single successful refresh transient reader interleave; 10/13 output fault-injection failed write; 10/13 concurrent archive append race. This case has two successful refresh writers and a permanently inconsistent output set, without a reader interleaving or archive writes."
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED; A/C CONTINUE and independent Supervisor PLATEAU absent",
+  "scope": "Only worker-control Planner A assessment; no Specialist code, main/private, Railway, workflows, secrets, prediction/API/Telegram/MT5/broker/execution, or schedules changed."
+}
