@@ -1,0 +1,22 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-15 10:53",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "30df25644bb8a8637a356f755ca5f5e1fd92b363",
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_TWO_WRITER_TEST_NOT_RUN",
+    "B": "BLOCKED_PUBLICATION_NO_NEW_SOURCE",
+    "C": "CONTINUE_CORRELATED_METRIC_TEST_NOT_RUN"
+  },
+  "workers": "A/B/C enabled, schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_BY_REPOSITORY_WRITE_SAFETY_CHECKS",
+  "next": "Verify Gemini JSON output contract; run A/C deterministic tests; do not queue until safe."
+}
