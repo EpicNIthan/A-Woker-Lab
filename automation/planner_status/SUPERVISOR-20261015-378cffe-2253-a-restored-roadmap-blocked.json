@@ -1,0 +1,22 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-15 22:53",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "520edca81981d53f1b7aacd4891519e952aef87e",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "A": "BLOCKED_PLATEAU_2101; unexpectedly disabled; reenabled without schedule change",
+  "B": "BLOCKED_SOURCE_ADMISSION_2033",
+  "C": "CONTINUE_SOURCE_ONLY_2115",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "gemini_last_run": "38759140728_NO_PENDING",
+  "tasks_queued": 0,
+  "private_changes": 0,
+  "main_changes": 0
+}
