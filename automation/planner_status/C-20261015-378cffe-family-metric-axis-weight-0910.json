@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT",
+  "at_ict": "2026-10-15 09:10",
+  "verdict": "CONTINUE_SOURCE_ONLY",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "5a3ff711417bc257c2156a43608fd1ba5179e4d2",
+  "recent_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "roadmap": "automation/supervisor_roadmap.md (2026-10-15 06:48 ICT)",
+  "latest_durable": {
+    "A": "A-20261015-378cffe-publish-blocked-0555.json",
+    "B": "B-20261015-378cffe-source-admission-plateau-0834.json",
+    "C": "C-20261015-378cffe-overlap-pair-double-count-0815.json",
+    "Supervisor": "SUPERVISOR-20261015-378cffe-0751-roadmap-write-blocked.json"
+  },
+  "finding": {
+    "title": "Correlated second metric within stablecoin family changes capital-axis family vote",
+    "source": "part2/capital_flow/engine.py",
+    "blob": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+    "lines": "48-56,250-270",
+    "supporting_source": "part2/capital_flow/features.py",
+    "supporting_blob": "af20e0ced4df0f5af3c73553dc2ad0b1b6cc072c",
+    "supporting_lines": "34-43,312-325",
+    "fixture": "Call CapitalFlowEngine._axis_scores_for_horizon at 7d with ETF state one CAPITAL metric direction_score=+0.8 and stablecoin state one CAPITAL metric direction_score=-0.8. Then add a second correlated stablecoin CAPITAL metric with direction_score=-0.8; keep family identities, original scores and independence unchanged. Minimal state/feature SimpleNamespace objects suffice.",
+    "source_predicted": "One ETF plus one stablecoin metric: median(+0.8,-0.8)=0.0; after second stablecoin metric: median(+0.8,-0.8,-0.8)=-0.8. Family-level median remains 0.0; second same-family metric changes axis direction.",
+    "expected_assertions": [
+      "A duplicated/correlated metric inside an existing family must not silently give that family a second independent axis vote.",
+      "Adding a distinct independent family may change axis score; reordering family mappings must not.",
+      "If metric-level weighting is intentional, document and test the explicit dependence/weighting policy before declaring plateau."
+    ],
+    "test_target": "part2/capital_flow/tests/test_features_engine.py",
+    "test_blob": "dabd4a82d7544f208820887926a90702fb0c1d1e",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "evidence": "SOURCE_ONLY; proposed scoring-quality invariant, not confirmed production failure"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED: no same-SHA A/B/C and independent Supervisor PLATEAU",
+  "protected_changes": 0,
+  "schedule_changed": false
+}
