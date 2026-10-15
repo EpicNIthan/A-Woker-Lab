@@ -1,0 +1,37 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-16 03:53",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_last_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_branch": "worker-control",
+  "control_prewrite_sha": "0f65c1e9720ad8e758e107122c2996e9df38db6b",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "done_task": "C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "queue_run_id": 37907159402
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_NO_NEW_PROOF",
+    "B": "BLOCKED_SOURCE_ADMISSION",
+    "C": "BLOCKED_PLATEAU_EXECUTION_SPEC_ONLY",
+    "Supervisor": "CONTINUE"
+  },
+  "new_c_evidence": "C-20261016-378cffe-role-marker-regression-spec-0312.json: pinned no-network string false role marker fixture; pytest NOT_RUN",
+  "workers": "A/B/C enabled; schedules unchanged",
+  "gemini_json": "UNVERIFIED; last queue run 38034687421 failed invalid JSON escape",
+  "roadmap_write": "REJECTED_BY_SAFETY_CHECKS",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "private_changes": false,
+  "main_changes": false,
+  "schedule_changes": false
+}
