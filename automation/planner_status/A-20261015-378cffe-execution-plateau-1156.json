@@ -1,0 +1,59 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-15 11:56",
+  "verdict": "BLOCKED_PLATEAU_NO_NEW_DEFECT",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_recent_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "ca18d69cae9a85bec505921ae73126d7d2710e72",
+  "queue": {
+    "pending": 0,
+    "pending_directory": "404 absent",
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob_sha": "c4d8f94ba5ed8553027af2c02d0d8da8b8981fe0"
+  },
+  "latest_durable": {
+    "A": "A-20261015-378cffe-execution-infrastructure-plateau-1100.json",
+    "B": "B-20261015-378cffe-blocked-1131.json",
+    "C": "C-20261015-378cffe-unscored-core-gate-1115.json",
+    "Supervisor": "SUPERVISOR-20261015-378cffe-1152-roadmap-write-blocked.json"
+  },
+  "validation": {
+    "kind": "EXACT_SHA_BOUNDED_DONE_TASK_PASS",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "matched_commit": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "integration": {
+    "prior_executable_oracle": "automation/planner_status/A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+    "test_target": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "test_presence": "ABSENT_FROM_PINNED_REPOSITORY",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "fixture": "network=False, shared empty tmp_path, as_of_ms 1800000000000 and 1800000060000, event pause A after latest.json, B finishes, then A resumes",
+    "invariant": "latest/audit/anata persisted as_of_ms must agree; source predicts mixed B/A/A",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "targeted_run": false,
+    "full_run": false,
+    "assessment": "Previously specified, no new defect or test result; A cannot progress without authorized Gemini execution and independently runnable exact-SHA test."
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED: C CONTINUE and Supervisor CONTINUE, no four-way same-SHA PLATEAU",
+  "protected_changes": 0,
+  "schedule_changed": false
+}
