@@ -1,0 +1,29 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-15 07:51",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "86acfdc3b5c6ffed69856e550622d8082a1d47c7",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU; two-writer regression not executed",
+    "B": "PLATEAU; getblockstats candidate rejected",
+    "C": "CONTINUE; stale level endpoint may produce false known zero; tests not run"
+  },
+  "workers_enabled": [
+    "A",
+    "B",
+    "C"
+  ],
+  "gemini_json": "UNVERIFIED; last push executor run 38034687421 malformed JSON escape",
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_BY_REPOSITORY_WRITE_SAFETY",
+  "private_branch_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "code_changes": 0,
+  "task_enqueued": false
+}
