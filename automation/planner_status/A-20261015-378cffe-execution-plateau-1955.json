@@ -1,0 +1,52 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-15 19:55",
+  "verdict": "BLOCKED_PLATEAU_NO_NEW_PROOF",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "4b9670320aaf251168b402cefda1e81439ff295a",
+  "queue": {
+    "pending": 0,
+    "pending_directory": "404_NOT_FOUND",
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "c4d8f94ba5ed8553027af2c02d0d8da8b8981fe0"
+  },
+  "latest_durable": {
+    "A": "A-20261015-378cffe-blocked-execution-plateau-1857.json",
+    "B": "B-20261015-378cffe-source-admission-blocked-1831.json",
+    "C": "C-20261015-378cffe-stale-cadence-horizon-1915.json",
+    "Supervisor": "SUPERVISOR-20261015-378cffe-1850-roadmap-write-blocked.json"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "task_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_pytest": "NOT_RUN"
+  },
+  "blocker": {
+    "operation": "mcp__GitHub__fetch_file",
+    "path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "existing_spec": "automation/planner_status/A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "reason": "Test absent and no exact-SHA executable checkout; further source-only oracles do not establish cross-file generation coherence. Execution/publication infrastructure must be repaired before progress."
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "protected_changes": 0,
+  "schedules_changed": false
+}
