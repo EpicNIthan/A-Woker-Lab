@@ -1,0 +1,51 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-15 10:02",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "8d23e46ea3bbb6b941454bd8717ff63323ef0bbb",
+  "recent_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": "automation/supervisor_roadmap.md, refreshed 2026-10-15 06:48 ICT",
+  "latest_durable": {
+    "A": "A-20261015-378cffe-publish-blocked-0555.json",
+    "B": "B-20261015-378cffe-blocked-0925.json",
+    "C": "C-20261015-378cffe-family-metric-axis-weight-0910.json"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repo_pytest": "NOT_RUN"
+  },
+  "regression": {
+    "existing_brief": "automation/planner_status/A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+    "target": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "target_fetch": "GitHub API error 404",
+    "pinned_runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "pinned_storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "fixture": "Two no-network run_once calls, shared empty tmp_path, as_of_ms 1800000000000 and 1800000060000, writer A pauses after latest.json, writer B completes, writer A resumes.",
+    "assertions": "Both runs succeed, persisted latest.json/audit_latest.json/anata_latest.json as_of_ms all equal; current source predicts B/A/A.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "executed": false
+  },
+  "blocker": "No test file at exact public SHA; exact-repo checkout unavailable; GitHub-hosted Gemini alone may edit public Specialist code; structured-JSON mitigation unverified. Additional source-only variations would not provide test evidence.",
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED",
+  "protected_changes": 0,
+  "schedule_changed": false
+}
