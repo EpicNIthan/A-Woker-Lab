@@ -1,5 +1,17 @@
 # Anata Worker Lab Supervisor Roadmap
 
+## Supervisor exact-state refresh — 2026-10-16 01:52 ICT (2026-10-15 18:52 UTC)
+
+- Public Specialist branch anata-local-hardening exact HEAD: 378cffee64e9933b28ed9a40b936724db3beb09e, unchanged since Oct 9. Parent 8010dfae0827004c1ff7c5eee672b99ca0ccb7cb; one-commit diff only part2/capital_flow/normalization.py and part2/capital_flow/tests/test_contracts_normalization.py. Ignore inert automation paths on public Specialist branch.
+- Authoritative worker-control prewrite HEAD: 105ddd7ea0ffa92a37432b235ffc17bc9a0b49c2. Queue pending absent (0), done 16, failed 16. No queued task to review; no pending-without-trigger gap currently. Latest scheduled Gemini run 38759140728 succeeded Oct 15 15:18 UTC without Specialist change. Last push queue run 38034687421 failed due to malformed structured JSON; mitigation not verified. Do not enqueue repeat failure tasks.
+- Exact public SHA validation PASS via worker-control done task C-20261009-same-revision-conflict-1547-01.json, executor_result.status PASS, commit_sha exactly 378cffee64e9933b28ed9a40b936724db3beb09e, bounded targeted and full Capital Flow pytest required before commit. No independent exact-SHA pytest claim; any new public HEAD invalidates this proof.
+- A integration: BLOCKED_PLATEAU_NO_NEW_PROOF; output generation two-writer test absent and exact-repo pytest not run. A unexpectedly disabled again, re-enabled at 01:52 ICT, original schedule unchanged.
+- B source breadth: BLOCKED_SOURCE_ADMISSION; latest 01:33 ICT, no new qualifying independent source with PIT/non-overlap proof; no task.
+- C quality: CONTINUE_SOURCE_ONLY; latest durable 00:16 ICT string-false context-only role inversion oracle, deterministic exact-repo regression not run. No same-SHA four-way PLATEAU.
+- Independent Supervisor CONTINUE; PROMOTION BLOCKED. Private anata-local-hardening observed HEAD 6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb, read-only. No private promotion or rotation. Only part2/** and specialist_evidence/** eligible for eventual reviewed promotion; never promote control/status/queue, workflows, secrets or execution systems.
+- Priority: investigate recurring unexpected A disablement; repair Gemini JSON serialization reliability; run bounded A/C deterministic tests; restore roadmap publication. Do not touch either main or change schedules.
+
+
 ## Supervisor exact-state refresh — 2026-10-15 06:48 ICT (23:48 UTC, Oct 14)
 
 - **Public Specialist** `anata-local-hardening` exact HEAD `378cffee64e9933b28ed9a40b936724db3beb09e`, unchanged since Oct 9. Parent `8010dfae0827004c1ff7c5eee672b99ca0ccb7cb`; exact diff only `part2/capital_flow/normalization.py` and `part2/capital_flow/tests/test_contracts_normalization.py`. Inert `automation/**` on this branch is excluded.
