@@ -1,0 +1,59 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-15 14:56",
+  "verdict": "BLOCKED_PLATEAU_NO_NEW_FINDING",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "control_prewrite_head": "77dec94d31f1e255eade7243fe764c89e8d01f9c",
+  "queue": {
+    "pending": 0,
+    "pending_directory": "GitHub API error 404",
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "c4d8f94ba5ed8553027af2c02d0d8da8b8981fe0",
+    "last_refresh_ict": "2026-10-15 06:48"
+  },
+  "latest_durable": {
+    "A": "A-20261015-378cffe-blocked-plateau-1403.json",
+    "B": "B-20261015-378cffe-source-admission-blocked-1428.json",
+    "C": "C-20261015-378cffe-sparse-trailing-history-1411.json"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "push_run_id": 37907159402,
+    "push_run_conclusion": "success",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN"
+  },
+  "integration": {
+    "finding": "NO_NEW_DEFECT; prior two-successful-writer cross-file generation oracle remains source-derived and unexecuted",
+    "existing_executable_brief": "automation/planner_status/A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+    "pinned_runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "pinned_storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "target_test": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "fetch_operation": "mcp__GitHub__fetch via GitHub REST contents exact public SHA",
+    "fetch_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "local_exact_repo_checkout": "UNAVAILABLE /mnt/data/A-Woker-Lab/.git",
+    "test_execution": "NOT_RUN",
+    "next_required": "Authorized Gemini executor must add existing deterministic no-network regression and run targeted and full Capital Flow pytest after verified structured-JSON mitigation"
+  },
+  "gemini_structured_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED; no A/B/C plus independent Supervisor PLATEAU consensus",
+  "protected_changes": 0,
+  "schedules_changed": false
+}
