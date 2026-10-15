@@ -1,0 +1,26 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-16 02:54",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "d5567d4191cca50ee6bb50c3360ed8930913594c",
+  "private_readonly_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_NO_NEW_PROOF",
+    "B": "BLOCKED_SOURCE_ADMISSION",
+    "C": "CONTINUE_SOURCE_ONLY",
+    "Supervisor": "CONTINUE"
+  },
+  "planner_health": "A/B/C enabled; schedules unchanged",
+  "C_latest_durable": "C-20261016-378cffe-string-false-context-role-0016.json",
+  "C_productivity": "Two newer runs without newer durable report; sharpened C prompt without changing schedule.",
+  "gemini_json_reliability": "UNVERIFIED",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "roadmap_write": "ATTEMPTED_UNCONFIRMED_REJECTED",
+  "protected_changes": 0
+}
