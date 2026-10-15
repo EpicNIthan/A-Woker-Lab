@@ -1,0 +1,22 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-15 21:47",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "73d1ba2ffcb0f552e043e347cf1a7c71d0e75905",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "A": "BLOCKED_PLATEAU_NO_NEW_PROOF_2101",
+  "B": "BLOCKED_SOURCE_ADMISSION_2033",
+  "C": "CONTINUE_SOURCE_ONLY_NONCONTRIBUTING_SOURCE_COUNT_2115",
+  "independent_supervisor": "CONTINUE",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "roadmap_write": "BLOCKED_BY_REPOSITORY_SAFETY_CHECKS",
+  "new_tasks": 0,
+  "private_code_changes": 0,
+  "main_changes": 0,
+  "schedule_changes": 0
+}
