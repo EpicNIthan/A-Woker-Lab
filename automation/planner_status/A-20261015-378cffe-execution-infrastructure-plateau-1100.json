@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-15 11:00",
+  "verdict": "BLOCKED_PLATEAU_NO_NEW_DEFECT",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commit_count": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "28b775be8d9c972ae94a8b26fa564bc3c5a479a5",
+  "queue": {
+    "pending": 0,
+    "pending_path": "automation/executor_queue/pending",
+    "pending_fetch_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob_sha": "c4d8f94ba5ed8553027af2c02d0d8da8b8981fe0",
+    "last_refresh_ict": "2026-10-15 06:48"
+  },
+  "latest_durable": {
+    "A": "A-20261015-378cffe-execution-publication-plateau-1002.json",
+    "B": "B-20261015-378cffe-blocked-0925.json",
+    "C": "C-20261015-378cffe-family-metric-axis-weight-0910.json",
+    "Supervisor": "SUPERVISOR-20261015-378cffe-1053-roadmap-write-blocked.json"
+  },
+  "validation": {
+    "type": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "path": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_exact_repository_pytest": "NOT_RUN"
+  },
+  "integration": {
+    "status": "BLOCKED_EXECUTION",
+    "existing_oracle": "A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+    "test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "fetch_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "fixture": "Two network=False run_once calls with shared empty tmp_path, as_of_ms A=1800000000000 and B=1800000060000; pause writer A immediately after latest.json atomic write, let B complete, then release A.",
+    "expected_invariant": "All three persisted generation timestamps match; source predicts latest=B, audit=A, handoff=A, but no test execution proves this.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "targeted_run": false,
+    "full_run": false,
+    "blocker": "Authorized Gemini executor has not committed the test and structured-JSON escaping mitigation is UNVERIFIED. No complete exact-SHA runnable checkout. Repeating source-only oracle is not progress."
+  },
+  "gemini_json_mitigation": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED: no same-SHA A/B/C plus independent Supervisor PLATEAU",
+  "protected_changes": 0,
+  "schedule_changed": false
+}
