@@ -1,0 +1,76 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-17 05:00",
+  "verdict": "BLOCKED_PLATEAU_EXACT_CHECKOUT_AND_GEMINI_JSON",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "control_prewrite_sha": "d5e8e5a9a0e87634b66a5f0994c6e6bf759514c2",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "pending_path": "404 absent; direct enumeration"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "cf80eab1865668e4135d157d87214eafd1da2b56"
+  },
+  "latest_durable": {
+    "A": "A-20261017-378cffe-blocked-plateau-0300.json",
+    "B": "B-20261017-378cffe-source-plateau-0434.json",
+    "C": "C-20261017-378cffe-execution-0416.json",
+    "supervisor": "SUPERVISOR-20261017-378cffe-0252-roadmap-write-blocked.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN"
+  },
+  "integration": {
+    "decision": "Freeze corrected two-writer final-output regression; no redundant source-only contract or Gemini task. Reader-visible cross-file atomicity is a separate unverified property.",
+    "spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "source_blobs": {
+      "runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "engine.py": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "engine_v1_1.py": "4204bf4fb9db88386bc5ce0b54c332c391166c7b",
+      "output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+    },
+    "regression_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "regression_fetch": "NOT_FOUND GitHub API 404",
+    "blocker": {
+      "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+      "path": "/mnt/data/A-Woker-Lab",
+      "verbatim": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+      "additional_absent_paths": [
+        "/mnt/data/part2/capital_flow",
+        "/workspace/A-Woker-Lab",
+        "/home/oai/share/A-Woker-Lab"
+      ],
+      "tests_executed": 0
+    },
+    "recovery": "Authorized exact-SHA checkout and independently verified Gemini structured JSON reliability are prerequisites; then GitHub-hosted executor implements corrected regression and runs python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py and python -m pytest -q part2/capital_flow/tests; record actual exit codes."
+  },
+  "gemini_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "lanes": {
+    "A": "BLOCKED_EXECUTION",
+    "B": "BLOCKED_SOURCE_ADMISSION",
+    "C": "BLOCKED_EXECUTION",
+    "supervisor": "CONTINUE"
+  },
+  "promotion": "BLOCKED",
+  "protected_changes": 0,
+  "automation_settings_changed": false
+}
