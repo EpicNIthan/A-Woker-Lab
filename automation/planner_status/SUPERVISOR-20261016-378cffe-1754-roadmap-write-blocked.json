@@ -1,0 +1,30 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-16 17:54",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "af71a8983ef603df868c9edad5d074b785b02889",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_NO_NEW_EXECUTABLE_EVIDENCE",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_PLATEAU_EXECUTION",
+    "supervisor": "CONTINUE"
+  },
+  "workers_enabled": {
+    "A": true,
+    "B": true,
+    "C": true
+  },
+  "gemini_json": "UNVERIFIED",
+  "promotion": "BLOCKED_NO_SAME_SHA_UNQUALIFIED_FOUR_WAY_PLATEAU",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "roadmap_write_error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending.",
+  "next": "Verify Gemini structured JSON handling, then execute pinned A/C regression tests with targeted and full Capital Flow pytest on exact checkout.",
+  "protected_changes": 0
+}
