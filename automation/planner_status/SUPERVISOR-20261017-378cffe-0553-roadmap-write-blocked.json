@@ -1,0 +1,23 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-17 05:53",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "c0237d311c429b9e5a648c167fe592dbc6589803",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "lanes": {
+    "A": "BLOCKED_EXECUTION",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_EXECUTION",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_json": "UNVERIFIED",
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "workers": "A_B_C_ENABLED_UNCHANGED",
+  "private_sha_readonly": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb"
+}
