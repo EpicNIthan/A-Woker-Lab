@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-16 15:59",
+  "verdict": "BLOCKED_PLATEAU_EXECUTION_REQUIRED_NO_NEW_DEFECT",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_recent_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "245d6675b5169c078f9794967b49756a9c776312",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404_NOT_FOUND",
+    "done": 16,
+    "failed": 16,
+    "source": "direct worker-control directory listing"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "cf80eab1865668e4135d157d87214eafd1da2b56",
+    "last_supervisor_refresh": "2026-10-16 04:50 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261016-378cffe-blocked-plateau-1457.json",
+    "B": "B-20261016-378cffe-blocked-1526.json",
+    "C": "C-20261016-378cffe-blocked-1520.json",
+    "Supervisor": "SUPERVISOR-20261016-378cffe-1354-roadmap-write-blocked.json"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "task_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN"
+  },
+  "integration": {
+    "decision": "BLOCKED_PLATEAU: do not repeat source-only oracle; no exact-repository execution evidence or new defect. Existing no-network test contract is executable when authorized Gemini implements it.",
+    "spec": "automation/planner_status/A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+    "target": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "target_status": "404_NOT_FOUND",
+    "pinned_blobs_verified": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/engine.py": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+    },
+    "predicted_mixed_generation_ms": [
+      1800000060000,
+      1800000000000,
+      1800000000000
+    ],
+    "observed_failure": false,
+    "execution_blocker": "Planner has pinned GitHub source reads, not runnable exact-SHA repository; regression target absent. C lane attempted pytest but exit 4 'file or directory not found; no tests ran' does not establish A regression results.",
+    "next_feasible_step": "Prove Gemini structured-JSON reliability separately; after verified, authorize ONE narrow fresh-SHA task to add existing test and execute targeted python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py and full python -m pytest -q part2/capital_flow/tests. Verify outputs before any A verdict change."
+  },
+  "gemini_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED_NO_UNQUALIFIED_A_B_C_SUPERVISOR_PLATEAU",
+  "protected_changes": 0,
+  "automation_changed": false
+}
