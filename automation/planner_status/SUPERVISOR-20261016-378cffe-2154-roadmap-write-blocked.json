@@ -1,0 +1,34 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-16 21:54",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "2526c9563781ffdedbe109ae3797ce3e7182b3c7",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_EXECUTION",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_PLATEAU_EXECUTION",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_json": "UNVERIFIED",
+  "latest_scheduled_executor_run": 38918223584,
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "workers_enabled": [
+    "A",
+    "B",
+    "C"
+  ],
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "tasks_queued": 0,
+  "code_changes": 0,
+  "schedules_changed": false,
+  "next": "Verify bounded Gemini JSON reliability; run pinned A/C deterministic targeted and full Capital Flow pytest on exact checkout."
+}
