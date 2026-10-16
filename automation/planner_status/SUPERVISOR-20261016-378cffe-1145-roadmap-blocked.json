@@ -1,0 +1,29 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-16 11:45",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "31ab812310b93c1b27b7c3eb8a5f253440021379",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_EXECUTION_REQUIRED_NO_NEW_DEFECT",
+    "B": "BLOCKED_SOURCE_ADMISSION",
+    "C": "BLOCKED_PLATEAU_EXECUTION",
+    "Supervisor": "CONTINUE"
+  },
+  "workers_enabled": [
+    "A",
+    "B",
+    "C"
+  ],
+  "gemini_json": "UNVERIFIED",
+  "latest_scheduled_executor_run": 38830804850,
+  "last_queue_push_run": 38034687421,
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "roadmap_update": "REJECTED_BY_REPOSITORY_WRITE_SAFETY_CHECKS",
+  "protected_changes": false
+}
