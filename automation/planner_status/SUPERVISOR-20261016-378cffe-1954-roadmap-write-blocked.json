@@ -1,0 +1,26 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-16 19:54",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "91b30506e2ac225b55b0967297226c6606e2fbd5",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_EXACT_REPO_EXECUTION_UNAVAILABLE",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_PLATEAU_EXECUTION",
+    "supervisor": "CONTINUE"
+  },
+  "workers": "A/B/C enabled; unchanged schedules",
+  "gemini_json": "UNVERIFIED",
+  "last_executor_run": 38883736448,
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "promotion": "BLOCKED_NO_FOUR_WAY_UNQUALIFIED_PLATEAU",
+  "private_code_changed": false,
+  "main_changed": false,
+  "next": "Verify Gemini JSON reliability; execute pinned A/C deterministic regression in exact checkout; keep lanes distinct."
+}
