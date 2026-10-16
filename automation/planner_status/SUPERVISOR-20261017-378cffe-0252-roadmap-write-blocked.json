@@ -1,0 +1,35 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-17 02:52",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "8d827f963db9a74c94240ca35b6f74968e32bc61",
+  "public_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "lanes": {
+    "A": "BLOCKED_EXECUTION; corrected two-writer regression specification; no exact checkout pytest",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU; no PIT/non-overlap qualified source",
+    "C": "BLOCKED_EXECUTION; string-false context-only role regression untested; pytest exit 4"
+  },
+  "workers": "A/B/C enabled, schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "latest_executor_run": 38947556351,
+  "private_branch_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "roadmap_write": "BLOCKED_BY_SAFETY_CHECK",
+  "next": "Verify Gemini JSON reliability; run exact-checkout A/C deterministic targeted and full Capital Flow pytest.",
+  "protected_changes": 0
+}
