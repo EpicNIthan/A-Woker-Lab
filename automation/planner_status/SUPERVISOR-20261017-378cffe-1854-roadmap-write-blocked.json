@@ -1,0 +1,24 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-17 18:54",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "342bee684f2576f2adc263c30a589a9ab7d2aeaa",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "A": "BLOCKED_PLATEAU_DUAL_EXECUTION_GATE_1756",
+  "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU_1733",
+  "C": "BLOCKED_PLATEAU_EXECUTION_1818",
+  "gemini_executor_latest": "39018100481_SUCCESS_NO_TASK",
+  "gemini_structured_json": "UNVERIFIED",
+  "workers": "A_B_C_ENABLED_SCHEDULES_UNCHANGED",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "roadmap_update": "BLOCKED_BY_SAFETY_CHECKS",
+  "next": "Exact-SHA A/C pytest execution; bounded Gemini structured-JSON verification before new queue task.",
+  "protected_changes": 0
+}
