@@ -1,0 +1,24 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-17 12:47",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "e2d49d63d467f8b3c232aea66bc32e23b961d1d4",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "A": "BLOCKED_PLATEAU_TESTS_NOT_RUN",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "BLOCKED_PLATEAU_EXECUTION",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "workers": "A_B_C_ENABLED_SCHEDULES_UNCHANGED",
+  "executor": "latest scheduled run 39001659641 succeeded no code change; structured JSON reliability unverified",
+  "roadmap_update": "REJECTED_BY_REPOSITORY_WRITE_SAFETY_CHECK",
+  "next": "Prove Gemini JSON reliability; run pinned A/C targeted and full Capital Flow pytest on exact public SHA",
+  "private_changes": false,
+  "main_changes": false
+}
