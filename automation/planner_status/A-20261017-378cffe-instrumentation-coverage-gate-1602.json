@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-17 16:02",
+  "verdict": "BLOCKED_PLATEAU_EXACT_REPO_EXECUTION",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "239df230f6b8582794e99e406ba91511c79605c0",
+  "recent_public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "basis": "15:02 direct count plus worker-control compare to current HEAD: only C status and Supervisor status added; pending directory 404"
+  },
+  "roadmap": "automation/supervisor_roadmap.md (14:54 ICT; 15:50 Supervisor fallback)",
+  "latest_durable": {
+    "A": "A-20261017-378cffe-same-clock-generation-oracle-1502.json",
+    "B": "B-20261017-378cffe-source-plateau-1427.json",
+    "C": "C-20261017-378cffe-blocked-1515-min.json",
+    "Supervisor": "SUPERVISOR-20261017-378cffe-1550-roadmap-write-blocked.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "independent_pytest": "NOT_RUN"
+  },
+  "source_blobs": {
+    "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "engine": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+    "engine_v11": "4204bf4fb9db88386bc5ce0b54c332c391166c7b",
+    "output": "94904d4e00a350d621e9c271372766879059ec03",
+    "handoff": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "integration": {
+    "decision": "Retain corrected two-writer baseline-RED plus same-clock generation-tag oracle; add instrumentation coverage prerequisite before treating result as valid.",
+    "finding": "Current runner calls imported atomic_write_json for three sequential files. A monkeypatch on runner.atomic_write_json is a test seam, not a stable public API: a future repair can reroute any output write, silently bypassing generation tagging/gates. Count and assert exactly one intercepted latest/audit/anata write per writer; assert all persisted outputs have injected tags. Missing/extra intercepts are HARNESS_INCONCLUSIVE, not product PASS or FAIL. Keep cross-process writer and reader-visible atomicity separate.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "proposed_test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "test_path_status": "404 absent at exact public SHA"
+  },
+  "execution": {
+    "attempted": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "verbatim": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "exit_code": 128,
+    "tests_executed": 0
+  },
+  "gemini_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED",
+  "lanes": {
+    "A": "BLOCKED_EXECUTION",
+    "B": "BLOCKED_SOURCE_ADMISSION",
+    "C": "BLOCKED_EXECUTION",
+    "Supervisor": "CONTINUE"
+  },
+  "next": "Restore authorized exact-SHA checkout/test host; first verify instrumentation coverage and baseline RED in both clock cases, then only after authorized Gemini fix run targeted and full pytest with captured results. Verify structured JSON before queueing.",
+  "protected_changes": 0,
+  "automation_settings_changed": false
+}
