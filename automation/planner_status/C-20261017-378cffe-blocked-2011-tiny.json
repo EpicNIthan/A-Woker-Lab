@@ -1,1 +1,1 @@
-{"worker":"C","public_sha":"378cffee64e9933b28ed9a40b936724db3beb09e","verdict":"BLOCKED_PLATEAU_EXECUTION","tests_executed":0,"promotion":"BLOCKED"}
+{"worker":"C","public_sha":"378cffee64e9933b28ed9a40b936724db3beb09e","verdict":"BLOCKED_PLATEAU_EXECUTION","tests_executed":0,"promotion":"BLOCKED","attempt":"git rev-parse HEAD","path":"/mnt/data/A-Woker-Lab","exit_code":128,"error":"No such file or directory"}
