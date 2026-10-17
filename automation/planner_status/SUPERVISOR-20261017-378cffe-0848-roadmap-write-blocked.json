@@ -1,0 +1,21 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-17 08:48",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "fc852b5d5a6e8eaaf8e5834e42e0847ff44f40b6",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "A": "BLOCKED_EXACT_REPO_EXECUTION",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "BLOCKED_EXACT_REPO_EXECUTION_ISOLATED_TEST_1_FAILED_1_PASSED",
+  "gemini_json": "UNVERIFIED",
+  "promotion": "BLOCKED",
+  "supervisor": "CONTINUE",
+  "roadmap_update": "REJECTED_BY_REPOSITORY_WRITE_CHECKS",
+  "next": "Verify structured JSON, execute exact-repo A/C targeted plus full Capital Flow tests, then only one narrowly scoped task",
+  "protected_changes": 0
+}
