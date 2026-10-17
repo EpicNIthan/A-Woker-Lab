@@ -1,0 +1,26 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 04:52",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "7f98871aa4838acab943e6f3b81ff343e5578300",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "workers": {
+    "A": "BLOCKED_EXECUTION",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_EXECUTION",
+    "all_enabled": true
+  },
+  "gemini_json": "UNVERIFIED",
+  "last_executor_run": 39067906082,
+  "verdict": "CONTINUE",
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_SAFETY_CHECK",
+  "next": "Restore A/C exact-SHA deterministic pytest; verify Gemini JSON before enqueuing.",
+  "protected_changes": 0
+}
