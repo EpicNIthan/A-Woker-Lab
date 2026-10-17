@@ -1,0 +1,51 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-17 22:46",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_parent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_branch": "worker-control",
+  "control_prewrite_sha": "25bb763ef1f6f99ed4ce243138000e757f938434",
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_run": 37907159402
+  },
+  "lanes": {
+    "A": {
+      "report": "A-20261017-378cffe-blocked-2155-min.json",
+      "verdict": "BLOCKED_PLATEAU_EXACT_SHA_EXECUTION"
+    },
+    "B": {
+      "report": "B-20261017-378cffe-source-plateau-2232.json",
+      "verdict": "BLOCKED_SOURCE_ADMISSION_PLATEAU"
+    },
+    "C": {
+      "report": "C-20261017-378cffe-blocked-2216.json",
+      "verdict": "BLOCKED_PLATEAU_EXECUTION"
+    }
+  },
+  "workers_enabled": {
+    "A": true,
+    "B": true,
+    "C": true
+  },
+  "gemini_latest_schedule_run": 39032779079,
+  "gemini_structured_json": "UNVERIFIED",
+  "independent_supervisor": "CONTINUE",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "tasks_queued": 0,
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "next": "Restore deterministic exact-SHA A/C tests; verify structured-JSON mitigation before enqueue; keep queue push-trigger; preserve main, private code and schedules."
+}
