@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-17 15:02",
+  "verdict": "BLOCKED_PLATEAU_EXACT_SHA_TEST_EXECUTION",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "2a22e59e19c201ca435438caea046514f358ac1f",
+  "recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "pending_path": "404 absent; done/failed directly enumerated"
+  },
+  "latest_durable": {
+    "A": "A-20261017-378cffe-execution-gate-1400.json",
+    "B": "B-20261017-378cffe-source-plateau-1427.json",
+    "C": "C-20261017-378cffe-blocked-1417.json",
+    "supervisor_roadmap": "automation/supervisor_roadmap.md (14:54 ICT)"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN"
+  },
+  "source_blobs": {
+    "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "engine": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+    "engine_v11": "4204bf4fb9db88386bc5ce0b54c332c391166c7b",
+    "output": "94904d4e00a350d621e9c271372766879059ec03",
+    "handoff": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "integration": {
+    "new_finding": "The pinned test uses differing as_of_ms as its only generation oracle. Two different publication generations at the same as_of_ms can pass a stamp-only check despite mixed files. Strengthen the deterministic regression with test-only per-writer generation tags on all three output payloads, including a same-clock pair. This is a test-oracle improvement, not a production fix.",
+    "test_contract": "Use the existing pinned no-network empty-archive two-thread barrier and corrected conditional B wait. Parametrize writer as_of_ms pairs (T,T+60000) and (T,T). Monkeypatch runner.atomic_write_json to shallow-copy each payload and inject _test_generation = threading.current_thread().name before delegating to original atomic_write_json; gate A immediately after latest write. Start B while A blocked. On unfixed baseline, require observed B latest event and B completion before A release, then persisted generation tags [B,A,A] (baseline RED); absence of overtake is INCONCLUSIVE, not PASS. On fixed code release A after bounded B wait, require both finish without errors, archive absent, all three files parse, identical generation tags; in distinct-clock case require identical as_of_ms too. A thread-local lock alone does not prove cross-process locking or reader-visible snapshot atomicity; keep those as separate gates.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "proposed_test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "test_path_status": "GitHub API 404 (not present at exact SHA)"
+  },
+  "execution": {
+    "attempted": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "verbatim": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "exit_code": 128,
+    "tests_executed": 0
+  },
+  "gemini_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED",
+  "lanes": {
+    "A": "BLOCKED_EXECUTION",
+    "B": "BLOCKED_SOURCE_ADMISSION",
+    "C": "BLOCKED_EXECUTION",
+    "Supervisor": "CONTINUE"
+  },
+  "next": "Restore authorized exact-SHA checkout/runner; prove baseline RED including same-clock generation tagging, then run post-fix targeted and full Capital Flow pytest with recorded output. Verify Gemini structured JSON before any task.",
+  "protected_changes": 0,
+  "automation_settings_changed": false
+}
