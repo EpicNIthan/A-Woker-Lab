@@ -1,0 +1,28 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-17 10:47",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "648da20e52b02879be7ee632eeb6f1c7916e28c3",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "lanes": {
+    "A": "BLOCKED_EXACT_REPO_EXECUTION",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_EXACT_REPO_EXECUTION",
+    "Supervisor": "CONTINUE"
+  },
+  "executor": {
+    "latest_scheduled_run": 38984249482,
+    "latest_scheduled_result": "SUCCESS_NO_CODE_PUSH",
+    "structured_json": "UNVERIFIED"
+  },
+  "roadmap_update": "REJECTED_BY_REPOSITORY_SAFETY_CHECKS",
+  "promotion": "BLOCKED",
+  "next": "Verify Gemini JSON handling; execute exact-SHA A/C deterministic regressions with targeted and full Capital Flow pytest",
+  "protected_changes": 0
+}
