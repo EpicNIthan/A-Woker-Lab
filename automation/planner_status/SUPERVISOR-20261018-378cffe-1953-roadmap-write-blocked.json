@@ -1,0 +1,43 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 19:53",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "b17c433d462c52a5894cf368ed9367b071988897",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authority": "worker-control"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_EXECUTOR",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "targeted_and_full_capital_flow_pytest_required": true,
+    "independent_A_C_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_EXECUTION (19:00)",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU (19:34)",
+    "C": "BLOCKED_PLATEAU_EXECUTION (18:19)"
+  },
+  "workers": "A/B/C ENABLED; schedules unchanged",
+  "gemini": {
+    "last_scheduled_run_id": 39115562925,
+    "conclusion": "success",
+    "structured_json_reliability": "UNVERIFIED",
+    "tasks_queued": 0
+  },
+  "roadmap_write": {
+    "status": "REJECTED_BY_SAFETY_CHECKS",
+    "path": "automation/supervisor_roadmap.md",
+    "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending."
+  },
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED_NO_SAME_SHA_FOUR_WAY_PLATEAU",
+  "next": "Restore exact-SHA A/C pytest host; verify Gemini structured-JSON mitigation before queueing; never promote while blocked."
+}
