@@ -1,0 +1,36 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 23:46",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "f75fcdf28ac542c9df6949dd6b62efd663894aa0",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "pending_directory": "404 absent; authoritative worker-control"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_run": 37907159402,
+    "independent_A_C_pytest": "NOT_RUN"
+  },
+  "planners": {
+    "A": "BLOCKED_PLATEAU_EXACT_SHA_EXECUTION (22:58 ICT; exact checkout absent)",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU (22:34 ICT)",
+    "C": "BLOCKED_PLATEAU_EXECUTION (22:18 ICT; role regression not run)"
+  },
+  "workers": "A/B/C enabled; hourly schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "scheduled_executor_last_run": 39131834195,
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "next": "Obtain exact-SHA disposable test checkout; run A baseline RED and C string-false regression with full Capital Flow pytest; verify Gemini structured-JSON reliability before any queue task.",
+  "roadmap_update": "REJECTED_BY_REPOSITORY_WRITE_SAFETY",
+  "changes_to_protected_code": 0
+}
