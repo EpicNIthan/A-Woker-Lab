@@ -1,0 +1,22 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 14:45",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "173eb242d5888b8bb2e755bc6404c70de20e3afb",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "validation": "PASS_EXACT_SHA_BOUNDED_EXECUTOR",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "A": "BLOCKED_PLATEAU_TEST_EXECUTION; latest durable 12:57; targeted/full NOT_RUN",
+  "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU; latest durable 14:26",
+  "C": "BLOCKED_PLATEAU_EXECUTION; latest durable 10:12; latest run 14:13 without new durable report",
+  "workers": "A/B/C enabled; hourly schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_SAFETY_CHECK",
+  "next": "Exact-SHA A/C tests and Gemini JSON reliability verification before narrow task."
+}
