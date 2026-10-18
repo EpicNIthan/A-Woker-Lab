@@ -1,0 +1,25 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-19 03:54",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "231c5da7c16632ba70407a78dd126868d6cf80ad",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_EXACT_SHA",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU exact-SHA two-writer regression NOT_RUN",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_PLATEAU exact-SHA role regression NOT_RUN"
+  },
+  "workers": "A/B/C enabled; schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "roadmap_write": "SAFETY_REJECTED",
+  "next": "Obtain exact-SHA pytest host; run A baseline RED and C role regression; verify Gemini JSON reliability before queueing.",
+  "changes": "control status report only; no Specialist/private/main/schedule edits"
+}
