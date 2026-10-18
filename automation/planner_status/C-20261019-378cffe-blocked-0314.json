@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-19 03:14",
+  "verdict": "BLOCKED_PLATEAU_EXECUTION",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "dcb5414d1b3c412ac3868cf9f46ca4b0470d3ccb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control recursive tree; pending directory absent"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "7d70a30113976d6308bcfd05c7991592f3abee02"
+  },
+  "latest_reports": {
+    "A": "A-20261019-378cffe-acceptance-0256-min.json",
+    "B": "B-20261019-378cffe-source-plateau-0234.json",
+    "C": "C-20261019-378cffe-blocked-0015.json",
+    "supervisor": "SUPERVISOR-20261018-378cffe-2346-roadmap-write-blocked.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_NORMALIZATION_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_pytest": "NOT_RUN"
+  },
+  "quality": {
+    "finding": "Exact-SHA handoff.py:31 and runner.py:60 apply bool(...) to provenance.context_only; string 'false' evaluates truthy, potentially reclassifying scoring evidence as context-only. No end-to-end regression execution proof.",
+    "pinned_blobs": {
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "last_observed_exit_code": 128,
+    "last_observed_stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "note": "Previously confirmed; not repeated this run. No authorized exact-SHA checkout established.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "tests_executed_this_run": 0
+  },
+  "recovery": "Provide authorized disposable no-network checkout pinned to public SHA; run deterministic string-'false' context_only regression and full Capital Flow pytest; preserve logs, reassess C before unqualified PLATEAU.",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_edits": 0,
+  "protected_changes": 0,
+  "schedules_changed": false
+}
