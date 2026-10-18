@@ -1,0 +1,43 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-19 04:46",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "f345006f97f7f77b788d6022690c00981fa73818",
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "pending_directory": "404 absent"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_EXECUTOR_EXACT_SHA",
+    "done_task": "C-20261009-same-revision-conflict-1547-01.json",
+    "independent_a_c_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_EXACT_SHA_TEST_HOST; new archive-idempotence two-writer acceptance gate 04:06",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU; no qualifying independent PIT source 02:34",
+    "C": "BLOCKED_PLATEAU_EXECUTION; string-false context_only regression unexecuted 03:14"
+  },
+  "workers_enabled": {
+    "A": true,
+    "B": true,
+    "C": true
+  },
+  "gemini": {
+    "latest_run": 39167821032,
+    "latest_conclusion": "success",
+    "public_head_advanced": false,
+    "structured_json_reliability": "UNVERIFIED"
+  },
+  "supervisor_verdict": "CONTINUE",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "roadmap_write": "BLOCKED_BY_SAFETY_CHECKS",
+  "next": "Exact-SHA A/C deterministic pytest and Gemini structured-JSON reliability proof",
+  "code_changes": 0,
+  "main_changes": 0,
+  "schedule_changes": 0
+}
