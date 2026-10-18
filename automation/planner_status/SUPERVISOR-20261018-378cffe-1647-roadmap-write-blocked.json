@@ -1,0 +1,28 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 16:47",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "38c197e42744eccb8c8bc18217a6934170de3f65",
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control direct enumeration"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_EXECUTOR",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json"
+  },
+  "A": "BLOCKED exact-SHA regression test host; latest durable 15:57 ICT",
+  "B": "SOURCE ADMISSION PLATEAU no qualified independent first-party PIT source; latest durable 14:26 ICT",
+  "C": "BLOCKED exact-SHA quality regression unexecuted; new durable report 16:15 ICT",
+  "gemini_json": "UNVERIFIED",
+  "latest_scheduled_executor": "39115562925 success at 16:29 ICT no public HEAD advance",
+  "last_queue_push_run": "38034687421 failed October 10",
+  "promotion": "BLOCKED_NO_UNQUALIFIED_FOUR_WAY_PLATEAU",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "action": "No Specialist, private, main, workflow, queue or schedule changes"
+}
