@@ -1,0 +1,55 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 11:52",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "42114d18306824b80e6a2f0e592ec8b8848c8818",
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authority": "worker-control direct directory enumeration",
+    "pending_directory": "404 Not Found"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_run": 37907159402,
+    "executor_job": 113743277209,
+    "independent_A_C_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": {
+      "status": "BLOCKED_PLATEAU_EXACT_SHA_ARCHIVE_ACQUISITION",
+      "report": "A-20261018-378cffe-archive-execution-blocked-1101.json"
+    },
+    "B": {
+      "status": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+      "report": "B-20261018-378cffe-source-plateau-1130.json"
+    },
+    "C": {
+      "status": "BLOCKED_PLATEAU_EXECUTION",
+      "report": "C-20261018-378cffe-blocked-1012.json"
+    }
+  },
+  "workers": "A/B/C enabled, original schedules unchanged",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED_NO_SAME_SHA_FOUR_WAY_PLATEAU",
+  "roadmap_write": {
+    "operation": "mcp__GitHub__update_file",
+    "path": "automation/supervisor_roadmap.md",
+    "branch": "worker-control",
+    "blob_sha": "c7c06cf781208ba061a9086559e5fb7210e8023c",
+    "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending."
+  },
+  "next": "Acquire authorized exact-SHA test checkout for A/C baseline RED and targeted/full pytest; verify Gemini structured JSON before new queue task. No code, main, private, workflows or schedule changes."
+}
