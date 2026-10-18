@@ -1,0 +1,22 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 13:54",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "ae97cd0c4709f0308016a654f7e15a038a4160b8",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_EXECUTOR",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "A": "BLOCKED_PLATEAU_TEST_EXECUTION; targeted/full NOT_RUN",
+  "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+  "C": "BLOCKED_PLATEAU_EXECUTION; latest durable 10:12 ICT",
+  "workers": "A/B/C enabled, schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "promotion": "BLOCKED",
+  "roadmap_update": "REJECTED_SAFETY_CHECK",
+  "next": "Restore exact-SHA A/C deterministic tests, verify Gemini structured JSON, then consider one bounded task."
+}
