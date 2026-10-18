@@ -1,0 +1,36 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 08:54",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "c7ba730febf99688be8ada15a87dde0a0f69a733",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authority": "worker-control"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_EXECUTOR",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "targeted_and_full_pytest": "required_before_commit",
+    "executor_run": 37907159402,
+    "independent_pytest": "NOT_RUN"
+  },
+  "workers": {
+    "A": "BLOCKED_EXACT_SHA_INTEGRATION_TEST_EXECUTION",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_EXACT_SHA_QUALITY_TEST_EXECUTION",
+    "all_enabled": true,
+    "schedules_unchanged": true
+  },
+  "gemini_json": "UNVERIFIED",
+  "latest_scheduled_executor_run": 39082836243,
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "roadmap_update": {
+    "status": "REJECTED",
+    "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending."
+  },
+  "next": "Restore exact-SHA A/C pytest execution and verify Gemini JSON reliability; do not queue until safe.",
+  "protected_changes": 0
+}
