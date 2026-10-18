@@ -1,0 +1,61 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 18:50",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "f382aa927db5c0c166a72f40684cc986f437a626",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authority": "worker-control; pending directory absent 404"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_EXECUTOR",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result_status": "PASS",
+    "executor_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "targeted_and_full_capital_flow_pytest_required": true,
+    "independent_A_C_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": {
+      "status": "BLOCKED_EXACT_SHA_EXECUTION",
+      "report": "A-20261018-378cffe-exact-execution-blocked-1757.json"
+    },
+    "B": {
+      "status": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+      "report": "B-20261018-378cffe-source-plateau-1826.json"
+    },
+    "C": {
+      "status": "BLOCKED_EXACT_SHA_EXECUTION",
+      "report": "C-20261018-378cffe-blocked-1819.json"
+    }
+  },
+  "workers": {
+    "A": "ENABLED",
+    "B": "ENABLED",
+    "C": "ENABLED",
+    "schedules": "UNCHANGED"
+  },
+  "executor": {
+    "last_scheduled_run_id": 39115562925,
+    "last_scheduled_conclusion": "success",
+    "head_advanced": false,
+    "structured_json_reliability": "UNVERIFIED",
+    "new_tasks": 0
+  },
+  "roadmap_write": {
+    "status": "REJECTED_BY_SAFETY_CHECKS",
+    "path": "automation/supervisor_roadmap.md",
+    "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending."
+  },
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED_NO_FOUR_WAY_UNQUALIFIED_PLATEAU",
+  "next": "Restore exact-SHA A/C deterministic pytest host and verify Gemini structured-JSON reliability before narrow queued task; do not promote or rotate."
+}
