@@ -1,5 +1,16 @@
 # Anata Worker Lab Supervisor Roadmap
 
+## Supervisor exact-state refresh — 2026-10-18 09:52 ICT (02:52 UTC)
+
+- **Public Specialist:** `anata-local-hardening` exact HEAD `378cffee64e9933b28ed9a40b936724db3beb09e` (unchanged since Oct 9). Latest parent-to-HEAD diff: only `part2/capital_flow/normalization.py` and `part2/capital_flow/tests/test_contracts_normalization.py`; public-branch automation/control contamination is inert.
+- **Authoritative control:** `worker-control` observed HEAD `5e5ade3a32ef3fdb55996e2a0aeec00b569576c4` before this write. Direct queue enumeration: pending directory 404 = **0 pending**; **16 done / 16 failed**. No pending task or missed immediate push-trigger currently. Last queue push run `38034687421` failed Oct 10. Gemini structured-JSON reliability **UNVERIFIED**; no new task enqueued.
+- **Validation:** exact public SHA **PASS via bounded done-task alternative**, `automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json` (`executor_result.status=PASS`, `commit_sha` matches current HEAD). Its task required targeted normalization and full Capital Flow pytest before commit; linked GitHub executor run `37907159402` completed successfully. Independent exact-SHA A/C regression pytest **NOT_RUN**. New unvalidated public HEAD voids this proof and all stale verdicts.
+- **A integration/completeness:** `A-20261018-378cffe-baseline-red-executor-gate-0857.json` = **BLOCKED_PLATEAU_BASELINE_RED_EXECUTION_GATE**. Missing exact-SHA checkout and regression test; baseline RED must precede Gemini fix, then targeted/full GREEN. **B source breadth:** `B-20261018-378cffe-source-plateau-0927.json` = **BLOCKED_SOURCE_ADMISSION_PLATEAU**, no qualified independent PIT/non-overlap BTC/ETH source. **C quality:** `C-20261018-378cffe-blocked-0910.json` = **BLOCKED_PLATEAU_EXECUTION**; string-'false' context_only regression unverified end-to-end; exact checkout unavailable. These are not unqualified promotion PLATEAU.
+- **Worker health:** A/B/C enabled, original hourly schedules intact, latest runs ~09:00/09:27/09:11 ICT. Private `anata-local-hardening` HEAD `6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb`, read-only.
+- **Independent Supervisor CONTINUE; PROMOTION BLOCKED:** no same-SHA four-way unqualified PLATEAU. No promotion/rotation. Eventual promotion only vetted `part2/**` and `specialist_evidence/**`; exclude automation, .github, controls/status, secrets, prediction/API, Telegram, MT5, broker, execution.
+- **Next:** authorize bounded exact-SHA A/C test execution (baseline RED, then GREEN), verify Gemini structured-JSON mitigation before any new narrow task, and check immediate push-trigger on any future queue write. Never touch either main, Specialist code, private code, or schedules.
+
+
 ## Supervisor exact-state refresh — 2026-10-17 14:54 ICT (07:54 UTC)
 
 - **Public Specialist:** `anata-local-hardening` exact HEAD `378cffee64e9933b28ed9a40b936724db3beb09e` unchanged since Oct 9; latest parent diff modifies only `part2/capital_flow/normalization.py` and `part2/capital_flow/tests/test_contracts_normalization.py`. Ignore inert public-branch queue/control contamination.
