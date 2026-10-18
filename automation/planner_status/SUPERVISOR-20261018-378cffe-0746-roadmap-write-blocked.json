@@ -1,0 +1,49 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-18 07:46",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "dc2caf27b8f224f734e9877818cfe74430c7c700",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "basis": "worker-control direct directory listing; pending 404"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "independent_pytest": "NOT_RUN"
+  },
+  "workers": {
+    "A": "BLOCKED_PLATEAU_NO_EXECUTABLE_INTEGRATION_PROOF",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_PLATEAU_EXECUTION",
+    "all_enabled": true,
+    "schedules_unchanged": true
+  },
+  "executor": {
+    "last_push_run": "38034687421 FAILED 2026-10-10",
+    "last_scheduled_run": "39082836243 PASS 2026-10-18 07:27 ICT; no Specialist HEAD advance",
+    "structured_json": "UNVERIFIED"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "write": "BLOCKED_BY_SAFETY_CHECKS",
+    "latest_existing_refresh": "2026-10-17 14:54 ICT"
+  },
+  "independent_verdict": "CONTINUE",
+  "promotion": "BLOCKED_NO_UNQUALIFIED_FOUR_WAY_PLATEAU",
+  "next": "Restore exact-SHA A/C pytest execution; verify Gemini structured JSON; reattempt roadmap update when allowed.",
+  "changes": {
+    "specialist": 0,
+    "private": 0,
+    "main": 0,
+    "schedules": 0,
+    "queued": 0
+  }
+}
