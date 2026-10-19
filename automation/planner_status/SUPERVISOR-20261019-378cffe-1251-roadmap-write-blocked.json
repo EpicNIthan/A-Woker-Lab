@@ -1,0 +1,57 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-19 12:51",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "b9769d93189bbd6758ec41545fbe40aea695985e",
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "pending_dir": "404"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_EXECUTOR_DONE",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_run": 37907159402,
+    "targeted_pytest": "required_before_commit",
+    "full_capital_flow_pytest": "required_before_commit",
+    "new_independent_a_c_pytest": "NOT_RUN"
+  },
+  "workers": {
+    "A": {
+      "status": "BLOCKED_PLATEAU_EXACT_SHA_EXECUTION",
+      "report": "A-20261019-378cffe-host-recovery-gate-1200-min.json"
+    },
+    "B": {
+      "status": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+      "report": "B-20261019-378cffe-source-plateau-1226.json"
+    },
+    "C": {
+      "status": "BLOCKED_PLATEAU_EXECUTION",
+      "report": "C-20261019-378cffe-blocked-1110.json"
+    },
+    "enabled": [
+      "A",
+      "B",
+      "C"
+    ],
+    "schedules_changed": false
+  },
+  "gemini": {
+    "latest_scheduled_run": 39187384344,
+    "latest_scheduled_conclusion": "success_no_specialist_advance",
+    "structured_json_reliability": "UNVERIFIED"
+  },
+  "supervisor_verdict": "CONTINUE",
+  "promotion": "BLOCKED_NO_UNQUALIFIED_FOUR_WAY_PLATEAU",
+  "roadmap_update": "REJECTED_REPOSITORY_SAFETY_CHECKS",
+  "next": "Restore authorized exact-SHA A/C deterministic pytest execution; verify Gemini JSON reliability before queueing; keep main/private/protected paths untouched."
+}
