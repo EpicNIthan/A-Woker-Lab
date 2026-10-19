@@ -1,0 +1,25 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-20 00:53",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "3990f98faab0407c0b330b7491c6ab40c8398afc",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "A": "BLOCKED exact-SHA A pytest not run",
+  "B": "SOURCE_ADMISSION_PLATEAU no qualifying source",
+  "C": "BLOCKED exact-SHA C pytest not run",
+  "workers": "A/B/C enabled schedules unchanged",
+  "gemini_structured_json": "UNVERIFIED",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "next": "Restore exact-SHA A/C test checkout and verify Gemini JSON mitigation.",
+  "roadmap_write": "SAFETY_BLOCKED",
+  "changed_specialist": false,
+  "changed_private": false,
+  "changed_main": false
+}
