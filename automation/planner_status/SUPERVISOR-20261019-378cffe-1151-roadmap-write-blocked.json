@@ -1,0 +1,24 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-19 11:51",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "c14b4b9f233562ac9df712ca674f2a39850944af",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "validation": "PASS exact SHA via bounded done-task; independent A/C pytest NOT_RUN",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU exact checkout absent, generation regression unexecuted",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU no qualified source",
+    "C": "BLOCKED_PLATEAU_EXECUTION context_only string-false regression unexecuted"
+  },
+  "workers": "A/B/C enabled hourly unchanged",
+  "gemini_structured_json": "UNVERIFIED",
+  "promotion": "BLOCKED no four-way unqualified PLATEAU",
+  "roadmap_update": "REJECTED repository-write safety checks",
+  "next": "Restore disposable exact-SHA pytest for A/C; prove Gemini structured JSON reliability before one narrow task; never promote non-allowlisted paths",
+  "protected_changes": 0
+}
