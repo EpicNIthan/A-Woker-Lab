@@ -1,0 +1,26 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-19 08:50",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "0d8c688bffa4422b95958e1f815af2ae0e5572e6",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control direct listings; pending 404"
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_EXECUTOR_DONE_TASK",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "A": "BLOCKED_PLATEAU_EXACT_SHA_TEST_HOST_0758",
+  "B": "SOURCE_ADMISSION_PLATEAU_0827",
+  "C": "BLOCKED_PLATEAU_EXECUTION_LAST_DURABLE_0314",
+  "workers": "A_B_C_ENABLED_HOURLY_UNCHANGED",
+  "gemini_json": "UNVERIFIED",
+  "latest_executor": "39177152496 schedule success 06:35 ICT, no code advance",
+  "promotion": "BLOCKED_NO_FOUR_WAY_UNQUALIFIED_PLATEAU",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECK",
+  "next": "Restore A/C exact-SHA targeted and full pytest; verify Gemini JSON; require C verified durable report",
+  "code_changes": 0,
+  "queued_tasks": 0
+}
