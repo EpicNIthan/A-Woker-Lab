@@ -1,0 +1,35 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-20 01:53",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_observed_sha": "2ceb1213815fc4d9328e8bfaf0521f925baf2ef3",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authoritative_branch": "worker-control"
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_EXECUTOR_DONE_TASK",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "proof_run": 37907159402,
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_EXACT_SHA_TEST_HOST; 01:01 ICT; independent pytest NOT_RUN",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU; 00:30 ICT; no qualifying independent PIT source",
+    "C": "BLOCKED_QUALITY_TEST_HOST; 01:15 ICT; context_only string-false regression NOT_RUN"
+  },
+  "workers": "A/B/C enabled; schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "last_executor_run": 39271752888,
+  "roadmap_update": "BLOCKED_BY_REPOSITORY_WRITE_SAFETY_CHECKS",
+  "decision": "CONTINUE; PROMOTION_BLOCKED; NO_ROTATION",
+  "next": "Restore authorized disposable exact-SHA A/C test host; run deterministic RED/targeted/full Capital Flow pytest; verify Gemini structured-JSON mitigation before any new task.",
+  "changed_specialist_code": false,
+  "changed_private_code": false,
+  "changed_main": false,
+  "tasks_queued": 0
+}
