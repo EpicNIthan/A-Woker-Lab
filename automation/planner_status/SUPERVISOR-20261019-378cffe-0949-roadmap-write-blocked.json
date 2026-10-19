@@ -1,0 +1,25 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-19 09:49",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "91a7ed00488f3177ce5b944cd34cedcc3eff1827",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_EXECUTOR_DONE",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "A": "BLOCKED_PLATEAU_EXACT_SHA_TEST_HOST at 08:56 ICT",
+  "B": "SOURCE_ADMISSION_PLATEAU at 08:27 ICT",
+  "C": "BLOCKED_PLATEAU_EXECUTION at 09:19 ICT; NEW VERIFIED DURABLE REPORT",
+  "workers": "A/B/C enabled; schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "latest_executor": "39187384344 success scheduled 08:53 ICT, no Specialist HEAD advance",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED_NO_FOUR_WAY_PLATEAU",
+  "roadmap_write": "SAFETY_REJECTED",
+  "next": "Authorized exact-SHA disposable test checkout for A/C targeted and full Capital Flow pytest; verify Gemini JSON reliability before enqueue",
+  "protected_changes": 0
+}
