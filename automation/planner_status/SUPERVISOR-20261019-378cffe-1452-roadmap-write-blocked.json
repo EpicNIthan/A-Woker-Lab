@@ -1,0 +1,51 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-19 14:52",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "a0ed10b0443fbf83bea221b1abb1be4472e5cc83",
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authoritative_branch": "worker-control"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "task": "C-20261009-same-revision-conflict-1547-01.json",
+    "workflow_run": 37907159402,
+    "matching_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_a_c_regressions": "NOT_RUN"
+  },
+  "workers": {
+    "A": "BLOCKED_PLATEAU; latest 14:07; exact-SHA checkout absent and two-writer test unexecuted",
+    "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU; latest 12:26; no qualified independent first-party PIT source",
+    "C": "BLOCKED_PLATEAU_EXECUTION; latest 13:15; context_only string false regression unexecuted",
+    "enabled": true,
+    "schedules_unchanged": true
+  },
+  "gemini": {
+    "latest_scheduled_run": 39214715431,
+    "started_ict": "2026-10-19 14:14",
+    "conclusion": "success",
+    "public_head_advanced": false,
+    "structured_json": "UNVERIFIED"
+  },
+  "promotion": "BLOCKED_NO_FOUR_WAY_UNQUALIFIED_PLATEAU",
+  "supervisor_verdict": "CONTINUE",
+  "roadmap_write": "REJECTED_BY_REPOSITORY_WRITE_SAFETY",
+  "actions": {
+    "new_tasks": 0,
+    "specialist_code_changes": 0,
+    "private_changes": 0,
+    "main_changes": 0,
+    "schedule_changes": 0
+  },
+  "next": "Restore authorized disposable exact-SHA test host and execute A/C targeted and full Capital Flow pytest; verify Gemini structured-JSON mitigation before any new task."
+}
