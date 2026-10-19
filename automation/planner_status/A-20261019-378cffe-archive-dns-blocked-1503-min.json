@@ -1,0 +1,42 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-19 15:03",
+  "verdict": "BLOCKED_PLATEAU_EXACT_SHA_EXECUTION",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "7775d18cbd3f5e3517ed9d307748e77f011edd28",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA; A_TARGETED_NOT_RUN; A_FULL_NOT_RUN",
+  "source_blobs": {
+    "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+  },
+  "pinned_two_writer_spec": "A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+  "decision": "No speculative code/test changes; no-network regression frozen until exact-SHA test execution. New archive delivery attempt failed at DNS; do not retry clone/archive repeatedly.",
+  "attempt": {
+    "operation": "urllib.request.urlopen",
+    "url": "https://codeload.github.com/EpicNIthan/A-Woker-Lab/zip/378cffee64e9933b28ed9a40b936724db3beb09e",
+    "verbatim": "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>",
+    "local_checkout": "/mnt/data/A-Woker-Lab ABSENT",
+    "pytest_version": "9.0.2",
+    "tests_executed": 0
+  },
+  "next": "Supply an authorized disposable exact-SHA checkout or downloadable archive through a network-enabled runner; execute pinned two-writer baseline RED then Gemini-only targeted/full GREEN after structured-JSON reliability proof.",
+  "B": "BLOCKED_SOURCE_ADMISSION_PLATEAU",
+  "C": "BLOCKED_PLATEAU_EXECUTION",
+  "supervisor": "CONTINUE",
+  "gemini_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED",
+  "protected_changes": 0,
+  "schedules_changed": false
+}
