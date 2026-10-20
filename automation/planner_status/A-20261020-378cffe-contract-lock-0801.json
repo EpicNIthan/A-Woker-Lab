@@ -1,0 +1,49 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-20T08:01:00+07:00",
+  "verdict": "BLOCKED_PLATEAU_TEST_HOST",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "c74369680252255a9ac10bed0004853d97851067",
+  "recent_public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "pending_dir": "404",
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA; A_GENERATION_TEST_NOT_RUN",
+  "latest": {
+    "A": "A-20261020-378cffe-test-only-gate-0701-min.json",
+    "B": "B-20261020-378cffe-source-plateau-0726.json",
+    "C": "C-20261020-378cffe-blocked-0715.json",
+    "supervisor": "SUPERVISOR-20261020-378cffe-0749-roadmap-write-blocked.json"
+  },
+  "finding": "Pinned two-writer test contract requires B.join before release_A. This rejects a correct transaction-lock fix: B legitimately waits for A, so the test deadlocks/times out. Separate deterministic current-SHA baseline RED from lock-compatible post-fix GREEN; never require B to finish while A is paused.",
+  "pinned_blobs": {
+    "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "no_network_contract": "Preseed one observation. Baseline RED on pinned unmodified SHA: pause A after latest.json; finish B; release A in finally; mixed as_of_ms expected. Post-fix GREEN: pause A; start B; confirm B thread entered run_once; release A in finally WITHOUT waiting for B.join; join both with timeouts; assert all three final output as_of_ms equal B, JSONL unchanged, zero append. Require a separately controlled contention checkpoint so an unscheduled B cannot create false GREEN.",
+  "commands": [
+    "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "blocker": {
+    "attempt": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit": 128,
+    "error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "missing_test": "part2/capital_flow/tests/test_runner_output_generation.py (public branch 404)"
+  },
+  "recovery": "Obtain authorized disposable exact-SHA pytest host; implement test only via Gemini after structured-JSON reliability proof, or use authorized independent test-only host to establish baseline RED; retain targeted/full pytest logs.",
+  "tests_executed": 0,
+  "gemini_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED",
+  "protected_changes": 0
+}
