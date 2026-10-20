@@ -1,0 +1,24 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-20T22:45:12+07:00",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_head": "640240342f26033ad792991984c3d1925796c420",
+  "private_head": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "EXACT_SHA_BOUNDED_DONE_PASS",
+  "A": "BLOCKED_PLATEAU; exact-SHA two-writer regression NOT_RUN",
+  "B": "SOURCE_ADMISSION_PLATEAU; no qualified source",
+  "C": "BLOCKED; string-false context_only regression NOT_RUN",
+  "workers": "A/B/C enabled; schedules unchanged",
+  "gemini_json": "UNVERIFIED",
+  "last_executor": "39427256322 SUCCESS scheduled no-op; last push failure 38034687421 malformed JSON",
+  "promotion": "BLOCKED; no four-way unqualified PLATEAU",
+  "roadmap_update": "BLOCKED_BY_REPOSITORY_WRITE_SAFETY",
+  "next": "Obtain exact-SHA disposable test host, run A/C deterministic regressions and full Capital Flow pytest, verify Gemini JSON mitigation.",
+  "tasks_queued": 0,
+  "protected_changes": 0
+}
