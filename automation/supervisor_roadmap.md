@@ -1,5 +1,14 @@
 # Anata Worker Lab Supervisor Roadmap
 
+## Supervisor exact-state refresh — 2026-10-20 17:46 ICT (10:46 UTC)
+
+- **Public Specialist** `anata-local-hardening`: exact HEAD `378cffee64e9933b28ed9a40b936724db3beb09e`, unchanged since Oct 9. Latest commit changes only `part2/capital_flow/normalization.py` and `part2/capital_flow/tests/test_contracts_normalization.py`; public-branch control/queue contamination inert.
+- **Authoritative control** `worker-control`: observed HEAD `3a24702ed97bbc619725ea70e94f3c638fc3839d`; pending directory absent/404 = **0 pending**, **16 done / 16 failed**. No task to audit, no missing push-trigger currently. Latest scheduled Gemini executor run `39388353796` succeeded at 14:43 ICT without Specialist HEAD advance; structured-JSON reliability **UNVERIFIED**.
+- **Exact-SHA validation**: PASS by bounded done-task `C-20261009-same-revision-conflict-1547-01.json` (`executor_result.status=PASS`, `commit_sha` matches HEAD, task mandates targeted normalization pytest and full Capital Flow pytest before commit). This is not independent A/C regression test proof; later unvalidated HEAD voids it.
+- **A integration**: `A-20261020-378cffe-execution-proof-1700.json` = **BLOCKED_PLATEAU_TEST_EXECUTION**, missing disposable exact-SHA test checkout; two-writer baseline RED and targeted/full pytest NOT_RUN. **B source**: `B-20261020-378cffe-source-plateau-1728.json` = **BLOCKED_SOURCE_ADMISSION_PLATEAU**, no qualifying independent PIT/non-overlap source. **C quality**: `C-20261020-378cffe-blocked-1616.json` = **BLOCKED**, string-'false' context_only regression and full pytest NOT_RUN. These are not unqualified same-SHA promotion PLATEAU.
+- **Worker health**: A/B/C enabled, hourly schedules unchanged; latest A 17:02, B 17:29, C 17:20 ICT. Private `anata-local-hardening` HEAD `6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb`, read-only.
+- **Independent Supervisor CONTINUE; PROMOTION BLOCKED**: four-way same-SHA PLATEAU consensus absent. No task queued, promotion or rotation. Next: obtain disposable exact-SHA pytest host, execute A/C regressions with logs, and verify Gemini structured-JSON mitigation before any task. Only reviewed `part2/**` and `specialist_evidence/**` eligible for eventual promotion; never `automation/**`, `.github/**`, controls, secrets, prediction/API, journals, Telegram, MT5, broker or execution. Never touch either main or any schedules.
+
 ## Supervisor exact-state refresh — 2026-10-18 21:50 ICT (14:50 UTC)
 
 - **Public Specialist:** `anata-local-hardening` exact HEAD `378cffee64e9933b28ed9a40b936724db3beb09e`, unchanged since Oct 9; latest commit only `part2/capital_flow/normalization.py` and `part2/capital_flow/tests/test_contracts_normalization.py`. Ignore inert automation/queue contamination on public code branch.
