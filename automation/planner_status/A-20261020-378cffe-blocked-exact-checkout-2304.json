@@ -1,0 +1,49 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "at_ict": "2026-10-20T23:04:43+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "58dd90cf82b1a94867891008607e63f38d3455dd",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "EXACT_SHA_BOUNDED_DONE_PASS; INDEPENDENT_A_PYTEST_NOT_RUN",
+  "latest_durable": {
+    "A": "A-20261020-378cffe-proof-gate-2203-min.json",
+    "B": "B-20261020-378cffe-source-plateau-2233.json",
+    "C": "C-20261020-378cffe-blocked-2210.json",
+    "supervisor": "SUPERVISOR-20261020-378cffe-2245-roadmap-blocked.json"
+  },
+  "pinned_sources": {
+    "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "output": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "test_contract": "Retain existing no-network two-successful-writer interleave: pause A after latest.json write; complete B; resume A; assert latest/audit/anata as_of_ms identical; sequential C control; archive one row. Proposed test path absent at exact SHA.",
+  "decision": "A integration remains unverified: runner.py lines 142-144 publish three output files separately. Do not request Gemini fix without observed baseline RED and exact-SHA targeted/full pytest evidence. Prioritize authorized disposable test-only checkout, not new speculative source or DNS retries.",
+  "attempt": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory"
+  },
+  "pytest_installed": "pytest 9.0.2",
+  "targeted_pytest": "NOT_RUN",
+  "full_capital_flow_pytest": "NOT_RUN",
+  "next": "Provide authorized disposable checkout pinned to exact public SHA; execute deterministic baseline RED, targeted pytest and full python -m pytest -q part2/capital_flow/tests with logs; preserve source branch and report GREEN only after authorized fix.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "BLOCKED_QUALITY_REGRESSION_NOT_RUN",
+  "supervisor": "CONTINUE",
+  "gemini_json": "UNVERIFIED",
+  "tasks_queued": 0,
+  "promotion": "BLOCKED",
+  "protected_changes": 0,
+  "schedule_changes": 0
+}
