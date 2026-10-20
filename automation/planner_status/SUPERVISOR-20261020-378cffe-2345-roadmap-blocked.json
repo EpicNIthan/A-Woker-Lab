@@ -1,0 +1,24 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-20T23:45:34+07:00",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_head": "e34ba38c8d0f4f742381ca1a1646cf77d5551bfd",
+  "private_head": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "EXACT_SHA_BOUNDED_DONE_PASS",
+  "A": "BLOCKED_PLATEAU_NO_PYTEST",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "BLOCKED_NO_REGRESSION_PYTEST",
+  "supervisor": "CONTINUE_PROMOTION_BLOCKED",
+  "gemini_json": "UNVERIFIED",
+  "latest_executor_run": 39427256322,
+  "roadmap_update": "REJECTED_BY_REPOSITORY_SAFETY_CHECK",
+  "next": "Obtain authorized disposable exact-SHA checkout; run A two-writer and C string-false context-only regressions and full Capital Flow pytest; prove Gemini JSON reliability.",
+  "promotion": "BLOCKED",
+  "protected_changes": 0,
+  "schedule_changes": 0
+}
