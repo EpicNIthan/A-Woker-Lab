@@ -1,0 +1,50 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-21T21:47:10+07:00",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "0d02d869f18b0ccd4513c0419e59886628869034",
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authoritative_branch": "worker-control"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "exact_sha_action_runs": 0,
+    "exact_sha_checks": 0,
+    "independent_A_C_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "PLATEAU",
+    "C": "BLOCKED",
+    "supervisor": "CONTINUE"
+  },
+  "latest_reports": {
+    "A": "A-20261021-378cffe-exact-checkout-blocked-2104.json",
+    "B": "B-20261021-378cffe-2128-min.json",
+    "C": "C-20261021-378cffe-blocked-2112.json"
+  },
+  "workers_enabled": true,
+  "gemini_last_run": {
+    "id": 39581420605,
+    "conclusion": "success",
+    "scheduled": true
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "promotion": "BLOCKED",
+  "tasks_enqueued": 0,
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECK",
+  "roadmap_error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending.",
+  "next": "Provision authorized disposable exact-SHA test checkout for A two-writer baseline RED and C string-false context-only regression; run targeted and full Capital Flow pytest with logs. Prove Gemini structured-JSON reliability before enqueue.",
+  "protected_changes": 0
+}
