@@ -1,0 +1,60 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "time_ict": "2026-10-22T06:46:24+07:00",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "d294d6f1cfdf036d681af0cef2197cc1f86ad04f",
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authoritative_branch": "worker-control"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_run_id": 37907159402,
+    "independent_A_C_pytest": "NOT_RUN"
+  },
+  "A": {
+    "at_ict": "06:02",
+    "verdict": "BLOCKED_PLATEAU",
+    "blocker": "two-writer generation baseline RED and full pytest unexecuted"
+  },
+  "B": {
+    "at_ict": "06:27",
+    "verdict": "SOURCE_ADMISSION_PLATEAU",
+    "qualified_sources": 0
+  },
+  "C": {
+    "at_ict": "06:11",
+    "verdict": "BLOCKED",
+    "blocker": "context_only string-false regression unexecuted"
+  },
+  "workers": "A/B/C enabled; schedules unchanged",
+  "latest_executor": {
+    "run_id": 39688113797,
+    "conclusion": "success",
+    "at_ict": "05:39",
+    "structured_json_reliability": "UNVERIFIED"
+  },
+  "test_attempt": {
+    "action": "disposable read-only git clone --branch anata-local-hardening",
+    "result": "DNS_ERROR",
+    "error": "Could not resolve host: github.com",
+    "tests_run": 0
+  },
+  "roadmap_write": {
+    "attempted": true,
+    "result": "SAFETY_BLOCKED"
+  },
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "next": "Execute A/C exact-SHA deterministic regression plus full Capital Flow pytest in authorized test checkout; verify Gemini structured JSON mitigation before enqueue. No promotion."
+}
