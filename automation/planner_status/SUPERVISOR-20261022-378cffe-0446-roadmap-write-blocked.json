@@ -1,0 +1,42 @@
+{
+  "schema": "anata-supervisor-v1",
+  "at_ict": "2026-10-22T04:46:00+07:00",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_head": "55a066c065d5491b95eaf51ef46adfb4c5ab1fa0",
+  "private_head": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authoritative_branch": "worker-control"
+  },
+  "validation": {
+    "status": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "targeted_and_full_pytest_required": true,
+    "independent_A_C_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU; two-writer exact-SHA baseline RED and full pytest not run",
+    "B": "SOURCE_ADMISSION_PLATEAU; no qualifying PIT-safe first-party source",
+    "C": "QUALITY_BLOCKED; string-false context_only regression not run",
+    "supervisor": "CONTINUE"
+  },
+  "last_planner_reports": {
+    "A": "A-20261022-378cffe-execution-gate-0304-min.json",
+    "B": "B-20261022-378cffe-0432-plateau.json",
+    "C": "C-20261022-378cffe-blocked-0412.json"
+  },
+  "workers": "A/B/C enabled, schedules unchanged",
+  "executor": {
+    "latest_run": 39660850247,
+    "latest_result": "SUCCESS_NO_NEW_PUBLIC_COMMIT",
+    "structured_json": "UNVERIFIED",
+    "last_failed_push_run": 38034687421
+  },
+  "roadmap_update": "REJECTED_BY_REPOSITORY_SAFETY_CHECKS",
+  "promotion": "BLOCKED",
+  "tasks_enqueued": 0,
+  "next": "Obtain authorized disposable exact-SHA checkout; run A baseline RED and C context_only string-false regression, targeted/full pytest; verify Gemini JSON mitigation.",
+  "changes": "control status only; no main, private, Specialist, queue, or schedule modifications"
+}
