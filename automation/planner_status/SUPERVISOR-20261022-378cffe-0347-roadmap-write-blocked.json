@@ -1,0 +1,25 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-22T03:47:46+07:00",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "d53555f97a7be1ae7ac6ddc518d95b1d1a097ef0",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_TESTS_NOT_RUN",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_TESTS_NOT_RUN"
+  },
+  "gemini_json": "UNVERIFIED",
+  "last_executor_run": 39660850247,
+  "workers_enabled": true,
+  "decision": "CONTINUE_PROMOTION_BLOCKED",
+  "roadmap_update": "REJECTED_BY_REPOSITORY_WRITE_SAFETY",
+  "next": "Execute exact-SHA A/C regressions in authorized disposable checkout and verify Gemini JSON reliability; no promotion or enqueue.",
+  "protected_changes": false
+}
