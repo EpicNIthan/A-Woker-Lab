@@ -1,0 +1,22 @@
+{
+  "planner": "C",
+  "timestamp_ict": "2026-10-21T22:16:39+07:00",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "public_branch": "anata-local-hardening",
+  "base_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "quality": "BLOCKED: handoff.py:31 and runner.py:60 apply bool() to provenance.context_only; string 'false' evaluates true and may invert scoring/context role.",
+  "tests": {
+    "targeted": "NOT_RUN_INDEPENDENTLY",
+    "full_capital_flow": "NOT_RUN_INDEPENDENTLY",
+    "prior_bounded_executor": "REPORTED_PASS_NOT_INDEPENDENT_C_VALIDATION"
+  },
+  "blocker": "No authorized disposable exact-SHA test checkout; deterministic string-'false' end-to-end regression not executed.",
+  "recovery": "Acquire authorized disposable checkout pinned to base_sha; run offline targeted test_v1_handoff.py regression and python -m pytest -q part2/capital_flow/tests; retain logs.",
+  "promotion": "BLOCKED",
+  "tasks_enqueued": 0
+}
