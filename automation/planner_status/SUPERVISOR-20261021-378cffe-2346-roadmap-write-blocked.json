@@ -1,0 +1,24 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-21T23:46:18+07:00",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_head_prewrite": "f89db6e9c32783f4948164d7665be009fe1c4224",
+  "private_head": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_EXECUTOR",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "A": "BLOCKED_PLATEAU exact-SHA two-writer integration regression NOT_RUN; latest 23:01 ICT",
+  "B": "SOURCE_ADMISSION_PLATEAU no qualified new source; latest 23:31 ICT",
+  "C": "BLOCKED context_only string-false regression NOT_RUN; latest 22:16 ICT",
+  "workers": "A/B/C enabled, original schedules",
+  "executor": "Latest scheduled 39622636143 success no-op; Gemini structured-JSON reliability UNVERIFIED",
+  "supervisor": "CONTINUE; PROMOTION BLOCKED; no four-way unqualified PLATEAU",
+  "roadmap_write": "REJECTED: This tool call was blocked by OpenAI's safety checks. Please double check what you are sending.",
+  "next": "Authorized disposable exact-SHA test checkout; A two-writer baseline RED, C context-only regression, targeted/full Capital Flow pytest; verify JSON mitigation before queue.",
+  "writes": "fallback status only; no public/private Specialist or main changes",
+  "tasks_enqueued": 0
+}
