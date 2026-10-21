@@ -1,0 +1,23 @@
+{
+  "supervisor": "2026-10-22T01:53:43+07:00",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_head": "1b47e5c7b77efcd5983e1838ada437e76e0dc975",
+  "private_head": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_EXACT_SHA_BOUNDED_DONE_TASK",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_TEST_NOT_RUN",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_CONTEXT_ONLY_TEST_NOT_RUN"
+  },
+  "gemini_json": "UNVERIFIED",
+  "workers": "A_B_C_ENABLED_UNCHANGED",
+  "promotion": "BLOCKED_NO_CONSENSUS",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "next": "Obtain exact-SHA A/C offline regression evidence and verify Gemini structured JSON reliability",
+  "no_code_or_schedule_changes": true
+}
