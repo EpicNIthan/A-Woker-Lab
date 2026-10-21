@@ -1,0 +1,20 @@
+{
+  "planner": "C",
+  "kind": "quality_audit_only",
+  "timestamp_ict": "2026-10-21T16:14:36+07:00",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_observed_sha": "60fa5221ed3b709d44294a57f260b0e7ca20ec64",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "finding": "Potential context_only role inversion: bool('false') is True; regression not executed.",
+  "blocker": "No authorized disposable exact-SHA test checkout confirmed.",
+  "targeted_pytest": "NOT_RUN",
+  "full_capital_flow_pytest": "NOT_RUN",
+  "recovery": "Obtain authorized disposable exact-SHA checkout; run deterministic no-network string-'false' role regression and python -m pytest -q part2/capital_flow/tests; retain logs.",
+  "promotion": "BLOCKED",
+  "code_changes": false
+}
