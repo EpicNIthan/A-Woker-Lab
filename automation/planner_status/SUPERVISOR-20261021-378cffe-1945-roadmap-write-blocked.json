@@ -1,0 +1,48 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-21T19:45:08+07:00",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_last_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_head": "56aa463fecea721fdd4b8fd597fe206f9b3a2046",
+  "private_head": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "authoritative_branch": "worker-control"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "independent_A_C_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU, latest durable 17:03 ICT, two-writer tests unexecuted",
+    "B": "SOURCE_ADMISSION_PLATEAU, latest durable 18:29 ICT",
+    "C": "BLOCKED, latest durable 16:14 ICT, context_only regression unexecuted"
+  },
+  "workers_enabled": {
+    "A": true,
+    "B": true,
+    "C": true
+  },
+  "executor": {
+    "latest_run_id": 39581420605,
+    "latest_run": "2026-10-21T17:01:03+07:00",
+    "latest_conclusion": "success_no_pending",
+    "structured_json_reliability": "UNVERIFIED"
+  },
+  "promotion": "BLOCKED",
+  "reason": "A/C unqualified same-SHA PLATEAU and independent Supervisor PLATEAU absent",
+  "roadmap_update": {
+    "attempted": true,
+    "result": "REJECTED_SAFETY_CHECKS"
+  },
+  "next": "Provision authorized disposable exact-SHA test checkout, run A/C targeted and full Capital Flow pytest, verify Gemini structured-JSON reliability",
+  "tasks_enqueued": 0,
+  "protected_changes": 0,
+  "schedules_changed": false
+}
