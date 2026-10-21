@@ -1,0 +1,30 @@
+{
+  "planner": "B",
+  "at_ict": "2026-10-22T05:33:20+07:00",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "27fbfebc7d554a4609361b144f34e28faca6f0a8",
+  "public_diff_paths": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "branch": "worker-control"
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA; independent A/C pytest NOT_RUN",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "lanes": {
+    "A": "BLOCKED",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED",
+    "supervisor": "CONTINUE"
+  },
+  "source_admission": "NO_NEW_QUALIFIED_INDEPENDENT_PIT_SAFE_BTC_ETH_SOURCE",
+  "new_sources": 0,
+  "tasks_enqueued": 0,
+  "gemini_structured_json": "UNVERIFIED",
+  "promotion": "BLOCKED",
+  "next": "Prioritize authorized independent exact-SHA A/C regression tests and Gemini JSON mitigation; do not recycle rejected sources."
+}
