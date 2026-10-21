@@ -1,0 +1,31 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-21T09:02:33+07:00",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_head_observed": "bedff9ecbf8459b5c5165afa5e36d2761eadce10",
+  "private_head": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "validation_proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_EXACT_SHA_TEST_HOST",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_CONTEXT_ONLY_REGRESSION_NOT_RUN",
+    "supervisor": "CONTINUE_PROMOTION_BLOCKED"
+  },
+  "executor": {
+    "latest_run_id": 39519178018,
+    "conclusion": "success",
+    "structured_json": "UNVERIFIED"
+  },
+  "workers": "A/B/C enabled; original schedules",
+  "roadmap_update": "BLOCKED_BY_REPOSITORY_SAFETY",
+  "next": "Authorized exact-SHA A/C regression pytest host; Gemini structured-JSON mitigation evidence before enqueue",
+  "promotion": "BLOCKED",
+  "protected_changes": 0,
+  "schedules_changed": false
+}
