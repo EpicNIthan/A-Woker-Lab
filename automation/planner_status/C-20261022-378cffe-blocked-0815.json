@@ -1,0 +1,26 @@
+{
+  "planner": "C",
+  "kind": "QUALITY_AUDIT_ONLY",
+  "observed_at_ict": "2026-10-22T08:15:35+07:00",
+  "public_branch": "anata-local-hardening",
+  "public_head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_head_observed": "c13f8528f1e0da73ca5000ec73e92bb31ef516fc",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "quality": "Potential role inversion: bool(provenance.context_only) treats string 'false' as true; requires deterministic end-to-end test.",
+  "targeted_pytest": "NOT_RUN",
+  "full_capital_flow_pytest": "NOT_RUN",
+  "blocker": "Authorized disposable exact-SHA checkout not available; independent test evidence absent.",
+  "recovery": "Use authorized disposable checkout at public_head; run no-network string-false handoff regression and python -m pytest -q part2/capital_flow/tests; retain logs.",
+  "promotion": "BLOCKED",
+  "gemini_structured_json": "UNVERIFIED",
+  "new_tasks": 0
+}
