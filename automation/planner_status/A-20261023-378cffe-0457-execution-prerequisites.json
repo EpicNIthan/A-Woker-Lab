@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-23T04:57:14+07:00",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "79e4935d0a0074470207d2486aacb3f2ee9072c5",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "pending_path": "404",
+    "basis": "exact worker-control recursive tree"
+  },
+  "roadmap_blob": "0e9d44225bdfb1b4f043320253b5e37c06acabe7",
+  "latest_durable": {
+    "A": "A-20261023-378cffe-0356-min.json",
+    "B": "B-20261023-378cffe-0434-plateau.json",
+    "C": "C-20261023-378cffe-blocked-0316.json",
+    "Supervisor": "SUPERVISOR-20261023-378cffe-0351-min.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "independent_A_pytest": "NOT_RUN",
+    "exact_sha_actions_runs": 0
+  },
+  "verdict": "BLOCKED_PLATEAU",
+  "decision": "A execution prerequisites are BOTH absent: exact-SHA disposable checkout and proposed two-writer test file. Existing pinned witness-gated contract is planning evidence only; do not infer RED/GREEN, cross-process safety or reader-visible consistency. No further source-only contract iteration.",
+  "pinned_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+  "pinned_blobs": {
+    "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "attempted_operation": "ls -ld /mnt/data/A-Woker-Lab",
+  "attempted_path": "/mnt/data/A-Woker-Lab",
+  "exit_code": 2,
+  "verbatim_error": "ls: cannot access '/mnt/data/A-Woker-Lab': No such file or directory",
+  "test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+  "test_path_state": "ABSENT_AT_PUBLIC_SHA",
+  "targeted_pytest": "NOT_RUN",
+  "full_capital_flow_pytest": "NOT_RUN",
+  "next": "Provision authorized disposable checkout pinned to public SHA, stage witness-gated no-network regression only in disposable test workspace, witness baseline RED, then after separately proven Gemini JSON reliability use Gemini-only narrow repair and capture targeted/full pytest logs and exit codes.",
+  "gemini_json_reliability": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
