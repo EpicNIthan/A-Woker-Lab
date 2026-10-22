@@ -1,0 +1,33 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-22T09:51:36+07:00",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "3a99f8898b860e7f0c31a24845b157846803d322",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "workers": {
+    "A": "BLOCKED_PLATEAU_two_writer_generation_and_nonempty_archive_concurrency_not_run",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_context_only_string_false_regression_not_run",
+    "enabled": "A/B/C all enabled; original schedules unchanged"
+  },
+  "gemini_executor": {
+    "latest_run_id": 39703128449,
+    "latest_conclusion": "success",
+    "structured_json_reliability": "UNVERIFIED"
+  },
+  "roadmap_update": "REJECTED_BY_REPOSITORY_SAFETY_CHECKS",
+  "independent_supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "next": "Run A and C deterministic regressions and full Capital Flow pytest in authorized exact-SHA disposable checkout; separately test nonempty concurrent archive append; verify Gemini JSON mitigation before enqueue",
+  "specialist_code_changed": false,
+  "private_code_changed": false,
+  "main_changed": false,
+  "schedules_changed": false
+}
