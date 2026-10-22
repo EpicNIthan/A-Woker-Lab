@@ -1,0 +1,27 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-22T10:46:55+07:00",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "29c0898b4c5ab1a65079a1915d70f2c838edf5b4",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "counts_from": "B 10:35 ICT durable status; pending direct 404"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_archive_concurrency_pytest_NOT_RUN",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "BLOCKED_context_only_string_false_pytest_NOT_RUN"
+  },
+  "workers": "A/B/C enabled; schedules unchanged",
+  "gemini_structured_json": "UNVERIFIED",
+  "roadmap_update": "REJECTED_BY_SAFETY_CHECKS",
+  "independent_supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "next": "Authorized disposable exact-SHA checkout; A/C deterministic regression and full Capital Flow pytest; verify Gemini structured JSON reliability",
+  "protected_changes": false
+}
