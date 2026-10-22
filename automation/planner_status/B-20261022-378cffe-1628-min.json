@@ -1,0 +1,1 @@
+{"planner":"B","at_ict":"2026-10-22T16:28:06+07:00","public_sha":"378cffee64e9933b28ed9a40b936724db3beb09e","queue":{"pending":0,"done":16,"failed":16},"validation":"PASS_BOUNDED_DONE_TASK_EXACT_SHA","A":"BLOCKED","B":"SOURCE_ADMISSION_PLATEAU","C":"BLOCKED","new_sources":0,"gemini_json":"UNVERIFIED","tasks":0,"promotion":"BLOCKED"}
