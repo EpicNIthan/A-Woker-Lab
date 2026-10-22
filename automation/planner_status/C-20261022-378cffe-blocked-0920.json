@@ -1,0 +1,41 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-22T09:20:00+07:00",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "b68d96b05eb6971534b946686a0fa7d8b1813ea4",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "roadmap_blob": "0e9d44225bdfb1b4f043320253b5e37c06acabe7",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "exact_sha_validation": "PASS_BOUNDED_DONE_TASK",
+  "validation_proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "quality_finding": "handoff._is_context_only and runner._scoring_history apply bool() to provenance.context_only; string 'false' becomes True and may invert scoring/context role. End-to-end regression unexecuted.",
+  "targeted_pytest": "NOT_RUN",
+  "full_capital_flow_pytest": "NOT_RUN",
+  "blocker": "Authorized disposable exact-SHA checkout absent at /mnt/data/A-Woker-Lab, /workspace/A-Woker-Lab, /home/oai/share/A-Woker-Lab; independent no-network regression evidence unavailable.",
+  "recovery": "Use authorized disposable checkout at public_sha; run deterministic string-'false' handoff/scoring regression and python -m pytest -q part2/capital_flow/tests with exit codes/logs. No public Specialist edits by Planner C.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "promotion": "BLOCKED",
+  "tasks_enqueued": 0,
+  "protected_changes": false,
+  "schedules_changed": false
+}
