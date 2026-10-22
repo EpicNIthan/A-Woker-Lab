@@ -1,0 +1,21 @@
+{
+  "at_ict": "2026-10-22T13:47:33+07:00",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "control_prewrite_sha": "2a9d002ae3f81f3929602e20491c494ad05a0216",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16
+  },
+  "validation": "PASS_BOUNDED_EXACT_SHA",
+  "A": "BLOCKED_PLATEAU",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "roadmap_update": "SAFETY_REJECTED",
+  "tests": "NOT_RUN",
+  "executor_json": "UNVERIFIED",
+  "workers": "A_B_C_ENABLED",
+  "next": "Exact-SHA A/C pytest and Gemini JSON reliability proof"
+}
