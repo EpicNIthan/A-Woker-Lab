@@ -1,0 +1,53 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-22T08:04:45+07:00",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "94cb8133f00532ac8db3882fe91642bbba2d98bf",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "pending_directory": "404 absent"
+  },
+  "roadmap_blob": "0e9d44225bdfb1b4f043320253b5e37c06acabe7",
+  "latest_durable": {
+    "A": "A-20261022-378cffe-lock-safe-oracle-0657.json",
+    "B": "B-20261022-378cffe-0733-plateau.json",
+    "C": "C-20261022-378cffe-blocked-0712.json",
+    "supervisor": "SUPERVISOR-20261022-378cffe-0746-roadmap-write-blocked.json"
+  },
+  "validation": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+  "validation_proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+  "source_blobs": {
+    "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "decision": "BLOCKED_PLATEAU: corrected lock-safe two-writer contract is frozen; no further source-only test revisions. Per-file os.replace does not prove three-file atomic snapshot; independent execution proof required. Regression test absent at exact public HEAD.",
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "tests_executed": 0
+  },
+  "exact_sha_actions_runs": 0,
+  "independent_A_pytest": "NOT_RUN",
+  "gemini_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE"
+  },
+  "promotion": "BLOCKED",
+  "next": "Provision authorized disposable exact-SHA checkout; demonstrate baseline RED with observed overtaking, then post-fix targeted and full Capital Flow pytest with captured exit codes/logs. Do not enqueue until Gemini structured JSON reliability proven.",
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
