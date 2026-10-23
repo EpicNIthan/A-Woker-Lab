@@ -1,0 +1,53 @@
+{
+  "schema": "planner-c-quality-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-24T02:12:45+07:00",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "latest_public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "control_prewrite_sha": "fcb7967025956feb28b58485525ef2a9779509ce",
+  "roadmap_blob": "91a2474a6d37a7b53ff09e4578c8f144d996cedb",
+  "latest_reports": {
+    "A": "A-20261024-378cffe-0204-process-boundary-gate.json",
+    "B": "B-20261024-378cffe-0127-min.json",
+    "C": "C-20261024-378cffe-blocked-0114.json",
+    "supervisor": "automation/supervisor_roadmap.md refreshed 2026-10-24 01:53 ICT"
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control recursive tree exact prewrite SHA; pending directory absent"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2
+  },
+  "quality": "QUALITY_BLOCKED",
+  "finding": "handoff.py:31 and runner.py:60 use bool(provenance.context_only); string 'false' is truthy and can invert scoring/context-only role.",
+  "blocker": "Independent deterministic exact-SHA end-to-end regression not witnessed; no authorized disposable checkout established.",
+  "targeted_pytest": "NOT_RUN",
+  "full_capital_flow_pytest": "NOT_RUN",
+  "recovery": "Provision authorized disposable checkout pinned to public_sha; run no-network string-'false' regression in part2/capital_flow/tests/test_v1_handoff.py, targeted pytest and python -m pytest -q part2/capital_flow/tests; preserve stdout/stderr/exit codes.",
+  "A": "BLOCKED_PLATEAU",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
