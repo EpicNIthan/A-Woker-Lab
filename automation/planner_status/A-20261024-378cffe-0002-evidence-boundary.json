@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T00:02:41+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "c53bac8d24e511ccee72dd4f0b413d69c48e0349",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404 direct",
+    "done": 16,
+    "failed": 16,
+    "counts": "direct worker-control contents enumeration"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN"
+  },
+  "latest_durable": {
+    "A": "A-20261023-378cffe-2258-execution-evidence-freeze.json",
+    "B": "B-20261023-378cffe-2335-min.json",
+    "C": "C-20261023-378cffe-blocked-2315.json",
+    "supervisor": "automation/supervisor_roadmap.md refreshed 2026-10-23 23:45 ICT"
+  },
+  "source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "integration_decision": "TEST_COVERAGE_BOUNDARY_AND_EXECUTION_ESCALATION. Exact pinned source: runner.run_once publishes latest/audit/anata JSON sequentially (runner.py lines 139-144); storage.append_observations performs load/seen before append without cross-process synchronization (storage.py lines 49-89). Existing test_providers_replay.py test_archive_is_append_only_and_dedups_identical_observation_id only verifies sequential append calls, NOT simultaneous writers. Pinned corrected two-writer spec (A-20261017...0058) plus tightened B-last oracle (A-20261021...0858) already exist, but test_runner_output_generation.py is absent from the public HEAD. Thus existing sequential PASS or bounded normalization PASS cannot close A concurrency completeness. No genuinely improved new contract; freeze spec churn and escalate executable evidence dependency. Risks are source-derived, not production incidents.",
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "attempted_path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_retry": false
+  },
+  "next": "Provision authorized disposable full checkout at exact public SHA (without repeating DNS clone); stage the existing corrected two-writer and archive/reader regressions, witness baseline RED, then run targeted and python -m pytest -q part2/capital_flow/tests with stdout/stderr and exit codes. Only GitHub-hosted Gemini may edit Specialist code after structured-JSON reliability is proven; no task now.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
