@@ -1,0 +1,44 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-23T22:26:00+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_last_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "1899419a87d131d17f320b81df88cd9e98a4491a",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404 direct",
+    "done": 16,
+    "failed": 16,
+    "proof": "worker-control direct contents enumeration"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "latest_durable": {
+    "A": "A-20261023-378cffe-2200-stale-worker-status-correction.json",
+    "B": "B-20261023-378cffe-2133-min.json",
+    "C": "C-20261023-378cffe-blocked-2218.json",
+    "supervisor": "automation/supervisor_roadmap.md (21:53 ICT)"
+  },
+  "A": "BLOCKED_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "qualified_new_sources": 0,
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "blocker": "No newly evidenced immutable first-party BTC/ETH event/artifact with effective/available/observed PIT clocks, economic non-overlap, correct spot-directional vs context-only role, and deterministic no-network test contract. Do not recycle previously rejected source families.",
+  "next": "Wait for genuinely new source proof; independently resolve A archive and C role-inversion exact-SHA regression gates and verify Gemini structured JSON before any task.",
+  "protected_changes": false,
+  "schedule_changed": false
+}
