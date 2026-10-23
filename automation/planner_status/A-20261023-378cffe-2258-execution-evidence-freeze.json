@@ -1,0 +1,58 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-23T22:58:24+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "be9eadbf0a2ec494e865d00d16ffcc5b8d7126d3",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404 direct",
+    "done": 16,
+    "failed": 16,
+    "counts": "direct worker-control contents enumeration"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_A_pytest": "NOT_RUN"
+  },
+  "latest_durable": {
+    "A": "A-20261023-378cffe-2200-stale-worker-status-correction.json",
+    "B": "B-20261023-378cffe-2226-min.json",
+    "C": "C-20261023-378cffe-blocked-2218.json",
+    "supervisor": "automation/supervisor_roadmap.md refreshed 2026-10-23 22:48 ICT"
+  },
+  "source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "integration_decision": "FREEZE_SOURCE_ONLY_CONTRACTS_AND_PRIORITIZE_EXECUTION_EVIDENCE. Re-read pinned two-writer spec and source blobs: existing lock-compatible/latest-wins two-writer, archive idempotence and supported-reader snapshot contracts already cover distinct A gates. The committed public tree has no test_runner_output_generation.py, and bounded exact-SHA PASS covers prior normalization task, not A concurrency regressions. No genuinely improved runnable contract identified; do not recycle another unexecuted test spec or malformed Gemini task.",
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "attempted_path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN"
+  },
+  "next": "Provision an authorized disposable exact-SHA full repository checkout/test runner without retrying DNS clone. Stage existing no-network A contracts, capture witnessed baseline RED, targeted pytest and full python -m pytest -q part2/capital_flow/tests stdout/stderr/exit codes, plus separate cross-process and supported-reader evidence. Only then reassess A completeness.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
