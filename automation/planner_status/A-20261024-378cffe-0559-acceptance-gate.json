@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T05:59:26+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "924aad4edb31d21dda5ff5359cc08d2488f9a737",
+  "roadmap": "automation/supervisor_roadmap.md (refreshed 2026-10-24 05:51 ICT)",
+  "queue": {
+    "pending": 0,
+    "pending_direct": "GitHub contents 404",
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control recursive tree enumeration; truncated=false"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0459-runner-gate-blocked.json",
+    "B": "B-20261024-378cffe-0534-min.json",
+    "C": "C-20261024-378cffe-blocked-0512.json",
+    "supervisor": "automation/supervisor_roadmap.md 05:51 ICT"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN"
+  },
+  "pinned_contract": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+  "pinned_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03c"
+  },
+  "decision": "ACCEPTANCE-GATE CORRECTION: do not treat the pinned Oct17 two-writer test as complete proof even if GREEN: it only asserts all three final as_of_ms are equal, not that the later B writer wins; it uses threads, and empty archive, so neither cross-process idempotence nor concurrent-reader atomicity is exercised. The stricter Oct21 B-wins oracle is mandatory, plus separate multiprocessing-spawn same-observation append and reader snapshot checks. No genuinely new source-only test specification is justified. Runtime has pytest 9.0.2, so the execution blocker is absent exact-SHA repository, not missing pytest.",
+  "source_scope": "runner.run_once writes latest.json, audit_latest.json, anata_latest.json with three independent atomic_write_json calls; storage.append_observations reads seen IDs then appends without a cross-process lock. These are source-derived integration risks, not independently reproduced production incidents.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "preflight": [
+      "MISSING:/mnt/data/A-Woker-Lab/.git",
+      "MISSING:/mnt/data/part2/capital_flow/tests",
+      "MISSING:/workspace/A-Woker-Lab/.git",
+      "MISSING:/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "pytest_preflight": "python -m pytest --version -> pytest 9.0.2; exit 0",
+    "proposed_test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "proposed_test_file": "NOT_FOUND GitHub contents 404 on exact public SHA",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Provide an authorized disposable offline archive/bundle containing the complete public repository pinned to 378cffee64e9933b28ed9a40b936724db3beb09e (avoids failed DNS clone), or an approved hosted test-only runner. Verify git HEAD; stage existing corrected regression only as ephemeral overlay, strengthen B-wins oracle, run separate multiprocessing-spawn archive and reader checks; capture baseline RED, targeted and full python -m pytest -q part2/capital_flow/tests stdout/stderr and exit codes. Do not modify Specialist branch except via GitHub-hosted Gemini after structured-JSON reliability is proven.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "protected_changes": 0,
+  "automation_settings_changed": false
+}
