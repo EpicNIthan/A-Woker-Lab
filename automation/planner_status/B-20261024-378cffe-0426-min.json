@@ -1,0 +1,45 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T04:26:32+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "c95f41bd33c11d134104a49d4a6980e6d9d50713",
+  "queue": {
+    "pending": 0,
+    "pending_direct": "GitHub contents 404 Not Found",
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0356-execution-gate.json",
+    "B": "B-20261024-378cffe-0331-min.json",
+    "C": "C-20261024-378cffe-blocked-0412.json",
+    "supervisor_roadmap": "automation/supervisor_roadmap.md 2026-10-24 03:53 ICT"
+  },
+  "A": "BLOCKED_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "qualified_new_sources": 0,
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "source_admission_blocker": "No new independently proven first-party BTC/ETH immutable artifact/event ID with economic entity, effective/available/observed PIT clocks, non-overlap proof, correct spot-directional versus context-only role, and deterministic no-network test contract. Previously rejected sources lack concrete new proof.",
+  "next": "Do not repeat speculative source browsing or enqueue near-identical tasks. Await qualifying first-party artifact evidence and verified Gemini JSON mitigation; A/C exact-SHA test execution remains outside B lane.",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
