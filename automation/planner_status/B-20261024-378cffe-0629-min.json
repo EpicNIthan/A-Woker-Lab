@@ -1,0 +1,54 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T06:29:53+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "1448cde1d138f25669727bc6911ce7328ef738a7",
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "6bd5f585fbda74036ea971f289316642b1c57772",
+    "latest_header": "2026-10-24 05:51 ICT"
+  },
+  "queue": {
+    "pending": 0,
+    "pending_directory": "absent",
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control direct GitHub contents enumeration"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0559-acceptance-gate.json",
+    "B": "B-20261024-378cffe-0534-min.json",
+    "C": "C-20261024-378cffe-blocked-0612.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "A": "BLOCKED_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "qualified_new_sources": 0,
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "blocker": "No newly evidenced independent first-party BTC/ETH artifact/event with immutable ID, economic entity, effective/available/observed PIT clocks, economic non-overlap, correct spot directional-vs-context role, and deterministic no-network tests. Previously rejected families have no concrete new proof; do not requeue.",
+  "next": "Await qualifying first-party evidence and verified Gemini JSON mitigation; A archive integration and C quality regression execution remain separate lanes.",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
