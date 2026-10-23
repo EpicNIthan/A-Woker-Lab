@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T03:56:23+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "b35909c3a72036b55d79cd925d47aed85860b393",
+  "roadmap": "automation/supervisor_roadmap.md refreshed 2026-10-24 03:53 ICT",
+  "queue": {
+    "pending": 0,
+    "pending_direct": "404 Not Found",
+    "done": 16,
+    "failed": 16,
+    "done_failed": "direct contents enumeration"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0301-executable-evidence-blocked.json",
+    "B": "B-20261024-378cffe-0331-min.json",
+    "C": "C-20261024-378cffe-blocked-0312.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN"
+  },
+  "pinned_contract": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+  "pinned_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "decision": "Do not reissue the already-corrected no-network two-writer test. It avoids falsely rejecting serialized writers; its missing test path and absent exact checkout prevent independent verification. Separate cross-process archive idempotence and reader-visible snapshot acceptance from thread-level final-state checks. No new improved spec identified.",
+  "execution_blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "missing": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/part2/capital_flow/tests",
+      "/workspace/A-Woker-Lab/.git"
+    ],
+    "proposed_test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "proposed_test_path_fetch": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "dns_clone_retried": false,
+    "tests_executed": 0
+  },
+  "recovery": "Provision authorized disposable full exact-SHA checkout, stage corrected existing no-network two-writer contract without modifying public Specialist code, execute targeted pytest and python -m pytest -q part2/capital_flow/tests with stdout/stderr/exit codes; independently test multiprocessing-spawn archive ID idempotence and supported-reader coherence. If no authorized runner exists, continue BLOCKED_PLATEAU with exact blocker; no speculative new contract.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "protected_changes": 0,
+  "automation_settings_changed": false
+}
