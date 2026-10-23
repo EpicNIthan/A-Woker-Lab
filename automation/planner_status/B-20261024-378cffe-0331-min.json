@@ -1,0 +1,52 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T03:31:10+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "932c12a4ae7faeafaac3537d8f579531e0382919",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404 absent",
+    "done": 16,
+    "failed": 16
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0301-executable-evidence-blocked.json",
+    "B": "B-20261024-378cffe-0229-min.json",
+    "C": "C-20261024-378cffe-blocked-0312.json",
+    "supervisor": "automation/supervisor_roadmap.md 2026-10-24 02:45 ICT"
+  },
+  "A": "BLOCKED_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "qualified_new_sources": 0,
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "source_admission_blocker": "No NEW independently verified first-party BTC/ETH artifact/event ID with economic entity, effective/available/observed PIT clocks, independent non-overlap proof, correct context-vs-directional spot role, and deterministic no-network contract. Rejected sources remain rejected absent concrete new proof.",
+  "evidence": [
+    "automation/supervisor_roadmap.md",
+    "automation/planner_status/B-20261024-378cffe-0229-min.json",
+    "automation/planner_status/A-20261024-378cffe-0301-executable-evidence-blocked.json",
+    "automation/planner_status/C-20261024-378cffe-blocked-0312.json"
+  ],
+  "next": "Do not repeat speculative source research or enqueue. Await new immutable first-party evidence and verified Gemini structured JSON mitigation; A/C execution blockers are outside B lane.",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
