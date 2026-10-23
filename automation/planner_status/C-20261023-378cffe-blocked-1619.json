@@ -1,0 +1,17 @@
+{
+  "schema": "planner-c-quality-status-v1",
+  "date_ict": "2026-10-23T16:19:00+07:00",
+  "public_ref": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "quality": "BLOCKED: bool('false') is true; provenance.context_only string 'false' may invert evidence role in handoff and scoring history.",
+  "blocker": "No authorized disposable exact-SHA checkout available; independent end-to-end regression not executed.",
+  "targeted_pytest": "NOT_RUN",
+  "full_capital_flow_pytest": "NOT_RUN",
+  "recovery": "Use authorized disposable checkout pinned to public_sha; run deterministic no-network string-'false' role regression and python -m pytest -q part2/capital_flow/tests; save logs and exit codes.",
+  "promotion": "BLOCKED"
+}
