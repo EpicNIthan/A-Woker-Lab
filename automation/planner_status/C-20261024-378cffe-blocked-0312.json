@@ -1,0 +1,52 @@
+{
+  "schema": "planner-c-quality-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-24T03:12:00+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "latest_public_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "worker_control_prewrite_sha": "2cc297f2b3bbb10a6c73ce60f0eac6e3c219def9",
+  "roadmap_blob": "8bc995d09f2ded14cd18c75006298857ec1b62de",
+  "latest_reports": {
+    "A": "A-20261024-378cffe-0301-executable-evidence-blocked.json",
+    "B": "B-20261024-378cffe-0229-min.json",
+    "C": "C-20261024-378cffe-blocked-0212.json"
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control recursive tree; pending directory absent (direct 404)"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2
+  },
+  "finding": "handoff.py:31 and runner.py:60 use bool(provenance.context_only); string 'false' is truthy, potentially inverting scoring/context-only role. No end-to-end proof.",
+  "blocker": "No authorized disposable checkout at exact public SHA in checked paths; deterministic string-'false' end-to-end regression remains unexecuted.",
+  "targeted_pytest": "NOT_RUN",
+  "full_capital_flow_pytest": "NOT_RUN",
+  "recovery": "Provision authorized disposable exact-SHA checkout; run no-network string-'false' regression in part2/capital_flow/tests/test_v1_handoff.py, targeted pytest and python -m pytest -q part2/capital_flow/tests; preserve logs and exit codes.",
+  "A": "BLOCKED_PLATEAU",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
