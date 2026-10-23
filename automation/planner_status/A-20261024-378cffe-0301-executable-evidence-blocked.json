@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T03:01:36+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_diff_from": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "686bfea75b4317ee0ad76fa95ccc827a0c905ea2",
+  "roadmap": "automation/supervisor_roadmap.md updated 2026-10-24 02:45 ICT",
+  "queue": {
+    "pending": 0,
+    "pending_direct": "404 absent on worker-control",
+    "done": 16,
+    "failed": 16,
+    "done_failed_count_evidence": "latest independent Supervisor direct enumeration at 02:45 ICT; directories confirmed present this run, counts not independently re-enumerated"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0204-process-boundary-gate.json",
+    "B": "B-20261024-378cffe-0229-min.json",
+    "C": "C-20261024-378cffe-blocked-0212.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN"
+  },
+  "pinned_contract": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+  "source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "integration_decision": "NO_NEW_SOURCE_ONLY_SPEC. Existing corrected thread regression is necessary but insufficient for cross-process safety. Pinned runner writes three JSON outputs separately; storage archive dedup reads before append without a cross-process transaction. Keep independent thread, cross-process archive/generation, and supported-reader gates; require executable same-SHA evidence, not repeated speculation.",
+  "test_file": "part2/capital_flow/tests/test_runner_output_generation.py",
+  "test_file_state": "404 absent at exact public SHA",
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "additional_missing": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/part2/capital_flow/tests",
+      "/workspace/A-Woker-Lab/.git"
+    ],
+    "dns_clone_retried": false
+  },
+  "next": "Provide approved disposable full checkout at exact public_sha; stage already-specified offline regressions; capture RED/GREEN logs and exit codes for thread generation, multiprocessing spawn same-observation archive idempotence and generation, supported-reader coherence; run python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py then python -m pytest -q part2/capital_flow/tests. Do not enqueue until structured-JSON reliability proven.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "automation_enabled_verified": true,
+  "automation_settings_changed": false,
+  "specialist_code_changes": false,
+  "protected_changes": false
+}
