@@ -1,0 +1,66 @@
+{
+  "schema": "anata-supervisor-status-v1",
+  "at_ict": "2026-10-23T20:52:55+07:00",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_latest_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "private_branch": "anata-local-hardening",
+  "private_sha": "6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb",
+  "control_prewrite_sha": "5b479a01417c9399efebdce666b59e1468c6ecbe",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control authoritative directory listing"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_run": 37907159402,
+    "independent_new_regressions": "NOT_RUN"
+  },
+  "workers": {
+    "A": {
+      "status": "BLOCKED_PLATEAU",
+      "report": "A-20261023-378cffe-2003-evidence-reconciliation.json",
+      "note": "Historical isolated duplicate-ID race reproduction reported; exact-repo regression not executed"
+    },
+    "B": {
+      "status": "SOURCE_ADMISSION_PLATEAU",
+      "report": "B-20261023-378cffe-2029-min.json",
+      "qualified_sources": 0
+    },
+    "C": {
+      "status": "QUALITY_BLOCKED",
+      "report": "C-20261023-378cffe-blocked-2017.json",
+      "note": "string false context_only role inversion risk; exact-repo pytest not executed"
+    }
+  },
+  "automations": {
+    "A": "enabled",
+    "B": "enabled",
+    "C": "enabled",
+    "schedules": "unchanged"
+  },
+  "gemini": {
+    "latest_run": 39951714344,
+    "latest_result": "SUCCESS_EMPTY_QUEUE",
+    "structured_json": "UNVERIFIED"
+  },
+  "supervisor": "CONTINUE",
+  "promotion": "BLOCKED",
+  "tasks_enqueued": 0,
+  "roadmap_write": {
+    "status": "REJECTED_BY_SAFETY_CHECKS",
+    "attempted_path": "automation/supervisor_roadmap.md",
+    "operation": "update_file",
+    "error": "This tool call was blocked by OpenAI's safety checks. Please double check what you are sending."
+  },
+  "next": "Authorized exact-SHA disposable test checkout and witnessed A archive/writer-reader consistency and C context_only regression targeted/full pytest; verify Gemini structured JSON before new task.",
+  "protected_changes": false,
+  "private_changes": false,
+  "schedule_changes": false
+}
