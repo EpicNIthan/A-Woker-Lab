@@ -1,0 +1,72 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T02:04:49+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_recent_commit_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "42e73eff9a361ccea2449a8b42b413aa38adc924",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404 direct worker-control",
+    "done": 16,
+    "failed": 16,
+    "counts": "direct worker-control contents enumeration"
+  },
+  "roadmap": "automation/supervisor_roadmap.md refreshed 2026-10-24 01:53 ICT",
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0104-exact-sha-execution-dependency.json",
+    "B": "B-20261024-378cffe-0127-min.json",
+    "C": "C-20261024-378cffe-blocked-0114.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN"
+  },
+  "source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "integration_decision": "PROCESS_BOUNDARY_IS_SEPARATE_ACCEPTANCE_GATE. Re-read corrected two-writer spec A-20261017-378cffe-two-writer-contract-corrected-0058.json: it uses threading.Thread and threading.Event, so even a future GREEN result would not prove cross-process serialization. Current runner.py performs three sequential JSON replacements after archive append; storage.py read-before-append has no cross-process lock. Retain existing corrected thread regression as necessary baseline, not sufficient cross-process acceptance. Avoid repeating new source-only tests without runnable checkout.",
+  "improved_no_network_acceptance_delta": "In disposable exact-SHA checkout, run the existing lock-compatible thread two-writer baseline; separately use multiprocessing spawn with process-safe events and shared tmp_path, A paused after latest.json, B either overtakes (old behavior) or waits for serialization, always release A in finally, join with timeouts and assert both exit cleanly and three outputs share one as_of_ms. Separately seed same immutable observation into both processes and assert one archived observation_id; do not conflate empty-archive generation with archive idempotence. Reader-visible coherence requires a supported reader contract, not raw three-file reads alone. These are proposed unexecuted gates, not passing tests.",
+  "test_file": "part2/capital_flow/tests/test_runner_output_generation.py",
+  "test_file_in_public_tree": false,
+  "test_file_fetch_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "other_paths": [
+      "/mnt/data/part2/capital_flow/tests",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "other_path_state": "MISSING",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next": "Provision authorized disposable full exact-SHA checkout by approved source transfer, not repeated DNS clone; stage frozen A regressions, witness RED, run python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py and python -m pytest -q part2/capital_flow/tests; preserve logs, exit codes and SHA. Cross-process and reader gates remain independent. No workflow dispatch.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
