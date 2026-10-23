@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-23 22:00 ICT",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+  "public_last_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "control_prewrite_sha": "a8ab549dc30e74ab84e954f4e3f1fe9005fea26f",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404",
+    "done": 16,
+    "failed": 16,
+    "source": "direct worker-control contents enumeration"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "attempt": 2,
+    "independent_A_pytest": "NOT_RUN"
+  },
+  "latest_durable": {
+    "A": "A-20261023-378cffe-2103-workflow-log-evidence.json",
+    "B": "B-20261023-378cffe-2133-min.json",
+    "C": "C-20261023-378cffe-blocked-2113.json",
+    "supervisor": "automation/supervisor_roadmap.md refreshed 21:53 ICT"
+  },
+  "verdict": "BLOCKED_PLATEAU",
+  "decision": "REJECT_STALE_A_WORKER_STATUS_BLOCKER",
+  "finding": "worker-control/automation/worker_status/loop-A.json is stale (updated 2026-10-05, assessed ded21ded) and claims AmericanBitcoinTreasuryCollector is not imported/registered. Exact current public runner.py imports it and includes ('american_bitcoin_treasury', AmericanBitcoinTreasuryCollector(), {}) in _collect_live. The old registration blocker is resolved in source at current SHA and must not be recycled as pending A integration work. This is source verification, not live collector or pytest proof.",
+  "pinned_blobs": {
+    "automation/worker_status/loop-A.json": "a22d74b98af9e279bd5307d18c0e614ca53a4e3e",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+  },
+  "pinned_two_writer_spec": "automation/planner_status/A-20261015-378cffe-empty-archive-two-writer-pytest-0358.json",
+  "corrected_contract": "automation/planner_status/A-20261023-378cffe-1503-lock-compatible-contract.json",
+  "target_test": "part2/capital_flow/tests/test_runner_output_generation.py",
+  "target_test_present": false,
+  "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+  "attempted_path": "/mnt/data/A-Woker-Lab",
+  "exit_code": 128,
+  "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+  "targeted_pytest": "NOT_RUN",
+  "full_pytest": "NOT_RUN",
+  "next": "Use an authorized disposable checkout pinned to exact public SHA; stage corrected lock-compatible two-writer regression and separate archive-idempotence/supported-reader consistency gates, witness baseline RED, then capture targeted and python -m pytest -q part2/capital_flow/tests stdout/exit codes. Do not repeat DNS clone, dispatch empty-queue workflow, or revive stale ABTC registration task.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
