@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T01:04:17+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "public_recent_diff": [
+    "part2/capital_flow/normalization.py",
+    "part2/capital_flow/tests/test_contracts_normalization.py"
+  ],
+  "worker_control_prewrite_sha": "1e43ca7c145d9b64689c67c799a4136224be5046",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404 direct",
+    "done": 16,
+    "failed": 16,
+    "counts": "direct worker-control contents enumeration"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0002-evidence-boundary.json",
+    "B": "B-20261024-378cffe-0034-min.json",
+    "C": "C-20261023-378cffe-blocked-2315.json",
+    "supervisor": "automation/supervisor_roadmap.md 2026-10-24 00:49 ICT"
+  },
+  "source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+    "part2/capital_flow/tests/test_providers_replay.py": "f31d5467e6962e0c2f0159ae34418ba7f7ac3a16"
+  },
+  "decision": "EXACT_SHA_EXECUTION_HOST_DEPENDENCY. Re-read pinned two-writer regression and corrected lock-compatible spec. Public runner.py:142-144 writes latest/audit/anata separately; storage.py:64-89 loads existing IDs then appends without cross-process lock; existing archive test verifies sequential dedup only. Direct exact-SHA fetch of part2/capital_flow/tests/test_runner_output_generation.py returns 404 (not committed). Existing corrected two-writer, archive-idempotence and supported-reader contracts already cover A; no improved new contract. Freeze further source-only specifications and Gemini tasks; move next effort to materializing an authorized full exact-SHA test environment. GitHub connector reads exact blobs successfully, but that is not an executable checkout. Do not treat bounded normalization PASS as concurrency proof.",
+  "blocker": {
+    "operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "observed_stdout": "PATH_CHECK /mnt/data/A-Woker-Lab/.git: MISSING",
+    "other_path": "/mnt/data/part2/capital_flow/tests",
+    "other_observed_stdout": "PATH_CHECK /mnt/data/part2/capital_flow/tests: MISSING",
+    "test_file_fetch": "GitHub API error 404: Not Found",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next": "Authorized disposable exact-SHA 378cffee checkout/test runner via approved source transfer (connector-mediated export possible, but not yet materialized). Stage frozen two-writer/archive/reader tests, witness baseline RED, run targeted and python -m pytest -q part2/capital_flow/tests; preserve stdout/stderr, exit codes, SHA. No workflow dispatch or code edits by Planner A.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
