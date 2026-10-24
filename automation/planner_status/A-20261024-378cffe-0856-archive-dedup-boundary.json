@@ -1,0 +1,79 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T08:56:53+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "4c5f94a2c63e46b93c4f980332623b00e4e8fe93",
+  "queue": {
+    "pending": 0,
+    "pending_direct_contents": "404 Not Found",
+    "done": 16,
+    "failed": 16,
+    "done_failed_source": "Supervisor roadmap 2026-10-24 08:53 ICT authoritative direct enumeration; directory listing unavailable through current GitHub connector"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "latest_header": "2026-10-24 08:53 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0756-offline-archive-route-blocked.json",
+    "B": "B-20261024-378cffe-0832-min.json",
+    "C": "C-20261024-378cffe-blocked-0817.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN"
+  },
+  "pinned_contract": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+  "pinned_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "new_integration_finding": "ARCHIVE IDEMPOTENCE HAS A BOUNDED HISTORY SCOPE: storage.append_observations loads only the last max_existing_records=100000 to build its seen observation_id set; an older ID outside that window can be appended again on replay even with one writer. This is a source-level limitation, NOT an executed regression result. Keep distinct from concurrent read-then-append race and three-file generation atomicity. Do not claim global archive idempotence from existing sequential small-archive tests.",
+  "decision": "Do not generate another speculative two-writer source-only test. Prioritize exact-SHA executable verification; archive replay acceptance must explicitly state 100k bounded dedup policy versus global idempotence before a new test/task. Preserve separate thread B-wins, spawn-process same-ID archive and supported-reader snapshot gates. No Gemini task because structured JSON remains unverified.",
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "missing_paths": [
+      "/mnt/data/A-Woker-Lab",
+      "/mnt/data/part2/capital_flow/tests",
+      "/workspace/A-Woker-Lab",
+      "/home/oai/share/A-Woker-Lab"
+    ],
+    "pytest_installed": "9.0.2",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Acquire approved complete offline public repository bundle or test-only hosted runner pinned to 378cffee64e9933b28ed9a40b936724db3beb09e. Verify SHA, stage tests in disposable overlay only, run targeted generation/thread, spawn-process archive and reader snapshot regressions plus python -m pytest -q part2/capital_flow/tests. Preserve actual stdout/stderr and exit codes. Clarify whether archive ID uniqueness is global or last-100k before asserting it.",
+  "other_lanes": {
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
