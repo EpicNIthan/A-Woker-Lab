@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-24T13:18:12+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignore_inert_public_automation": true
+  },
+  "worker_control_prewrite_sha": "177dfb028df7e926839214d7220c4379055df384",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "queue": {
+    "pending": 0,
+    "pending_directory": "ABSENT_404",
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control direct directory reads"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "2b1818661980dce5e8f8fd3ffd8287204e5a2c24",
+    "latest_header": "2026-10-24 12:53 ICT"
+  },
+  "latest_reports": {
+    "A": "A-20261024-378cffe-1302-single-writer-publish-failpoint.json",
+    "B": "B-20261024-378cffe-1230-min.json",
+    "C": "C-20261024-378cffe-blocked-1215.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_EXECUTOR_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_C_targeted": "NOT_RUN",
+    "independent_C_full": "NOT_RUN",
+    "logs": "NONE"
+  },
+  "finding": "Pinned handoff.py:31 and runner.py:60 coerce provenance.context_only using bool(...); bool('false') is True, so a serialized scoring row may be misclassified as context-only. Existing test_v1_handoff.py does not establish string-'false' end-to-end correctness.",
+  "blocker": "No authorized disposable complete exact-SHA checkout/test-only runner in /mnt/data/A-Woker-Lab, /mnt/data/part2/capital_flow, /workspace/A-Woker-Lab, /home/oai/share/A-Woker-Lab; no DNS clone attempted.",
+  "recovery": "Obtain authorized disposable exact-SHA test checkout or test-only runner; verify git rev-parse HEAD; run deterministic no-network string-'false' role regression plus python -m pytest -q part2/capital_flow/tests, retain stdout/stderr and exit codes.",
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "Supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "schedule_changes": false
+}
