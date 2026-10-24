@@ -1,0 +1,58 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T08:32:13+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "files": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "324a03dbe68a338352f4f0bb1e3bb9a5c77e2f01",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control recursive Git tree; pending direct contents 404"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "latest_header": "2026-10-24 07:50 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0756-offline-archive-route-blocked.json",
+    "B": "B-20261024-378cffe-0725-min.json",
+    "C": "C-20261024-378cffe-blocked-0817.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU_NO_NEW_PROOF",
+    "blocker": "No newly supplied first-party immutable BTC/ETH event/artifact ID with economic entity, effective/available/observed PIT clocks, independent economic non-overlap, correct context-versus-directional spot role, and deterministic no-network contract. Previously rejected families remain rejected without new proof. Do not repeat speculative browsing."
+  },
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "next": "Await concrete independent first-party source proof before narrow enqueue. A archive integration, C role regression and exact-SHA test execution remain separate blockers.",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
