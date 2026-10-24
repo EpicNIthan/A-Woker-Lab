@@ -1,0 +1,77 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T07:56:36+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "commits": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "d69501f18b9bf065295d23abd5334da8ecf59dfe",
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control recursive tree (truncated=false); pending direct contents 404"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob_sha": "6745842fab7f89187aa6ac776673b8b73cb60752",
+    "latest_header": "2026-10-24 07:50 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0702-execution-route-boundary.json",
+    "B": "B-20261024-378cffe-0725-min.json",
+    "C": "C-20261024-378cffe-blocked-0711.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN"
+  },
+  "pinned_contract": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+  "pinned_source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03c"
+  },
+  "decision": "NEW EXECUTION-ROUTE GATE: one-shot exact-SHA codeload archive bootstrap was attempted, but the artifact download facility denied access before any transfer (URL not viewed); web open could not access archive, so a second download attempt returned the same access-control error. This is not a DNS clone failure and not pytest evidence. Stop attempting direct archive fetches in this runtime. Existing Oct17 thread contract is only a partial oracle: source runner writes three independent output files; storage dedup checks then appends without cross-process locking. Prioritize an authorized offline bundle or hosted test-only runner and a witnessed later-B-wins generation test plus separate cross-process archive and supported-reader tests; no further speculative source-only contracts.",
+  "blocker": {
+    "operation": "container.download exact public-SHA codeload tar.gz",
+    "url": "https://codeload.github.com/EpicNIthan/A-Woker-Lab/tar.gz/378cffee64e9933b28ed9a40b936724db3beb09e",
+    "verbatim_error": "ERROR: download failed because url not viewed in conversation before. open the file or url using web.run first.",
+    "web_open_result": "URL https://codeload.github.com/EpicNIthan/A-Woker-Lab/tar.gz/378cffee64e9933b28ed9a40b936724db3beb09e is not accessible via this tool.",
+    "checkout_preflight": [
+      "MISSING:/mnt/data/A-Woker-Lab/.git",
+      "MISSING:/mnt/data/part2/capital_flow/tests",
+      "MISSING:/workspace/A-Woker-Lab/.git",
+      "MISSING:/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "pytest_version": "9.0.2",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Obtain authorized offline full public repository bundle pinned to 378cffee, or approved hosted test-only runner. Verify exact commit; stage tests only in disposable overlay; execute later-B-wins two-writer, multiprocessing-spawn same-observation ID archive idempotence, reader-visible snapshot checks, targeted and full python -m pytest -q part2/capital_flow/tests. Preserve stdout/stderr/exit codes and exact SHA.",
+  "B": "SOURCE_ADMISSION_PLATEAU",
+  "C": "QUALITY_BLOCKED",
+  "supervisor": "CONTINUE",
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
