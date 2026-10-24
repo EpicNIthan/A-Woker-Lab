@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T13:02:00+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignore_inert_public_automation": true
+  },
+  "worker_control_prewrite_sha": "e963ca9218f35ce5356aa5ab820ca88e0f910a81",
+  "queue": {
+    "pending": 0,
+    "pending_directory": "ABSENT_404",
+    "done": 16,
+    "failed": 16,
+    "source": "direct worker-control directory listing"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "latest_header": "2026-10-24 12:53 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-1201-nonvacuous-concurrency-oracle.json",
+    "B": "B-20261024-378cffe-1230-min.json",
+    "C": "C-20261024-378cffe-blocked-1215.json",
+    "supervisor": "SUPERVISOR-20261023-378cffe-2052-min.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN"
+  },
+  "pinned_spec": {
+    "path": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7"
+  },
+  "source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "new_integration_decision": "Add single-writer failure-atomicity gate independent of concurrency: storage.atomic_write_json atomically replaces ONE file; runner.run_once publishes latest, audit_latest, anata_latest in sequence without a shared commit point. A failure during audit publication can leave newest latest with older audit/anata. Do not mark publication consistency complete based only on successful two-writer final snapshots.",
+  "no_network_test_contract": {
+    "status": "PROPOSED_NOT_COMMITTED_NOT_EXECUTED",
+    "path": "part2/capital_flow/tests/test_runner_publish_failure_atomicity.py",
+    "pytest_source": "import json\nfrom pathlib import Path\nimport pytest\nfrom part2.capital_flow import runner\n\ndef test_publish_failure_keeps_previous_complete_generation(tmp_path, monkeypatch):\n    old, new = 1800000000000, 1800000060000\n    runner.run_once(local_dir=tmp_path, network=False, external_jsonl=(), as_of_ms=old)\n    original = runner.atomic_write_json\n    def fail_on_audit(path, payload):\n        if Path(path).name == \"audit_latest.json\":\n            raise OSError(\"injected audit publish failure\")\n        return original(path, payload)\n    monkeypatch.setattr(runner, \"atomic_write_json\", fail_on_audit)\n    with pytest.raises(OSError, match=\"injected audit publish failure\"):\n        runner.run_once(local_dir=tmp_path, network=False, external_jsonl=(), as_of_ms=new)\n    names = (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\")\n    stamps = [json.loads((tmp_path / n).read_text())[\"as_of_ms\"] for n in names]\n    assert stamps == [old, old, old], dict(zip(names, stamps))\n",
+    "expected_current_source": "FAIL: after injected OSError latest is new but audit/anata remain old (source-derived prediction only)",
+    "acceptance": "After failed publication, supported three-file reader must observe one committed generation; avoid rejecting valid manifest-based atomic publication if reader contract changes.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_publish_failure_atomicity.py",
+    "full": "python -m pytest -q part2/capital_flow/tests"
+  },
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Obtain approved disposable full public checkout pinned to exact SHA (or test-only runner), verify git rev-parse HEAD, run single-writer failpoint, existing lock-compatible two-writer and cross-process archive/reader regressions, targeted and full Capital Flow pytest; retain stdout/stderr and exit codes.",
+  "other_lanes": {
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
