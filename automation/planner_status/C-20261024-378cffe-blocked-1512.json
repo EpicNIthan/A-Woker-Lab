@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-24T15:12:57+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "diff": {
+      "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "ahead_by": 1,
+      "paths": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    "ignore_inert_public_automation": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "prewrite_sha": "6d3530785180beb96a0850c620e16ed59da03f32",
+    "queue": {
+      "pending": 0,
+      "pending_dir": "ABSENT",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": {
+      "path": "automation/supervisor_roadmap.md",
+      "blob": "d856ee7c5f655701a4d186a21a492de6ba01998c",
+      "latest_header": "2026-10-24 14:54 ICT"
+    },
+    "latest_reports": {
+      "A": "A-20261024-378cffe-1456-test-overlay-execution-gate.json",
+      "B": "B-20261024-378cffe-1426-min.json",
+      "C": "C-20261024-378cffe-blocked-1412.json"
+    }
+  },
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_C_targeted": "NOT_RUN",
+    "independent_C_full": "NOT_RUN",
+    "pytest_logs": "NONE"
+  },
+  "finding": "Pinned handoff.py:31 and runner.py:60 call bool(provenance.context_only): bool('false') is True, potentially inverting scoring/context roles. test_v1_handoff.py lacks an executed end-to-end string-'false' regression.",
+  "blocker": "No authorized disposable exact-SHA checkout at four checked locations; no DNS clone attempted. Independent targeted/full pytest cannot be claimed PASS.",
+  "recovery": "Provide authorized disposable exact-SHA test checkout; overlay deterministic no-network string-'false' regression in test_v1_handoff.py (test-only), run targeted python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py and full python -m pytest -q part2/capital_flow/tests; preserve exit codes/stdout/stderr. Only Gemini may change public Specialist code.",
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "Supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "schedule_changes": false
+}
