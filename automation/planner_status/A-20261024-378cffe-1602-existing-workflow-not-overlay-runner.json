@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T16:02:45+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": {
+      "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "ahead_by": 1,
+      "files": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    "inert_public_automation_ignored": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "prewrite_sha": "f414e529e1c0803a0d9cb1a46cbde87a4cdf7e5a",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-24 15:54 ICT",
+    "latest": {
+      "A": "A-20261024-378cffe-1456-test-overlay-execution-gate.json",
+      "B": "B-20261024-378cffe-1526-min.json",
+      "C": "C-20261024-378cffe-blocked-1512.json"
+    }
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "exact_sha_check_runs": 0,
+    "commit_statuses": 0,
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "source_pins": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    ".github/workflows/validate.yml": "0f6b0e6319ab5c1e998e261c0b52ab8b14ae4e99"
+  },
+  "new_integration_decision": "REJECT_EXISTING_GITHUB_WORKFLOW_AS_A_REGRESSION_OVERLAY_RUNNER. Read-only inspection of public exact-SHA .github/workflows/validate.yml confirms it runs only python -m pytest -q part2/capital_flow/tests on the committed tree; workflow_dispatch has no inputs or step for injecting the three uncommitted A regression sources. Therefore triggering the existing workflow (even if green) cannot prove two-writer generation, publication failure atomicity, or archive-publish retry; do not dispatch or modify it. Freeze new speculative A contracts. Recovery specifically requires an authorized ephemeral test-only checkout/runner capable of overlaying pinned pytest_source before targeted and full pytest. This is a newly verified execution-route rejection, not an executed test.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Obtain authorized disposable exact-SHA 378cffee64e9933b28ed9a40b936724db3beb09e checkout or test-only runner with ephemeral overlay. Inject already-pinned tests from worker-control planner reports without committing Specialist code. Run python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py and python -m pytest -q part2/capital_flow/tests/test_runner_archive_publish_retry.py, then python -m pytest -q part2/capital_flow/tests; preserve stdout/stderr, exit codes and SHA. Require nonvacuous overlap/serialization and supported-reader generation consistency. No existing workflow dispatch can substitute for overlay.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_queued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
