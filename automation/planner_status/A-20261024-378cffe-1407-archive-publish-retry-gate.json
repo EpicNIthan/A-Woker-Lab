@@ -1,0 +1,87 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T14:07:00+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignore_inert_public_automation": true
+  },
+  "worker_control_prewrite_sha": "bd5040235578479922d162b94cca166738be62e4",
+  "queue": {
+    "pending": 0,
+    "pending_directory": "ABSENT_404",
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control tree and direct directory fetch"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "latest_header": "2026-10-24 13:48 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-1302-single-writer-publish-failpoint.json",
+    "B": "B-20261024-378cffe-1330-min.json",
+    "C": "C-20261024-378cffe-blocked-1318.json",
+    "supervisor": "SUPERVISOR-20261023-378cffe-2052-min.json",
+    "supervisor_roadmap_verdict": "CONTINUE"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "github_actions_exact_sha_runs": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN"
+  },
+  "pinned_spec": {
+    "path": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7"
+  },
+  "source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03c",
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "new_integration_decision": "The prior empty-archive audit-failpoint contract checks output consistency but misses a pre-publication durable archive append. Source order is append_observations -> build outputs -> latest/audit/anata writes. Add a nonempty offline JSONL fixture and post-failure retry: do NOT require append-only archive rollback, but require coherent published generation during failure, exactly-once archived observation, and successful idempotent recovery on retry. This tests completeness across archive and publication, distinct from B source breadth and C role audit.",
+  "no_network_test_contract": {
+    "status": "PROPOSED_NOT_COMMITTED_NOT_EXECUTED",
+    "path": "part2/capital_flow/tests/test_runner_archive_publish_retry.py",
+    "pytest_source": "import json\nfrom pathlib import Path\nimport pytest\nfrom part2.capital_flow import runner\nfrom part2.capital_flow.contracts import FlowObservation\nfrom part2.capital_flow.storage import load_observations\n\ndef test_failed_publish_retry_is_coherent_and_idempotent(tmp_path, monkeypatch):\n    old, new = 1800000000000, 1800000060000\n    local = tmp_path / \"local\"\n    runner.run_once(local_dir=local, network=False, external_jsonl=(), as_of_ms=old)\n    row = FlowObservation(family=\"etf\", metric=\"net_flow_usd\", asset=\"BTC\",\n                          value=123.0, unit=\"USD\", effective_at_ms=old,\n                          available_at_ms=old, observed_at_ms=old,\n                          source=\"offline_fixture\", source_record_id=\"r1\")\n    source = tmp_path / \"source.jsonl\"\n    source.write_text(json.dumps(row.to_dict()) + \"\\n\", encoding=\"utf-8\")\n    original = runner.atomic_write_json\n    def fail_audit(path, payload):\n        if Path(path).name == \"audit_latest.json\":\n            raise OSError(\"injected audit publish failure\")\n        return original(path, payload)\n    names = (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\")\n    def stamps():\n        return [json.loads((local / name).read_text())[\"as_of_ms\"] for name in names]\n    with monkeypatch.context() as patch:\n        patch.setattr(runner, \"atomic_write_json\", fail_audit)\n        with pytest.raises(OSError, match=\"injected audit publish failure\"):\n            runner.run_once(local_dir=local, network=False,\n                            external_jsonl=(source,), as_of_ms=new)\n    after_failure = stamps()\n    assert len(load_observations(local / \"observations.jsonl\")) == 1\n    retried = runner.run_once(local_dir=local, network=False,\n                              external_jsonl=(source,), as_of_ms=new)\n    assert retried[\"appended_observations\"] == 0\n    assert len(load_observations(local / \"observations.jsonl\")) == 1\n    assert stamps() == [new, new, new]\n    assert after_failure == [old, old, old], after_failure\n",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_archive_publish_retry.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "expected_current_source": "RED at after_failure generation assertion: latest=new, audit/anata=old; archive append=1 and retry should append=0. Prediction from pinned source, NOT executed.",
+    "acceptance": "Failed publish must not expose mixed generation to supported readers; durable append-only archive may retain one row; subsequent retry must not duplicate it and must publish a coherent new generation. If a future implementation uses a committed-generation manifest, adapt the reader assertion to that supported reader rather than inspecting raw uncommitted files."
+  },
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Obtain authorized disposable exact-public-SHA checkout/test-only runner; run new archive+publish retry regression, existing lock-compatible two-writer and cross-process archive/reader tests, targeted and full Capital Flow pytest, preserve exit codes and logs.",
+  "other_lanes": {
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
