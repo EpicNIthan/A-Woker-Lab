@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24 22:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "diff_base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff_ahead": 1,
+    "diff_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c4ddbab813116634d1fe8e9fd24664d03137e105",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "source": "direct GitHub worker-control contents enumeration"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-24 22:49 ICT",
+    "latest_durable": {
+      "A": "A-20261024-378cffe-2158-p0-execution-evidence-gate.json",
+      "B": "B-20261024-378cffe-2231-min.json",
+      "C": "C-20261024-378cffe-blocked-2217.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "corrected_two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "decision": {
+    "name": "P1_PROCESS_ISOLATED_ARCHIVE_ADMISSION_CONTRACT_NOW_RUNNABLE",
+    "finding": "The corrected pinned P0 output-generation test uses threads and does not establish process-isolated append admission. Exact storage.py performs read/check/append without a process lock. A new no-network POSIX-fork test gates A after archive read, lets independent process B overtake or serialize, and asserts one persisted observation. Its conditional B wait avoids deadlocking a correct serialized implementation.",
+    "priority": "Keep P0 two-writer output coherence and single-writer publication recovery ahead of P1 process admission. No code change authorized.",
+    "proposed_test_path": "part2/capital_flow/tests/test_archive_process_admission.py",
+    "proposed_pytest_source": "import multiprocessing as mp\nimport os\nfrom queue import Empty\nimport pytest\nfrom part2.capital_flow.contracts import FlowObservation\nfrom part2.capital_flow import storage\n\ndef _admit(path, label, loaded, release_a, errors):\n    original = storage.load_observations\n    def gated(*args, **kwargs):\n        rows = original(*args, **kwargs)\n        loaded.set()\n        if label == \"A\" and not release_a.wait(20):\n            raise TimeoutError(\"A admission release timeout\")\n        return rows\n    storage.load_observations = gated\n    try:\n        obs = FlowObservation(family=\"etf\", metric=\"net_flow_usd\",\n            asset=\"BTC\", value=100.0, unit=\"USD\",\n            effective_at_ms=1800000000000, available_at_ms=1800000000000,\n            observed_at_ms=1800000000000, source=\"fixture\",\n            source_record_id=\"same-record\")\n        storage.append_observations(path, [obs])\n    except BaseException as exc:\n        errors.put(f\"{label}: {type(exc).__name__}: {exc}\")\n\n@pytest.mark.skipif(not hasattr(os, \"fork\"), reason=\"requires POSIX fork\")\ndef test_two_processes_admit_same_observation_once(tmp_path):\n    ctx = mp.get_context(\"fork\")\n    a_loaded, b_loaded, release_a = (ctx.Event() for _ in range(3))\n    errors = ctx.Queue()\n    path = str(tmp_path / \"observations.jsonl\")\n    a = ctx.Process(target=_admit, args=(path,\"A\",a_loaded,release_a,errors))\n    b = ctx.Process(target=_admit, args=(path,\"B\",b_loaded,release_a,errors))\n    a.start()\n    try:\n        assert a_loaded.wait(15), \"A did not reach archive read\"\n        b.start()\n        if b_loaded.wait(5):  # unguarded B can overtake; serialized B waits\n            b.join(15)\n            assert not b.is_alive(), \"B did not finish while A paused\"\n    finally:\n        release_a.set()\n        a.join(20)\n        if b.pid is not None:\n            b.join(20)\n        for p in (a,b):\n            if p.is_alive():\n                p.terminate()\n                p.join(5)\n    assert a.exitcode == 0 and b.exitcode == 0\n    issues = []\n    while True:\n        try: issues.append(errors.get_nowait())\n        except Empty: break\n    assert not issues, issues\n    rows = storage.load_observations(path)\n    assert len(rows) == 1, [r.observation_id for r in rows]\n",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_archive_process_admission.py",
+    "baseline": "python -m pytest -q part2/capital_flow/tests",
+    "execution_order": "exact-SHA baseline; temporary test-only overlay targeted P0/P1 separately; full suite with overlays; preserve hashes/stdout/stderr/exit codes",
+    "test_status": "PROPOSED_NOT_EXECUTED",
+    "caveat": "POSIX fork only; timeout-based blocked-writer branch is a bounded synchronization probe, not proof of arbitrary scheduler fairness."
+  },
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "other_absent_paths": [
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab",
+      "/home/oai/share/A-Woker-Lab"
+    ],
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Obtain authorized disposable exact-SHA checkout/test-only runner; execute baseline then pinned P0 and new P1 overlays with actual logs; Gemini JSON repair proof required before any narrow queue task.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
