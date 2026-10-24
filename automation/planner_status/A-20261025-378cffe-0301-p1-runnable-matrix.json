@@ -1,0 +1,82 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25 03:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_automation_ignored": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "prewrite_sha": "b365ae74621a31bbe12d638035608fd6aca8a6e6",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND_direct_this_run",
+      "done": 16,
+      "failed": 16,
+      "done_failed_counts_source": "2026-10-25 02:50 supervisor roadmap authoritative enumeration; connector fetch_file cannot enumerate directory"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 02:50 ICT",
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0201-p1-matrix-coverage-gap.json",
+      "B": "B-20261025-378cffe-0226-min.json",
+      "C": "C-20261025-378cffe-blocked-0218.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pins": {
+    "corrected_two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "decision": {
+    "name": "P1_PARAMETERIZED_PROCESS_ADMISSION_MATRIX_NOW_RUNNABLE",
+    "finding": "Previous POSIX test checked concurrent identical-ID final count only. Pinned storage.py read/check/append has no cross-process lock. Add one test-only parameterized no-network overlay covering same-ID (one append), distinct-ID (both append), sequential replay (zero), exact identities, JSONL readability and both process results. Capture B_READ_BEFORE_A_RELEASE witness; a false witness is serialization-compatible but not proof of serialization or scheduler fairness. P0 two-writer and publication/recovery tests remain higher priority.",
+    "proposed_test_path": "part2/capital_flow/tests/test_archive_process_matrix.py",
+    "pytest_source": "import multiprocessing as mp\nimport os\nimport pytest\nfrom part2.capital_flow import storage\nfrom part2.capital_flow.contracts import FlowObservation\n\ndef _row(key):\n    return FlowObservation(family=\"etf\", metric=\"net_flow_usd\", asset=\"BTC\",\n        value=100.0, unit=\"USD\", effective_at_ms=1800000000000,\n        available_at_ms=1800000000000, observed_at_ms=1800000000000,\n        source=\"offline_fixture\", source_record_id=key)\n\ndef _child(path, key, label, entered, read, release_a, results):\n    original = storage.load_observations\n    def gated(*args, **kwargs):\n        rows = original(*args, **kwargs)\n        read.set()\n        if label == \"A\" and not release_a.wait(20):\n            raise TimeoutError(\"A release timeout\")\n        return rows\n    storage.load_observations = gated\n    entered.set()\n    try:\n        count = storage.append_observations(path, [_row(key)])\n        results.put((label, \"OK\", count))\n    except BaseException as exc:\n        results.put((label, type(exc).__name__, str(exc)))\n        raise\n\n@pytest.mark.skipif(not hasattr(os, \"fork\"), reason=\"POSIX fork required\")\n@pytest.mark.parametrize(\"distinct\", [False, True])\ndef test_process_archive_admission_matrix(tmp_path, distinct):\n    ctx = mp.get_context(\"fork\")\n    a_enter, b_enter, a_read, b_read, release_a = (ctx.Event() for _ in range(5))\n    results = ctx.Queue()\n    path = str(tmp_path / \"observations.jsonl\")\n    a = ctx.Process(target=_child, args=(path,\"A\",\"A\",a_enter,a_read,release_a,results))\n    b = ctx.Process(target=_child, args=(path,\"B\" if distinct else \"A\",\"B\",b_enter,b_read,release_a,results))\n    a.start()\n    try:\n        assert a_read.wait(15), \"A did not reach archive read\"\n        b.start()\n        assert b_enter.wait(15), \"B did not begin append attempt\"\n        b_read_before_release = b_read.wait(5)\n    finally:\n        release_a.set()\n        a.join(20)\n        if b.pid is not None:\n            b.join(20)\n        for p in (a, b):\n            if p.is_alive():\n                p.terminate()\n                p.join(5)\n    assert a.exitcode == b.exitcode == 0\n    outcomes = dict((label, (status, count)) for label, status, count in\n                    [results.get(timeout=5), results.get(timeout=5)])\n    assert set(outcomes) == {\"A\", \"B\"}\n    assert all(status == \"OK\" for status, _ in outcomes.values()), outcomes\n    counts = sorted(count for _, count in outcomes.values())\n    assert counts == ([1, 1] if distinct else [0, 1]), outcomes\n    rows = storage.load_observations(path)\n    expected = {\"A\", \"B\"} if distinct else {\"A\"}\n    assert {r.source_record_id for r in rows} == expected\n    assert len(rows) == len(expected)\n    assert storage.append_observations(path, [_row(\"A\")]) == 0\n    if distinct:\n        assert storage.append_observations(path, [_row(\"B\")]) == 0\n    print(\"B_READ_BEFORE_A_RELEASE=\", b_read_before_release)\n",
+    "command": "python -m pytest -q -s -rs part2/capital_flow/tests/test_archive_process_matrix.py",
+    "status": "PROPOSED_NOT_EXECUTED",
+    "limitations": "POSIX fork only; no network; test-only overlay; non-skipped Linux execution and witnessed overlap or separately evidenced serialization required. A green result alone does not prove arbitrary process scheduling safety."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git && git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 1,
+    "verbatim_output": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\nABSENT_CAPITAL_FLOW:/mnt/data/part2/capital_flow",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Authorized disposable exact-SHA Linux checkout. First run unchanged python -m pytest -q part2/capital_flow/tests; overlay existing P0 tests plus P1 matrix, hash overlays, run targeted and full python -m pytest -q part2/capital_flow/tests with stdout/stderr, exit codes, pytest -rs non-skip and witness. No Gemini enqueue until malformed JSON recovery proven.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
