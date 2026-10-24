@@ -1,0 +1,97 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T04:55:52+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff": [
+      {
+        "path": "part2/capital_flow/normalization.py",
+        "additions": 39,
+        "deletions": 18
+      },
+      {
+        "path": "part2/capital_flow/tests/test_contracts_normalization.py",
+        "additions": 91,
+        "deletions": 0
+      }
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c50daae2a69ed970dd440989cc8ffe78576cefe4",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "source": "fresh recursive worker-control Git tree plus direct pending contents 404"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 04:48 ICT",
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0403-p0-evidence-first.json",
+      "B": "B-20261025-378cffe-0434-min.json",
+      "C": "C-20261025-378cffe-blocked-0417.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pins": {
+    "corrected_two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "existing_stronger_oracle": "automation/planner_status/A-20261018-378cffe-final-generation-oracle-1257.json",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "integration_decision": {
+    "name": "ENFORCE_EXISTING_LATEST_WRITER_P0_ORACLE_NOT_ONLY_COHERENCE",
+    "finding": "The pinned corrected two-writer pytest asserts only len(set(stamps)) == 1. That passes three coherent but stale writer-A stamps, even though writer-B used the later as_of_ms and completed. The previously documented 2026-10-18 strengthened oracle requires all three final stamps equal writer-B's later as_of_ms (1800000060000). runner.py 142-144 still publishes three files sequentially. The stronger assertion is an acceptance correction to the existing test, not a new test/spec.",
+    "required_test_contract": "Use pinned 2026-10-17 event-gated no-network empty-archive test, retaining serialization-compatible conditional wait; assert both threads completed without errors, no archive file, each JSON parseable, and [latest.as_of_ms,audit.as_of_ms,anata.as_of_ms] == [1800000060000]*3. Capture scheduling witness and distinguish final-state latest-wins from concurrent-reader atomic snapshot (separate unresolved contract). Run unchanged baseline first, then targeted P0 overlay, publication-failure recovery, full suite; preserve real stdout/stderr, exit codes and overlay hash.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "P1": "Only after P0, non-skipped Linux process matrix with actual overlap or serialization witness; do not count printed false witness as proof",
+    "execution": "SPECIFICATION_RECONCILED_NOT_EXECUTED"
+  },
+  "blocker": {
+    "attempted_operation": "test -e /mnt/data/A-Woker-Lab/.git and test -e /mnt/data/part2/capital_flow",
+    "paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "verbatim_output": "ABSENT:/mnt/data/A-Woker-Lab/.git\nABSENT:/mnt/data/part2/capital_flow\nABSENT:/workspace/A-Woker-Lab/.git\nABSENT:/home/oai/share/A-Woker-Lab/.git",
+    "tests_executed": 0,
+    "dns_clone_retried": false,
+    "next_feasible_recovery": "Authorized disposable exact-SHA Linux checkout mounted to a test runner; verify HEAD and pinned blobs, run unchanged full baseline, existing corrected+strengthened P0 oracle and publication-failure tests, then witnessed P1 and full Capital Flow suite. GitHub connector read access does not supply a runnable checkout."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
