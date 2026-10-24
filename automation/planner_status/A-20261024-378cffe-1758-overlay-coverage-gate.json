@@ -1,0 +1,113 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T17:58:00+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": {
+      "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "ahead_by": 1,
+      "files": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    "inert_automation_ignored": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "prewrite_sha": "04bc958ae050d9ac506da4e4ce5cb01eebe5a62e",
+    "queue": {
+      "pending": 0,
+      "pending_direct_fetch": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "done_failed_count_source": "authoritative supervisor_roadmap.md refresh 2026-10-24 17:45 ICT; not independently re-enumerated in this connector"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "73accbd5efd484e102667789d6df291502763a28",
+    "latest_durable": {
+      "A": "A-20261024-378cffe-1703-execution-handoff-blocked.json",
+      "B": "B-20261024-378cffe-1733-min.json",
+      "C": "C-20261024-378cffe-blocked-1713.json"
+    },
+    "supervisor": "CONTINUE"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_pr_workflow_runs": 0,
+    "commit_statuses": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "integration_decision": "OVERLAY_COVERAGE_SPLIT: Three pinned reports contain literal pytest_source for test-only overlays (two-thread empty-archive output generation; single-writer audit-failpoint; archive-publish retry). A separate cross-process archive-admission contract has NO pytest_source and its target file is absent at exact public SHA. The two-writer overlay uses threading.Thread and an empty archive; it cannot be counted as cross-process archive deduplication evidence. Preserve distinct in-process publication, single-writer failure/retry, and interprocess archive admission gates. Do not claim the four targeted pytest files already exist or that three runnable overlays establish cross-process safety. No new speculative test contract issued.",
+  "pinned_test_artifacts": [
+    {
+      "path": "part2/capital_flow/tests/test_runner_output_generation.py",
+      "source_report": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+      "source_field": "integration.pytest_source",
+      "type": "in_process_two_thread_empty_archive",
+      "exact_public_file": "404_ABSENT"
+    },
+    {
+      "path": "part2/capital_flow/tests/test_runner_publish_failure_atomicity.py",
+      "source_report": "automation/planner_status/A-20261024-378cffe-1302-single-writer-publish-failpoint.json",
+      "source_field": "no_network_test_contract.pytest_source",
+      "type": "single_writer_failure",
+      "exact_public_file": "404_ABSENT"
+    },
+    {
+      "path": "part2/capital_flow/tests/test_runner_archive_publish_retry.py",
+      "source_report": "automation/planner_status/A-20261024-378cffe-1407-archive-publish-retry-gate.json",
+      "source_field": "no_network_test_contract.pytest_source",
+      "type": "archive_append_publish_retry",
+      "exact_public_file": "404_ABSENT"
+    },
+    {
+      "path": "part2/capital_flow/tests/test_storage_multiprocess_append.py",
+      "source_report": "automation/planner_status/A-20261024-378cffe-1059-cross-process-lock-compatible-contract.json",
+      "source_field": "test_contract_only_NO_pytest_source",
+      "type": "cross_process_archive_admission",
+      "exact_public_file": "404_ABSENT"
+    }
+  ],
+  "pinned_source_blobs": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "checked_absent_paths": [
+      "/mnt/data/A-Woker-Lab",
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab",
+      "/home/oai/share/A-Woker-Lab"
+    ],
+    "pytest_installed": "9.0.2",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next_feasible_recovery": "Authorized disposable exact-SHA checkout and test-only runner: materialize three existing pinned pytest_source strings as uncommitted overlays; separately implement the existing lock-compatible cross-process archive contract as a test-only overlay (no Specialist commits); record overlay hashes and actual stdout/stderr/exit codes for each targeted test and python -m pytest -q part2/capital_flow/tests. Do not dispatch committed validate.yml as a substitute. Recheck public HEAD and worker-control queue first.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
