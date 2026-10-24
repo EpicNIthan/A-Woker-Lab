@@ -1,0 +1,59 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T10:34:26+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "17e840c9925dcc12426b9ec2598d21f0c22806db",
+  "queue": {
+    "pending": 0,
+    "pending_path": "404 Not Found",
+    "done": 16,
+    "failed": 16,
+    "source": "direct worker-control contents enumeration"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "latest_header": "2026-10-24 09:53 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0958-generation-identity-oracle-blocked.json",
+    "B": "B-20261024-378cffe-0931-min.json",
+    "C": "C-20261024-378cffe-blocked-1016.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU_NO_NEW_PROOF",
+    "blocker": "No new independently evidenced first-party BTC/ETH immutable artifact/event ID with effective, available and observed PIT clocks, economic non-overlap proof, correct directional spot vs context-only role and deterministic no-network contract. Prior rejected families remain rejected; no speculative task."
+  },
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "next": "Await concrete first-party qualifying source proof; A archive integration and C quality exact-SHA regressions remain separate gates.",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
