@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25 04:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_specialist_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "a138edebd5b549308b7dc7a535501120d02aa105",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "source": "direct worker-control contents enumeration; no pending directory"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 03:51 ICT",
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0301-p1-runnable-matrix.json",
+      "B": "B-20261025-378cffe-0330-min.json",
+      "C": "C-20261025-378cffe-blocked-0317.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_check_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pins": {
+    "two_writer_corrected_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "integration_decision": {
+    "name": "EXECUTION_EVIDENCE_FIRST_NO_FURTHER_SPEC_PROLIFERATION",
+    "finding": "Exact pinned runner.py lines 142-144 sequentially replace latest.json, audit_latest.json and anata_latest.json. The corrected two-writer regression already exercises final generation coherence while accommodating valid writer serialization. The proposed P1 process matrix only prints B_READ_BEFORE_A_RELEASE; it does not assert the witness, so a green result without demonstrated contention or separate serialization proof is not a complete cross-process safety verdict. Neither source inspection nor bounded normalization PASS establishes P0/P1 acceptance.",
+    "priority": "P0 existing two-writer generation and publication-failure recovery before P1 process admission; do not add a new speculative overlay until an exact-SHA test host exists.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "p1": "python -m pytest -q -rs part2/capital_flow/tests/test_archive_process_matrix.py; record non-skip and contention/serialization witness",
+    "evidence_status": "SPECIFICATIONS_ONLY_NOT_EXECUTED"
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "alternate_attempt": "container.download https://codeload.github.com/EpicNIthan/A-Woker-Lab/zip/378cffee64e9933b28ed9a40b936724db3beb09e -> /mnt/data/A-Woker-Lab-378cffee.zip",
+    "alternate_error": "ERROR: download failed because url not viewed in conversation before. open the file or url using web.run first.",
+    "alternate_web_open": "URL https://codeload.github.com/EpicNIthan/A-Woker-Lab/zip/378cffee64e9933b28ed9a40b936724db3beb09e is not accessible via this tool.",
+    "next_feasible_recovery": "Provide an authorized disposable exact-SHA Linux test checkout or accessible archive mount; verify HEAD and pinned blobs; run unchanged baseline then targeted P0, P1 non-skipped with witness classification, then full suite. Capture stdout/stderr, exit codes and exact commit."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
