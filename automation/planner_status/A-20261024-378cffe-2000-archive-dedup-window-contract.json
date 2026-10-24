@@ -1,0 +1,98 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T20:02:04.681+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": {
+      "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "ahead_by": 1,
+      "files": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    "inert_public_automation_ignored": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "prewrite_sha": "9f972cf81cd85b45ff51eb059878753b7900e7e8",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "counts": "independent GitHub contents enumeration"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-24 19:48 ICT",
+    "latest_durable": {
+      "A": "A-20261024-378cffe-1900-baseline-overlay-verdict-separation.json",
+      "B": "B-20261024-378cffe-1931-min.json",
+      "C": "C-20261024-378cffe-blocked-1918.json"
+    },
+    "supervisor": "CONTINUE"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "commit_statuses": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "other_overlay_specs": [
+      "automation/planner_status/A-20261024-378cffe-1302-single-writer-publish-failpoint.json",
+      "automation/planner_status/A-20261024-378cffe-1407-archive-publish-retry-gate.json",
+      "automation/planner_status/A-20261024-378cffe-1059-cross-process-lock-compatible-contract.json"
+    ]
+  },
+  "integration_decision": "ARCHIVE_DEDUP_WINDOW_SCOPE: Exact-SHA storage.py append_observations loads only max_existing_records=100000 before building seen observation IDs and latest semantic signatures. An old observation ID replayed after falling outside that tail is not recognized and can be appended again even with a single writer. Existing single-record and concurrent-admission oracles cannot justify an unqualified globally-exactly-once archive claim. Treat exactly-once as bounded-window until an authorized Gemini-only implementation provides persistent identity tracking or a documented retention guarantee. Keep this distinct from cross-process race and output-generation coherence. New boundary test is deterministic diagnostic RED candidate, not executed.",
+  "new_no_network_test_contract": {
+    "status": "PROPOSED_NOT_COMMITTED_NOT_EXECUTED",
+    "path": "part2/capital_flow/tests/test_storage_dedup_window.py",
+    "pytest_source": "from part2.capital_flow.contracts import FlowObservation\nfrom part2.capital_flow.storage import append_observations, load_observations\n\ndef test_archive_replay_outside_dedup_window(tmp_path):\n    path = tmp_path / \"observations.jsonl\"\n    fields = dict(family=\"etf\", metric=\"net_flow_usd\", asset=\"BTC\",\n                  value=10.0, unit=\"USD\", effective_at_ms=1800000000000,\n                  available_at_ms=1800000000000, observed_at_ms=1800000000000,\n                  source=\"offline_fixture\")\n    a = FlowObservation(**fields, source_record_id=\"a\")\n    b = FlowObservation(**fields, source_record_id=\"b\")\n    assert append_observations(path, [a], max_existing_records=1) == 1\n    assert append_observations(path, [b], max_existing_records=1) == 1\n    assert append_observations(path, [a], max_existing_records=1) == 0\n    assert [r.observation_id for r in load_observations(path)] == [\n        a.observation_id, b.observation_id]\n",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_storage_dedup_window.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "acceptance": "Append A, B, replay A with max_existing_records=1. If global idempotence is required, third append must be 0 and archive IDs exactly [A,B]. Existing source predicts third append 1; verify with actual pytest before assigning a test verdict.",
+    "scope_note": "Do not misclassify expected diagnostic RED as failure of the committed baseline; run baseline full suite first."
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "checked_absent_paths": [
+      "/mnt/data/A-Woker-Lab",
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab",
+      "/home/oai/share/A-Woker-Lab"
+    ],
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next_feasible_recovery": "Obtain authorized disposable exact-SHA checkout/test-only runner. First run unmodified full Capital Flow pytest baseline. Materialize and hash pinned A overlays plus this bounded-window diagnostic; run each targeted and overlay-augmented full suite with stdout/stderr/exit codes. Run separate cross-process admission test; no Specialist code edits by A. Verify current public SHA/queue before any later task; Gemini JSON reliability must be proven before enqueue.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
