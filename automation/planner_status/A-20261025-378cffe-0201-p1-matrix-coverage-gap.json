@@ -1,0 +1,79 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25 02:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "compare_base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead": 1,
+    "diff_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "observed_head": "6ab7e6de459c026ee95a64ba553f93b2034b63a7",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "counts_source": "2026-10-25 01:50 supervisor roadmap authoritative enumeration; pending path direct 404 this run"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 01:50 ICT",
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0104-reader-snapshot-scope-gate.json",
+      "B": "B-20261025-378cffe-0128-min.json",
+      "C": "C-20261025-378cffe-blocked-0115.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "decision": {
+    "name": "P1_RUNNABLE_TEST_COVERAGE_DOWNGRADE",
+    "finding": "The 2026-10-24 10:59 cross-process admission contract required three outcomes: concurrent same-ID dedup, concurrent distinct-ID preservation, and sequential replay zero new rows, plus append counts. The later 22:56 runnable POSIX-fork test asserts only one archived row for concurrent same-ID, process exit codes, and no child errors. It does not assert append counts, distinct-ID no-loss, sequential replay, or an observed competing read/serialization witness. A green result therefore cannot close the original P1 completeness gate.",
+    "acceptance": "Retain existing runnable same-ID test as a partial diagnostic only. In a disposable exact-SHA Linux runner, add test-only distinct-ID concurrent append with demonstrable overlap or serialization, valid JSONL parsing and both IDs present; sequential same-ID replay returns 0; total append counts equal 2 for distinct IDs and 1 for identical IDs. Record whether overlap/serialization was observed; otherwise mark INCONCLUSIVE. No network and no Specialist code edits by Planner A.",
+    "priority": "P0 two-writer publication and publish-failure/retry remain first. P1 matrix coverage is an acceptance checklist, not a new task to enqueue."
+  },
+  "blocker": {
+    "operation": "stat /mnt/data/A-Woker-Lab",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 1,
+    "verbatim_error": "stat: cannot statx '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Authorized disposable exact-public-SHA checkout with test-only overlays; unchanged Capital Flow baseline, P0 targeted regressions, P1 complete matrix on Linux with pytest -rs non-skip proof, then full python -m pytest -q part2/capital_flow/tests; capture SHA, hashes, stdout/stderr, exit codes. No queue task until Gemini structured JSON recovery proven.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
