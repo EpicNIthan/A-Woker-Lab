@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-24T12:15:10+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignored_inert_public_automation": true
+  },
+  "worker_control_prewrite_sha": "5855e867cf705e2562ad4af080d55242ef934e87",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "queue": {
+    "pending": 0,
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control exact recursive tree; no pending directory"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "700fd8817f370f42cfef3d0e9035598f023ba1f8",
+    "latest_header": "2026-10-24 11:52 ICT"
+  },
+  "latest_reports": {
+    "A": "A-20261024-378cffe-1201-nonvacuous-concurrency-oracle.json",
+    "B": "B-20261024-378cffe-1128-min.json",
+    "C": "C-20261024-378cffe-blocked-1119.json",
+    "Supervisor": "SUPERVISOR-20261023-378cffe-2052-min.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_EXECUTOR_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_C_targeted": "NOT_RUN",
+    "independent_C_full": "NOT_RUN",
+    "logs": "NONE"
+  },
+  "finding": "Exact-SHA handoff.py:31 and runner.py:60 apply bool(...) to provenance.context_only. bool('false') is True; scoring/context role inversion risk. Existing test_v1_handoff.py has bool context_only coverage, but string-'false' end-to-end regression remains unexecuted.",
+  "blocker": "No authorized disposable complete exact-SHA checkout/test-only runner. Checked /mnt/data/A-Woker-Lab, /mnt/data/part2/capital_flow, /workspace/A-Woker-Lab, /home/oai/share/A-Woker-Lab: all missing. No network clone retried.",
+  "recovery": "Use approved disposable exact-public-SHA checkout or test-only runner. Confirm git rev-parse HEAD; run deterministic no-network string-'false' handoff/runner regression and python -m pytest -q part2/capital_flow/tests; retain stdout/stderr and exit codes.",
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "Supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "schedule_changes": false
+}
