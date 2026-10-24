@@ -1,0 +1,64 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-24T09:18:44+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "ab7e1ee85a54e9202a05384da13d5103d31debf4",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "queue": {
+    "pending": 0,
+    "pending_direct_contents": "404 Not Found",
+    "done": 16,
+    "failed": 16,
+    "counts_provenance": "Supervisor roadmap 2026-10-24 08:53 ICT and B 08:32 report; direct pending path rechecked"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "0c5c90be857b31eb9f57e04384b95d149db3b30b",
+    "latest_header": "2026-10-24 08:53 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0856-archive-dedup-boundary.json",
+    "B": "B-20261024-378cffe-0832-min.json",
+    "C": "C-20261024-378cffe-blocked-0817.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_C_targeted": "NOT_RUN",
+    "independent_C_full": "NOT_RUN"
+  },
+  "quality_finding": "handoff.py:31 and runner.py:60 use bool(provenance.context_only); string 'false' is truthy, potentially inverting scoring versus context-only roles. Source-level concern; end-to-end regression not witnessed.",
+  "blocker": "No authorized complete disposable checkout pinned to exact public SHA or approved test-only runner; /mnt/data/A-Woker-Lab, /workspace/A-Woker-Lab and /home/oai/share/A-Woker-Lab absent. No pytest execution; no DNS clone retry.",
+  "recovery": "Acquire approved complete exact-SHA offline bundle or test-only runner; run deterministic no-network string-'false' regression in part2/capital_flow/tests/test_v1_handoff.py then python -m pytest -q part2/capital_flow/tests, recording SHA, stdout/stderr and exit codes. Do not modify public code.",
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "supervisor": "CONTINUE"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
