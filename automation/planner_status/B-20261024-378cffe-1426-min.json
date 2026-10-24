@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T14:26:43+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignore_inert_specialist_automation": true
+  },
+  "worker_control_prewrite_sha": "4e5aff8d261f0d08dbe37717f21bac9bbbd89da4",
+  "queue": {
+    "pending": 0,
+    "pending_directory": "ABSENT_404",
+    "done": 16,
+    "failed": 16,
+    "source": "direct worker-control contents reads"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "latest_header": "2026-10-24 13:48 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-1407-archive-publish-retry-gate.json",
+    "B": "B-20261024-378cffe-1330-min.json",
+    "C": "C-20261024-378cffe-blocked-1412.json",
+    "supervisor": "SUPERVISOR-20261023-378cffe-2052-min.json",
+    "supervisor_roadmap_verdict": "CONTINUE"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU_NO_NEW_PROOF",
+    "blocker": "No new immutable first-party BTC/ETH artifact/event with effective/available/observed PIT clocks, independent economic non-overlap proof, correct context-vs-directional spot role, and deterministic no-network test contract. No concrete new proof rehabilitates previously rejected source families.",
+    "next": "Stop speculative repeats; require source artifact ID, PIT evidence, independent overlap proof and offline fixture before candidate/task."
+  },
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
