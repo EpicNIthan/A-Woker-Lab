@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T16:32:32+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "diff_base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff_ahead": 1,
+    "diff_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "e69fe90a17e8bd234dd8246a70600461b81ca8c1",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-24 15:54 ICT",
+    "latest_durable": {
+      "A": "A-20261024-378cffe-1602-existing-workflow-not-overlay-runner.json",
+      "B": "B-20261024-378cffe-1526-min.json",
+      "C": "C-20261024-378cffe-blocked-1619.json"
+    }
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_sources": 0,
+    "decision": "PLATEAU_NO_NEW_FIRST_PARTY_PROOF",
+    "blocker": "No new first-party immutable BTC/ETH economic artifact/event ID with effective/available/observed PIT clocks, independent economic non-overlap, correct context-vs-directional spot role and deterministic no-network contract was established. Previously rejected families cannot be recycled without new proof.",
+    "next": "Hold source tasks; require concrete artifact ID, clock provenance and non-overlap evidence before revisiting a candidate."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "schedules_changed": false
+}
