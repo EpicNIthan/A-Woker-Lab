@@ -1,0 +1,80 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T19:00:28+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": {
+      "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "ahead_by": 1,
+      "paths": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    "inert_public_automation_ignored": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "prewrite_sha": "d530ee75141ca7a93be16fe68bac6894bc8a544d",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "counts": "independently re-enumerated via worker-control GitHub contents API"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-24 18:45 ICT",
+    "latest_durable": {
+      "A": "A-20261024-378cffe-1758-overlay-coverage-gate.json",
+      "B": "B-20261024-378cffe-1826-min.json",
+      "C": "C-20261024-378cffe-blocked-1816.json"
+    }
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "commit_statuses": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "single_writer_failpoint": "automation/planner_status/A-20261024-378cffe-1302-single-writer-publish-failpoint.json",
+    "archive_retry": "automation/planner_status/A-20261024-378cffe-1407-archive-publish-retry-gate.json",
+    "cross_process_spec": "automation/planner_status/A-20261024-378cffe-1059-cross-process-lock-compatible-contract.json"
+  },
+  "integration_decision": "SEPARATE_BASELINE_FROM_DIAGNOSTIC_OVERLAY: Current runner sequentially replaces latest.json, audit_latest.json, anata_latest.json. Pinned two-thread and publish-failpoint pytest_source overlays are diagnostic RED candidates for the current source, not committed baseline tests. Do not inject them before measuring existing full-suite baseline or report a red overlay-augmented full suite as a regression of the already-validated commit. Once authorized exact-SHA runner exists: (1) run unmodified python -m pytest -q part2/capital_flow/tests; (2) inject only pinned test-only overlays, hash them and run each targeted test; (3) run full suite with overlays and separately label preexisting diagnostic failures versus any unrelated failures. After a future Gemini-only repair, require targeted AND full suite green on new exact HEAD. Cross-process archive admission remains a fourth independent unimplemented overlay, never covered by threaded test. Do not invent execution results or enqueue task while JSON reliability unverified.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next_feasible_recovery": "Authorized disposable checkout pinned to public SHA 378cffee64e9933b28ed9a40b936724db3beb09e with test-only overlay runner; baseline-before-overlay protocol above, exact SHA, overlay hashes, stdout/stderr/exit codes, then cross-process admission overlay. No Specialist code or workflows touched.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
