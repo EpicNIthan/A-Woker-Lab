@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-24T14:12:00+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignore_inert_public_automation": true
+  },
+  "worker_control_prewrite_sha": "866b0c98bcaaded84d001f206da77823b8f80875",
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "queue": {
+    "pending": 0,
+    "pending_directory": "ABSENT",
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control recursive git tree (directory entries excluded)"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "d71f23bb24f2efd89599a901303ecb6d8773afb3",
+    "latest_header": "2026-10-24 13:48 ICT"
+  },
+  "latest_reports": {
+    "A": "A-20261024-378cffe-1407-archive-publish-retry-gate.json",
+    "B": "B-20261024-378cffe-1330-min.json",
+    "C": "C-20261024-378cffe-blocked-1318.json",
+    "supervisor": "SUPERVISOR-20261023-378cffe-2052-min.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_EXECUTOR_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_C_targeted": "NOT_RUN",
+    "independent_C_full": "NOT_RUN",
+    "logs": "NONE"
+  },
+  "finding": "Pinned handoff.py:31 and runner.py:60 apply bool(...) to provenance.context_only; string 'false' becomes True and can invert scoring/context-only role. Existing test_v1_handoff.py does not prove end-to-end string-'false' correctness.",
+  "blocker": "Authorized disposable exact-SHA checkout/test-only runner absent at /mnt/data/A-Woker-Lab, /mnt/data/part2/capital_flow, /workspace/A-Woker-Lab, /home/oai/share/A-Woker-Lab; no DNS clone attempted.",
+  "recovery": "Provide authorized disposable full checkout pinned to exact public SHA; run deterministic no-network string-'false' role regression, targeted python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py, full python -m pytest -q part2/capital_flow/tests; retain stdout/stderr and exit codes.",
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "Supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "schedule_changes": false
+}
