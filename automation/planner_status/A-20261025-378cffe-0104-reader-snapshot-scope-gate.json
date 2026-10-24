@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25 01:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "compare_base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "compare_ahead": 1,
+    "diff_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "21a88cb646ab0baf0dc8788afab851f1d20e96b7",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "source": "fresh direct GitHub contents listing"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 00:50 ICT",
+    "latest_durable": {
+      "A": "A-20261024-378cffe-2356-p1-nonskip-proof-gate.json",
+      "B": "B-20261025-378cffe-0025-min.json",
+      "C": "C-20261025-378cffe-blocked-0018.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_pr_workflow_runs": 0,
+    "commit_statuses": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "decision": {
+    "name": "P0_FINAL_WRITER_COHERENCE_NOT_READER_SNAPSHOT_ATOMICITY",
+    "finding": "Pinned P0 two-writer regression checks only the three persisted as_of_ms values after both writers finish. Exact runner.py independently replaces latest.json, audit_latest.json and anata_latest.json in sequence; atomic_write_json is per-file. Even a future writer serialization fix and a green P0 final-state test do not establish that a reader combining these files cannot observe mixed generations mid-publication.",
+    "scope": "Coverage/acceptance distinction, not an independently demonstrated consumer bug: no cross-file reader contract verified. Do not claim multi-file atomic visibility or expand P0 PASS into reader-snapshot proof.",
+    "recovery_contract": "On authorized exact-SHA disposable checkout, first run unchanged Capital Flow baseline and pinned P0/P1 overlays. Separately identify the supported consumer read path: if it combines these files, stage T0 outputs, gate a T1 writer immediately after latest.json replacement, invoke the real reader while writer is paused, require a coherent single generation or explicit incomplete-snapshot rejection, then release writer and verify final T1. If consumers read only one file, document that narrower guarantee and do not add a speculative cross-file acceptance test.",
+    "priority": "Existing unexecuted P0 publication/coherence and P1 non-skipped POSIX archive admission tests remain first. No additional speculative test file or Specialist edits."
+  },
+  "blocker": {
+    "operation": "stat /mnt/data/A-Woker-Lab",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 1,
+    "verbatim_error": "stat: cannot statx '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
