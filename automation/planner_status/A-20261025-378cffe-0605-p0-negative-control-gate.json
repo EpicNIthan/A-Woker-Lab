@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T06:05:41+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      {
+        "path": "part2/capital_flow/normalization.py",
+        "additions": 39,
+        "deletions": 18
+      },
+      {
+        "path": "part2/capital_flow/tests/test_contracts_normalization.py",
+        "additions": 91,
+        "deletions": 0
+      }
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c9d56c65010a315d4336d332833b6d4304ce8670",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 05:54 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "ABSENT_IN_EXACT_TREE",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0455-p0-oracle-acceptance-gate.json",
+      "B": "B-20261025-378cffe-0533-min.json",
+      "C": "C-20261025-378cffe-blocked-0517.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pins": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "stronger_oracle": "automation/planner_status/A-20261018-378cffe-final-generation-oracle-1257.json",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "integration_decision": {
+    "name": "REQUIRE_DETERMINISTIC_P0_NEGATIVE_CONTROL_BEFORE_GREEN",
+    "detail": "The pinned event-gated two-writer overlay must be shown to fail against unchanged exact-SHA public code (negative control) with its A-latest and B-latest gate witnesses and both writer exits; otherwise a future green result could be a vacuous or non-executed test. The positive oracle remains all three final as_of_ms == 1800000060000, not merely equal stamps. This is an acceptance/verification decision, not a claim of observed failure. Do not add another source-only spec.",
+    "negative_control": "EXPECTED_RED_NOT_EXECUTED",
+    "positive_control": "NOT_EXECUTED",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "execution": "NOT_RUN"
+  },
+  "blocker": {
+    "attempted_operation": "test -e /mnt/data/A-Woker-Lab/.git; test -e /mnt/data/part2/capital_flow; test -e /workspace/A-Woker-Lab/.git; test -e /home/oai/share/A-Woker-Lab/.git",
+    "verbatim_output": "ABSENT:/mnt/data/A-Woker-Lab/.git\nABSENT:/mnt/data/part2/capital_flow\nABSENT:/workspace/A-Woker-Lab/.git\nABSENT:/home/oai/share/A-Woker-Lab/.git",
+    "tests_executed": 0,
+    "dns_clone_retried": false,
+    "next_feasible_recovery": "Authorized disposable Linux checkout pinned to exact public SHA and verified blob SHAs; run unchanged full Capital Flow baseline, then the pinned P0 event-gated test as negative control with non-vacuous witness and expected red, then Gemini-only implementation after structured-JSON reliability proof, targeted and full green, then P1 non-skipped witnessed matrix. Capture logs, exit codes and overlay hashes."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
