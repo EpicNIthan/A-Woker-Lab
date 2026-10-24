@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T23:56:41+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "diff_base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff_ahead": 1,
+    "diff_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "98ce9faa4850bd65bf4f2787ba0122315b4232a0",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-24 23:48 ICT",
+    "latest_durable": {
+      "A": "A-20261024-378cffe-2256-process-admission-contract.json",
+      "B": "B-20261024-378cffe-2325-min.json",
+      "C": "C-20261024-378cffe-blocked-2316.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "process_test_contract": "automation/planner_status/A-20261024-378cffe-2256-process-admission-contract.json",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+  },
+  "decision": {
+    "name": "P1_POSIX_TEST_MUST_EXECUTE_NOT_JUST_PASS",
+    "finding": "The newly proposed process-isolated test is decorated with pytest.mark.skipif(not hasattr(os,'fork')); on Windows a full pytest exit 0 can coexist with this test being SKIPPED. A PASS alone must not be counted as cross-process archive admission proof.",
+    "contract": "Run on an authorized Linux/POSIX exact-SHA checkout; preserve pytest -rs or equivalent per-test results, explicitly confirm test_archive_process_admission.py::test_two_processes_admit_same_observation_once was collected and EXECUTED (not skipped/xfailed), both child exitcodes zero, persisted archive count one; record stdout/stderr, exit code, OS, overlay content hash. P0 two-writer output coherence and publication failure/recovery precede P1; retain baseline/overlay verdict separation.",
+    "scope": "Test-evidence acceptance only. No Specialist edits, no new speculative source tests."
+  },
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "pytest_installed": "9.0.2",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": "Provide authorized disposable Linux exact-SHA checkout/test-only runner; execute unchanged full Capital Flow baseline, pinned P0 overlays, then P1 with non-skip proof and full suite; preserve actual logs, hashes and exit codes. Recheck HEAD and queue first.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
