@@ -1,0 +1,59 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T09:31:46+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ]
+  },
+  "worker_control_prewrite_sha": "7ea13f57329fe3c4721ada184c1bcef92e06957e",
+  "queue": {
+    "pending": 0,
+    "pending_check": "direct worker-control contents 404",
+    "done": 16,
+    "failed": 16,
+    "done_failed_provenance": "2026-10-24 08:53 ICT supervisor_roadmap.md direct enumeration; current connector rejects directory listing"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "latest_header": "2026-10-24 08:53 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-0856-archive-dedup-boundary.json",
+    "B": "B-20261024-378cffe-0832-min.json",
+    "C": "C-20261024-378cffe-blocked-0918.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU_NO_NEW_PROOF",
+    "blocker": "No newly verified immutable first-party BTC/ETH artifact/event ID with effective/available/observed PIT clocks, independent economic non-overlap, correct spot-directional versus context-only role and deterministic no-network test contract. Rejected families lack new proof; no speculative re-enqueue."
+  },
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "next": "Await qualifying new first-party source proof; A archive integration and C role quality exact-SHA tests are separate gates.",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
