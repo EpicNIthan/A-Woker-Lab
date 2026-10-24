@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24T17:03:05+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": {
+      "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "ahead_by": 1,
+      "files": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    "inert_automation_ignored": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "prewrite_sha": "2c17e93debbdbc82d200356b02df0e3977c70f1d",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-24 16:49 ICT",
+    "latest": {
+      "A": "A-20261024-378cffe-1602-existing-workflow-not-overlay-runner.json",
+      "B": "B-20261024-378cffe-1632-min.json",
+      "C": "C-20261024-378cffe-blocked-1619.json"
+    }
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "commit_statuses": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "source_pins": {
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7"
+  },
+  "integration_decision": "EXECUTION_HANDOFF_FROZEN: Pinned runnable no-network pytest_source already exists in worker-control reports, but is not committed in the public Specialist tree. Do not generate more speculative tests or dispatch validate.yml (committed suite only). Require a disposable exact-SHA checkout plus ephemeral overlay of already-pinned two-writer, single-writer audit failpoint, and archive-publish retry tests. A successful full committed suite alone is insufficient; capture distinct targeted overlay results and full suite exit codes. No independent execution evidence obtained this run.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "exact_checkout_present": false,
+    "pytest_targeted": "NOT_RUN",
+    "pytest_full": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "recovery": {
+    "runner_requirements": "Authorized disposable repository checkout at exact public SHA, test-only overlay from worker-control pinned pytest_source; no Specialist commits or workflow changes.",
+    "overlay_sources": [
+      "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+      "automation/planner_status/A-20261024-378cffe-1302-single-writer-publish-failpoint.json",
+      "automation/planner_status/A-20261024-378cffe-1407-archive-publish-retry-gate.json"
+    ],
+    "commands": [
+      "git rev-parse HEAD",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py part2/capital_flow/tests/test_runner_publish_failure_atomicity.py part2/capital_flow/tests/test_runner_archive_publish_retry.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "proof_required": "Recorded exact SHA, overlay file hashes, stdout/stderr, exit codes, nonvacuous overlap or verified serialization, supported-reader generation consistency and exactly-once archive retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_queued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
