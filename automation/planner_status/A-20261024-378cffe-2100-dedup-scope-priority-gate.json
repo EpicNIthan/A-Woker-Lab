@@ -1,0 +1,87 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-24 21:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": {
+      "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+      "ahead_by": 1,
+      "files": [
+        "part2/capital_flow/normalization.py",
+        "part2/capital_flow/tests/test_contracts_normalization.py"
+      ]
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "f13c49ac46fc79baf65b3811582f32625c651712",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "ABSENT_404",
+      "done": 16,
+      "failed": 16,
+      "source": "direct worker-control directory enumeration"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-24 20:51 ICT",
+    "latest_durable": {
+      "A": "A-20261024-378cffe-2000-archive-dedup-window-contract.json",
+      "B": "B-20261024-378cffe-2028-min.json",
+      "C": "C-20261024-378cffe-blocked-2011.json"
+    },
+    "legacy_worker_status": "loop-A/B/C files stale; latest planner reports authoritative"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted": "NOT_RUN",
+    "independent_A_full": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "decision": {
+    "name": "RECLASSIFY_DEDUP_WINDOW_AS_DOCUMENTED_BOUNDARY_NOT_STANDALONE_RELEASE_GATE",
+    "basis": "storage.py:53-65 explicitly bounds existing archive memory to 100000 and builds seen IDs from that tail; public README only claims unchanged-input dedup, not global historical exactly-once. A-2000 proposed max_existing_records=1 diagnostic remains useful but its expected RED is not, by itself, proof of violating a specified unbounded retention contract. Do not promote global exactly-once claims; require owner/product retention contract before making persistent full-history identity tracking a repair prerequisite.",
+    "priority": [
+      "P0 two-writer output-generation coherence; corrected no-network threaded pytest source already pinned, not executed",
+      "P0 single-writer publication failure/recovery consistency; existing overlays, not executed",
+      "P1 genuine independent-process archive admission; existing contract has no runnable pytest_source",
+      "P2 bounded-window archive replay diagnostic only; scope/retention requirement unresolved"
+    ],
+    "test_contract": "NO_NEW_TEST: reuse corrected pinned test_runner_output_generation.py, unmodified full Capital Flow baseline first, then targeted diagnostic overlay tests separately; do not misclassify expected diagnostic RED as committed-suite failure."
+  },
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next_feasible_recovery": "Provision authorized disposable exact-SHA checkout at 378cffee; verify git rev-parse HEAD, run unmodified python -m pytest -q part2/capital_flow/tests, then materialize hashed existing test-only overlays and run each targeted and overlay-augmented suite; record stdout/stderr/exit codes. Cross-process test must be separately implemented and executed in test-only workspace. Only Gemini may edit public Specialist code. No queue until Gemini structured-JSON recovery is proven.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
