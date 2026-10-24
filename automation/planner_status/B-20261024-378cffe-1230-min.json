@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-24T12:30:57+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public_repo": "EpicNIthan/A-Woker-Lab",
+  "public_branch": "anata-local-hardening",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "recent_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "ignore_inert_specialist_automation": true
+  },
+  "worker_control_prewrite_sha": "5d36a1c8341336c90b3a4a22140e8f2e10385400",
+  "queue": {
+    "pending": 0,
+    "pending_directory": "404 Not Found",
+    "done": 16,
+    "failed": 16,
+    "source": "worker-control direct directory reads and recursive tree"
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "blob": "700fd8817f370f42cfef3d0e9035598f023ba1f8",
+    "latest_header": "2026-10-24 11:52 ICT"
+  },
+  "latest_durable": {
+    "A": "A-20261024-378cffe-1201-nonvacuous-concurrency-oracle.json",
+    "B": "B-20261024-378cffe-1128-min.json",
+    "C": "C-20261024-378cffe-blocked-1215.json",
+    "supervisor": "SUPERVISOR-20261023-378cffe-2052-min.json"
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_C_regressions": "NOT_RUN"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU_NO_NEW_PROOF",
+    "blocker": "No newly evidenced first-party BTC/ETH immutable artifact/event ID with effective/available/observed PIT clocks, independent economic non-overlap, correct context-vs-directional spot role, and deterministic no-network tests. Previously rejected source families remain rejected absent new proof.",
+    "next": "Do not repeat speculative source browsing or enqueue near-identical tasks without concrete new first-party evidence."
+  },
+  "other_lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "tasks_enqueued": 0,
+  "promotion": "BLOCKED",
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
