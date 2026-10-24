@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-24T18:16:34+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff_paths": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "worker_control": {
+    "prewrite_sha": "7192a2689986c734cb225c995236fa2eb1ce643f",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap_blob": "73accbd5efd484e102667789d6df291502763a28",
+    "roadmap_latest": "2026-10-24 17:45 ICT",
+    "latest_reports": {
+      "A": "A-20261024-378cffe-1758-overlay-coverage-gate.json",
+      "B": "B-20261024-378cffe-1733-min.json",
+      "C": "C-20261024-378cffe-blocked-1713.json"
+    }
+  },
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "commit_statuses": 0,
+    "independent_C_targeted": "NOT_RUN",
+    "independent_C_full": "NOT_RUN",
+    "pytest_logs": "NONE"
+  },
+  "finding": "handoff.py:31 and runner.py:60 call bool(provenance.context_only): string 'false' becomes True, potentially inverting scoring/context role. No end-to-end regression executed.",
+  "blocker": "No authorized disposable exact-SHA checkout in four checked paths; committed validate.yml cannot inject test-only overlay; no independent pytest evidence.",
+  "recovery": "Obtain authorized disposable exact-SHA checkout/test-only runner; overlay deterministic no-network string-'false' handoff/scoring regression without committing Specialist code; run targeted test_v1_handoff.py and full python -m pytest -q part2/capital_flow/tests, retain stdout/stderr/exit codes and overlay hash.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "gemini_structured_json": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
