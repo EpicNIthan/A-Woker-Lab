@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-26T01:11:26+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py (+39/-18)",
+      "part2/capital_flow/tests/test_contracts_normalization.py (+91)"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "b61fb36a7a33d62fd922422a82f902a30241c755",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "832e3419d1e92a9fb0120c8ed02f3d8d91b0fb0c",
+    "roadmap_latest": "2026-10-26 00:48 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16
+    },
+    "latest_reports": {
+      "A": "A-20261026-378cffe-0100-archive-transport-blocked.json",
+      "B": "B-20261026-378cffe-0034-min.json",
+      "C": "C-20261026-378cffe-blocked-0018.json"
+    }
+  },
+  "pins": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5"
+  },
+  "finding": "Source-confirmed at exact SHA: handoff.py:31 and runner.py:60 use bool(provenance.context_only), so string 'false' is truthy and can invert scoring/context role. Equal-rank role metadata tie remains unexecuted concern; not a witnessed end-to-end failure.",
+  "validation": {
+    "status": "PASS_BOUNDED_EXECUTOR_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA checkout; /mnt/data/A-Woker-Lab absent. A archive transport denied. Independent no-network string-'false' regression and full-suite logs/exit codes missing.",
+  "recovery": "Obtain authorized disposable exact-SHA test checkout or approved GitHub-hosted test-only execution; pin HEAD/blobs, run unchanged python -m pytest -q part2/capital_flow/tests -rs baseline, add test-only deterministic string-'false' regression in test_v1_handoff.py, run targeted/full suite, retain logs and exit codes. A integration and B source breadth are separate gates.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
