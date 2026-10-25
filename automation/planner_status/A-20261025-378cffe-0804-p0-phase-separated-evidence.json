@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25 08:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "7a9525d797ae1df0558ac5596ce35237e79c91ce",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 07:52 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_fetch": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "counts_basis": "Supervisor 07:52 direct enumeration; connector directory fetch is unsupported, so done/failed counts not freshly enumerated"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0702-test-overlay-gate.json",
+      "B": "B-20261025-378cffe-0732-min.json",
+      "C": "C-20261025-378cffe-blocked-0716.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "stronger_oracle": "automation/planner_status/A-20261018-378cffe-final-generation-oracle-1257.json",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03",
+    "test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "test_state": "404_NOT_FOUND_ON_PUBLIC_HEAD"
+  },
+  "integration_decision": {
+    "name": "SEPARATE_BASELINE_GREEN_FROM_INTENTIONAL_P0_NEGATIVE_CONTROL_RED",
+    "finding": "The planned diagnostic is expected RED against unchanged source. If its overlay is added before the baseline full-suite run, the full suite is expected to fail intentionally; such a result cannot be reported as an unchanged Capital Flow baseline failure. A negative-control RED also does not establish the race unless both writers and the gate are witnessed and the final mixed-generation vector is observed.",
+    "no_network_execution_contract": [
+      "1. In authorized disposable Linux checkout verify exact HEAD and pinned runner/storage/output blob SHAs; run unchanged `python -m pytest -q part2/capital_flow/tests` BEFORE installing the test-only overlay; record exit/logs.",
+      "2. Extract pytest_source from pinned spec into uncommitted test-only overlay; record SHA256 and ensure no non-test changes. Strengthen oracle to stamps == [1800000060000]*3; preserve conditional B wait and release-A finally.",
+      "3. Run `python -m pytest -q -rs part2/capital_flow/tests/test_runner_output_generation.py`; classify expected RED as witnessed only if a_latest and b_latest fired, B completed while A held, both writers exited without errors, and final stamps are [1800000060000,1800000000000,1800000000000]. Any timeout, skip, collection/import error, or different vector is INCONCLUSIVE, not proof.",
+      "4. Do NOT call a full suite containing the expected-RED overlay a passing baseline. Only after Gemini-only repair, rerun the SAME overlay targeted and full `python -m pytest -q part2/capital_flow/tests`; require both GREEN with no skips and actual stdout/stderr/exit codes. Reader atomicity remains separately unproven."
+    ],
+    "new_test_file_written": false,
+    "test_contract_executed": false
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "local_preflight": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/part2/capital_flow",
+      "ABSENT:/workspace/A-Woker-Lab/.git",
+      "ABSENT:/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "next_feasible_recovery": "Provide authorized disposable Linux exact-SHA checkout with pinned test-only overlay; run separated baseline, witnessed negative control, then targeted/full GREEN only after independently authorized Gemini fix; preserve logs, exits, -rs, SHA256.",
+    "dns_clone_retried": false,
+    "tests_executed": 0
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
