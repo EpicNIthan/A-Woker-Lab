@@ -1,0 +1,86 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T07:02:37+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      {
+        "path": "part2/capital_flow/normalization.py",
+        "additions": 39,
+        "deletions": 18
+      },
+      {
+        "path": "part2/capital_flow/tests/test_contracts_normalization.py",
+        "additions": 91,
+        "deletions": 0
+      }
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "8d0ad0d32cd8c15c38a4699f99f4aeb8efbc91de",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_refreshed": "2026-10-25 06:49 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_direct_fetch": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "counts_basis": "latest Supervisor 06:49 ICT direct enumeration; current connector cannot enumerate directories"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0605-p0-negative-control-gate.json",
+      "B": "B-20261025-378cffe-0628-min.json",
+      "C": "C-20261025-378cffe-blocked-0620.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pins": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "stronger_oracle": "automation/planner_status/A-20261018-378cffe-final-generation-oracle-1257.json",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "integration_decision": {
+    "name": "MATERIALIZE_PINNED_TEST_OVERLAY_BEFORE_P0_EXECUTION",
+    "evidence": "The corrected two-writer regression exists only as pytest_source inside pinned planner JSON. The proposed part2/capital_flow/tests/test_runner_output_generation.py is 404 at exact public SHA and absent locally. A direct targeted pytest invocation cannot validate this proposed regression until a test-only overlay is materialized in a disposable exact-SHA checkout. Preserve its SHA256 and do not commit it to public Specialist code as Planner A.",
+    "contract": "In authorized disposable Linux checkout: verify git HEAD and pinned runner/storage/output blobs; run unchanged python -m pytest -q part2/capital_flow/tests; materialize pinned JSON pytest_source to a test-only overlay path; apply stronger [1800000060000]*3 oracle; record both writer exits, a_latest/b_latest/release_a witness, non-skipped collection, targeted pytest stdout/stderr/exit; rerun full suite. Negative control on unchanged SHA must be witnessed RED before accepting any future GREEN. No execution claimed.",
+    "separate_scope": "Final three-file generation consistency does not prove concurrent-reader atomic snapshots. A monotonic freshness policy for historical as_of_ms replays is also not established by the pinned forced-order test; do not assert it as a production invariant without consumer contract."
+  },
+  "blocker": {
+    "attempted_operation": "read exact public test path via GitHub fetch_file; inspect local exact-repo candidate paths and test path",
+    "verbatim_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}",
+    "local_preflight": "ABSENT:/mnt/data/A-Woker-Lab\nABSENT:/mnt/data/part2/capital_flow\nABSENT:/workspace/A-Woker-Lab\nABSENT:/home/oai/share/A-Woker-Lab\nTARGETED_TEST_ABSENT:part2/capital_flow/tests/test_runner_output_generation.py",
+    "tests_executed": 0,
+    "dns_clone_retried": false,
+    "next_feasible_recovery": "Provision authorized disposable exact-SHA Linux checkout and pinned test-only overlay from JSON; capture overlay hash and actual targeted/full pytest logs, exits, -rs; maintain no-code-edit Planner A scope."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
