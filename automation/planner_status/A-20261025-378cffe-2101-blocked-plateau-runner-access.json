@@ -1,0 +1,76 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T21:01:54+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "ignore_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "6ce01446936cc868d8c170ffdbf522ccb320f49e",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap_path": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "a96978e667077f36998caa3f7df357e5940b579a",
+    "roadmap_latest": "2026-10-25 20:47 ICT",
+    "latest_durable": {
+      "A": "A-20261025-378cffe-2004-ci-baseline-recovery-gate.json",
+      "B": "B-20261025-378cffe-2031-min.json",
+      "C": "C-20261025-378cffe-blocked-2017.json"
+    }
+  },
+  "validation": {
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_check_runs": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "pins": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03c",
+    "existing_validation_workflow_blob": "0f6b0e6319ab5c1e998e261c0b52ab8b14ae4e99"
+  },
+  "decision": "Do not expand source-only P0/P1 specs or enqueue unverified Gemini tasks. Exact-SHA hosted Specialist Lab Validation workflow_dispatch can provide unchanged full-suite baseline if separately authorized and dispatched by a permitted actor; its results cannot substitute for witnessed no-network P0 mixed-generation negative control, P1 cross-process archive admission, or reader coherence. Planner A does not dispatch or alter workflows. Require exact HEAD and captured exit codes/logs before changing A verdict.",
+  "execution_blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "preflight": "NO_GIT /mnt/data/A-Woker-Lab; NO_GIT /mnt/data/anata-local-hardening; NO_GIT /mnt/data",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py -rs",
+    "full": "python -m pytest -q part2/capital_flow/tests -rs",
+    "tests_executed": 0,
+    "next": "Obtain an authorized disposable exact-SHA checkout or separately authorized existing workflow_dispatch for unchanged baseline, then a disposable checkout for witnessed no-network P0/P1. Do not retry DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
