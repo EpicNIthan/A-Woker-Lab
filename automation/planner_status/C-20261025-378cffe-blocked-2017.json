@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-25T20:17:24+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "public_automation_inert": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "5dc9d0b0c7fb47e8ee82fbeee8fd28791ed84eb2",
+    "roadmap_blob": "c1a40151022f0d05d651ddecd3e5863f4727c4bd",
+    "roadmap_latest": "2026-10-25 19:52 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404",
+      "done": 16,
+      "failed": 16
+    },
+    "latest": {
+      "A": "A-20261025-378cffe-2004-ci-baseline-recovery-gate.json",
+      "B": "B-20261025-378cffe-1934-min.json",
+      "C": "C-20261025-378cffe-blocked-1914.json"
+    }
+  },
+  "pins": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+    "part2/capital_flow/tests/test_contracts_normalization.py": "8bfd0557050ac72a5e45bace98460d536b789e52"
+  },
+  "finding": "Source-confirmed bool(provenance.context_only) at handoff.py:31 and runner.py:60 treats string 'false' as True; scoring/context role may invert. Equal-rank normalization tie omits context_only metadata; permutation regression not executed.",
+  "validation": {
+    "exact_sha": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA checkout; no independently witnessed string-false end-to-end regression logs/exit codes. Bounded normalization PASS is not handoff proof.",
+  "recovery": "Obtain authorized disposable exact-SHA checkout; verify HEAD and pins; run unchanged python -m pytest -q part2/capital_flow/tests -rs, then deterministic no-network string-'false' regression in test_v1_handoff.py and full Capital Flow suite; retain logs and exit codes. Existing workflow_dispatch may offer baseline, but C does not dispatch.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "workflow_or_schedule_changes": false
+}
