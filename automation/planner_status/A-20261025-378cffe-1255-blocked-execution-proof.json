@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T12:55:54+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "unchanged": true,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "41fef12fe3946c1e29c56dc1cc0c6eb6fc0fa7db",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "08b892ace5e4c267cecb771937581958726a1dcd",
+    "roadmap_latest": "2026-10-25 12:49 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_direct": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "done_failed_basis": "latest Supervisor direct enumeration at 12:49 ICT; directory fetch_file is not a listing API"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-1200-exact-execution-blocked.json",
+      "B": "B-20261025-378cffe-1230-min.json",
+      "C": "C-20261025-378cffe-blocked-1210.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03c",
+    "test_overlay_in_public_tree": false
+  },
+  "integration_decision": "EXECUTION_DEPENDENCY: Source review confirms three separately atomic writes (latest, audit_latest, anata_latest), but not generation-atomic publication. Existing P0 test-only overlay is conditional on B overtake and can give vacuous GREEN; freeze further source-only specs. Next A-lane evidence must be unchanged exact-SHA full-suite baseline, then witnessed P0 negative-control (both writer completions, B overtakes A, final generation vector), plus non-skipped P1 admission. RED without witness is INCONCLUSIVE. Post-authorized Gemini fix needs targeted/full GREEN at new exact SHA. Reader atomicity remains separately unproven.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "other_absent": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "next_feasible_recovery": "Provision authorized disposable exact-SHA Linux checkout (or existing hosted test runner) pinned to 378cffee; verify pinned blob SHAs and test-only overlay hash; capture unchanged python -m pytest -q part2/capital_flow/tests -rs stdout/stderr/exit code, then witnessed P0 negative-control and P1 process test. Do not repeat DNS clone or assert unexecuted results."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
