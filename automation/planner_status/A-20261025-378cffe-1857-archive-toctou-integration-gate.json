@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T18:57:00+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "observed_head": "44eb0d02037612b58c705238913bbe32f6047617",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 18:52 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "source": "direct worker-control directory enumeration"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-1800-execution-evidence-escalation.json",
+      "B": "B-20261025-378cffe-1830-min.json",
+      "C": "C-20261025-378cffe-blocked-1815.json"
+    }
+  },
+  "pinned": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03c",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "proposed_p0_test": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "proposed_test_status": "404_NOT_FOUND"
+  },
+  "integration_decision": {
+    "new_source_supported_gap": "Distinct from the known P0 three-output mixed-generation race: storage.append_observations loads existing IDs and semantic signatures, then appends JSONL without a process-wide lock or atomic admission. Two processes reading an empty archive can each append the same observation_id. This is a cross-process archive deduplication time-of-check/time-of-use (TOCTOU) risk; source evidence only, NOT executed or claimed reproduced.",
+    "deterministic_no_network_p1_contract": "Use multiprocessing spawn with two workers, shared tmp_path/observations.jsonl and one identical FlowObservation fixture; synchronize both before calling storage.append_observations. Unchanged-code negative control only: test-only interception after both load_observations calls return empty, with a witnessed two-process barrier before append; expect duplicate-ID archive rows (RED), otherwise INCONCLUSIVE if witness missing. Post-repair acceptance: remove after-read barrier (a correct lock may serialize it), synchronize only before function entry, require both exit 0, parse every JSONL line, exactly one persisted observation_id, no partial/corrupt lines, and one append result 1 and the other 0. Capture process exit codes, witness and stdout/stderr. Keep P0 output generation, P1 process admission, reader snapshot atomicity, and archive safety distinct.",
+    "commands_when_authorized": [
+      "git rev-parse HEAD (must equal public exact SHA)",
+      "python -m pytest -q part2/capital_flow/tests -rs",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py -rs (test-only overlay, witnessed P0 RED)",
+      "python -m pytest -q part2/capital_flow/tests/test_storage_archive_multiprocess.py -rs (test-only P1 negative control and acceptance)"
+    ],
+    "limits": "No Specialist code edits, no tests claimed run, no Gemini queue enqueue until bounded structured-JSON reliability proven. Source-only P1 contract is a handoff, not a passed regression."
+  },
+  "validation": {
+    "exact_sha": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "missing_path": "/mnt/data/A-Woker-Lab/.git",
+    "other_checked_absent": [
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "next_feasible_recovery": "Authorized disposable exact-SHA Linux checkout or existing hosted runner, without workflow mutation or DNS clone retry. Verify pinned blobs, run unchanged full baseline and test-only witnessed P0/P1 with exact commands, exit codes and logs."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
