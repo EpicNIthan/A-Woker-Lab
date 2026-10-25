@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-25T18:15:22+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "d8d766d0633b2c6fa95c852ca725db106440e647",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "ac7d62e1728db80de7321b8fc68ace7f649bad95",
+    "roadmap_latest": "2026-10-25 17:47 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_reports": {
+      "A": "A-20261025-378cffe-1800-execution-evidence-escalation.json",
+      "B": "B-20261025-378cffe-1726-min.json",
+      "C": "C-20261025-378cffe-blocked-1715.json"
+    }
+  },
+  "pins": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+    "part2/capital_flow/tests/test_contracts_normalization.py": "8bfd0557050ac72a5e45bace98460d536b789e52"
+  },
+  "finding": "Confirmed source-level: handoff.py:31 and runner.py:60 apply bool(...) to provenance.context_only. String 'false' evaluates True and can invert scoring/context role. Existing handoff test checks booleans; no independently executed deterministic string-'false' regression. Separately normalization.py equal-rank tie uses observation_id/value without context_only metadata, potentially order-dependent role selection.",
+  "validation": {
+    "exact_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "bounded_proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "bounded_executor": "PASS_ATTEMPT_2_NORMALIZATION_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA executable checkout at /mnt/data/A-Woker-Lab; no independent targeted/full pytest execution, logs, or exit codes. Bounded normalization proof cannot validate context-only handoff semantics.",
+  "recovery": "Obtain authorized disposable checkout pinned to exact public SHA or existing hosted runner; verify SHA/blobs; execute unchanged python -m pytest -q part2/capital_flow/tests; add test-only deterministic no-network string-'false' role regression to test_v1_handoff.py and run targeted plus full suite, preserving stdout/stderr and exit codes. Gemini alone may modify public Specialist code after structured-JSON reliability proven; no malformed task retries.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "schedule_changes": false
+}
