@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T21:56:42+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "e6320019629779a180ef6cb92f03a3e73a2c1484",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "8897c8950517a14796419ee435d45923c87acdd6",
+    "roadmap_latest": "2026-10-25 21:46 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "source": "direct worker-control API enumeration"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-2101-blocked-plateau-runner-access.json",
+      "B": "B-20261025-378cffe-2134-min.json",
+      "C": "C-20261025-378cffe-blocked-2112.json"
+    }
+  },
+  "validation": {
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "source_pins": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03c",
+    "proposed_test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "proposed_test_status": "404_NOT_FOUND"
+  },
+  "decision": "No new source-only P0/P1 contract: pinned amended P0 already permits B to serialize behind A, and P1 archive-admission contract is separately specified. This run independently re-read exact blobs and confirmed three individually atomic output writes plus archive load-before-append without process lock; neither is witnessed regression proof. Existing validate.yml workflow can supply unchanged baseline only when separately authorized; current exact SHA has 0 Actions runs and the proposed P0 test file is absent. Gate further A integration claims on an authorized exact-SHA disposable checkout, not more speculative specifications. Keep P0 output generation, P1 cross-process archive admission, reader snapshot and C quality distinct.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "other_preflight": [
+      "ABSENT /mnt/data/A-Woker-Lab",
+      "ABSENT /mnt/data/anata-local-hardening",
+      "ABSENT /workspace/A-Woker-Lab",
+      "ABSENT /home/oai/share/A-Woker-Lab"
+    ],
+    "next_feasible_recovery": "Permitted actor provisions isolated Linux checkout pinned to 378cffee64e9933b28ed9a40b936724db3beb09e; verify git rev-parse HEAD and pinned blob SHAs, run unchanged python -m pytest -q part2/capital_flow/tests -rs, then test-only witnessed P0 negative-control and independent P1 process-admission regression with actual exit codes/logs. No DNS clone retry or workflow dispatch by Planner A."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
