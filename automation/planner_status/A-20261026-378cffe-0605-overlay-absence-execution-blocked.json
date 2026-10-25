@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26T06:05:17+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "7714b458faaf883553c2923ae348a0bd5375bd7f",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "source": "recursive worker-control git tree (truncated=false)"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 05:46 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-0505-stale-integration-gap-reconciled.json",
+      "B": "B-20261026-378cffe-0531-min.json",
+      "C": "C-20261026-378cffe-blocked-0518.json"
+    }
+  },
+  "validation": {
+    "bounded_executor": "PASS",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "pins": {
+    "P0_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "P1_spec": "automation/planner_status/A-20261025-378cffe-0301-p1-runnable-matrix.json",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+  },
+  "integration_decision": {
+    "name": "UNCOMMITTED_CONCURRENCY_OVERLAYS_ARE_NOT_COVERED_BY_BASELINE_VALIDATION",
+    "finding": "Fresh complete public exact-SHA Git tree (63 entries, truncated=false) has 17 Capital Flow test files, but neither proposed test_runner_output_generation.py (P0) nor test_archive_process_matrix.py (P1). Thus bounded executor PASS and any unchanged full-suite run cannot establish these new P0/P1 contracts. P0 corrected contract allows serialized B; P1 matrix checks duplicate-ID exclusion, distinct-ID preservation, JSONL integrity and overlap/serialization witness. The source risks are unconfirmed experimentally. Do not claim the existing suite executed these uncommitted tests or enqueue a task while Gemini JSON recovery is unverified.",
+    "test_only_overlay_paths": [
+      "part2/capital_flow/tests/test_runner_output_generation.py",
+      "part2/capital_flow/tests/test_archive_process_matrix.py"
+    ],
+    "targeted_commands": [
+      "python -m pytest -q -rs part2/capital_flow/tests/test_runner_output_generation.py",
+      "python -m pytest -q -s -rs part2/capital_flow/tests/test_archive_process_matrix.py"
+    ],
+    "baseline_and_post_overlay_full": "python -m pytest -q part2/capital_flow/tests -rs",
+    "expected_evidence": "actual non-skipped test collection, exit codes, stdout/stderr, process overlap/serialization witness, and exact checked-out HEAD"
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "next_feasible_recovery": "Authorized disposable exact-SHA Linux checkout; verify HEAD and pinned source blobs; execute unchanged full baseline, apply existing P0/P1 test-only overlays (not Specialist code), run targeted and full pytest, preserve logs/exit codes and concurrency witness. Do not retry failed DNS clone or claim independent PASS."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
