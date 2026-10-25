@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T23:56:08+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "5b4b184a2be1063c0ce1a3fb62a683a68259633f",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "b521f41041cfdcef1fb0e058072dda7f865bd35b",
+    "roadmap_latest": "2026-10-25 23:53 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND_DIRECT",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-2303-exact-sha-runner-gate.json",
+      "B": "B-20261025-378cffe-2331-min.json",
+      "C": "C-20261025-378cffe-blocked-2312.json"
+    }
+  },
+  "validation": {
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "source_pins": {
+    "corrected_p0_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "corrected_p0_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "decision": "Freeze corrected P0 test-only contract; it allows serialized writers and rejects a witnessed mixed latest/audit/anata generation, but is only same-process evidence. Do not treat bounded executor PASS or a baseline-only validate.yml dispatch as A integration completion. Separate cross-process P1 archive admission and reader-coherence evidence is mandatory. Escalate executable-runner access rather than produce another source-only oracle or speculative Gemini task.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "checked_paths": [
+      "ABSENT /mnt/data/A-Woker-Lab",
+      "ABSENT /mnt/data/part2/capital_flow",
+      "ABSENT /workspace/A-Woker-Lab",
+      "ABSENT /home/oai/share/A-Woker-Lab"
+    ],
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout/hosted test runner: verify HEAD=378cffee64e9933b28ed9a40b936724db3beb09e and pinned blobs; run unchanged python -m pytest -q part2/capital_flow/tests -rs with exit code/log; execute test-only corrected P0 with witnessed two-writer schedule and P1 independent processes plus reader/archive checks, targeted and full pytest, preserving actual logs. No new task until Gemini structured-JSON recovery independently proven."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_A_enabled_observed": true
+}
