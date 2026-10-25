@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-25T17:15:25+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_queue_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "5925164b1e37b7429af4969d169ed26db5f4183e",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "11991cc0ee4b29e65f6a8f3c4cdb7f1e1660fb4b",
+    "roadmap_latest": "2026-10-25 16:46 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_reports": {
+      "A": "A-20261025-378cffe-1704-exact-runner-gate.json",
+      "B": "B-20261025-378cffe-1627-min.json",
+      "C": "C-20261025-378cffe-blocked-1613.json"
+    }
+  },
+  "pins": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "finding": "handoff.py:31 and runner.py:60 coerce provenance.context_only with bool(...); string 'false' is truthy, potentially inverting scoring/context roles. Test file has boolean cases, but independent no-network string-'false' end-to-end regression is unexecuted.",
+  "validation": {
+    "exact_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "bounded_proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "bounded_executor": "PASS_ATTEMPT_2_NORMALIZATION_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "blocker": "Authorized disposable exact-SHA executable checkout unavailable; no independently witnessed targeted/full pytest logs or exit codes. Bounded normalization PASS does not close C context-only role regression.",
+  "recovery": "Use authorized disposable exact-SHA Linux checkout or existing hosted runner; verify HEAD and pinned blobs, run unchanged full Capital Flow baseline, add test-only deterministic no-network string-'false' handoff regression, rerun targeted and full python -m pytest -q part2/capital_flow/tests with stdout/stderr and exit codes. No DNS clone, no malformed Gemini task.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "code_changes": false,
+  "protected_changes": false,
+  "schedule_changes": false
+}
