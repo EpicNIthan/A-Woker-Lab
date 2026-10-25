@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26T03:01:37+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "8991d487823a58ff3d3146b0e29b48b66e7db0b6",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 02:51 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "source": "direct exact worker-control recursive tree enumeration; pending path 404"
+    },
+    "latest_durable": {
+      "A": "A-20261026-378cffe-0157-source-contract-ready-execution-blocked.json",
+      "B": "B-20261026-378cffe-0226-min.json",
+      "C": "C-20261026-378cffe-blocked-0219.json"
+    }
+  },
+  "validation": {
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "source_pins": {
+    "P0_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "P0_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "P1_spec": "automation/planner_status/A-20261025-378cffe-0301-p1-runnable-matrix.json",
+    "P1_blob": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03"
+  },
+  "decision": "EXECUTION_ONLY_BLOCKED_PLATEAU: refreshed pinned P0/P1 test contracts and exact source blobs. runner.py writes latest/audit/anata as separate atomic file replacements; storage.py reads existing IDs before append without cross-process admission lock. Both are source-supported risks, not witnessed failures. Existing validate.yml covers unchanged baseline only; exact public SHA has zero workflow runs/status checks. No new test contract justified. Preserve independent P0 generation and P1 archive/reader test gates; do not claim done-task PASS proves A concurrency. Next feasible recovery: authorized isolated exact-SHA Linux runner, baseline then test-only P0/P1 targeted and full suite with actual stdout/stderr, exit codes, overlap/serialization witness. No Gemini enqueue while malformed-JSON recovery unverified.",
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent'; exit 2; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 2,
+    "verbatim_output": "BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent",
+    "next_feasible_recovery": "Provide an authorized disposable checkout pinned to 378cffee64e9933b28ed9a40b936724db3beb09e; verify pinned blob SHAs; execute python -m pytest -q part2/capital_flow/tests -rs baseline and separate non-skipped P0/P1 overlays with targeted and full tests, preserving logs and exit codes. No DNS/codeload retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
