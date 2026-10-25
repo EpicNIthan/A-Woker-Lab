@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25 08:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "12cc4498e962ae8f4d5c2e88e9d5f4ed76d21534",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 08:46 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "counts_basis": "direct recursive worker-control git-tree enumeration at exact prewrite SHA"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0804-p0-phase-separated-evidence.json",
+      "B": "B-20261025-378cffe-0826-min.json",
+      "C": "C-20261025-378cffe-blocked-0813.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_head_actions_runs": 0,
+    "exact_head_check_runs": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03",
+    "overlay_test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "overlay_present_on_public_head": false
+  },
+  "integration_decision": {
+    "name": "FAIL_CLOSED_ON_UNWITNESSED_B_OVERTAKE_IN_P0_NEGATIVE_CONTROL",
+    "finding": "Pinned pytest_source uses `if b_latest.wait(10): ...` with no else. If B is not scheduled until after A is released, unchanged unprotected code can finish with all-B stamps and pass the strengthened coherence assertion vacuously. This is a harness non-vacuity risk, not a confirmed production result.",
+    "no_network_contract": [
+      "Run unchanged `python -m pytest -q part2/capital_flow/tests` first on authorized exact-SHA disposable Linux checkout; capture raw exit/stdout/stderr.",
+      "Materialize pinned pytest_source as test-only uncommitted overlay; verify blob/hash. Record a_latest, b_latest, release_a, both thread completion/errors and final 3-file stamp vector.",
+      "For unchanged-code P0 negative control require b_latest fired BEFORE release_a and both writers finished; if not, mark INCONCLUSIVE even when final stamps are coherent. Only witnessed [1800000060000,1800000000000,1800000000000] is valid RED defect evidence.",
+      "After separately authorized Gemini-only repair, the identical test with conditional release must finish both writers and show [1800000060000,1800000060000,1800000060000]; run targeted `python -m pytest -q -rs part2/capital_flow/tests/test_runner_output_generation.py` and full `python -m pytest -q part2/capital_flow/tests`. Do not require b_latest before release_a for a correctly serialized GREEN path.",
+      "Reader snapshot atomicity and cross-process archive admission remain distinct acceptance gates; no new source changes or task queued."
+    ],
+    "tests_executed": 0
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'test -d /mnt/data/A-Woker-Lab/.git || { echo \"BLOCKED_PLATEAU: no exact-SHA executable repository at /mnt/data/A-Woker-Lab/.git\" >&2; exit 42; }'",
+    "exit_code": 42,
+    "verbatim_error": "BLOCKED_PLATEAU: no exact-SHA executable repository at /mnt/data/A-Woker-Lab/.git",
+    "absent_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "next_feasible_recovery": "Authorized disposable Linux checkout pinned to exact SHA, test-only overlay from pinned blob, then unchanged baseline + witnessed negative control + targeted/full post-repair pytest with logs and -rs. No DNS clone retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
