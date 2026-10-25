@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-26T03:34:57+07:00",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_specialist_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "067f22fc4b7cac7f1c6e8557fa8f84314725c087",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 02:51 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_durable": {
+      "A": "A-20261026-378cffe-0301-exact-runner-blocked.json",
+      "B": "B-20261026-378cffe-0226-min.json",
+      "C": "C-20261026-378cffe-blocked-0311.json"
+    }
+  },
+  "validation": {
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "scope": "BOUNDED_EXECUTOR_ONLY",
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_check_runs": 0,
+    "independent_A_C_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_sources": 0,
+    "blocker": "No newly demonstrated independent first-party immutable BTC/ETH event/artifact with economic entity, effective/available/observed PIT clocks, independent non-overlap proof, context-vs-directional spot role, and deterministic no-network test contract.",
+    "basis": [
+      "automation/supervisor_roadmap.md",
+      "automation/planner_status/B-20261026-378cffe-0226-min.json",
+      "automation/worker_status/loop-B.json"
+    ],
+    "decision": "PLATEAU: do not recycle rejected candidates, infer directional spot flows from context stocks, or enqueue Gemini until structured-JSON mitigation is verified."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "workflow_or_schedule_changes": false
+}
