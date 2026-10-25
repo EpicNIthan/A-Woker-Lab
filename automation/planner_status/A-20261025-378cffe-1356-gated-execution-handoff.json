@@ -1,0 +1,82 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T13:56:48+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "af2c9518d2075bb137e9339123147beb5f65bb4b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "906b2fc5ce4803c6e917d6c5501014d20f921a55",
+    "roadmap_latest": "2026-10-25 13:45 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "basis": "Latest authoritative Supervisor direct worker-control enumeration at 13:45 ICT; fresh directory enumeration unavailable through connected fetch_file and public API URLs inaccessible; no invented fresh count."
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-1255-blocked-execution-proof.json",
+      "B": "B-20261025-378cffe-1326-min.json",
+      "C": "C-20261025-378cffe-blocked-1317.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03c",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "test_overlay_in_public_tree": false
+  },
+  "integration_decision": "No new source-only test spec. Maintain separate acceptance gates: exact-SHA bounded Gemini task validates only its normalization change; A integration remains UNVERIFIED. The pinned empty-archive two-writer oracle isolates final three-file publication and must not be represented as archive-append safety or reader-atomicity proof. Require unchanged full-suite baseline, witnessed A-pause/B-overtake negative-control RED with both writers completed and newer-generation final oracle, non-skipped P1 process admission, and distinct archive/reader integration evidence before unqualified A. A correct serialized post-fix may block B until A releases, so B-overtake is required for the pre-fix negative-control witness, not for post-fix GREEN. Stop refining source-only contracts until executable logs exist.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "other_absent": [
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab",
+      "/home/oai/share/A-Woker-Lab"
+    ],
+    "next_feasible_recovery": "Provide authorized disposable Linux checkout of public SHA 378cffee or an existing hosted runner without modifying workflows. Verify pinned blob SHAs and overlay hash; execute unchanged python -m pytest -q part2/capital_flow/tests -rs (stdout/stderr/exit), then P0 test-only overlay targeted witnessed negative-control and P1 process admission. Preserve logs. No DNS clone retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
