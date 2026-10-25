@@ -1,0 +1,79 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T23:03:27+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "a5c6dfaade5e263b35f564c2710d2b9eed93c92b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 22:48 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND_DIRECT",
+      "done": 16,
+      "failed": 16,
+      "counts_source": "2026-10-25 22:48 ICT Supervisor authoritative enumeration"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-2156-execution-route-evidence-gate.json",
+      "B": "B-20261025-378cffe-2233-min.json",
+      "C": "C-20261025-378cffe-blocked-2210.json"
+    }
+  },
+  "validation": {
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_status": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_pr_workflow_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "source_pins": {
+    "p0_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "p0_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03",
+    "validation_workflow_blob": "0f6b0e6319ab5c1e998e261c0b52ab8b14ae4e99"
+  },
+  "decision": "No new regression specification or Gemini task. The pinned P0 contract already distinguishes overtaking from valid serialization, and P1 archive-admission remains separate. Current runner persists latest/audit/anata as three individually atomic writes, not one generation; storage performs unguarded read-before-append. These are source-supported risks, not witnessed failures. Existing workflow_dispatch validation can establish only unchanged baseline when separately authorized, never P0/P1 concurrency. Prioritize executable exact-SHA evidence and preserve gate separation; A cannot promote on bounded done-task proof alone.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "other_paths": [
+      "ABSENT /mnt/data/anata-local-hardening",
+      "ABSENT /workspace/A-Woker-Lab",
+      "ABSENT /home/oai/share/A-Woker-Lab"
+    ],
+    "next_feasible_recovery": "Authorized actor provisions disposable checkout at exact public SHA, verifies HEAD and pinned blobs, captures unchanged python -m pytest -q part2/capital_flow/tests -rs logs/exit code, then test-only P0 witnessed two-writer negative control and separate P1 cross-process archive admission/reader-coherence logs. Optional separately authorized one-off existing validate.yml dispatch can supply baseline only; no dispatch by Planner A."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
