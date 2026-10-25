@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-25T16:13:27+07:00",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_queue_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "51509f3d7cb8dd0be7200e23456aaddf6a3f3e63",
+    "roadmap_blob": "78c5065196162601ee7b6dc2c54824d07852055d",
+    "roadmap_latest": "2026-10-25 15:52 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_reports": {
+      "A": "A-20261025-378cffe-1605-execution-provenance-blocked.json",
+      "B": "B-20261025-378cffe-1529-min.json",
+      "C": "C-20261025-378cffe-blocked-1510.json"
+    }
+  },
+  "pins": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "quality": "handoff.py:31 and runner.py:60 use bool(provenance.context_only); serialized string 'false' evaluates truthy and can invert scoring/context-only roles. End-to-end no-network regression remains unexecuted.",
+  "validation": {
+    "exact_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "bounded_executor_status": "PASS",
+    "bounded_executor_attempt": 2,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "exact_sha_lab_workflow": "NO_MATCH_REPORTED",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable executable checkout pinned to exact public SHA; no witnessed targeted/full pytest logs or exit codes. Bounded normalization executor PASS does not validate C context-only regression.",
+  "recovery": "Acquire authorized disposable exact-SHA Linux checkout or existing hosted test runner; verify pinned blobs; run unchanged python -m pytest -q part2/capital_flow/tests -rs baseline; run deterministic no-network string-'false' regression in test_v1_handoff.py; rerun targeted/full suite with logs and exit codes. Do not repeat DNS clone attempts or enqueue before Gemini JSON recovery proven.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "writes": "ONE_WORKER_CONTROL_STATUS_JSON_ONLY; no Specialist code, queue, protected paths, workflows, or schedules changed"
+}
