@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T14:57:26+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      {
+        "path": "part2/capital_flow/normalization.py",
+        "additions": 39,
+        "deletions": 18
+      },
+      {
+        "path": "part2/capital_flow/tests/test_contracts_normalization.py",
+        "additions": 91,
+        "deletions": 0
+      }
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "67e08647230c1ed18cb5872b76b6391bacf12cdf",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "98ddc97a3001548376518e4791f65d21d140cf5c",
+    "roadmap_latest": "2026-10-25 14:48 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_direct": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-1356-gated-execution-handoff.json",
+      "B": "B-20261025-378cffe-1432-min.json",
+      "C": "C-20261025-378cffe-blocked-1410.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03c"
+  },
+  "integration_decision": "P0 is an in-process threading.Thread regression with monkeypatch on runner.atomic_write_json; even witnessed RED/GREEN would not prove cross-process serialization. Keep P0 negative control, distinct P1 cross-process admission and separate archive/reader atomicity gates. Do not claim A complete from existing bounded normalization PASS, do not issue further source-only oracle refinements without executable evidence.",
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or existing hosted test runner; verify pinned blob IDs; run unchanged python -m pytest -q part2/capital_flow/tests -rs; then test-only P0 witnessed B-overtake negative-control, P1 distinct-process admission, archive/reader checks, preserving real stdout/stderr/exit codes. No DNS clone retries or workflow changes."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
