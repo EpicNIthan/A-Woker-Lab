@@ -1,0 +1,77 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26T05:05:26+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "6cdddbea8cf1fc59c3a475e70d1e981d8d3be75d",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "pending_directory": "ABSENT_404"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 04:49 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-0358-execution-evidence-hard-gate.json",
+      "B": "B-20261026-378cffe-0433-min.json",
+      "C": "C-20261026-378cffe-blocked-0414.json"
+    }
+  },
+  "integration_decision": {
+    "name": "DISCARD_STALE_ABTC_REGISTRATION_BLOCKER",
+    "finding": "Durable automation/worker_status/loop-A.json (2026-10-05) says AmericanBitcoinTreasuryCollector is not registered. At exact public HEAD, runner.py imports it and includes american_bitcoin_treasury in _collect_live; test_sec_context_collectors.py has an offline runner integration test asserting successful collector attempt, archive, handoff, and evidence health. Therefore that stale status is NOT a current missing-integration task; do not enqueue duplicate registration. This is source/test presence proof only, not a pytest execution result.",
+    "pins": {
+      "automation/worker_status/loop-A.json": "a22d74b98af9e279bd5307d18c0e614ca53a4e3e",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/tests/test_sec_context_collectors.py": "a3558b035004a9115b874d2bdd92d466857c16f1",
+      "P0": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+      "P1": "automation/planner_status/A-20261025-378cffe-0301-p1-runnable-matrix.json"
+    },
+    "remaining_gate": "Existing P0 generation and P1 archive cross-process regression contracts are proposed, not executed; do not expand specs without new evidence."
+  },
+  "validation": {
+    "bounded_executor": "PASS",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_check_runs": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent\\n' >&2; exit 2; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 2,
+    "verbatim_error": "BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent",
+    "next_feasible_recovery": "Authorized isolated Linux exact-SHA checkout; verify SHA/source pins; run unchanged python -m pytest -q part2/capital_flow/tests -rs; add test-only P0/P1 overlays, execute targeted and full suite with stdout/stderr, exit codes, non-skips and overlap/serialization witness. Do not retry failed DNS clone or modify Specialist code."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
