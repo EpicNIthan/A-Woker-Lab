@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T12:00:43+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "278131e170efe19ff46c5188ecfc5ae307c39fc3",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "01033780bc5d8e7413b922d8aa4206d8110a110c",
+    "roadmap_latest": "2026-10-25 11:49 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND_DIRECT",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-1100-execution-provenance-gate.json",
+      "B": "B-20261025-378cffe-1127-min.json",
+      "C": "C-20261025-378cffe-blocked-1119.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_pr_workflow_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "pinned": {
+    "spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "test_overlay_in_public_tree": false
+  },
+  "integration_decision": "EXECUTION_ONLY_GATE: exact-source review reconfirmed three individually atomic but not generation-atomic output writes. Pinned P0 overlay is not committed and its conditional B wait does not prove B overtook A; freeze redundant source-only test designs. Accept no P0 GREEN/RED verdict without witnessed interleave, both writers exiting, and actual logs. Keep P1 process admission and reader atomicity separately unverified.",
+  "blocker": {
+    "attempted_operation": "bash -lc 'test -d /mnt/data/A-Woker-Lab/.git ... else exit 42'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "BLOCKED_PLATEAU: no exact-SHA executable repository at /mnt/data/A-Woker-Lab/.git",
+    "other_absent": [
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "next_feasible_recovery": "Provision an authorized disposable Linux checkout pinned to 378cffee; hash pinned blobs and test-only overlay; run unchanged python -m pytest -q part2/capital_flow/tests -rs with stdout/stderr and exit code, then witnessed P0 negative control and non-skipped P1 process admission; post-Gemini repair require targeted/full same-new-SHA GREEN. Do not repeat DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
