@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T17:04:40+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "d358b962c3efcb4bbcc47ac97d633e1d256c547b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 16:46 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-1605-execution-provenance-blocked.json",
+      "B": "B-20261025-378cffe-1627-min.json",
+      "C": "C-20261025-378cffe-blocked-1613.json"
+    }
+  },
+  "pins": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03c",
+    "proposed_test": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "proposed_test_at_public_sha": "404_NOT_FOUND"
+  },
+  "validation": {
+    "exact_sha_status": "PASS_BOUNDED_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_run": "NONE_IN_RECENT_BRANCH_RUNS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "integration_decision": "No new source-only P0 revision and no Gemini task. Existing pinned test is a test-only overlay, not a committed public test; a passing baseline alone cannot prove generation coherence. Require an exact-SHA disposable executable tree and phase-separated witnessed evidence: unchanged full baseline; P0 negative control RED only if writer B actually overtakes paused A, otherwise INCONCLUSIVE; distinct P1 cross-process admission and reader/archive integrity; post-authorized-repair targeted/full GREEN. Do not count bounded normalization PASS as independent A proof.",
+  "blocker": {
+    "operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "missing_path": "/mnt/data/A-Woker-Lab/.git",
+    "second_operation": "GitHub fetch_file part2/capital_flow/tests/test_runner_output_generation.py at exact public SHA",
+    "second_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}",
+    "next_feasible_recovery": "Provide an authorized disposable exact-SHA Linux checkout or an existing hosted runner with the public tree; verify HEAD and pinned blobs; execute python -m pytest -q part2/capital_flow/tests -rs and a test-only pinned P0 overlay, preserving stdout/stderr, exit codes, writer overlap witness, generation vector, and separate P1 process result. No repeated DNS clone and no workflow modification."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
