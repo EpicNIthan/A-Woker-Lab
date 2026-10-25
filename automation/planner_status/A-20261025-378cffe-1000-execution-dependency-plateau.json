@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25 10:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "feeae32d14c77686166a0ee0a2eada61d5086da3",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-25 09:50 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "source": "direct worker-control directory enumeration"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-0857-p0-vacuity-witness-gate.json",
+      "B": "B-20261025-378cffe-0926-min.json",
+      "C": "C-20261025-378cffe-blocked-0914.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pinned": {
+    "spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "overlay_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "overlay_present_on_public_head": false
+  },
+  "integration_decision": {
+    "name": "FREEZE_SOURCE_ONLY_P0_REFINEMENTS_ESCALATE_EXECUTION_PROVENANCE",
+    "basis": "Read-back of exact runner/storage/output/handoff blobs confirms three sequential per-file os.replace publications, not a multi-file transaction; pinned pytest_source remains uncommitted and its optional B overtake can yield vacuous GREEN. This source finding is not executed defect proof. No further redundant source-only contract revisions: next useful A evidence must come from isolated exact-SHA execution.",
+    "acceptance": [
+      "Unchanged exact-SHA Capital Flow full suite first, capture command, exit code, raw logs and -rs.",
+      "Test-only overlay from pinned JSON, record SHA256, require A latest gate, witnessed B latest BEFORE A release and both writers finished for negative-control classification; otherwise INCONCLUSIVE.",
+      "Expected witnessed unchanged-code RED vector [1800000060000,1800000000000,1800000000000] is a hypothesis, NOT_RUN; later authorized Gemini-only repair must show all three 1800000060000 plus targeted/full GREEN.",
+      "Keep cross-process archive admission and concurrent reader snapshot atomicity separate from this thread-level final-state oracle."
+    ]
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "additional_absent": [
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/part2/capital_flow/tests"
+    ],
+    "next_feasible_recovery": "Authorized disposable Linux exact-SHA checkout (not private and not main); overlay pinned test without commit; execute unchanged full suite and witnessed P0 negative control; save stdout/stderr/exit codes. No DNS clone retry, no workflow modification."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
