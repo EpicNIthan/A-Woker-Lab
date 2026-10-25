@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26T03:58:36+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "ignore_public_automation": true
+  },
+  "control": {
+    "prewrite_sha": "287bbccc15faf51ffb359eaf8d4ca2960443146f",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 03:48 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "source": "worker-control recursive tree and direct pending 404"
+    },
+    "latest_durable": {
+      "A": "A-20261026-378cffe-0301-exact-runner-blocked.json",
+      "B": "B-20261026-378cffe-0334-min.json",
+      "C": "C-20261026-378cffe-blocked-0311.json"
+    }
+  },
+  "validation": {
+    "bounded_executor": "PASS",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_check_runs": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "pins": {
+    "P0_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "P0_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "P1_spec": "automation/planner_status/A-20261025-378cffe-0301-p1-runnable-matrix.json",
+    "P1_blob": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "decision": "EXECUTION_EVIDENCE_HARD_GATE: independently re-read pinned P0/P1 regression contracts and exact public source blobs. P0 must allow serialized B (no false negative), and P1 must prove duplicate-ID exclusion, distinct-ID retention and JSONL integrity with process overlap witness or separately proven serialization. Existing tests are proposed overlays, not committed nor run. Separate atomic replacements for latest/audit/anata and unguarded read-before-append are source-supported risks, NOT witnessed failures. No new source-only specification justified; no promotion or Gemini task. Next authorized action is isolated exact-SHA Linux execution with real non-skipped results, not another clone/ZIP retry.",
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent'; exit 2; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 2,
+    "verbatim_error": "BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent",
+    "next_feasible_recovery": "Authorized disposable Linux checkout pinned to 378cffee64e9933b28ed9a40b936724db3beb09e; verify source blobs; run unchanged python -m pytest -q part2/capital_flow/tests -rs baseline; apply test-only P0/P1 overlays; run targeted P0 and P1 plus full python -m pytest -q part2/capital_flow/tests -rs, capture stdout/stderr, exit codes, non-skips and concurrency witness. Do not change public Specialist code/workflows or use DNS clone workaround."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
