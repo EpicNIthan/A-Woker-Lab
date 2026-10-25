@@ -1,0 +1,64 @@
+{
+  "schema": "anata-planner-status-v1",
+  "worker": "A",
+  "lane": "INTEGRATION_COMPLETENESS",
+  "assessed_at_ict": "2026-10-25 20:04",
+  "verdict": "BLOCKED_PLATEAU",
+  "public_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+  "worker_control_prewrite_sha": "d5ceb8cd6463bf99460c79f9fbc505b313f5c004",
+  "recent_public_diff": {
+    "base": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "head": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "files": [
+      "part2/capital_flow/normalization.py (+39/-18)",
+      "part2/capital_flow/tests/test_contracts_normalization.py (+91/-0)"
+    ],
+    "public_automation_ignored": true
+  },
+  "queue": {
+    "authoritative_ref": "worker-control",
+    "pending": 0,
+    "pending_directory": "404",
+    "done": 16,
+    "failed": 16
+  },
+  "roadmap": {
+    "path": "automation/supervisor_roadmap.md",
+    "latest_section": "2026-10-25 19:52 ICT",
+    "supervisor": "CONTINUE"
+  },
+  "latest_durable": {
+    "A": "A-20261025-378cffe-1857-archive-toctou-integration-gate.json",
+    "B": "B-20261025-378cffe-1934-min.json (SOURCE_ADMISSION_PLATEAU)",
+    "C": "C-20261025-378cffe-blocked-1914.json (QUALITY_BLOCKED)"
+  },
+  "validation": {
+    "bounded_done_task": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "executor_result": "PASS",
+    "commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_A_pytest": "NOT_RUN",
+    "exact_sha_actions_runs": 0,
+    "gemini_malformed_json_recovery": "UNVERIFIED"
+  },
+  "finding": {
+    "title": "Existing public validation workflow offers a non-edit baseline recovery path; exact-SHA Actions proof still absent",
+    "evidence": [
+      "At public exact SHA, .github/workflows/validate.yml blob 0f6b0e6319ab5c1e998e261c0b52ab8b14ae4e99 includes workflow_dispatch and runs python -m pytest -q part2/capital_flow/tests on ubuntu-latest Python 3.11.",
+      "Public workflow push path filters include part2/**, matching latest commit's two modified files; GitHub Actions runs query head_sha=378cffee... returned total_count=0.",
+      "The existing Gemini executor queue workflow uses checkout persist-credentials:true; GitHub GITHUB_TOKEN push-trigger suppression is a plausible cause of missing validation run, not established from this inspection."
+    ],
+    "decision": "Separate unchanged full-suite baseline recovery from P0/P1 test-overlay execution. An authorized one-off dispatch of existing public Specialist Lab Validation on anata-local-hardening could provide full-suite evidence WITHOUT editing workflow; accept only if returned run head_sha equals exact public SHA, and capture logs/exit codes. Do not dispatch or edit workflows in Planner A. Pinned no-network two-writer P0 (runner.py blob 61a792aafcb8b8ff4b1c9e4460cf93e51d59203c), P1 cross-process archive admission (storage.py blob e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd), and reader coherence remain separately NOT_RUN."
+  },
+  "execution_blocker": {
+    "attempted": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 128,
+    "stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "next": "Use an authorized existing workflow_dispatch for exact-head unchanged baseline; separately obtain disposable exact-SHA test checkout for witnessed non-vacuous P0/P1 and full suite. No DNS clone retry."
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "workflow_or_schedule_changes": false,
+  "promotion": "BLOCKED: independent A tests absent; C QUALITY_BLOCKED; Supervisor CONTINUE"
+}
