@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-25T11:00:42+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "compare_to_prior": "identical; ahead=0; behind=0",
+    "last_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "2df83c82b54c2f31147ff834d7630222a0a2cb15",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "5039eaca00e6eb022f194be7b12ece35fa285f26",
+    "roadmap_latest": "2026-10-25 10:48 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "source": "direct worker-control GitHub REST tree + contents directory counts"
+    },
+    "latest_durable": {
+      "A": "A-20261025-378cffe-1000-execution-dependency-plateau.json",
+      "B": "B-20261025-378cffe-1034-min.json",
+      "C": "C-20261025-378cffe-blocked-1010.json"
+    }
+  },
+  "validation": {
+    "route": "PASS_BOUNDED_DONE_TASK_EXACT_SHA_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pins": {
+    "spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "overlay": "part2/capital_flow/tests/test_runner_output_generation.py",
+    "overlay_in_public_tree": false
+  },
+  "integration_decision": {
+    "name": "EXECUTION_PROVENANCE_GATE_NO_MORE_SOURCE_ONLY_TEST_REVISIONS",
+    "basis": "Refreshed exact public source blobs and pinned two-writer specification: runner publishes latest/audit/anata JSON in three separate atomic writes; the proposed P0 overlay is absent from public HEAD and its conditional B wait does not prove B overtook A. GitHub connector provides exact source/tree read-back, but not a local runnable exact-SHA checkout. No new test design would resolve missing execution evidence.",
+    "acceptance": [
+      "On authorized disposable exact-SHA checkout, run unchanged python -m pytest -q part2/capital_flow/tests with captured stdout/stderr, -rs, exit code.",
+      "Materialize pinned P0 overlay only in disposable test workspace; hash it and require witnessed B-over-A ordering and both writer exit codes; without witness classify INCONCLUSIVE.",
+      "Treat unchanged-code RED vector [1800000060000,1800000000000,1800000000000] as unexecuted hypothesis, not defect proof. Require post-Gemini targeted and full GREEN on same new SHA.",
+      "Keep P1 process admission and concurrent reader snapshot atomicity as separate unverified contracts."
+    ]
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "alternate_api_operation": "GET https://api.github.com/repos/EpicNIthan/A-Woker-Lab/git/trees/worker-control?recursive=1 via container requests",
+    "alternate_error": "ConnectionError: HTTPSConnectionPool(host='api.github.com', port=443): Max retries exceeded with url: /repos/EpicNIthan/A-Woker-Lab/git/trees/worker-control?recursive=1 (Caused by NameResolutionError(\"HTTPSConnection(host='api.github.com', port=443): Failed to resolve 'api.github.com' ([Errno -3] Temporary failure in name resolution))",
+    "next_feasible_recovery": "Provision authorized disposable exact-SHA Linux checkout or existing GitHub-hosted test runner with pinned test-only overlay and artifact/log export. Do not repeat DNS clone or change workflows. Only GitHub-hosted Gemini may modify public Specialist code after separately proven JSON reliability."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_changes": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
