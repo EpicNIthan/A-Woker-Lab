@@ -1,0 +1,87 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26T07:02:39+07:00",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "ddb5a2ba243f9affd32cddb3fe0e69e062484f60",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 06:50 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-0605-overlay-absence-execution-blocked.json",
+      "B": "B-20261026-378cffe-0633-min.json",
+      "C": "C-20261026-378cffe-blocked-0611.json"
+    }
+  },
+  "validation": {
+    "bounded_executor": "PASS_SELF_REPORTED_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "pins": {
+    "P0_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "P0_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "P1_spec": "automation/planner_status/A-20261025-378cffe-0301-p1-runnable-matrix.json",
+    "P1_spec_blob": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "integration_decision": {
+    "name": "TWO_STAGE_CONCURRENCY_PROOF_NO_VACUOUS_PASS",
+    "finding": "Re-read exact runner/storage/output/handoff: output publication is three individually atomic JSON replacements, not a generation-wide transaction; archive admission reads/checks then appends without visible process lock. Preserve pinned P0/P1 test-only overlays. Classify a P0 negative control as RED only if B writes latest before A is released and final three-file stamps disagree; otherwise INCONCLUSIVE. Classify P1 same-ID race as RED only with witnessed concurrent admission and duplicate/integrity failure; a passing run without overlap is NOT sufficient proof of cross-process safety. After any separately authorized Gemini-only fix, allow serialization, require non-skipped P0/P1 GREEN with both writers/processes completed and integrity checks. No unexecuted PASS asserted.",
+    "no_network_execution_contract": [
+      "git rev-parse HEAD must equal 378cffee64e9933b28ed9a40b936724db3beb09e; verify pinned source blob hashes",
+      "python -m pytest -q part2/capital_flow/tests -rs (unchanged baseline; retain stdout/stderr and exit code)",
+      "Apply pinned test-only overlays at part2/capital_flow/tests/test_runner_output_generation.py and test_archive_process_matrix.py in disposable checkout; do not commit Specialist code",
+      "python -m pytest -q -s -rs part2/capital_flow/tests/test_runner_output_generation.py part2/capital_flow/tests/test_archive_process_matrix.py (record non-skip count, both writer/process exits, P0 stamp vector and P1 overlap witness)",
+      "python -m pytest -q part2/capital_flow/tests -rs (post-overlay full suite, retain stdout/stderr and exit code)"
+    ],
+    "contract_status": "PINNED_NOT_EXECUTED"
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf \"BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent\\n\" >&2; exit 42; fi'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent",
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA Linux checkout (or authorized existing runner), run pinned baseline and test-only P0/P1 overlay contract, preserve actual pytest logs, exit codes and overlap/serialization witnesses. Do not retry failed DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
