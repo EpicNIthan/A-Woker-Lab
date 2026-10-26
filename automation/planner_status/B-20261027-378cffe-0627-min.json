@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-27 06:27 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c318fe2caa5045ffdca6bc427f9f467e6648e0ab",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "97169e75af53d6eee7dc5a1d8e06c91cdcc5de54",
+    "roadmap_latest": "2026-10-27 05:53 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "directly_enumerated": true
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0600-audit-payload-oracle-handoff.json",
+      "B": "B-20261027-378cffe-0530-min.json",
+      "C": "C-20261027-378cffe-blocked-0611.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "effective_immediate_dispatch": "UNVERIFIED"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU",
+    "evidence": [
+      "automation/worker_status/loop-B.json",
+      "automation/planner_status/B-20261027-378cffe-0530-min.json",
+      "automation/supervisor_roadmap.md"
+    ],
+    "blocker": "No new first-party BTC/ETH source dossier establishes immutable artifact/event ID, economic entity, effective/available/observed PIT clocks, independent non-overlap, context-versus-directional spot role, and deterministic no-network test. Prior OKX PoR review lacks verified stable report/file linkage and publication clock; other rejected sources remain excluded.",
+    "next": "Do not recycle rejected candidates or browse speculatively. Reopen only on concrete new first-party evidence. No Gemini task until JSON reliability and immediate queue dispatch are proven."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
