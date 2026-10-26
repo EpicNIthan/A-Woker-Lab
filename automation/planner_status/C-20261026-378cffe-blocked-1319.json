@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-26 13:19 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "cc5b90a5bb337998690101f735702391aecd5397",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "source": "authoritative worker-control recursive tree at prewrite SHA"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "332ced53f54122d8396f96093a5e0a7ef6d16f31",
+    "roadmap_latest": "2026-10-26 12:54 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-1301-same-clock-sentinel-contract.json",
+      "B": "B-20261026-378cffe-1233-min.json",
+      "C": "C-20261026-378cffe-blocked-1219.json"
+    }
+  },
+  "pins": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5"
+  },
+  "quality_finding": "Exact-SHA handoff.py:31 and runner.py:60 use bool(provenance.context_only); string 'false' evaluates True, risking scoring/context-only role inversion. Source-level risk, not an executed end-to-end regression. A's same-clock generation sentinel and B's source admission are separate lanes.",
+  "validation": {
+    "bounded_executor": "PASS_REPORTED_BY_DONE_TASK_EXACT_SHA",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "exact_sha_commit_statuses": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA checkout available; /mnt/data/A-Woker-Lab known missing. No DNS clone or pytest attempted in this run.",
+  "recovery": "Use authorized isolated checkout at exact public SHA; run unchanged baseline python -m pytest -q part2/capital_flow/tests -rs; test-only deterministic no-network string-'false' regression in part2/capital_flow/tests/test_v1_handoff.py; run targeted python -m pytest -q -s -rs part2/capital_flow/tests/test_v1_handoff.py and full suite; retain stdout/stderr, exit codes, overlay hash, and exact SHA. No Gemini task until structured JSON reliability proven.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
