@@ -1,0 +1,80 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 04:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "99fdc69680fd4afa35ff829660ed1f5895d8a865",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-27 03:48 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_direct": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "done_failed_source": "Supervisor direct enumeration 03:48 ICT; not independently re-enumerated in this run"
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0303-p0-oracle-overlay-preflight.json",
+      "B": "B-20261027-378cffe-0333-min.json",
+      "C": "C-20261027-378cffe-blocked-0315.json"
+    }
+  },
+  "validation": {
+    "bounded_exact_sha": "PASS_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "effective_immediate_push_dispatch": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "SAME_CLOCK_CROSS_FILE_COHERENCE_NOT_PROVEN_BY_TIMESTAMP",
+    "finding": "Source review confirms run_once publishes latest.json, audit_latest.json, anata_latest.json with three separate atomic_write_json calls; each has as_of_ms but no shared immutable generation_id/manifest pointer. Two runs can share the same as_of_ms yet carry different evidence, so equality of the three timestamps alone cannot prove a coherent snapshot for readers. The pinned distinct-clock writer-B oracle is still necessary for its narrow two-writer test but is NOT sufficient to certify reader consistency or a same-clock collision. This is an integration acceptance-scope correction, not a new executed defect proof.",
+    "pinned_p0_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "pinned_oracle": "automation/planner_status/A-20261021-378cffe-two-writer-oracle-tightened-0858.json",
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "part2/capital_flow/engine.py": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+    },
+    "acceptance": "Do not promote on as_of_ms equality alone. In an authorized exact-SHA test checkout, run unchanged full baseline, materialize/hash corrected pinned P0 and separate P1 overlays, run targeted and full Capital Flow pytest. For any reader-based alternative, require a versioned manifest/generation token or equivalent verified coherent read protocol; exercise equal-as_of_ms writers with distinct evidence and an interleaved reader and reject mixed payloads. No new overlay/test or code was constructed or executed here.",
+    "tests_enqueued": 0
+  },
+  "blocker": {
+    "attempted_operation": "if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "targeted_pytest_executed": false,
+    "full_pytest_executed": false,
+    "next_feasible_recovery": "Authorized isolated checkout pinned to 378cffee64e9933b28ed9a40b936724db3beb09e; verify 17 test files, baseline, hash test-only overlays, run corrected writer-B oracle plus process/reader contracts and full Capital Flow pytest, preserve logs, exit codes, non-skipped counts, witness hashes. No DNS clone retry. Gemini JSON and immediate dispatch must be proven before any enqueue."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
