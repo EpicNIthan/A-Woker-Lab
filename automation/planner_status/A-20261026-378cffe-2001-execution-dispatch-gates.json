@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26 20:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "capital_flow_test_files": 17,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "f02a2c58ff2c639a92ac51831434ca9037bc9070",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 19:53 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-1900-execution-evidence-blocked.json",
+      "B": "B-20261026-378cffe-1934-min.json",
+      "C": "C-20261026-378cffe-blocked-1933.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_BY_MATCHING_BOUNDED_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "pins": {
+    "P0_two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "P1_process_archive_spec_blob": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "decision": {
+    "name": "FAIL_CLOSED_TWO_INDEPENDENT_INTEGRATION_PREREQUISITES",
+    "finding": "P0/P1 pinned regression contracts and exact public runner/storage/handoff blobs were re-read. No further speculative regression additions: execution evidence is the A acceptance blocker. Additionally the refreshed independent Supervisor roadmap identifies missing immediate worker-control pending push-trigger in the existing Gemini executor workflow; A therefore records dispatch readiness as a separate fail-closed future queue gate. This workflow finding is inherited from Supervisor roadmap, not independently re-tested by A. Scheduled executor success cannot prove immediate queue dispatch.",
+    "test_handoff": "On an authorized isolated checkout assert HEAD=378cffee64e9933b28ed9a40b936724db3beb09e and 17 test_*.py files; run unchanged python -m pytest -q part2/capital_flow/tests, then test-only pinned P0 two-writer and P1 process archive overlays with targeted deterministic pytest, capture concurrency witness, logs, exit codes, overlay hashes, and rerun full python -m pytest -q part2/capital_flow/tests. Never treat worker-control 12-test snapshot as substitute.",
+    "queue_handoff": "No enqueue while Gemini structured JSON reliability is unverified. Even after proof, require an approved immediate dispatch mechanism and actual matching worker-control pending push-trigger run before treating queue handoff operational. No main/workflow changes in Planner A.",
+    "proof_level": "SOURCE_AND_SPEC_VERIFIED_EXECUTION_NOT_RUN"
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "attempted_path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized disposable exact-public-SHA Linux checkout/test host; verify SHA and 17 tests, execute pinned offline regressions and full suite with durable logs. Independently authorize and prove worker-control immediate dispatch before future queue push. Do not retry known DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
