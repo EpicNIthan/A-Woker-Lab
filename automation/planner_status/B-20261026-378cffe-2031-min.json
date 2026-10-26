@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-26 20:31 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "9e059bc7cbf1c5cc30c127fefb631133e0bd6127",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 19:53 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-2001-execution-dispatch-gates.json",
+      "B": "B-20261026-378cffe-1934-min.json",
+      "C": "C-20261026-378cffe-blocked-1933.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_BY_MATCHING_BOUNDED_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_check_runs": 0,
+    "combined_status_contexts": 0,
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_sources": 0,
+    "decision": "PLATEAU",
+    "blocker": "No new immutable first-party BTC/ETH artifact/event ID with effective/available/observed PIT clocks, independent economic non-overlap proof, correct context-vs-directional spot role and deterministic no-network test contract. Previously rejected candidates have no new admissible proof.",
+    "next": "Hold source admission and do not enqueue until new qualifying first-party evidence and verified Gemini JSON recovery. Supervisor additionally identifies missing worker-control pending push-trigger; approved immediate dispatch proof required before future queue use."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
