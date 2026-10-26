@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-26 23:15 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "7788c4fcac3180fc574b9c8e37bbc53fb427c938",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "counts_basis": "Supervisor direct enumeration 2026-10-26 22:46 ICT; not independently re-enumerated this run"
+    },
+    "roadmap_blob": "c6f9ae4401122544d5a92185d3abccb0b0c56ff7",
+    "roadmap_latest": "2026-10-26 22:46 ICT",
+    "latest_reports": {
+      "A": "A-20261026-378cffe-2300-execution-ownership-gate.json",
+      "B": "B-20261026-378cffe-2234-min.json",
+      "C": "C-20261026-378cffe-blocked-2216.json"
+    }
+  },
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+  },
+  "finding": "handoff.py:31 and runner.py:60 use bool(provenance.context_only); bool('false') is True, potentially inverting scoring/context role. No deterministic end-to-end witness.",
+  "validation": {
+    "exact_sha": "BOUNDED_MATCHING_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "effective_queue_push_dispatch": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA checkout: /mnt/data/A-Woker-Lab/.git absent; worker-control test snapshot incomplete (12 vs public 17). No independent pytest logs.",
+  "recovery": "Independent authorized runner: obtain disposable exact-public-SHA checkout; verify git HEAD and 17 tests; execute unchanged baseline, deterministic no-network string-'false' regression test overlay in test_v1_handoff.py and full python -m pytest -q part2/capital_flow/tests; preserve logs, exit codes and overlay hashes.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
