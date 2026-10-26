@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-26 15:19 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "efd49f8103068b572770916b207381e5aaac42ba",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "pending_dir": "404_NOT_FOUND"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "777972cae2fb8ba566b1c44c803e23bd0c59fa65",
+    "roadmap_latest": "2026-10-26 15:04 ICT",
+    "latest_reports": {
+      "A": "A-20261026-378cffe-1504-branch-provenance-gate.json",
+      "B": "B-20261026-378cffe-1333-min.json",
+      "C": "C-20261026-378cffe-blocked-1424.json"
+    }
+  },
+  "pins": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5"
+  },
+  "quality_finding": "handoff.py:31 and runner.py:60 apply bool(...) to provenance.context_only; bool('false') is True, risking scoring/context role inversion. End-to-end regression not executed. A integration and B source breadth are separate gates.",
+  "validation": {
+    "bounded_exact_sha": "PASS_REPORTED_BY_DONE_TASK",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-public-SHA checkout verified; no regression or pytest executed. Worker-control source tree is not the authoritative public Specialist source tree.",
+  "recovery": "Use authorized disposable checkout pinned to public 378cffee with all 17 committed Capital Flow test files. Run unchanged no-network baseline; test-only string-'false' regression in test_v1_handoff.py; targeted and full python -m pytest -q part2/capital_flow/tests; preserve stdout/stderr, exit codes, overlay hash and SHA. No Gemini task until structured-JSON reliability is proven.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
