@@ -1,0 +1,76 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26 23:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "test_files": 17,
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "421e9bed1d2b7d92c1af2319637c949aa3354078",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 22:46 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-2200-dispatch-trigger-correction-blocked.json",
+      "B": "B-20261026-378cffe-2234-min.json",
+      "C": "C-20261026-378cffe-blocked-2216.json"
+    },
+    "legacy_worker_status": "STALE_NOT_AUTHORITY"
+  },
+  "validation": {
+    "route": "BOUNDED_MATCHING_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "combined_status_contexts": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "inspected_exact_blobs": {
+    "P0_spec": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "decision": {
+    "name": "FREEZE_UNEXECUTED_P0_P1_CONTRACTS_ESCALATE_TEST_HOST_OWNERSHIP",
+    "finding": "Direct exact-blob read confirms runner writes latest.json, audit_latest.json, anata_latest.json sequentially at lines 142-144 and archive append/read at lines 120-121; the corrected two-writer P0 spec already allows a serialized B and tests coherent final as_of_ms. No source change or new executable evidence justifies another speculative test variant. Worker-control has an incomplete 12-test snapshot versus public 17; neither it nor a reconstructed partial source tree is an acceptable exact-SHA execution substitute. This is an infrastructure/ownership blocker, not a code-change authorization.",
+    "next_feasible_step": "Independent authorized runner owner provisions a disposable checkout of public anata-local-hardening at SHA 378cffee64e9933b28ed9a40b936724db3beb09e, verifies git rev-parse HEAD and 17 test_*.py files, runs unchanged baseline python -m pytest -q part2/capital_flow/tests, applies test-only pinned P0/P1/reader/archive regression overlays, runs targeted deterministic pytest and full suite, saves command logs, exit codes, overlay hashes, non-skipped concurrency witness and exact commit identity. Do not use worker-control checkout. Recheck SHA before interpreting evidence.",
+    "queue_decision": "NO_ENQUEUE; structured Gemini JSON reliability remains unverified and effective pending-push dispatch lacks an actual run witness. Configured on.push is not proof of effective dispatch."
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "attempted_path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "tests_executed": 0
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
