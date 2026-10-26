@@ -1,0 +1,80 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26 17:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_head": "2238f016389e6d648852c718c4dccc239dbbdb9e",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 16:48 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "source": "direct exact worker-control Git tree enumeration; pending directory absent"
+    },
+    "latest_durable": {
+      "A": "A-20261026-378cffe-1604-interrupted-publication-atomicity.json",
+      "B": "B-20261026-378cffe-1638-min.json",
+      "C": "C-20261026-378cffe-blocked-1616.json"
+    }
+  },
+  "validation": {
+    "bounded_exact_sha": "PASS_BY_MATCHING_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "exact_sha_combined_statuses": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "pins": {
+    "P0_two_writer_spec": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "P1_process_archive_spec": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+  },
+  "decision": {
+    "name": "P0_2_PARAMETERIZED_THREE_STAGE_INTERRUPTED_PUBLICATION_GATE",
+    "improvement": "Previous single failpoint only checked audit_latest.json. Test all three publication stages: failure before latest (control), before audit (T1/T0/T0 source-predicted), before anata (T1/T1/T0 source-predicted). Require no mixed committed generation or independently proven fail-closed snapshot reader. This closes the third-stage blind spot without adding a new production requirement.",
+    "test_only_path": "part2/capital_flow/tests/test_interrupted_publication_matrix.py",
+    "pytest_source": "import json\nfrom pathlib import Path\nimport pytest\nfrom part2.capital_flow import runner\n\n@pytest.mark.parametrize(\"failed_output\", [\n    \"latest.json\", \"audit_latest.json\", \"anata_latest.json\"\n])\ndef test_interrupted_publication_failpoint_matrix(tmp_path, monkeypatch, failed_output):\n    t0, t1 = 1800000000000, 1800000060000\n    names = (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\")\n    runner.run_once(local_dir=tmp_path, network=False, external_jsonl=(), as_of_ms=t0)\n    def stamps():\n        return [json.loads((tmp_path / n).read_text(encoding=\"utf-8\"))[\"as_of_ms\"] for n in names]\n    assert stamps() == [t0, t0, t0]\n    original = runner.atomic_write_json\n    attempts = []\n    def injected(path, payload):\n        if Path(path).name == failed_output:\n            attempts.append(failed_output)\n            raise RuntimeError(\"injected_publication_failure\")\n        return original(path, payload)\n    monkeypatch.setattr(runner, \"atomic_write_json\", injected)\n    with pytest.raises(RuntimeError, match=\"injected_publication_failure\"):\n        runner.run_once(local_dir=tmp_path, network=False, external_jsonl=(), as_of_ms=t1)\n    assert attempts == [failed_output]\n    assert stamps() == [t0, t0, t0], (failed_output, stamps())\n",
+    "targeted": "python -m pytest -q -s -rs part2/capital_flow/tests/test_interrupted_publication_matrix.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "acceptance": "Expected source-derived RED for second and third failpoints; NOT EXECUTED. GREEN only with non-skipped exact-SHA targeted and full pytest plus stdout/stderr, exit codes and overlay hash, or explicit reader protocol test that rejects/retries partial snapshots. Preserve P0 two-writer, P0.5 archive-output causality, P1 cross-process archive gates.",
+    "proof_level": "EXACT_SOURCE_DERIVED_NOT_EXECUTED"
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "attempted_path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "next_feasible_recovery": "Provision an authorized isolated checkout of exact public SHA with 17 Capital Flow test files (not worker-control's 12); run unchanged full baseline, then test-only P0/P0.2/P0.5/P1 targeted regressions and full suite; preserve witnesses/logs/hashes. Do not retry known DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
