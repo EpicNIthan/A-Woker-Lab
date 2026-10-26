@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26 09:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "ignore_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "0197de8678bbac1e65ea7c78ec3a90b65e763951",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 08:50 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-0756-red-green-execution-gate.json",
+      "B": "B-20261026-378cffe-0827-min.json",
+      "C": "C-20261026-378cffe-blocked-0811.json"
+    }
+  },
+  "validation": {
+    "exact_sha_bounded_done": "PASS_REPORTED",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "exact_sha_actions_pass": "NOT_FOUND",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "pins": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "process_matrix": "automation/planner_status/A-20261025-378cffe-0301-p1-runnable-matrix.json",
+    "process_matrix_blob": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "reader_interleave": "automation/planner_status/A-20261014-378cffe-successful-refresh-reader-interleave-0204.json",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "output_blob": "94904d4e00a350d621e9c271372766879059ec03c"
+  },
+  "decision": {
+    "name": "READER_VISIBILITY_MANDATORY_SEPARATE_FROM_WRITER_FINAL_STATE",
+    "reason": "Pinned two-writer P0 checks final three files only. Even a correct writer-serialization repair can still expose [new,old,old] to a concurrent reader between individually atomic replacements. Prior pinned Oct14 reader-interleave oracle covers this separate property but has never run as exact-repo pytest. Make it an explicit independent A acceptance gate: a consumer-facing read must return one generation or detect/retry incomplete publication; do not infer reader atomicity from a P0 writer-only GREEN. Preserve existing P0/P1 contracts; no new speculative test code.",
+    "no_network_contract": [
+      "Pin exact checkout SHA and source blob IDs; run python -m pytest -q part2/capital_flow/tests -rs as baseline.",
+      "Apply only pinned test-only P0 writer, Oct14 reader-interleave, and P1 POSIX process matrix overlays to disposable checkout; never commit Specialist code.",
+      "Run targeted P0 writer and P1 process pytest; for reader gate seed G0, pause G1 immediately after latest.json replacement, read via documented consumer-facing snapshot protocol, require coherent generation or explicit fail-closed retry; capture pause/reader stamps and writer exits.",
+      "Run python -m pytest -q part2/capital_flow/tests -rs with overlays; preserve stdout/stderr, exit codes, non-skip counts and concurrency witnesses. RED pre-fix, GREEN post-fix, otherwise INCONCLUSIVE."
+    ]
+  },
+  "blocker": {
+    "operation": "bash -lc exact-repository checkout preflight before pytest",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "BLOCKED_EXACT_SHA_EXECUTION: /mnt/data/A-Woker-Lab/.git absent",
+    "additional_absent_paths": [
+      "/mnt/data/part2/capital_flow/.git",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "tests_executed": 0,
+    "next_feasible_recovery": "Use authorized disposable Linux checkout pinned to 378cffee64e9933b28ed9a40b936724db3beb09e, with source and test overlays only; run baseline and P0 writer/reader plus P1 process tests; retain exact-SHA logs. No repeat DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
