@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 05:18 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py",
+      "part2/capital_flow/tests/test_contracts_normalization.py"
+    ],
+    "capital_flow_test_files": 17,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "e261da27d43dadf11a6d55934f35ec268265277c",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "4bf3130177d2ea59e9d5372c129a6408dd04034f",
+    "roadmap_at_ict": "2026-10-27 04:47 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "direct_tree_enumeration": true
+    },
+    "latest_reports": {
+      "A": "A-20261027-378cffe-0503-payload-witness-reader-contract.json",
+      "B": "B-20261027-378cffe-0426-min.json",
+      "C": "C-20261027-378cffe-blocked-0417.json"
+    }
+  },
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/tests/test_contracts_normalization.py": "8bfd0557050ac72a5e45bace98460d536b789e52"
+  },
+  "quality_finding": "handoff.py:31 and runner.py:60 apply bool() to provenance.context_only; string 'false' evaluates True and may invert scoring/context role. No end-to-end regression executed.",
+  "validation": {
+    "exact_sha": "BOUNDED_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "immediate_queue_dispatch": "UNVERIFIED"
+  },
+  "blocker": "AUTHORIZED_EXACT_SHA_CHECKOUT_ABSENT:/mnt/data/A-Woker-Lab/.git",
+  "recovery": "Obtain authorized disposable exact-SHA checkout; run unchanged baseline, deterministic no-network string-'false' regression in part2/capital_flow/tests/test_v1_handoff.py, and python -m pytest -q part2/capital_flow/tests; retain logs, exit codes, overlay hashes. No DNS clone retry.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "automation_settings_changed": false
+}
