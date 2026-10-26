@@ -1,0 +1,102 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 05:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "ahead_by": 1,
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "capital_flow_test_files": 17,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "1261c74cb30fd745b2dc6fa1ba1d31920b2aadfd",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "4bf3130177d2ea59e9d5372c129a6408dd04034f",
+    "roadmap_latest": "2026-10-27 04:47 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_direct": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "directly_enumerated": true
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0400-same-clock-coherence-limit.json",
+      "B": "B-20261027-378cffe-0426-min.json",
+      "C": "C-20261027-378cffe-blocked-0417.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "effective_immediate_dispatch": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "PAYLOAD_IDENTITY_WITNESS_DISTINGUISHES_WRITER_SERIALIZATION_FROM_READER_COHERENCE",
+    "improvement_over_previous": "A timestamp-only three-file oracle can false-green for equal-clock but different evidence; this test-only contract uses captured per-writer payload identity and an actual interleaved read. A producer lock alone cannot satisfy reader coherence.",
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/providers.py": "072581823a815c124d8629afd678196e86fe8840"
+    },
+    "pinned_p0": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "pinned_oracle": "automation/planner_status/A-20261021-378cffe-two-writer-oracle-tightened-0858.json",
+    "proposed_test_only_overlay": "part2/capital_flow/tests/test_runner_same_clock_reader.py",
+    "no_network_contract": [
+      "In an authorized disposable exact-SHA checkout, run unchanged full baseline first. Use tmp_path and network=False throughout; do not touch production paths.",
+      "Construct a valid FlowObservation(family='etf',metric='net_flow_usd',asset='BTC',value=100,unit='USD',effective_at_ms=T-3600000,available_at_ms=T-60000,observed_at_ms=T-60000,source='fixture',source_record_id='same-clock-reader',cadence_seconds=86400). Write its to_dict() as one JSONL line to tmp_path/input.jsonl. Set T=1800000060000.",
+      "Monkeypatch runner.atomic_write_json to forward to original and record a deep-copy/canonical JSON payload keyed by thread name and output basename. Require payload A != payload B for EACH of latest.json, audit_latest.json, anata_latest.json, or reject the fixture as non-discriminating.",
+      "Reader test: finish A run_once(local_dir=tmp_path,network=False,external_jsonl=(),as_of_ms=T); then start B with external_jsonl=(input.jsonl,) and same T. Pause B immediately AFTER its latest.json os.replace and BEFORE audit_latest.json. While B is paused, read and preserve the three persisted JSON payloads as one reader observation. Release B in finally; require both run_once calls return normally, no errors, and B's fixture appended exactly once.",
+      "Classify the captured reader triplet against each writer's recorded payloads, not timestamps: it must equal one entire completed generation (all A or all B), never B-latest with A-audit/A-anata. All three as_of_ms values equal T by construction, so timestamp equality must not be accepted as proof.",
+      "Producer P0 separately: retain corrected conditional B-wait/release-A-in-finally contract, require both returns and final three outputs equal writer B's captured payloads; distinct-clock B-final stamp remains a separate assertion. Do not equate threaded P0 with process-safety or reader proof.",
+      "Preserve per-file SHA256 fixture/overlay hashes, writer-payload SHA256, reader-triplet classification, stdout/stderr, exit codes, non-skipped counts. Targeted: python -m pytest -q part2/capital_flow/tests/test_runner_same_clock_reader.py part2/capital_flow/tests/test_runner_output_generation.py; full: python -m pytest -q part2/capital_flow/tests."
+    ],
+    "expected_current_sha": "SOURCE_PREDICTED_RED_NOT_EXECUTED: three independent atomic_write_json calls permit B latest with A audit/anata during B's pause. This is a test expectation, not an observed failure.",
+    "acceptance": "Passing writer serialization alone is insufficient. Reader-visible generation consistency requires verified coherent-read protocol or immutable manifest; same-clock payload-identity witness must pass. No Specialist code proposal or task until actual test evidence and Gemini reliability.",
+    "tasks_enqueued": 0
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA checkout discovery via bounded recursive .git scan (depth<=3)",
+    "search_roots": [
+      "/mnt/data",
+      "/workspace",
+      "/home/oai/share"
+    ],
+    "exit_code": 43,
+    "verbatim_stderr": "NO_EXACT_SHA_CHECKOUT_FOUND_IN_SEARCH_ROOTS\n",
+    "exact_repo_present": false,
+    "missing_overlay_files": [
+      "part2/capital_flow/tests/test_runner_same_clock_reader.py",
+      "part2/capital_flow/tests/test_runner_output_generation.py"
+    ],
+    "targeted_pytest_executed": false,
+    "full_pytest_executed": false,
+    "next_feasible_recovery": "Authorized isolated checkout at public SHA 378cffee64e9933b28ed9a40b936724db3beb09e; construct/hash test-only overlays from pinned specs, unchanged baseline then targeted + full pytest with logs and witness hashes. No DNS clone retry. GitHub-hosted Gemini alone may edit Specialist code after structured-JSON recovery and effective pending push dispatch proven."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
