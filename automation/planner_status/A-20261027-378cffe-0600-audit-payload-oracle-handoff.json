@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 06:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "compare_ahead_by": 1,
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "f239fe66258d8751ff93f4fd7769b6596e5d6e3e",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "97169e75af53d6eee7dc5a1d8e06c91cdcc5de54",
+    "roadmap_latest": "2026-10-27 05:53 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_direct": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "done_failed_counts_source": "Supervisor direct enumeration at 05:53 ICT; directories independently confirmed present this run but connector does not enumerate directory entries"
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0503-payload-witness-reader-contract.json",
+      "B": "B-20261027-378cffe-0530-min.json",
+      "C": "C-20261027-378cffe-blocked-0518.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "effective_immediate_dispatch": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "SEPARATE_READER_VISIBILITY_ORACLE_AND_CAPTURE_AUDIT_PAYLOAD",
+    "finding": "Exact runner.py builds three JSON payloads, writes latest/audit/anata separately, but run_once returns only output and anata_output; frame_audit is NOT returned. Therefore a reader-coherence regression must capture the actual audit_latest.json payload at the atomic_write_json call site, not infer B's expected audit from return values or equal as_of_ms. Also distinguish single-writer/interleaved-reader coherence from the independent two-writer B-final serialization contract; a writer-only lock cannot prove readers see a coherent triplet.",
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+    },
+    "runnable_no_network_contract": [
+      "Isolated exact-SHA checkout; unchanged baseline first. Test-only overlay path part2/capital_flow/tests/test_runner_same_clock_reader.py; do not commit overlay to Specialist branch.",
+      "At fixed T=1800000060000, run A completely with network=False and valid local external_jsonl A. Record persisted A latest/audit/anata payloads.",
+      "Run B on the same local_dir and T with a distinct valid local external_jsonl B. Monkeypatch runner.atomic_write_json: call original, deepcopy each successfully written payload keyed by writer and filename; after B latest.json replacement, set event and wait on release_B in a finally-safe gated section.",
+      "While B is paused, read the three persisted JSONs as one reader observation. Always release_B in finally; join with bounded timeouts; require both run_once calls returned, no exceptions, no source_errors, B fixture appended exactly once.",
+      "Require each A-versus-B captured output payload differs (latest, audit, anata); fail fixture preflight if not. Compare reader triplet to full captured A or B triplet using canonical JSON SHA256, not timestamp. Mixed B-latest/A-audit/A-anata is RED, not accepted as coherent.",
+      "After release, require persisted final triplet equals B's captured payload triplet. Preserve fixture and overlay SHA256, writer/reader payload hashes, event ordering, exit codes, stdout/stderr and non-skipped counts.",
+      "Separate corrected two-writer contract test_runner_output_generation.py must require both writer returns and final B timestamp, not merely three equal stamps; threaded results are not cross-process proof.",
+      "Run python -m pytest -q part2/capital_flow/tests/test_runner_same_clock_reader.py part2/capital_flow/tests/test_runner_output_generation.py; then python -m pytest -q part2/capital_flow/tests."
+    ],
+    "expected_current_sha": "SOURCE_PREDICTED_RED_NOT_EXECUTED; no reader-visible transaction or manifest in pinned source",
+    "tasks_enqueued": 0
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "targeted_pytest_executed": false,
+    "full_pytest_executed": false,
+    "missing_overlay_files": [
+      "part2/capital_flow/tests/test_runner_same_clock_reader.py",
+      "part2/capital_flow/tests/test_runner_output_generation.py"
+    ],
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout/test host; materialize and hash test-only overlays from pinned contracts, run unchanged baseline, targeted and full pytest, preserve witnesses; no DNS clone retry. Gemini structured JSON reliability and effective pending push dispatch must be proven before any narrow task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
