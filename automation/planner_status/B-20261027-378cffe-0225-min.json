@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-27 02:25 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "aedea55cc51512a942a4e7b6c2f541f40321e50e",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-27 01:47 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND_DIRECT",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0204-stale-abtc-registration-reconciled.json",
+      "B": "B-20261027-378cffe-0134-min.json",
+      "C": "C-20261027-378cffe-blocked-0217.json"
+    }
+  },
+  "validation": {
+    "status": "BOUNDED_EXACT_SHA_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "effective_push_dispatch": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_sources": 0,
+    "decision": "PLATEAU",
+    "blocker": "No new independent first-party BTC/ETH artifact/event with immutable ID, economic entity, effective/available/observed PIT clocks, proven non-overlap, valid context-versus-directional-spot role and deterministic no-network contract. The durable loop-B OKX PoR assessment lacks an immutable machine-readable manifest and defensible publication clock; rejected sources are not readmitted.",
+    "next": "Stop repetitive source browsing; request a complete new first-party artifact dossier before re-review. No Gemini task while structured-JSON recovery and effective immediate queue dispatch remain unverified."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
