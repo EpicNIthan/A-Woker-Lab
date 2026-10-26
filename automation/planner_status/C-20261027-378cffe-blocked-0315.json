@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 03:15 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_queue_ignored": true
+  },
+  "worker_control": {
+    "branch": "worker-control",
+    "prewrite_sha": "72e492d7cfe23eac184c16581f8a3f7ed6793151",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "abafe548bc81fe392c7b0db7e780e7dc30396d41",
+    "roadmap_last_update": "2026-10-27 02:49 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "enumerated_directly": true
+    },
+    "latest_reports": {
+      "A": "A-20261027-378cffe-0303-p0-oracle-overlay-preflight.json",
+      "B": "B-20261027-378cffe-0225-min.json",
+      "C": "C-20261027-378cffe-blocked-0217.json"
+    }
+  },
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+    "part2/capital_flow/tests/test_v1_handoff.py": "TO_BE_VERIFIED",
+    "part2/capital_flow/tests/test_contracts_normalization.py": "TO_BE_VERIFIED"
+  },
+  "finding": "handoff._is_context_only and runner._scoring_history apply bool(...) to provenance.context_only; bool('false') is True. String 'false' may invert scoring/context role. End-to-end no-network regression not executed.",
+  "validation": {
+    "historical_bounded_exact_sha": "PASS_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "public_test_file_inventory": 17,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "immediate_queue_dispatch": "UNVERIFIED"
+  },
+  "blocker": {
+    "exact_sha_checkout": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "recovery": "Authorized isolated exact-public-SHA checkout; verify 17 test_*.py files; unchanged baseline; deterministic no-network string-'false' role-inversion regression in test_v1_handoff.py; full python -m pytest -q part2/capital_flow/tests; preserve stdout/stderr, exit codes and test-only overlay SHA256. Do not retry DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
