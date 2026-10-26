@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-26 14:24 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "384b0da180e1459362114b79546c60b271ce142d",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "source": "worker-control exact-SHA recursive tree"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "d5b4385eb9a9b2fdce42014977bb158081af4d53",
+    "roadmap_latest": "2026-10-26 13:53 ICT",
+    "latest_reports": {
+      "A": "A-20261026-378cffe-1359-archive-output-causality-gate.json",
+      "B": "B-20261026-378cffe-1333-min.json",
+      "C": "C-20261026-378cffe-blocked-1319.json"
+    }
+  },
+  "pins": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5"
+  },
+  "quality_finding": "Exact-SHA handoff.py:31 and runner.py:60 apply bool(...) to provenance.context_only; string 'false' is truthy and can invert scoring/context-only classification. Source-level risk; end-to-end regression NOT_RUN. A's archive-to-output causal-coherence acceptance and B's source breadth are separate gates.",
+  "validation": {
+    "bounded_exact_sha": "PASS_REPORTED_BY_DONE_TASK",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA checkout at known local paths; no DNS clone or pytest attempted. No independent regression evidence.",
+  "recovery": "Obtain authorized isolated exact-SHA checkout or existing isolated GitHub test runner. Run unchanged python -m pytest -q part2/capital_flow/tests -rs baseline; add test-only deterministic no-network string-'false' regression in part2/capital_flow/tests/test_v1_handoff.py; run targeted and full suite; retain logs, exit codes, overlay hash, exact SHA.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
