@@ -1,0 +1,96 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26 15:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "source_tree_exact_sha_verified": true,
+    "committed_capital_flow_test_files": 17,
+    "required_provider_modules_present": [
+      "providers_abtc.py",
+      "providers_circle.py",
+      "providers_strategy.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "b7b0cdf6b39b8524887d493541cf5930744a183a",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "source": "worker-control recursive tree and pending contents API"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "d5b4385eb9a9b2fdce42014977bb158081af4d53",
+    "roadmap_latest": "2026-10-26 13:53 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-1359-archive-output-causality-gate.json",
+      "B": "B-20261026-378cffe-1333-min.json",
+      "C": "C-20261026-378cffe-blocked-1424.json"
+    }
+  },
+  "validation": {
+    "bounded_exact_sha": "PASS_REPORTED_BY_DONE_TASK",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "pins": {
+    "P0_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "P1_spec_blob": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "decision": {
+    "name": "EXACT_PUBLIC_BRANCH_PROVENANCE_PRECHECK",
+    "finding": "The worker-control tree contains an older, incomplete Capital Flow source/test snapshot: 12 test files and no providers_abtc.py/providers_circle.py/providers_strategy.py. The exact public anata-local-hardening tree contains 17 test files and all three providers. Therefore using worker-control as an execution checkout can create false import/completeness verdicts and invalid P0/P1 evidence. Worker-control is authoritative ONLY for queue/status/roadmap; public SHA is authoritative for Specialist code and test inventory.",
+    "improved_no_network_preflight": "In authorized disposable Linux checkout, run: test \"$(git rev-parse HEAD)\" = 378cffee64e9933b28ed9a40b936724db3beb09e; test \"$(git ls-files 'part2/capital_flow/tests/test_*.py' | wc -l)\" -eq 17; for m in providers_abtc providers_circle providers_strategy; do test -f \"part2/capital_flow/$m.py\" || exit 11; done. Fail closed if any mismatch. No Specialist edit.",
+    "after_preflight": [
+      "python -m pytest -q part2/capital_flow/tests -rs (unaltered baseline)",
+      "Use pinned test-only P0 two-writer and P1 process regressions, plus prior same-clock and archive-to-output causality contracts; require non-skipped witnessed overlap or independently verified serialization",
+      "python -m pytest -q part2/capital_flow/tests -rs (full overlay)",
+      "Retain SHA, overlay hash, stdout/stderr, exit codes and witness markers; no false GREEN"
+    ],
+    "test_files_committed_on_public": {
+      "P0": false,
+      "P1": false,
+      "P0_5": false
+    },
+    "proof_level": "EXACT_SOURCE_TREE_VERIFIED; TESTS_NOT_EXECUTED"
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "attempted_path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "next_feasible_recovery": "Use an authorized disposable checkout of public 378cffee (not worker-control), apply the branch-provenance preflight, then run baseline and existing pinned test-only contracts. Do not retry DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
