@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-27 05:30 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "89b5dfc4603d8248b64de0cc191dcc2c102cad6f",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "4bf3130177d2ea59e9d5372c129a6408dd04034f",
+    "roadmap_latest": "2026-10-27 04:47 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "directly_enumerated": true
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0503-payload-witness-reader-contract.json",
+      "B": "B-20261027-378cffe-0426-min.json",
+      "C": "C-20261027-378cffe-blocked-0518.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "effective_immediate_dispatch": "UNVERIFIED"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU",
+    "evidence": [
+      "automation/worker_status/loop-B.json",
+      "automation/planner_status/B-20261027-378cffe-0426-min.json"
+    ],
+    "blocker": "No new immutable first-party BTC/ETH source artifact/event ID with economic entity, effective/available/observed PIT clocks, independent non-overlap proof, correct context-versus-directional spot role, and deterministic no-network contract. Previously rejected sources remain excluded; OKX PoR still lacks stable report/file linkage and defensible publication clock.",
+    "next": "Stop speculative re-search until a complete new first-party dossier exists. Do not enqueue Gemini before structured-JSON recovery and immediate dispatch proof."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
