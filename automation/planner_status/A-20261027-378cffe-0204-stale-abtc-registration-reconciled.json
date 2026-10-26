@@ -1,0 +1,85 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 02:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "capital_flow_test_files": 17,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "f46bf4f4231971a1e58f81e3c4740bba441986d9",
+    "roadmap_path": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "463e8d5e9e67c6b17364290375174dc2fb51b06f",
+    "roadmap_latest": "2026-10-27 01:47 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_dir": "404_NOT_FOUND_DIRECT",
+      "done": 16,
+      "failed": 16
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0104-manual-validation-route-audit.json",
+      "B": "B-20261027-378cffe-0134-min.json",
+      "C": "C-20261027-378cffe-blocked-0110.json"
+    }
+  },
+  "validation": {
+    "status": "BOUNDED_EXACT_SHA_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "exact_sha_combined_status_contexts": 0,
+    "exact_sha_lab_validation_runs": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "effective_immediate_pending_push_dispatch": "UNVERIFIED"
+  },
+  "integration_decision": {
+    "name": "RECONCILE_STALE_LOOP_A_ABTC_REGISTRATION_BLOCKER",
+    "finding": "The durable automation/worker_status/loop-A.json from 2026-10-05 still asserts AmericanBitcoinTreasuryCollector is not imported or registered in runner. Exact current public SHA contradicts that historical blocker: runner.py imports the class and registers american_bitcoin_treasury in _collect_live. An existing deterministic no-network integration test test_new_sec_context_collectors_are_live_and_excluded_from_scoring asserts successful collection attempt, archive records, context-only handoff, evidence health, and scoring exclusion. Therefore do NOT enqueue a redundant ABTC registration task; mark the stale durable worker-status claim superseded at source/test-definition level, not as executed test proof.",
+    "exact_source_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/providers_abtc.py": "61aee3964a87c87407e083e23e8c454380a8fdbc",
+      "part2/capital_flow/tests/test_sec_context_collectors.py": "a3558b035004a9115b874d2bdd92d466857c16f1",
+      "automation/worker_status/loop-A.json": "a22d74b98af9e279bd5307d18c0e614ca53a4e3e"
+    },
+    "pinned_two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "pinned_two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "pinned_oracle_tightening": "automation/planner_status/A-20261021-378cffe-two-writer-oracle-tightened-0858.json",
+    "pinned_storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "still_open": "The existing P0 two-writer three-file generation publication and P1 archive cross-process races remain unexecuted and cannot be cleared by ABTC source registration or historical done-task PASS.",
+    "runnable_no_network_contract": "In an authorized disposable checkout verified at 378cffee64e9933b28ed9a40b936724db3beb09e with 17 test_*.py files, run unchanged baseline python -m pytest -q part2/capital_flow/tests, then existing pinned test-only two-writer (both complete, final all-B generation), interrupted publication, reader fail-closed and archive process matrix overlays; targeted python -m pytest -q -s -rs part2/capital_flow/tests/test_runner_output_generation.py part2/capital_flow/tests/test_archive_process_matrix.py, plus existing ABTC integration targeted python -m pytest -q part2/capital_flow/tests/test_sec_context_collectors.py, then full python -m pytest -q part2/capital_flow/tests. Preserve non-skipped counts, stdout/stderr, exit codes, overlay hashes, and concurrency witnesses. These commands were NOT executed in this run.",
+    "next_feasible_recovery": "An authorized independent runner owner must provide a disposable exact-public-SHA checkout and execute baseline and pinned regressions; do not dispatch or modify workflows. Only reconsider Gemini tasks after structured-JSON reliability and effective pending-push dispatch are proven."
+  },
+  "blocker": {
+    "attempted_operation": "bash exact-repository checkout preflight; if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else ...; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "targeted_pytest_executed": false,
+    "full_pytest_executed": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
