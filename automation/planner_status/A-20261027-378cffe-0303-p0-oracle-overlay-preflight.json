@@ -1,0 +1,79 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 03:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "compare_ahead_by": 1,
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_head": "2b4a7297f4e009f3a43b379ad0da5f0ad2ca7186",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_last_update": "2026-10-27 02:49 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_direct": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "done_failed_source": "Supervisor direct enumeration at 02:49 ICT; directory presence confirmed, not independently enumerated this run"
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0204-stale-abtc-registration-reconciled.json",
+      "B": "B-20261027-378cffe-0225-min.json",
+      "C": "C-20261027-378cffe-blocked-0217.json"
+    }
+  },
+  "validation": {
+    "bounded_exact_sha": "PASS_DONE_TASK_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "effective_immediate_queue_push": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "PINNED_P0_ORACLE_AND_MISSING_TEST_OVERLAY_PREFLIGHT",
+    "finding": "A's 2026-10-17 pinned P0 pytest_source checks only len(set(stamps))==1, so all-A files can false-green even if writer B ran and failed to publish. A's 2026-10-21 oracle tightening requires final stamps all equal B and captures both run_once return values, but that tightening is separate prose, not integrated into the pinned pytest_source. Direct exact-public-SHA file reads return 404 for test_runner_output_generation.py and test_archive_process_matrix.py; test_interrupted_publication_matrix.py also absent. Thus an exact checkout alone does NOT make the named targeted commands runnable. This is a concrete execution-handoff incompleteness, not a new production-code verdict.",
+    "pinned_p0_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "pinned_p0_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "pinned_oracle": "automation/planner_status/A-20261021-378cffe-two-writer-oracle-tightened-0858.json",
+    "pinned_oracle_blob": "30d141a4d35fd9397bb3c0ff37c38006b855891f",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "acceptance": "In authorized isolated checkout pinned to exact public SHA with 17 test_*.py files, first run unchanged full Capital Flow baseline. Then materialize test-only overlays from pinned worker-control specifications OUTSIDE any branch write; merge the later P0 oracle tightening into the P0 source: A/B started and both returned successfully, release A in finally, no unconditional B join before release, final three as_of_ms exactly B=1800000060000 (not merely mutually equal), archive absent, no errors. Materialize existing P0.2 failpoint and P1 archive process overlays separately with SHA256 hashes. Run targeted overlays with non-skipped counts and final full python -m pytest -q part2/capital_flow/tests. Preserve stdout/stderr, exit codes, SHA256 overlay manifest, generation/process witnesses. No execution or test file creation was performed in this run.",
+    "process_scope": "Threaded P0 only proves in-process behavior; it must not be represented as cross-process output-generation validation. P1 archive process coverage is a separate gate.",
+    "tasks_enqueued": 0
+  },
+  "blocker": {
+    "attempted_operation": "if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "targeted_pytest_executed": false,
+    "full_pytest_executed": false,
+    "next_feasible_recovery": "Independent authorized exact-SHA checkout/test host owner to construct and hash pinned test-only overlays with tightened oracle, run baseline, targeted and full tests, and publish actual logs; do not retry DNS clone. Do not enqueue Gemini until JSON reliability and immediate push dispatch proven."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
