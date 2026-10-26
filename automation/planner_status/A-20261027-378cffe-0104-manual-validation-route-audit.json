@@ -1,0 +1,87 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 01:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "inert_automation_ignored": true,
+    "test_inventory": 17
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "8aefd731434597e6a0d14838ac689e1fc3dea711",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "96776da63ce0e55a618125bba71ed75c7c49ffcb",
+    "roadmap_latest": "2026-10-27 00:45 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND_DIRECT",
+      "done": 16,
+      "failed": 16,
+      "counts_basis": "direct worker-control git tree (not worker-control's Specialist snapshot)"
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0003-execution-evidence-handoff.json",
+      "B": "B-20261027-378cffe-0030-min.json",
+      "C": "C-20261027-378cffe-blocked-0020.json"
+    }
+  },
+  "validation": {
+    "route": "BOUNDED_EXACT_SHA_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "proof_attempt": 2,
+    "exact_sha_combined_status_contexts": 0,
+    "exact_sha_specialist_lab_validation_runs": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_A_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "immediate_queue_push_dispatch": "UNVERIFIED"
+  },
+  "pinned": {
+    "two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "two_writer_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "P1_process_spec_blob": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+  },
+  "decision": {
+    "name": "RULE_OUT_UNVERIFIED_MANUAL_VALIDATION_ROUTE_KEEP_EXECUTION_HANDOFF",
+    "new_verified_finding": "Public branch .github/workflows/validate.yml (blob 0f6b0e6319ab5c1e998e261c0b52ab8b14ae4e99) includes workflow_dispatch and full Capital Flow pytest on ubuntu-latest, BUT default main .github/workflows directory contains only gemini-executor.yml; validate.yml is absent from default main. Do not assume public-branch workflow_dispatch is a usable exact-SHA remote execution path; no dispatch was attempted. Existing exact-SHA validation is bounded done-task PASS, not independent A regression proof.",
+    "source_integration": "runner.py:142-144 writes latest/audit/anata separately; storage.py:64-90 performs archive read/check/append without cross-process lock. Pinned corrected two-writer and P1 process contracts already target these boundaries. No new speculative overlay justified until executable evidence.",
+    "runnable_no_network_contract": "In authorized disposable Linux checkout at exact public SHA verify git rev-parse HEAD and 17 test_*.py; baseline python -m pytest -q part2/capital_flow/tests; apply existing test-only P0 two-writer, publication failpoint, P0.5 reader and P1 process archive matrix overlays; run targeted python -m pytest -q -s -rs part2/capital_flow/tests/test_runner_output_generation.py part2/capital_flow/tests/test_archive_process_matrix.py and full python -m pytest -q part2/capital_flow/tests. Require non-skipped runs, both writers complete, coherent generation, archive identity and replay checks; preserve overlay hashes, concurrency witness, stdout/stderr, exit codes. No test execution claimed.",
+    "next_feasible_recovery": "An authorized independent runner owner obtains a disposable exact-public-SHA checkout outside worker-control and executes the existing test-only contracts. Alternative GitHub-hosted manual validation requires separately authorized infrastructure route because the existing public-branch workflow is not on default main; Planner A must not edit/dispatch workflows or main.",
+    "queue_decision": "NO_ENQUEUE: Gemini JSON reliability and effective immediate push dispatch remain unverified."
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "attempted_path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "tests_executed": 0
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
