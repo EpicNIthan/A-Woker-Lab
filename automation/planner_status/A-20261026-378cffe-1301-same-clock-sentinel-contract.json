@@ -1,0 +1,96 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-26 13:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "recent_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "179cd6793ee081a824c38f3f6aa6d3b160e493ef",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "counts_source": "Direct worker-control directory enumeration this run"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-26 12:54 ICT",
+    "latest_durable": {
+      "A": "A-20261026-378cffe-1157-audit-linkage-acceptance-blocked.json",
+      "B": "B-20261026-378cffe-1233-min.json",
+      "C": "C-20261026-378cffe-blocked-1219.json"
+    }
+  },
+  "validation": {
+    "bounded_executor_exact_sha": "PASS_REPORTED_BY_DONE_TASK",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "attempt": 2,
+    "exact_sha_actions_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_A_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "pins": {
+    "P0_corrected_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "P0_spec_blob": "dbf74cb2e4be360a1311f5de13ecb8804a9b51b7",
+    "P1_matrix": "automation/planner_status/A-20261025-378cffe-0301-p1-runnable-matrix.json",
+    "P1_spec_blob": "d5b7336b34d894446808a2402d8deaa7fb5ccc7c",
+    "runner_blob": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "storage_blob": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+    "handoff_blob": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "providers_blob": "not_pinned"
+  },
+  "decision": {
+    "name": "P0_SAME_CLOCK_SEMANTIC_SENTINEL_NO_NETWORK_REGRESSION",
+    "finding": "The pinned P0 final-state regression uses different as_of_ms; a same-clock mixed generation can pass its stamp-equality oracle. Exact runner.py writes latest/audit/handoff independently, and its source-error markers are present in all three artifacts: compact.audit_flags includes SOURCE_COLLECTION_ERRORS_PRESENT; audit.source_errors is nonempty; handoff.availability.source_errors_present is true. This yields a deterministic same-clock generation sentinel without fabricating observations or touching protected consumers. Source-derived expected failure only; NOT EXECUTED.",
+    "improved_runnable_test_contract": [
+      "In a disposable exact-SHA checkout, test-only add a parametrized case to part2/capital_flow/tests/test_runner_output_generation.py. Use shared tmp_path and identical as_of_ms=1800000000000 for both writer A and writer B; network=False and no Kote/Glassnode.",
+      "Writer A calls runner.run_once(local_dir=tmp_path, external_jsonl=(), as_of_ms=T) and must return source_errors=[]. Writer B calls runner.run_once(local_dir=tmp_path, external_jsonl=(tmp_path/'deliberately_missing.jsonl',), as_of_ms=T); assert B returns a nonempty source_errors list (JsonlFlowAdapter missing-file error) without raising. This makes B distinguishable with zero market/network fixtures.",
+      "Reuse corrected pinned P0 gate on runner.atomic_write_json: A pauses after its latest.json replacement, B starts; if B reaches latest.json before A release, require B completes; if B is serialized behind A, release A before waiting for B completion. Always release in finally, bounded joins and no surviving threads.",
+      "After both return, load all three JSON files; require identical as_of_ms AND semantic coherence: ('SOURCE_COLLECTION_ERRORS_PRESENT' in latest.audit_flags) == bool(audit.source_errors) == bool(handoff.availability.source_errors_present). The current unguarded order predicts [True,False,False] with equal timestamps; this is an expected RED, not a measured result. Also assert no archive observations.jsonl and both writer calls completed.",
+      "Preserve independent reader interleave and P1 POSIX process tests as separate gates; this test proves only final same-clock writer coherence. For GREEN require non-skipped target and full Capital Flow suite; preserve stdout/stderr, exit codes, exact SHA and overlay hash."
+    ],
+    "targeted": "python -m pytest -q -s -rs part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests -rs",
+    "proof_level": "EXACT_SOURCE_DERIVED_NOT_EXECUTED"
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "attempted_path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_stderr": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "other_absent": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/part2/capital_flow",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "next_feasible_recovery": "Use authorized disposable exact-SHA Linux checkout or existing isolated GitHub test runner (no workflow changes), run baseline then P0 same-clock sentinel, reader, P1 and full pytest with logs. Do not retry DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tests_executed": 0,
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
