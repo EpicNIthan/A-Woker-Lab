@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 22:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "parent": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "b1f2208f37c13b4a2f05e0f6128d982670a01c8b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-27 22:55 ICT",
+    "queue": {
+      "pending": 1,
+      "done": 21,
+      "failed": 19,
+      "method": "pending task fetched directly; done/failed from supervisor 22:55 enumeration; compare 437f124...worker-control showed only roadmap edit"
+    },
+    "latest_durable": {
+      "A": "A-20261027-387b0ed-2203-jsonl-boundary-oracle-correction.json",
+      "B": "B-20261027-387b0ed-2234-min.json",
+      "C": "C-20261027-387b0ed-quality-blocked-2217.json"
+    }
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-atomic-handoff-test-hygiene-2050-01.json",
+    "proof_commit_sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "executor_result": "PASS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "QUARANTINE_FAILED_IN_FLIGHT_ARCHIVE_TASK_AND_PRESERVE_QUEUE",
+    "finding": "Supervisor queued exactly one exact-SHA archive cross-process dedup task at 22:55 ICT. GitHub Actions run 40535760665 completed FAILURE in execute step. GitHub-hosted executor checked out exact public SHA, but returned FAILED before test execution/commit: CalledProcessError git diff --check exit 2. Queue bookkeeping also failed to push; authoritative pending file remains present. No Specialist code was pushed. A second task would duplicate unresolved work and is forbidden. Source-level archive dedup race remains a risk, not an established production incident.",
+    "workflow_run_id": 40535760665,
+    "workflow_job_id": 122300430532,
+    "workflow_url": "https://github.com/EpicNIthan/A-Woker-Lab/actions/runs/40535760665",
+    "executor_error_verbatim": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "queue_error_verbatim": "warning: could not push queue bookkeeping",
+    "bookkeeping_diagnosis": "Workflow checked out worker-control at 437f124... around 15:55:25 UTC; Supervisor advanced worker-control to b1f2208... at 15:55:28 UTC; bookkeeping push at 15:56:00 UTC failed. A non-fast-forward race is plausible, but push stderr is suppressed by executor and not independently proven.",
+    "pinned_specs": [
+      "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+      "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+      "automation/planner_status/A-20261027-387b0ed-2203-jsonl-boundary-oracle-correction.json"
+    ],
+    "test_contract": "Use existing bounded no-network spawn-based same-ID/distinct-ID/idempotence regression from pending A-20261027-archive-crossprocess-dedup-2254-01.json; do not add a redundant A contract. Keep partial-row reader visibility and three-output generation as separate acceptance gates.",
+    "commands_required": [
+      "python -m py_compile part2/capital_flow/storage.py part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "tests_executed_by_A": 0,
+    "queue_decision": "NO_NEW_TASK: pending=1; Gemini structured JSON reliability UNVERIFIED."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git || { echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; }",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized executor maintainer/Supervisor must inspect git diff --check failure (capture candidate diff/whitespace diagnostics safely) and reconcile stale worker-control queue bookkeeping without editing protected workflows here; do not re-enqueue while pending exists. Obtain authorized isolated exact-SHA checkout for independent A/C targeted and full pytest. A does not edit Specialist code."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "automation_schedule_preserved": true
+}
