@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-27 23:28 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "parent": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "diff_summary": "test-only +7/-5, no new economic source",
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "24288d3e5a3a407165c424f40290f020b7d33075",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-27 22:55 ICT",
+    "queue": {
+      "pending": 1,
+      "done": 21,
+      "failed": 19,
+      "method": "direct three-directory enumeration"
+    },
+    "pending_task": "A-20261027-archive-crossprocess-dedup-2254-01.json",
+    "latest_durable": {
+      "A": "A-20261027-387b0ed-2259-executor-diff-check-queue-reconciliation.json",
+      "B": "B-20261027-387b0ed-2234-min.json",
+      "C": "C-20261027-387b0ed-quality-blocked-2315.json"
+    }
+  },
+  "validation": {
+    "exact_sha_bounded_executor_done": "PASS C-20261027-atomic-handoff-test-hygiene-2050-01.json",
+    "new_archive_task": "FAIL_BEFORE_TEST",
+    "workflow_run_id": 40535760665,
+    "workflow_conclusion": "failure",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU",
+    "reason": "No new first-party immutable BTC/ETH artifact with effective/available/observed PIT clocks, independent economic non-overlap, correct context-versus-directional spot role, and deterministic no-network contract. Previously rejected source families not re-admitted.",
+    "evidence": [
+      "exact public SHA comparison 6015b0e...387b0ed",
+      "automation/supervisor_roadmap.md 22:55 ICT",
+      "A 22:59 report",
+      "C 23:15 report"
+    ],
+    "next": "Reopen only for concrete new qualifying first-party evidence; do not duplicate pending integration task."
+  },
+  "blocker": {
+    "scope": "A-lane executor/queue; not B source admission",
+    "attempted_operation": "GitHub Actions Gemini executor run 40535760665; git diff --check",
+    "path": "part2/capital_flow/storage.py and part2/capital_flow/tests/test_archive_concurrent_dedup.py (task allowlist); queue bookkeeping automation/executor_queue/pending/A-20261027-archive-crossprocess-dedup-2254-01.json",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "queue_error": "warning: could not push queue bookkeeping",
+    "next": "Supervisor/authorized maintainer inspect candidate diff/whitespace and reconcile queue bookkeeping; pending stays authoritative; no duplicate enqueue."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
