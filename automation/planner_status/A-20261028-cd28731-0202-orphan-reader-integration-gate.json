@@ -1,0 +1,83 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 02:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "cd28731ba33c8116ca0f9abbf1e4287289a6c540",
+    "parent": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "0c621b16188742212e557535aa002ff7c7f22ac0",
+      "part2/capital_flow/storage.py": "f7531127cc2491aa2abb21ff1b2d01d4ed483bcc",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "18f886e3dc1f0088624c349ca279d9640c2906d8",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "2242a5eb6847be7138830aac8cfa05d1820597d5",
+    "roadmap_latest": "2026-10-28 ~01:57 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 23,
+      "failed": 20,
+      "source": "direct worker-control recursive tree enumeration"
+    },
+    "latest_durable_before_run": {
+      "A": "A-20261028-484ef5e-0103-c-executor-failure-reconciliation.json",
+      "B": "B-20261028-484ef5e-0129-c-failed-plateau.json",
+      "C": "C-20261028-484ef5e-quality-executor-failed-0118.json"
+    }
+  },
+  "validation": {
+    "exact_sha_bounded_executor": "PASS_BY_DONE_TASK_AND_WORKFLOW",
+    "task": "automation/executor_queue/done/C-20261028-archive-lock-crash-harness-0154-01.json",
+    "task_result": "PASS",
+    "task_commit_sha": "cd28731ba33c8116ca0f9abbf1e4287289a6c540",
+    "workflow_run": 40564495803,
+    "workflow_conclusion": "success",
+    "required_targeted": "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "required_full": "python -m pytest -q part2/capital_flow/tests",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "ACCEPT_TEST_ONLY_ORPHAN_FAIL_CLOSED_PROOF_HOLD_ARCHIVE_READER_INTEGRATION",
+    "new_finding": "New committed test asserts child exitcode 17, persistent .jsonl.lock, and subsequent ArchiveWriterLock timeout. This proves fail-closed behavior in bounded executor, NOT automatic crash recovery. storage.append_observations holds lock across read/dedup/append/fsync, but runner.run_once calls load_observations outside the lock, so the runner's archive reader is not serialized with another writer; a partial JSONL body can cause ValueError. This is a source-derived concurrency exposure, not an executed production failure. The known external consumer reads one atomic handoff JSON, so the pinned three-output generation mismatch remains diagnostic.",
+    "pinned_two_writer_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "runnable_no_network_test_contract": "At this exact SHA, in a temp local_dir seed one valid observation. Spawn writer A with top-level target and a test-only wrapper around destination Path.open('a') that writes and flushes HALF the next JSON body, signals A_PARTIAL, waits RELEASE_A (bounded), then writes remainder+newline. Parent waits A_PARTIAL; with A still holding ArchiveWriterLock, assert load_observations raises ValueError for the deliberately incomplete row and runner.run_once(network=False, local_dir=tmp_path) also raises ValueError (its reader is outside lock). Release A in finally; bounded join and exitcode==0; assert complete JSONL is parseable, two unique rows, no lockfile. Include positive control where a COMPLETE JSON body without final newline is parseable (do not use newline absence as corruption oracle). This characterizes current behavior, not a passed reader-safety requirement; a stronger acceptance gate would require reader to see only complete rows or defer safely. Keep separate pinned two-writer generation diagnostic.",
+    "commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "new_task_enqueued": 0,
+    "reason_no_queue": "Gemini structured JSON reliability unverified; C just changed public HEAD; A does not edit Specialist code or dispatch repeat failed tasks."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git || { echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; }",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Supervisor arrange isolated exact-SHA checkout or independent GitHub test runner for targeted/full pytest and controlled reader/write test; obtain fresh B/C verdicts at cd28731; document safe manual orphan-lock recovery policy before claiming operational resilience."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "STALE_AT_484ef5e",
+    "C": "STALE_AT_484ef5e",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
