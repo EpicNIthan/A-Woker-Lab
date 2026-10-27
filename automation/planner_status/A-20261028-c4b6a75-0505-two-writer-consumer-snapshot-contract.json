@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 05:05 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "ad9684f8efa9a608b6db178b5d0c150a68ed4b51",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "461dda3d89cfda6060ae6d2e4a7624e00b493948",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 20,
+      "provenance": "recursive exact worker-control Git tree"
+    },
+    "latest_durable": {
+      "A": "A-20261028-c4b6a75-0356-queue-reconciliation-orphan-lock.json",
+      "B": "B-20261028-c4b6a75-0432-min.json",
+      "C": "C-20261028-c4b6a75-quality-blocked-0418.json"
+    },
+    "legacy_worker_status_not_authoritative": true
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ALTERNATIVE",
+    "matching_done": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "workflow_run": 40581619175,
+    "workflow_conclusion": "success",
+    "task_required_targeted": "python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py",
+    "task_required_full": "python -m pytest -q part2/capital_flow/tests",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "queue_reconciliation": "SUPERVISOR_COMPLETED_0_PENDING_25_DONE_20_FAILED"
+  },
+  "decision": {
+    "name": "TWO_WRITER_THREE_OUTPUT_CONSUMER_SNAPSHOT_ACCEPTANCE",
+    "kind": "IMPROVED_UNEXECUTED_NO_NETWORK_TEST_CONTRACT",
+    "pinned_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "finding": "Archive lock now serializes observation read/write, but runner.run_once still publishes latest.json, audit_latest.json, and anata_latest.json via three independent atomic_write_json calls. A consumer reading the trio can observe mixed generations, and two successful runs can leave persistent mixed generations. This is source-derived; no known production consumer of all three and no confirmed incident.",
+    "improvement_over_pinned": "Add a pre-seeded generation S and explicit consumer snapshot while writer A is paused after latest.json, proving a transient torn read as well as pinned persistent torn final state. Keep monkeypatch thread-scoped to writer A; collect all snapshots and assert only after finally cleanup, so RED test cannot strand writer.",
+    "runnable_contract": [
+      "Add test-only part2/capital_flow/tests/test_runner_output_generation.py on an isolated checkout of EXACT public SHA; do not change production code. Use tmp_path, append_observations once with pinned valid BTC ETF row; network=False, external_jsonl=(), as_of_ms explicit.",
+      "Seed run_once(local_dir=tmp_path,network=False,as_of_ms=1800000000000) to publish S; assert all three top-level as_of_ms==S and archive contains one unchanged observation.",
+      "Monkeypatch runner.atomic_write_json with original forwarding. Only for thread named writer-A AND path.name=='latest.json': invoke original first, set A_paused Event, then wait release_A Event with bounded timeout. Start writer-A at 1800000060000; assert A_paused.wait(10).",
+      "While A paused, read all three JSON files and record transient snapshot (predicted A,S,S). Start writer-B at 1800000120000 on same local_dir; join B with timeout 10, assert completed without exception; record snapshot (predicted B,B,B).",
+      "In finally release_A, join both with bounded timeouts and assert no live thread; record final snapshot (predicted B,A,A). Assert both runs succeeded, appended_observations==0, archive still one original ID/clock/provenance; JSON loads for every file.",
+      "Acceptance assertions require every observed snapshot to contain one identical as_of_ms across latest/audit/anata, including transient and final. Baseline current source predicts RED, not executed. Run sequential C at 1800000180000 afterward and assert all three C and archive unchanged (positive control).",
+      "Targeted: python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py; full: python -m pytest -q part2/capital_flow/tests; capture exit codes and exact SHA. No network calls."
+    ],
+    "additional_integration_gate": "ArchiveWriterLock uses PID-only orphan .lock and cannot safely auto-reap; require operator-only fail-closed recovery with proof no live owner and validated archive JSONL integrity before manual lock removal. Do not auto-delete.",
+    "next_feasible_recovery": "Provide authorized isolated exact-SHA checkout/runner; execute baseline RED and full suite, then allow Gemini-only narrow fix after structured-JSON reliability proven and queue empty. Independent C verification and fresh Supervisor PLATEAU required for promotion.",
+    "tasks_enqueued": 0
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_AT_c4b6a75",
+    "B": "SOURCE_ADMISSION_PLATEAU_AT_c4b6a75",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE_AT_c4b6a75",
+    "Supervisor": "CONTINUE_NOT_PLATEAU_AT_c4b6a75"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
