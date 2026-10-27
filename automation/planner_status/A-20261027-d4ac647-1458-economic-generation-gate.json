@@ -1,0 +1,97 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 14:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "previous_sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "ahead_by": 1,
+    "changed_paths": [
+      "part2/capital_flow/runner.py",
+      "part2/capital_flow/tests/test_runner_role_consistency.py"
+    ],
+    "inert_public_automation_ignored": true,
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "runner_role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "0c612d1a5cd6db63facb79482eb07fe9d313dc70",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "b5c221dbee5a1d10a5d9378f2cf2c93a254c5337",
+    "roadmap_updated": "2026-10-27 14:48 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404 absent via GitHub fetch_file",
+      "done": 19,
+      "failed": 19,
+      "done_failed_counts_source": "Supervisor 14:48 ICT direct directory enumeration; not independently re-enumerated"
+    },
+    "latest_durable": {
+      "A": "A-20261027-d3d9b72-1358-unittest-fixture-contract.json",
+      "B": "B-20261027-d3d9b72-1431-min.json",
+      "C": "C-20261027-d3d9b72-blocked-1413.json"
+    }
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-runner-context-role-pytest-1445-01.json",
+    "proof_commit_sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "executor_status": "PASS",
+    "attempt": 1,
+    "required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "CLOSE_RUNNER_ROLE_PARITY_ONLY_AND_ELEVATE_SAME_CLOCK_ECONOMIC_GENERATION_GATE",
+    "closed": "Source now delegates runner._scoring_history to evidence_health._is_context_only, matching handoff; dedicated nine-case pure pytest and two-observation offline integration test committed with exact-SHA bounded executor PASS. Prior A runner role-parity source blocker is resolved at this SHA; prior A/B/C reports are stale.",
+    "open": "No exact-repo independent pytest; no executed economically distinct two-writer generation regression; separate production-reader coherent snapshot acceptance unproven. runner still writes latest/audit/anata sequentially through independent atomic_write_json calls. This is a source-level risk, not an observed production race.",
+    "new_contract": {
+      "path_proposed": "part2/capital_flow/tests/test_runner_output_generation.py",
+      "materialized": false,
+      "executed": false,
+      "why_improved": "Both writers use identical as_of_ms, same source IDs and provenance but opposite economically meaningful values. Three sequential single-writer oracle snapshots are compared against each persisted output, not merely timestamps or file hashes; conditional B wait avoids rejecting a correct writer serialization lock.",
+      "python_source": "import json\nimport threading\nfrom pathlib import Path\nfrom part2.capital_flow import runner\nfrom part2.capital_flow.contracts import FlowObservation\n\nCLOCK = 1_800_000_000_000\nFILES = (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\")\n\ndef _economic_rows(sign):\n    specs = ((\"etf\", \"net_flow_usd\", \"USD\", 10000000),\n             (\"exchange_btc\", \"btc_netflow\", \"BTC\", 100),\n             (\"stablecoin\", \"supply_change_usd\", \"USD\", 100000000))\n    rows = []\n    for family, metric, unit, scale in specs:\n        for i in range(8):\n            stamp = CLOCK - (8 - i) * 3600000\n            rows.append(FlowObservation(\n                family=family, metric=metric, asset=\"BTC\", value=sign * (i + 1) * scale,\n                unit=unit, effective_at_ms=stamp, available_at_ms=stamp,\n                observed_at_ms=stamp, source=\"same_offline_source\",\n                source_record_id=f\"{family}-{i}\", cadence_seconds=3600,\n                provenance={\"context_only\": False}))\n    return rows\n\ndef _snapshot(directory):\n    return {name: json.loads((directory / name).read_text(encoding=\"utf-8\"))\n            for name in FILES}\n\ndef test_two_writers_same_clock_distinct_economic_generations(tmp_path, monkeypatch):\n    histories = {\"writer-A\": _economic_rows(1), \"writer-B\": _economic_rows(-1)}\n    selected = {\"name\": \"writer-A\"}\n    def offline_load(_path, *, max_records=None):\n        name = threading.current_thread().name\n        return list(histories[name if name in histories else selected[\"name\"]])\n    monkeypatch.setattr(runner, \"load_observations\", offline_load)\n\n    oracles = {}\n    for name in histories:\n        selected[\"name\"] = name\n        root = tmp_path / name\n        runner.run_once(local_dir=root, network=False, external_jsonl=(),\n                        as_of_ms=CLOCK)\n        oracles[name] = _snapshot(root)\n    assert all(oracles[\"writer-A\"][f] != oracles[\"writer-B\"][f] for f in FILES), (\n        \"Fixture must distinguish economically opposite evidence in EACH output\")\n    shared = tmp_path / \"shared\"\n    shared.mkdir()\n    for f in FILES:\n        (shared / f).write_text(json.dumps(oracles[\"writer-B\"][f]), encoding=\"utf-8\")\n\n    a_latest, release_a, b_latest = (threading.Event() for _ in range(3))\n    original_write = runner.atomic_write_json\n    def gated_write(path, payload):\n        original_write(path, payload)\n        if Path(path).name == \"latest.json\":\n            if threading.current_thread().name == \"writer-A\":\n                a_latest.set()\n                assert release_a.wait(20), \"writer A release timeout\"\n            elif threading.current_thread().name == \"writer-B\":\n                b_latest.set()\n    monkeypatch.setattr(runner, \"atomic_write_json\", gated_write)\n    errors = []\n    def writer():\n        try:\n            runner.run_once(local_dir=shared, network=False,\n                            external_jsonl=(), as_of_ms=CLOCK)\n        except BaseException as exc:\n            errors.append(repr(exc))\n    a = threading.Thread(target=writer, name=\"writer-A\")\n    b = threading.Thread(target=writer, name=\"writer-B\")\n    a.start()\n    try:\n        assert a_latest.wait(20), \"A did not reach first output write\"\n        b.start()\n        if b_latest.wait(5):\n            b.join(20)  # Unlocked B overtakes paused A; serialized B waits.\n            assert not b.is_alive(), \"B did not complete after overtaking\"\n    finally:\n        release_a.set()\n        a.join(20)\n        if b.ident is not None:\n            b.join(20)\n    assert not a.is_alive() and not b.is_alive(), \"writer thread hung\"\n    assert not errors, errors\n    assert not (shared / \"observations.jsonl\").exists()\n    actual = _snapshot(shared)\n    matches = {f: (\"A\" if actual[f] == oracles[\"writer-A\"][f]\n                   else \"B\" if actual[f] == oracles[\"writer-B\"][f]\n                   else \"OTHER\") for f in FILES}\n    assert len(set(matches.values())) == 1 and \"OTHER\" not in matches.values(), matches\n",
+      "commands": [
+        "python -m py_compile part2/capital_flow/tests/test_runner_output_generation.py",
+        "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "reader_gate": "Separate production-reader integration test must exercise the actual reader path under paused writer and verify one coherent generation. Raw three-file reads may legitimately mix during a write without a reader-side snapshot protocol; do not claim writer serialization alone passes reader acceptance.",
+      "limitations": "Candidate contract not materialized or executed; verify source-dependent oracle differences and test reliability in an authorized exact-SHA checkout. If oracles do not differ in every output, improve economic fixtures rather than weaken assertion."
+    },
+    "queue_decision": "NO_TASK: general Gemini structured JSON reliability remains UNVERIFIED; no repeat of malformed failed tasks."
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'test -d /mnt/data/A-Woker-Lab/.git || { echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; }'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized isolated checkout pinned to exact d4ac647f34f7a4116c53219da4099212022c96dd; materialize test-only candidate, execute targeted and full Capital Flow pytest and preserve logs/exit codes/hashes. Do not repeat DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "STALE_REASSESSMENT_REQUIRED",
+    "C": "STALE_REASSESSMENT_REQUIRED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
