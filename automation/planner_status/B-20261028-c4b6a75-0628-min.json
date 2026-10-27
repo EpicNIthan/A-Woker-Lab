@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 06:28 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "economic_source_change": "NONE; reader/writer regression test-only",
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "5f4c66d7d06c5b52936132edb85a1c091c38653e",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 20,
+      "provenance": "Direct worker-control contents enumeration: pending directory absent (404), done 25, failed 20."
+    },
+    "latest_durable": {
+      "A": "A-20261028-c4b6a75-0605-consumer-contract-scope-correction.json",
+      "B_previous": "B-20261028-c4b6a75-0529-min.json",
+      "C": "C-20261028-c4b6a75-quality-contract-scope-0615.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK",
+    "task": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "executor_commit_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "workflow_run": 40581619175,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "decision": "PLATEAU",
+    "reason": "Latest exact public commit changes only a concurrency test; no new first-party economic source artifact. No fresh source establishes immutable artifact/event ID, BTC/ETH economic entity, effective/available/observed PIT clocks, non-overlap, correct context-vs-directional spot role, and deterministic no-network contract.",
+    "rejected_families": "Previously rejected Uniswap v3, Arbitrum bridge, Thorchain, BTC mining subsidy, Coinbase/Bitfinex/OKX, PoR, treasury/staking/derivatives remain excluded absent genuinely new proof.",
+    "next": "Reopen source admission only on a new immutable first-party artifact with complete clocks, economic non-overlap and offline contract."
+  },
+  "lane_boundary": {
+    "A": "BLOCKED_PLATEAU; latest 06:05 clarifies that three independently atomic outputs are not a proven transactional consumer contract; consumer read-set unverified",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE; latest 06:15 no independent exact-SHA tests, reader ATTEMPT event not definitive lock-acquisition proof, string-'false' regression unexecuted",
+    "Supervisor": "CONTINUE_NOT_PLATEAU; latest roadmap 05:47 ICT"
+  },
+  "blockers": [
+    "Independent targeted/full pytest and exact consumer read-set absent (A/C ownership).",
+    "PID-only orphan lock remains fail-closed; operator-only recovery needs no-live-owner and JSONL integrity proof.",
+    "Gemini structured JSON reliability unverified; no repetitive task dispatch."
+  ],
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
