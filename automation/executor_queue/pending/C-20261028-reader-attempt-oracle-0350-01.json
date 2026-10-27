@@ -1,0 +1,22 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261028-reader-attempt-oracle-0350-01",
+  "worker": "C",
+  "title": "Make Capital Flow reader/writer visibility regression prove reader attempted during held lock",
+  "base_sha": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/tests/test_archive_reader_writer_visibility.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "instructions": "C-LANE QUALITY TEST-ONLY task on EXACT base_sha. Modify ONLY part2/capital_flow/tests/test_archive_reader_writer_visibility.py. Existing reader visibility regression uses broad pytest.raises(Exception) around queue.get(timeout=1) without proving reader has reached the public load_observations call; a slow child spawn can falsely pass. Introduce a spawn-safe multiprocessing reader_attempt_event passed into _reader_target and set immediately before calling public load_observations, after writer PARTIAL event is observed. Parent must first wait for writer partial_written_event and reader_attempt_event with bounded timeouts, assert writer lock still held, then assert specifically queue.Empty from queue.get(timeout=bounded interval) while writer lock remains held (import Empty from queue); do not accept arbitrary exceptions as evidence. Always release writer in finally, join/terminate both children with bounded timeouts, assert both exitcode==0, complete two distinct observations, no leftover lock; avoid sleeps as sole synchronization and avoid semicolon/formatting issues. Add a separate deterministic no-network positive control that writes a complete valid JSON observation row WITHOUT terminal newline and proves public load_observations parses it, so newline absence alone is not treated as corruption. Preserve existing production storage behavior and public APIs; do not modify storage.py or any non-test file, do not add stale-lock auto deletion. Run python -m py_compile for modified test, targeted pytest and FULL Capital Flow pytest, git diff --check; commit only on all PASS and only allowed path. If any tests fail, fail closed, do not push. No changes to main, private, automation/**, .github/**, secrets, prediction/API orchestration/journals/Telegram/MT5/broker/execution or Railway. Do not enqueue another task."
+}
