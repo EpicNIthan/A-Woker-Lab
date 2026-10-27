@@ -1,0 +1,24 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261027-runner-context-role-pytest-1445-01",
+  "worker": "A",
+  "title": "Runner context-role parity with pure-pytest regression (no unittest fixture)",
+  "base_sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+  "instructions": "A integration/completeness, exact-base bounded retry after failed A-20261027-runner-context-role-parity-1347-01. Repair ONLY runner._scoring_history's context_only parsing: import evidence_health._is_context_only under a distinct alias and filter observations by NOT that function on obs.provenance. Preserve all other runner logic, PIT, archive, scoring, outputs, and APIs. Existing evidence_health and handoff parsing are authoritative. Truth table provenance -> context_only: {} false (scoring); {\"context_only\":false} false; {\"context_only\":true} true; {\"context_only\":\" false \"} false; {\"context_only\":\"TRUE\"} true; {\"context_only\":\"maybe\"} true (fail closed); {\"context_only\":null} true; {\"context_only\":\"\"} true; {\"context_only\":[]} true. Create ONLY NEW part2/capital_flow/tests/test_runner_role_consistency.py; all existing tests byte-for-byte unchanged. IMPORTANT PREVIOUS FAILURE: generated unittest.TestCase.test_*(self,tmp_path) caused TypeError because unittest does NOT inject pytest fixtures. New test file MUST use only standalone MODULE-LEVEL pytest test_*(tmp_path) functions and pytest.mark.parametrize; NO unittest.TestCase, NO unittest import, NO class-based tests, NO test methods with self. Include one direct _scoring_history truth-table test using fresh FlowObservation for each case, unique source_record_id; include one deterministic run_once(local_dir=tmp_path, network=False, external_jsonl=(), as_of_ms=fixed_clock) integration test using observations.jsonl and FlowObservation.to_dict, verifying scoring_records_loaded, archive_records_loaded, audit_latest context_only_observation_count, and handoff source_evidence scoring/context roles for two PIT-visible distinct records: string ' false ' scoring, explicit None context. Use valid timestamps <= as_of_ms and distinct IDs. If checking future-available rows, archive-wide audit counts may differ from PIT-visible handoff counts; do NOT assert they equal. Inspect existing runner/contracts tests for exact interfaces, do not fabricate keys or weaken assertions. Syntax-compile runner and new test; ensure existing test blob hashes unchanged. Run targeted NEW pytest then FULL python -m pytest -q part2/capital_flow/tests, and commit ONLY if both PASS and changed paths exactly allowlist. On failure, fail closed with accurate report; do not commit. Never edit automation/.github/worker-control/main/private, secrets, prediction/API orchestration, journals, Telegram, MT5, broker or execution. Return minimal structured JSON.",
+  "read_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/evidence_health.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_handoff_context_role.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/tests/test_runner_role_consistency.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2
+}
