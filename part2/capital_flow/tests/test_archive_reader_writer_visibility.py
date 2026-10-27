@@ -5,6 +5,7 @@ import multiprocessing as mp
 import os
 from pathlib import Path
 import time
+from queue import Empty
 import pytest
 
 from part2.capital_flow.contracts import FlowObservation
@@ -63,6 +64,7 @@ def _reader_target(
     archive_path: str,
     start_event: mp.Event,
     partial_written_event: mp.Event,
+    reader_attempt_event: mp.Event,
     queue: mp.Queue,
 ) -> None:
     try:
@@ -75,6 +77,9 @@ def _reader_target(
         if not partial_written_event.wait(timeout=5.0):
             queue.put(("TIMEOUT", "Partial written signal not received"))
             return
+
+        # Signal that reader is about to attempt public load_observations under held lock
+        reader_attempt_event.set()
 
         # Attempt loading observations while writer holds lock; should block on ArchiveWriterLock
         records = load_observations(archive_path)
@@ -113,6 +118,7 @@ def test_archive_reader_writer_visibility_barrier(tmp_path: Path) -> None:
     ctx = mp.get_context("spawn")
     start_event = ctx.Event()
     partial_written_event = ctx.Event()
+    reader_attempt_event = ctx.Event()
     release_event = ctx.Event()
     queue = ctx.Queue()
 
@@ -134,6 +140,7 @@ def test_archive_reader_writer_visibility_barrier(tmp_path: Path) -> None:
             str(archive),
             start_event,
             partial_written_event,
+            reader_attempt_event,
             queue,
         ),
     )
@@ -142,9 +149,19 @@ def test_archive_reader_writer_visibility_barrier(tmp_path: Path) -> None:
         writer_proc.start()
         reader_proc.start()
 
-        # Verify reader cannot complete during partial write phase because writer holds ArchiveWriterLock
-        with pytest.raises(Exception):
-            queue.get(timeout=1.0)
+        # Wait for writer partial written signal with bounded timeout
+        assert partial_written_event.wait(timeout=5.0), "Writer partial written signal not received"
+
+        # Wait for reader attempt signal with bounded timeout proving reader has reached load_observations call
+        assert reader_attempt_event.wait(timeout=5.0), "Reader attempt event not received"
+
+        # Assert writer lock still held
+        lock_path = Path(str(archive) + ".lock")
+        assert lock_path.exists(), "Writer lock must still be held during reader block"
+
+        # Assert specifically queue.Empty from queue.get with bounded timeout while writer lock remains held
+        with pytest.raises(Empty):
+            queue.get(timeout=0.5)
 
         assert reader_proc.is_alive(), "Reader process should be blocked waiting for ArchiveWriterLock"
 
@@ -156,8 +173,8 @@ def test_archive_reader_writer_visibility_barrier(tmp_path: Path) -> None:
         assert status == "OK", f"Reader failed with status {status}: {payload}"
 
         # Join processes with bounded timeouts
-        writer_proc.join(timeout=5.0);
-        reader_proc.join(timeout=5.0);
+        writer_proc.join(timeout=5.0)
+        reader_proc.join(timeout=5.0)
 
         if writer_proc.is_alive():
             writer_proc.terminate()
@@ -175,7 +192,6 @@ def test_archive_reader_writer_visibility_barrier(tmp_path: Path) -> None:
         ids = {r.observation_id for r in loaded_records}
         assert ids == {obs1.observation_id, obs2.observation_id}
 
-        lock_path = Path(str(archive) + ".lock")
         assert not lock_path.exists(), "Archive writer lock file must be cleaned up"
     finally:
         try:
@@ -188,3 +204,33 @@ def test_archive_reader_writer_visibility_barrier(tmp_path: Path) -> None:
         if reader_proc.is_alive():
             reader_proc.terminate()
             reader_proc.join()
+
+
+def test_archive_load_observations_no_terminal_newline_positive_control(tmp_path: Path) -> None:
+    archive = tmp_path / "no_newline.jsonl"
+    obs = FlowObservation(
+        family="etf",
+        metric="net_flow_usd",
+        asset="BTC",
+        value=999.0,
+        unit="USD",
+        effective_at_ms=DAY,
+        available_at_ms=DAY + 1,
+        observed_at_ms=DAY + 1,
+        source="nn-src",
+        source_record_id="rec-nn",
+    )
+
+    # Write complete valid JSON observation row WITHOUT terminal newline
+    archive.parent.mkdir(parents=True, exist_ok=True)
+    with archive.open("w", encoding="utf-8", newline="") as handle:
+        row_json = json.dumps(obs.to_dict(), sort_keys=True, separators=(",", ":"))
+        handle.write(row_json)
+        handle.flush()
+        os.fsync(handle.fileno())
+
+    # Proves public load_observations parses it successfully so newline absence alone is not treated as corruption
+    loaded = load_observations(archive)
+    assert len(loaded) == 1
+    assert loaded[0].observation_id == obs.observation_id
+    assert loaded[0].value == 999.0
