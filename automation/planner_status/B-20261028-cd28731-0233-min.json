@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 02:33 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "cd28731ba33c8116ca0f9abbf1e4287289a6c540",
+    "parent": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_change": "NONE; test-only crash-orphan lock harness and process exitcode assertions",
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "95768b43354014b36f606a45305bfb97f912090d",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "2242a5eb6847be7138830aac8cfa05d1820597d5",
+    "roadmap_latest": "2026-10-28 ~01:57 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 23,
+      "failed": 20,
+      "provenance": "worker-control executor_queue directory enumeration; pending absent, done and failed counted"
+    },
+    "latest_A": "A-20261028-cd28731-0202-orphan-reader-integration-gate.json",
+    "latest_B_prior": "B-20261028-484ef5e-0129-c-failed-plateau.json",
+    "latest_C": "C-20261028-cd28731-quality-blocked-0218.json"
+  },
+  "validation": {
+    "exact_sha_bounded_executor": "PASS_BY_MATCHING_DONE_TASK_AND_SUCCESSFUL_WORKFLOW",
+    "done_task": "automation/executor_queue/done/C-20261028-archive-lock-crash-harness-0154-01.json",
+    "task_commit_sha": "cd28731ba33c8116ca0f9abbf1e4287289a6c540",
+    "workflow_run": 40564495803,
+    "workflow_conclusion": "success",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU",
+    "reason": "Latest exact-SHA diff is only a test harness, not a new economic BTC/ETH source. No new first-party immutable artifact/event with effective/available/observed PIT clocks, independent economic non-overlap, correct context-vs-directional spot role, and deterministic offline tests was established. Previously rejected families remain excluded.",
+    "next": "Reopen only upon concrete first-party artifact and complete PIT/non-overlap/role/offline proof; do not enqueue near-identical failed tasks."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_AT_CURRENT_SHA",
+    "B": "SOURCE_ADMISSION_PLATEAU_AT_CURRENT_SHA",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE_AT_CURRENT_SHA",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "outside_B_blockers": "A/C report writer-only archive lock leaves unlocked runner JSONL reader exposed to possible partial records; orphan lock fails closed without automatic recovery. Controlled interleaving and independent exact-SHA pytest remain unproven; these are integration/quality, not new source admission.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
