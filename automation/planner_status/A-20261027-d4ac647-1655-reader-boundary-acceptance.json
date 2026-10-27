@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 16:55 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "parent": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "ahead_by": 1,
+    "recent_diff": [
+      "part2/capital_flow/runner.py",
+      "part2/capital_flow/tests/test_runner_role_consistency.py"
+    ],
+    "tree_entries": 65,
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "0acf3a47f3fe3bb273624f8997d430aa8817f9af",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "ffd3f998ea46b13fc0e7e2474407f091ed594c19",
+    "roadmap_reviewed": "2026-10-27 16:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 19,
+      "failed": 19,
+      "method": "direct directory listing for done/failed; pending contents endpoint 404"
+    },
+    "latest_durable": {
+      "A": "A-20261027-d4ac647-1559-single-writer-reader-window.json",
+      "B": "B-20261027-d4ac647-1631-min.json",
+      "C": "C-20261027-d4ac647-quality-blocked-1611.json"
+    },
+    "legacy_worker_status": "STALE_NOT_VERDICT_AUTHORITY"
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-runner-context-role-pytest-1445-01.json",
+    "proof_commit_sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "executor_status": "PASS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "SEPARATE_PUBLIC_PRODUCER_ATOMICITY_FROM_UNAVAILABLE_REAL_CONSUMER_ACCEPTANCE",
+    "finding": "The exact public tree has 65 entries and no identifiable real production consumer for the three output JSON files. runner.run_once persists latest.json, audit_latest.json and anata_latest.json through three separate atomic_write_json calls; storage.atomic_write_json atomically replaces only one file. Therefore a raw-read pause test is a valid producer negative control, NOT production-reader acceptance. This is a source-level risk, not an observed production incident.",
+    "tightened_no_network_contract": {
+      "status": "SPEC_ONLY_NOT_MATERIALIZED_NOT_EXECUTED",
+      "test_path": "part2/capital_flow/tests/test_runner_output_generation.py",
+      "source": "Pinned two-writer A-20261014-378cffe-two-writer-generation-test-1557.json plus same-clock economic-oracle and A-20261027-d4ac647-1559-single-writer-reader-window.json",
+      "producer_gate": "Create two PIT-visible economically distinct A/B archives at identical as_of_ms; assert normalized economic evidence fingerprints differ for each of latest/audit/handoff (exclude collection_attempts, filesystem paths, generated timestamps). Start A and pause immediately after latest.json atomic replace; complete B on same local_dir; release A. Require final three files to correspond entirely to A or entirely to B; mixed A/B is a failing producer acceptance, not a PASS. Repeat with single paused writer and raw JSON reads as expected mixed-window negative control; never count raw-reader result as production consumer proof.",
+      "consumer_gate": "Only if an explicitly authorized real production consumer path is identified, invoke that exact offline consumer against the same paused-writer fixture; accept coherent A or coherent B or explicit retry/fail-closed, reject mixed output. Public synthetic readers are insufficient. No production consumer identified in the 65-entry public tree; consumer gate NOT_RUN/UNAVAILABLE.",
+      "commands_after_authorized_checkout": [
+        "python -m py_compile part2/capital_flow/tests/test_runner_output_generation.py",
+        "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "required_evidence": "Exact repo SHA, test blob hashes, command stdout/stderr and exit codes; no assertion of pass without execution."
+    },
+    "why_no_new_task": "Gemini JSON reliability UNVERIFIED, proposed writer regression test not materialized/executed, and public-only test cannot validate unavailable production consumer. No malformed task replay."
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'if [ -d /mnt/data/A-Woker-Lab/.git ]; then echo EXACT_REPO_PRESENT; git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; fi'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Obtain an authorized isolated checkout pinned to d4ac647f34f7a4116c53219da4099212022c96dd without repeating DNS clone; materialize only disposable test overlay and run producer targeted/full Capital Flow pytest. For consumer acceptance require separately authorized real offline reader harness; do not inspect or modify private/prediction/execution paths under Planner A."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
