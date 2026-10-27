@@ -1,0 +1,23 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261027-archive-crossprocess-dedup-2254-01",
+  "worker": "A",
+  "title": "Serialize cross-process Capital Flow archive deduplication",
+  "base_sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+  "read_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/tests/test_providers_replay.py",
+    "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "instructions": "A-LANE INTEGRATION/COMPLETENESS ONLY. On exact public base_sha, address one narrowly defined archive race in part2/capital_flow/storage.py: append_observations currently reads existing JSONL and filters seen IDs before opening append without cross-process serialization. Implement a small robust standard-library cross-process writer lock (portable for Linux GitHub Actions and Windows if supported; otherwise fail closed on unsupported platforms) around the entire load/deduplicate/append/flush/fsync critical section. Lock must be per archive path, released in finally on errors, with bounded acquisition and no unsafe lock-file deletion that permits competing holders. Preserve append-only JSONL, existing max_existing_records behavior, revision/semantic-signature logic, existing return count, and single-writer behavior; no schema changes, new dependencies, private imports, or network. Add ONLY part2/capital_flow/tests/test_archive_concurrent_dedup.py with deterministic pytest: multiprocessing spawn/top-level child functions, temp archive, fixed FlowObservation fixtures, bounded Events/joins and child exception/exit-code propagation. Exercise simultaneous same-observation-ID writers (exactly one valid row) and distinct IDs (exactly two valid rows), and idempotent repeated append. Use a bounded controlled interleaving around the pre-existing load/check/append race where feasible; do not rely solely on sleeps or probabilistic stress, and avoid barrier deadlock when correct locking serializes readers. All children must terminate, all JSONL rows parse and match expected IDs, and no duplicates/lost records. Do NOT claim that this also fixes partial-row visibility to independent readers or atomic publication of multiple files; those are separate future gates. Run py_compile, targeted new pytest, and FULL Capital Flow pytest before committing. Commit ONLY if all pass and changed paths are exactly the two allowlisted paths; otherwise report FAIL without committing. Never edit automation/, .github/, main, private, queue/control/status, secrets, prediction/API orchestration, journals, Telegram, MT5, broker/execution, or Railway. Return minimal structured executor result.",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2
+}
