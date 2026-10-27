@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import multiprocessing as mp
+import os
 from pathlib import Path
 import time
+import pytest
 
 from part2.capital_flow.contracts import FlowObservation
-from part2.capital_flow.storage import append_observations, load_observations
+from part2.capital_flow.storage import ArchiveWriterLock, append_observations, load_observations
 
 DAY = 86_400_000
 
@@ -17,6 +19,14 @@ def _worker_append_target(archive_path: str, serialized_obs_list: list[str], que
         queue.put(("OK", count))
     except Exception as exc:
         queue.put(("ERROR", str(exc)))
+
+
+def _orphan_lock_child_target(archive_path: str, acquired_event: mp.Event, release_event: mp.Event) -> None:
+    with ArchiveWriterLock(archive_path):
+        acquired_event.set()
+        # Wait for parent release signal with bounded timeout
+        release_event.wait(timeout=10.0)
+        os._exit(17)
 
 
 def test_archive_concurrent_same_observation_id(tmp_path: Path) -> None:
@@ -43,27 +53,43 @@ def test_archive_concurrent_same_observation_id(tmp_path: Path) -> None:
         for _ in range(num_workers)
     ]
 
-    for p in processes:
-        p.start()
+    try:
+        for p in processes:
+            p.start()
 
-    results = []
-    for _ in range(num_workers):
-        status, payload = queue.get(timeout=10.0)
-        results.append((status, payload))
+        results = []
+        for _ in range(num_workers):
+            status, payload = queue.get(timeout=10.0)
+            results.append((status, payload))
 
-    for p in processes:
-        p.join(timeout=5.0)
-        if p.is_alive():
-            p.terminate()
-            p.join()
+        for p in processes:
+            p.join(timeout=5.0)
+            if p.is_alive():
+                p.terminate()
+                p.join()
+            assert p.exitcode == 0
 
-    for status, payload in results:
-        assert status == "OK", f"Worker failed with error: {payload}"
+        total_appended = 0
+        for status, payload in results:
+            assert status == "OK", f"Worker failed with error: {payload}"
+            total_appended += payload
 
-    loaded = load_observations(archive)
-    assert len(loaded) == 1
-    assert loaded[0].observation_id == obs.observation_id
-    assert loaded[0].value == 42.0
+        # For same ID across multiple concurrent workers, exactly one worker appends the row (sum == 1)
+        assert total_appended == 1
+
+        loaded = load_observations(archive)
+        assert len(loaded) == 1
+        assert loaded[0].observation_id == obs.observation_id
+        assert loaded[0].value == 42.0
+    finally:
+        try:
+            queue.close()
+        except Exception:
+            pass
+        for p in processes:
+            if p.is_alive():
+                p.terminate()
+                p.join()
 
 
 def test_archive_concurrent_distinct_observation_ids(tmp_path: Path) -> None:
@@ -98,28 +124,50 @@ def test_archive_concurrent_distinct_observation_ids(tmp_path: Path) -> None:
     p1 = ctx.Process(target=_worker_append_target, args=(str(archive), [obs1.to_dict()], queue))
     p2 = ctx.Process(target=_worker_append_target, args=(str(archive), [obs2.to_dict()], queue))
 
-    p1.start()
-    p2.start()
+    try:
+        p1.start()
+        p2.start()
 
-    results = []
-    for _ in range(2):
-        status, payload = queue.get(timeout=10.0)
-        results.append((status, payload))
+        results = []
+        for _ in range(2):
+            status, payload = queue.get(timeout=10.0)
+            results.append((status, payload))
 
-    p1.join(timeout=5.0)
-    p2.join(timeout=5.0)
-    if p1.is_alive():
-        p1.terminate()
-    if p2.is_alive():
-        p2.terminate()
+        p1.join(timeout=5.0)
+        p2.join(timeout=5.0)
+        if p1.is_alive():
+            p1.terminate()
+            p1.join()
+        if p2.is_alive():
+            p2.terminate()
+            p2.join()
 
-    for status, payload in results:
-        assert status == "OK", f"Worker failed with error: {payload}"
+        assert p1.exitcode == 0
+        assert p2.exitcode == 0
 
-    loaded = load_observations(archive)
-    assert len(loaded) == 2
-    ids = {item.observation_id for item in loaded}
-    assert ids == {obs1.observation_id, obs2.observation_id}
+        total_appended = 0
+        for status, payload in results:
+            assert status == "OK", f"Worker failed with error: {payload}"
+            total_appended += payload
+
+        # Distinct IDs should sum to 2 appended records
+        assert total_appended == 2
+
+        loaded = load_observations(archive)
+        assert len(loaded) == 2
+        ids = {item.observation_id for item in loaded}
+        assert ids == {obs1.observation_id, obs2.observation_id}
+    finally:
+        try:
+            queue.close()
+        except Exception:
+            pass
+        if p1.is_alive():
+            p1.terminate()
+            p1.join()
+        if p2.is_alive():
+            p2.terminate()
+            p2.join()
 
 
 def test_archive_idempotent_repeated_append(tmp_path: Path) -> None:
@@ -144,3 +192,48 @@ def test_archive_idempotent_repeated_append(tmp_path: Path) -> None:
     loaded = load_observations(archive)
     assert len(loaded) == 1
     assert loaded[0].observation_id == obs.observation_id
+
+
+def test_archive_orphan_lock_fail_closed(tmp_path: Path) -> None:
+    archive = tmp_path / "orphan.jsonl"
+    lock_path = Path(str(archive) + ".lock")
+
+    ctx = mp.get_context("spawn")
+    acquired_event = ctx.Event()
+    release_event = ctx.Event()
+
+    p = ctx.Process(
+        target=_orphan_lock_child_target,
+        args=(str(archive), acquired_event, release_event),
+    )
+
+    try:
+        p.start()
+        # Wait for child to acquire lock
+        assert acquired_event.wait(timeout=5.0), "Child failed to acquire lock in time"
+        assert lock_path.exists(), ".jsonl.lock must exist while child holds lock"
+
+        # Release child to proceed and crash via os._exit(17)
+        release_event.set()
+        p.join(timeout=5.0)
+        if p.is_alive():
+            p.terminate()
+            p.join()
+
+        assert p.exitcode == 17
+        assert lock_path.exists(), "Orphan lock file must remain after child crash"
+
+        # Verify subsequent lock attempt fails with TimeoutError due to orphan lock
+        with pytest.raises(TimeoutError):
+            with ArchiveWriterLock(archive, timeout=0.1, poll_interval=0.01):
+                pass
+    finally:
+        if p.is_alive():
+            p.terminate()
+            p.join()
+        # Safely cleanup orphan lockfile only after child is confirmed dead
+        try:
+            if lock_path.exists():
+                lock_path.unlink()
+        except Exception:
+            pass
