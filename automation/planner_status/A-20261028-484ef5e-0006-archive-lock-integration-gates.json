@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 00:06 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "parent": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "f7531127cc2491aa2abb21ff1b2d01d4ed483bcc",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d5202851fb0dbe5f836fa3a4e71e26cc21e9acf5",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "bef9a62e8699f6f8f3ef827cd845224a44deab26",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "adc32298fa80fb54fa95cfc659453a4134a6648c",
+    "roadmap_latest": "2026-10-27 23:51 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 22,
+      "failed": 19,
+      "method": "Supervisor 23:51 authoritative enumeration; previous pending path direct 404; matching done record directly fetched"
+    },
+    "latest_durable_before_run": {
+      "A": "A-20261027-387b0ed-2259-executor-diff-check-queue-reconciliation.json",
+      "B": "B-20261027-387b0ed-2328-min.json",
+      "C": "C-20261027-387b0ed-quality-blocked-2315.json"
+    }
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS",
+    "proof": "automation/executor_queue/done/A-20261027-archive-crossprocess-dedup-2254-01.json",
+    "proof_commit_sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "executor_result": "PASS",
+    "attempt": 2,
+    "workflow_run": 40544640420,
+    "workflow_conclusion": "success",
+    "required_targeted": "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "required_full": "python -m pytest -q part2/capital_flow/tests",
+    "note": "Bounded executor PASS and successful workflow verified; individual pytest counts not visible in logs; independent targeted/full pytest NOT RUN",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "ACCEPT_BOUNDED_ARCHIVE_WRITER_SERIALIZATION_WITH_REMAINING_INTEGRATION_GATES",
+    "finding": "Gemini's retried same task advanced public HEAD and serialized archive load/dedup/append/fsync with an exclusive per-path lockfile. This addresses the previously identified cross-writer duplicate race at source level, not independently reproduced production behavior. New spawn tests check same-ID, distinct-ID and idempotence, but use no controlled Event/barrier interleaving and omit explicit child exitcode assertions. On abrupt process death the O_EXCL .lock persists; subsequent append can time out after 10s, with no documented safe owner-verified recovery. runner.run_once still reads archive outside writer lock and writes three JSON outputs separately; prior pinned two-writer generation contract remains unexecuted. Known consumer reads a single handoff artifact, so three-output mismatch is diagnostic, not a demonstrated consumer failure.",
+    "pinned_specs": [
+      "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+      "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json"
+    ],
+    "new_no_network_acceptance_contract": "At exact public SHA, use spawn/top-level child workers and fixed observations. Child A enters append_observations and pauses INSIDE lock at a patched load_observations hook, signaling A_IN_LOCK. Child B signals B_ATTEMPT immediately before append and must not complete before A release. Release A in finally, bounded join both, assert both exitcode==0, result counts {1,0} for same ID, exactly one valid JSONL row, and lock removed. Repeat distinct IDs and assert exactly two rows. Separately child acquires ArchiveWriterLock then os._exit(17): parent asserts orphan lock exists and ArchiveWriterLock(timeout=0.2) fails closed with TimeoutError; document safe manual recovery procedure, do not automatically unlink a possibly owned lock. Retain corrected two-writer generation regression as separate diagnostic, with B-serialized branch accepted.",
+    "commands": [
+      "python -m py_compile part2/capital_flow/storage.py part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "tests_executed_by_A": 0,
+    "queue_decision": "NO_NEW_TASK: reliability UNVERIFIED; new public HEAD needs fresh A/B/C, and integration acceptance not established."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git || { echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; }",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized isolated exact-SHA checkout or GitHub-hosted independent test harness should execute controlled interleaving, crash-lock fail-closed and targeted/full pytest with stdout/stderr and exit codes. Obtain fresh B/C at 484ef5e; Supervisor reassess. No DNS clone retry or Specialist edit by A."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "STALE_AT_387b0ed",
+    "C": "STALE_AT_387b0ed",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved_by_no_mutation": true
+}
