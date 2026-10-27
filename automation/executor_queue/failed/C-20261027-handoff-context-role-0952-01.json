@@ -1,0 +1,27 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "base_sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+  "executor_result": {
+    "error": "ExecutorError: Gemini exhausted bounded repair attempts; last test output:\n$ python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py\nexit=1\n.............                                                      [100%]\n=================================== FAILURES ===================================\n_ CapitalFlowV1Tests.test_handoff_context_role_parsing_variants (prov={}, expected_context=True) _\n\nself = <test_v1_handoff.CapitalFlowV1Tests testMethod=test_handoff_context_role_parsing_variants>\n\n    def test_handoff_context_role_parsing_variants(self) -> None:\n        as_of = self._frame().as_of_ms\n        test_cases = [\n            ({}, True),\n            ({\"context_only\": False}, False),\n            ({\"context_only\": True}, True),\n            ({\"context_only\": \" false \"}, False),\n            ({\"context_only\": \"TRUE\"}, True),\n            ({\"context_only\": \"maybe\"}, True),\n        ]\n        for prov, expected_context in test_cases:\n            with self.subTest(prov=prov, expected_context=expected_context):\n                obs = FlowObservation(\n                    family=\"miner\",\n                    metric=\"miner_outflow_btc\",\n                    asset=\"BTC\",\n                    value=10.0,\n                    unit=\"BTC\",\n                    effective_at_ms=as_of - 10_000,\n                    available_at_ms=as_of - 5_000,\n                    observed_at_ms=as_of,\n                    source=\"test_source\",\n                    source_record_id=f\"id-{str(prov)}\",\n                    cadence_seconds=3600,\n                    attribution_status=\"HIGH\",\n                    attribution_quality=0.9,\n                    data_quality=0.9,\n                    provenance=prov,\n                )\n                handoff = build_anata_handoff(self._frame(), [obs], source_errors=[])\n                miner_support = handoff[\"families\"][\"miner\"]\n                sources = handoff[\"source_evidence\"]\n                matched_source = next(s for s in sources if s[\"family\"] == \"miner\")\n    \n                if expected_context:\n>                   self.assertEqual(miner_support[\"scoring_observation_count\"], 0)\nE                   AssertionError: 1 != 0\n\npart2/capital_flow/tests/test_v1_handoff.py:549: AssertionError\n=========================== short test summary info ============================\nSUBFAILED(prov={}, expected_context=True) part2/capital_flow/tests/test_v1_handoff.py::CapitalFlowV1Tests::test_handoff_context_role_parsing_variants - AssertionError: 1 != 0\n1 failed, 13 passed, 5 subtests passed in 0.29s\n",
+    "status": "FAILED"
+  },
+  "instructions": "PUBLIC Capital Flow QUALITY only; exact base SHA. In handoff.py, _is_context_only currently uses bool(dict(obs.provenance).get('context_only',False)), so string 'false' is incorrectly context-only. Reuse the existing fail-closed _is_context_only(provenance) implementation in evidence_health.py (read-only) rather than inventing divergent parsing; it accepts missing/bool False and case/whitespace-insensitive string 'false' as scoring, bool True/string 'true' as context-only, and unknown/malformed explicit values as context-only. Make minimal handoff.py change only; preserve all existing PIT, normalization, source evidence, family support, scoring formulas, and public output schemas. Add deterministic no-network tests in existing test_v1_handoff.py with real frozen FlowObservation instances, testing missing key, bool values, string ' false ', 'TRUE', malformed 'maybe', and asserting handoff _source_evidence role plus _family_support scoring/context role where practical. Do not mutate frozen dataclasses. Do NOT modify runner.py (its parallel bug is a separate later task), evidence_health.py, or any other files. Only the two allowed write paths. Run targeted pytest and full Capital Flow pytest before commit. No main/private/automation/prediction/API/Telegram/broker/execution/secrets; fail closed; return minimal JSON changed files.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/evidence_health.py",
+    "part2/capital_flow/tests/test_v1_handoff.py",
+    "part2/capital_flow/contracts.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261027-handoff-context-role-0952-01",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "Stage 2a: align handoff context role parsing with validated evidence health",
+  "worker": "C"
+}
