@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 08:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "capital_flow_test_files": 17,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "beda320bd3993b089de8a50bb7ff0ac2a26a2ab7",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "4d96129d04baa76e2349be5db0069229414c0455",
+    "roadmap_at_ict": "2026-10-27 07:47 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 16,
+      "failed": 16,
+      "directly_enumerated": true
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0655-semantic-witness-preflight.json",
+      "B": "B-20261027-378cffe-0731-min.json",
+      "C": "C-20261027-378cffe-blocked-0718.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "immediate_queue_dispatch": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "SEPARATE_WRITER_SERIALIZATION_FROM_READER_SNAPSHOT_ACCEPTANCE",
+    "finding": "Pinned two-writer regression verifies only writer-to-writer final-file coherence. A cross-file writer lock could make that test GREEN while an unsynchronized reader still observes mixed output during a three-file publication. Exact runner.py writes latest/audit/anata in three independent atomic_write_json calls; storage.py os.replace is atomic per file only. No generation manifest or production snapshot-reader contract is established by those pinned sources. Therefore writer-only GREEN must not be promoted as reader-consistency proof.",
+    "pinned_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "pinned_oracle": "automation/planner_status/A-20261021-378cffe-two-writer-oracle-tightened-0858.json",
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/engine.py": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4"
+    },
+    "no_network_acceptance_contract": [
+      "First verify unchanged 17-file baseline at exact public SHA. Materialize and hash test-only overlays; do not commit Specialist code.",
+      "Writer P0: retain conditional B wait and release A in finally, assert both completed and final three as_of_ms exactly writer B, not merely equal.",
+      "Reader diagnostic: same-clock A empty archive vs B one valid ETF BTC FLOW row, fixed T=1800000060000; preflight A/B normalized counts 0/1, coverage 0/>0 and scoring source_evidence empty/present. Do not require B directional score or known=true: a single row has insufficient trailing history.",
+      "Gate B immediately after its latest.json os.replace; record actual A/B payloads including audit, read raw three-file triplet while B is paused, prove whether mixed. Always release B in finally and bound joins; capture hashes/event order.",
+      "Acceptance after any repair must additionally exercise the actual supported production snapshot-reader protocol (or atomic generation publication) under that gate. A test-only reader adapter or writer-only lock does not prove consumer safety; raw legacy triplet remains a diagnostic until reader contract exists.",
+      "Run targeted python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py part2/capital_flow/tests/test_runner_same_clock_reader.py, then python -m pytest -q part2/capital_flow/tests. Retain overlay hashes, non-skipped counts, stdout/stderr, exit codes."
+    ],
+    "expected_current_source": "SOURCE_PREDICTED_MIXED_READER_TRIPLET_NOT_EXECUTED",
+    "tasks_enqueued": 0
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "missing_test_overlays": [
+      "part2/capital_flow/tests/test_runner_output_generation.py",
+      "part2/capital_flow/tests/test_runner_same_clock_reader.py"
+    ],
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout/test host, materialize hashed test-only overlays, execute baseline and targeted/full tests, preserve evidence. No DNS clone retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
