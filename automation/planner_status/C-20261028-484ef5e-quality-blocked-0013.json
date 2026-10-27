@@ -1,0 +1,72 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 00:13 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "parent": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "f7531127cc2491aa2abb21ff1b2d01d4ed483bcc",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d5202851fb0dbe5f836fa3a4e71e26cc21e9acf5",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_sha": "aa3db69d5e6a8a10e04bdd4609a87a1b05afc963",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "adc32298fa80fb54fa95cfc659453a4134a6648c",
+    "roadmap_latest": "2026-10-27 23:51 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 22,
+      "failed": 19,
+      "method": "direct worker-control executor_queue directory enumeration"
+    },
+    "latest_A": "A-20261028-484ef5e-0006-archive-lock-integration-gates.json",
+    "latest_B": "B-20261027-387b0ed-2328-min.json",
+    "latest_C": "C-20261027-387b0ed-quality-blocked-2315.json"
+  },
+  "quality": {
+    "finding": "New archive writer lock encloses load/dedup/append/fsync and three spawn tests cover same-ID, distinct-ID, and idempotence. Quality gaps: tests do not force controlled concurrent interleaving or assert child exitcode==0; os.O_EXCL lockfile remains after abrupt writer death, so subsequent writers time out without safe recovery; independent readers can still encounter partially appended JSONL, and multi-output generation remains separate. These are unproven safety properties, not claimed observed failures. Existing string-' false ' context-only role fix remains source-present.",
+    "blocker": "No authorized isolated exact-SHA checkout at /mnt/data/A-Woker-Lab/.git; independent targeted/full pytest not executed. Latest B verdict predates new public SHA. Supervisor CONTINUE/NOT_PLATEAU.",
+    "recovery": "On authorized isolated exact-SHA checkout run deterministic no-network role regression, archive spawn tests with controlled Event interleaving and explicit exit codes, crash-orphan lock fail-closed check, targeted pytest, and python -m pytest -q part2/capital_flow/tests; capture stdout/stderr/exit codes. Obtain fresh B and independent Supervisor plateau before promotion."
+  },
+  "validation": {
+    "exact_sha_bounded_executor": "PASS",
+    "proof": "automation/executor_queue/done/A-20261027-archive-crossprocess-dedup-2254-01.json",
+    "proof_commit_sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "attempt": 2,
+    "workflow_run": 40544640420,
+    "workflow_conclusion": "success",
+    "targeted_command": "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "full_command": "python -m pytest -q part2/capital_flow/tests",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU_STALE_SHA",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved_by_no_mutation": true
+}
