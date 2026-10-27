@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-27 09:33 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "parent": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": [
+      "part2/capital_flow/evidence_health.py",
+      "part2/capital_flow/tests/test_evidence_health.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "bf2a6e5c156513c52f6cee010263d3667a56b4f1",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "4bffd799945c0ad19f0c36fb40b75e671e51ea0e",
+    "queue": {
+      "pending": 0,
+      "done": 17,
+      "failed": 16,
+      "directly_enumerated": true
+    },
+    "latest_durable": {
+      "A": "A-20261027-39adf6e-0855-cross-surface-role-gate.json",
+      "B": "B-20261027-378cffe-0834-min.json",
+      "C": "C-20261027-39adf6e-blocked-0913.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-context-role-coercion-0848-01.json",
+    "proof_commit_sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json": "NOT_GENERALLY_VERIFIED; first attempt malformed, second bounded attempt PASS",
+    "immediate_push_dispatch": "VERIFIED_FOR_PRIOR_TASK"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU",
+    "evidence": [
+      "automation/worker_status/loop-B.json",
+      "automation/planner_status/B-20261027-378cffe-0834-min.json",
+      "automation/supervisor_roadmap.md"
+    ],
+    "blocker": "No newly demonstrated first-party independent BTC/ETH artifact/event ID with economic entity, effective/available/observed PIT clocks, independent non-overlap, correct context-versus-directional spot role, and deterministic no-network test contract. Prior rejected source classes remain excluded.",
+    "next": "No speculative re-browsing or near-identical Gemini tasks. Reopen only on concrete first-party artifact and clock proof."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
