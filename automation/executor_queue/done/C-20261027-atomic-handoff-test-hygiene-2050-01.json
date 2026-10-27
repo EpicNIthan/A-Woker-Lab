@@ -1,20 +1,29 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "C-20261027-atomic-handoff-test-hygiene-2050-01",
-  "worker": "C",
-  "title": "Make atomic handoff regression temp-file assertion meaningful",
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+  ],
   "base_sha": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+  "executor_result": {
+    "attempt": 1,
+    "base_sha": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "commit_sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Make atomic handoff regression temp-file assertion meaningful and remove unused time import"
+  },
   "instructions": "Quality-only narrowly bounded correction. On exact public base_sha, edit ONLY part2/capital_flow/tests/test_atomic_handoff_visibility.py. Preserve the existing deterministic event-gated old-A/new-B single-file atomic JSON test and its bounded writer synchronization. Replace the vacuous `assert len(tmp_files) >= 0` with an exact assertion that while the writer is paused immediately before os.replace, precisely one live temporary file for destination exists and its filename matches the destination-specific mkstemp prefix and `.tmp` suffix. Ensure the assertion is portable and deterministic under tmp_path and does not match unrelated files. Remove the unused `import time` and leave all other existing production code/tests unchanged. Continue asserting zero temp files after completion, background exception propagation, bounded waits and exact complete A/B payloads. Do NOT claim a concurrent production reader test, multi-file atomicity or cross-process archive dedup. No unittest.TestCase, no network, no private imports. Run py_compile, targeted pytest and full Capital Flow pytest before committing. Commit ONLY if both pytest commands PASS and changed paths are exactly this single test file; otherwise fail closed with no code commit. Never edit automation/.github, main, private, queue/control/status, secrets, prediction/API orchestration, journals, Telegram, MT5, broker/execution or Railway. Return minimal structured result.",
+  "max_attempts": 2,
   "read_paths": [
     "part2/capital_flow/storage.py",
     "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261027-atomic-handoff-test-hygiene-2050-01",
   "tests": [
     "python -m pytest -q part2/capital_flow/tests/test_atomic_handoff_visibility.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "title": "Make atomic handoff regression temp-file assertion meaningful",
+  "worker": "C"
 }
