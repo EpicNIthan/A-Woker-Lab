@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 10:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "parent": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": [
+      "part2/capital_flow/evidence_health.py",
+      "part2/capital_flow/tests/test_evidence_health.py"
+    ],
+    "capital_flow_test_files": 17,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "b661e3d27fcf5c959e605e134cb262c5fc1aeceb",
+    "roadmap_path": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "38efbc12c68e28a88c82749a74d0ee257cc05952",
+    "roadmap_at_ict": "2026-10-27 09:56 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404 absent",
+      "done": 17,
+      "failed": 17,
+      "directly_enumerated": true
+    },
+    "latest_durable": {
+      "A": "A-20261027-39adf6e-0855-cross-surface-role-gate.json",
+      "B": "B-20261027-39adf6e-0933-min.json",
+      "C": "C-20261027-39adf6e-blocked-0913.json"
+    },
+    "latest_executor_failure": "automation/executor_queue/failed/C-20261027-handoff-context-role-0952-01.json"
+  },
+  "validation": {
+    "status": "BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-context-role-coercion-0848-01.json",
+    "proof_commit_sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_general_reliability": "UNVERIFIED",
+    "immediate_queue_push_dispatch": "VERIFIED_FOR_PRIOR_TASK_ONLY"
+  },
+  "decision": {
+    "name": "QUARANTINE_C_FAILED_ORACLE_AND_PIN_CROSS_SURFACE_A_ACCEPTANCE",
+    "new_finding": "Latest failed C task generated ({}, True) for absent context_only, contradicting exact evidence_health.py semantics (absent defaults to scoring). Its 1 failed/13 passed targeted test is a bad test oracle, not proof of a production defect. The source-level cross-surface defect remains: runner and handoff use bool('false') while evidence_health parses 'false' as scoring.",
+    "a_lane_decision": "Do not recycle the C failure as A regression evidence or enqueue a repeat. Preserve independent two-writer writer-B-last and reader-snapshot acceptance gates. New test-only A contract explicitly pins the absent-key case as scoring and checks runner, evidence health, handoff, and persisted outputs against one local fixture.",
+    "pinned_two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "pinned_writer_b_oracle": "automation/planner_status/A-20261021-378cffe-two-writer-oracle-tightened-0858.json",
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+    },
+    "no_network_test_only_overlay": {
+      "path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+      "source": "import json\nimport pytest\nfrom part2.capital_flow.contracts import FlowObservation\nfrom part2.capital_flow.runner import run_once\nfrom part2.capital_flow.storage import append_observations\n\n@pytest.mark.parametrize(\"provenance,scoring\", [\n    ({}, True),\n    ({\"context_only\": False}, True),\n    ({\"context_only\": True}, False),\n    ({\"context_only\": \" false \"}, True),\n    ({\"context_only\": \"TRUE\"}, False),\n    ({\"context_only\": \"maybe\"}, False),\n])\ndef test_role_consistency_across_persisted_surfaces(tmp_path, provenance, scoring):\n    obs = FlowObservation(\n        family=\"exchange_btc\", metric=\"btc_netflow\", asset=\"BTC\",\n        value=12.0, unit=\"BTC\", effective_at_ms=1_800_000,\n        available_at_ms=1_900_000, observed_at_ms=2_000_000,\n        source=\"fixture_source\", source_record_id=\"one\",\n        cadence_seconds=300, provenance=provenance,\n    )\n    append_observations(tmp_path / \"observations.jsonl\", [obs])\n    result = run_once(local_dir=tmp_path, network=False, as_of_ms=2_100_000)\n    assert result[\"source_errors\"] == []\n    assert result[\"archive_records_loaded\"] == 1\n    assert result[\"scoring_records_loaded\"] == int(scoring)\n    handoff = result[\"anata_output\"]\n    assert handoff[\"evidence_health\"][\"families\"][\"exchange_btc\"][\"scoring_observation_count\"] == int(scoring)\n    assert handoff[\"families\"][\"exchange_btc\"][\"scoring_observation_count\"] == int(scoring)\n    roles = [row[\"role\"] for row in handoff[\"source_evidence\"]\n             if row[\"family\"] == \"exchange_btc\" and row[\"source\"] == \"fixture_source\"]\n    assert roles == ([\"scoring\"] if scoring else [\"context\"])\n    for name in (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\"):\n        assert json.loads((tmp_path / name).read_text())[\"as_of_ms\"] == 2_100_000\n",
+      "materialized": false,
+      "executed": false,
+      "expected_current_source_result": "' false ' case cross-surface inconsistent (source prediction only); no pytest executed",
+      "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py",
+      "full": "python -m pytest -q part2/capital_flow/tests",
+      "acceptance": "All six provenance cases, same observed fixture, runner counts, evidence-health and handoff family counts, source role, and all three persisted as_of timestamps must agree. This does not establish concurrent reader consistency; separate two-writer and production-reader tests remain required."
+    },
+    "tasks_enqueued": 0
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized isolated checkout pinned to exact 39adf6e... SHA; establish unchanged 17-file baseline, materialize/hash test-only role-consistency and pinned two-writer/reader overlays, execute targeted and full Capital Flow pytest, preserve stdout/stderr/exit codes. No DNS clone retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
