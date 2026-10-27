@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-27 07:31 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "inert_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "de419a3079a1ef0b4d82b38eca69368437fd4d77",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_at_ict": "2026-10-27 06:53 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_direct": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "done_failed_source": "Supervisor 06:53 ICT direct enumeration; directories rechecked present, entries not enumerated in this run"
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0655-semantic-witness-preflight.json",
+      "B": "B-20261027-378cffe-0627-min.json",
+      "C": "C-20261027-378cffe-blocked-0718.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_DONE_TASK_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "effective_immediate_dispatch": "UNVERIFIED"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU",
+    "evidence": [
+      "automation/worker_status/loop-B.json",
+      "automation/planner_status/B-20261027-378cffe-0627-min.json",
+      "automation/supervisor_roadmap.md"
+    ],
+    "blocker": "No new independently evidenced first-party BTC/ETH dossier provides immutable artifact/event ID, effective/available/observed PIT clocks, economic non-overlap, correct context-versus-directional spot role, and deterministic no-network test contract. Previously rejected sources remain excluded.",
+    "next": "Do not recycle rejected candidates or enqueue Gemini task. Reopen only with concrete first-party artifact and defensible publication/observation clocks; require verified JSON recovery and immediate dispatch before one narrow task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "tests_executed": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
