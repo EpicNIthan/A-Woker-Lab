@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 01:29 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "parent": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_change": "NONE; cross-process archive lock and tests only",
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "0ca63e8d4af777d031f8518f144c50c89520f1ff",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-28 00:49 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 22,
+      "failed": 20,
+      "provenance": "direct recursive tree enumeration at prewrite worker-control HEAD"
+    },
+    "latest_A": "A-20261028-484ef5e-0103-c-executor-failure-reconciliation.json",
+    "latest_B_prior": "B-20261028-484ef5e-0031-min.json",
+    "latest_C": "C-20261028-484ef5e-quality-executor-failed-0118.json"
+  },
+  "validation": {
+    "exact_sha_bounded_executor": "PASS_PRIOR_A_TASK",
+    "proof": "automation/executor_queue/done/A-20261027-archive-crossprocess-dedup-2254-01.json",
+    "proof_commit_sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "independent_pytest": "NOT_RUN",
+    "new_C_test_only_executor": "FAILED_NO_PUBLIC_COMMIT",
+    "new_C_failed_task": "automation/executor_queue/failed/C-20261028-archive-lock-controlled-interleaving-0048-01.json",
+    "new_C_targeted_final": "1 failed, 5 passed in 11.15s",
+    "new_C_error_excerpt": "FAILED part2/capital_flow/tests/test_archive_concurrent_dedup.py::test_archive_crash_orphan_fail_closed - _queue.Empty",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU",
+    "reason": "No new first-party immutable artifact/event ID for economic BTC/ETH with effective/available/observed PIT clocks, proven non-overlap, correct context-vs-directional spot role and deterministic no-network tests. Latest public diff is infrastructure, not economic evidence; rejected families not readmitted.",
+    "next": "Reopen only on concrete qualifying first-party evidence, not speculative recycled candidates."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "blocker": {
+    "scope": "C test-only harness failure and A/C independent validation, outside B source admission",
+    "detail": "Failed C task now recorded in failed queue; targeted test timed out on multiprocessing Queue.get in crash-orphan test after two bounded repair attempts. No production commit or independent exact-SHA pytest. Supervisor must evaluate failure before any new C retry; no duplicate task."
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
