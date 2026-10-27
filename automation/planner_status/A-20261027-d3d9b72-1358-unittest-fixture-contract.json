@@ -1,0 +1,99 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 13:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "diff_from_previous_public": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f -> d3d9b72d6595cf52c80dba2e03b14e06c29b2471: handoff.py modified, new tests/test_handoff_context_role.py; unchanged since previous A",
+    "inert_public_automation_ignored": true,
+    "source_blobs": {
+      "runner": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "storage": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "8afe1c53c7b39bf4ae390c201bc5c4556e9d2cca",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "772939fcac7185dacdaf11d6cbc56e781d013a12",
+    "roadmap_at_ict": "2026-10-27 13:49 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404 absent",
+      "done": 18,
+      "failed": 19,
+      "counts": "direct directory enumeration"
+    },
+    "latest_durable": {
+      "A": "A-20261027-d3d9b72-1258-pit-visibility-scope-gate.json",
+      "B": "B-20261027-d3d9b72-1330-min.json",
+      "C": "C-20261027-d3d9b72-blocked-1318.json"
+    }
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-handoff-role-dedicated-test-1148-01.json",
+    "proof_commit_sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "executor_status": "PASS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "QUARANTINE_FAILED_UNITTEST_PYTEST_FIXTURE_ORACLE_AND_PIN_PURE_PYTEST_REPLACEMENT",
+    "finding": "A-20261027-runner-context-role-parity-1347-01 FAILED after Gemini emitted unittest.TestCase.test_run_once_no_network_role_integration(self,tmp_path). unittest does not inject pytest tmp_path; this is a test harness error, NOT proof of a Capital Flow regression or repair. No Specialist commit. One other test and nine subtests passed in attempted targeted run, but full suite NOT RUN.",
+    "failed_task": "automation/executor_queue/failed/A-20261027-runner-context-role-parity-1347-01.json",
+    "failed_workflow": {
+      "id": 40463202159,
+      "event": "push",
+      "created_at_utc": "2026-10-27T06:47:31Z",
+      "completed_at_utc": "2026-10-27T06:48:07Z",
+      "conclusion": "failure"
+    },
+    "verbatim_error": "TypeError: RunnerRoleConsistencyTests.test_run_once_no_network_role_integration() missing 1 required positional argument: 'tmp_path'",
+    "test_contract": {
+      "materialized": false,
+      "executed": false,
+      "proposed_test_only_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+      "python_source": "import json\nimport pytest\nfrom part2.capital_flow.contracts import FlowObservation\nfrom part2.capital_flow.runner import run_once\n\nCLOCK = 1787520123456\nCASES = [\n    ({}, False), ({\"context_only\": False}, False),\n    ({\"context_only\": True}, True), ({\"context_only\": \" false \"}, False),\n    ({\"context_only\": \"TRUE\"}, True), ({\"context_only\": \"maybe\"}, True),\n    ({\"context_only\": None}, True), ({\"context_only\": \"\"}, True),\n    ({\"context_only\": []}, True),\n]\n\ndef observation(record_id, provenance, *, available_at_ms=CLOCK-10000):\n    return FlowObservation(\n        family=\"etf\", metric=\"etf_netflow_btc\", asset=\"BTC\", value=10.0,\n        unit=\"BTC\", effective_at_ms=CLOCK-20000,\n        available_at_ms=available_at_ms, observed_at_ms=available_at_ms,\n        source=\"offline_fixture\", source_record_id=record_id,\n        cadence_seconds=3600, provenance=provenance,\n    )\n\n@pytest.mark.parametrize(\"provenance,is_context\", CASES)\ndef test_runner_handoff_role_parity(tmp_path, provenance, is_context):\n    row = observation(\"one\", provenance)\n    (tmp_path / \"observations.jsonl\").write_text(\n        json.dumps(row.to_dict()) + \"\\n\", encoding=\"utf-8\")\n    result = run_once(local_dir=tmp_path, network=False,\n                      external_jsonl=(), as_of_ms=CLOCK)\n    assert result[\"source_errors\"] == []\n    assert result[\"archive_records_loaded\"] == 1\n    assert result[\"scoring_records_loaded\"] == int(not is_context)\n    audit = json.loads((tmp_path / \"audit_latest.json\").read_text())\n    handoff = json.loads((tmp_path / \"anata_latest.json\").read_text())\n    assert audit[\"context_only_observation_count\"] == int(is_context)\n    assert handoff[\"families\"][\"etf\"][\"scoring_observation_count\"] == int(not is_context)\n    assert handoff[\"families\"][\"etf\"][\"context_observation_count\"] == int(is_context)\n\ndef test_archive_wide_vs_pit_visible_count(tmp_path):\n    rows = [\n        observation(\"visible\", {\"context_only\": False}),\n        observation(\"future\", {\"context_only\": True}, available_at_ms=CLOCK+60000),\n    ]\n    (tmp_path / \"observations.jsonl\").write_text(\n        \"\".join(json.dumps(row.to_dict()) + \"\\n\" for row in rows), encoding=\"utf-8\")\n    result = run_once(local_dir=tmp_path, network=False,\n                      external_jsonl=(), as_of_ms=CLOCK)\n    audit = json.loads((tmp_path / \"audit_latest.json\").read_text())\n    handoff = json.loads((tmp_path / \"anata_latest.json\").read_text())\n    assert result[\"archive_records_loaded\"] == 2\n    assert result[\"scoring_records_loaded\"] == 1\n    assert audit[\"context_only_observation_count\"] == 1\n    assert handoff[\"families\"][\"etf\"][\"scoring_observation_count\"] == 1\n    assert handoff[\"families\"][\"etf\"][\"context_observation_count\"] == 0\n    assert handoff[\"evidence_health\"][\"families\"][\"etf\"][\"visible_observation_count\"] == 1\n",
+      "critical_harness_rule": "Use standalone pytest test_*(tmp_path) functions, never unittest.TestCase methods with pytest fixtures. Alternate unittest approach uses tempfile.TemporaryDirectory() inside a self-only method.",
+      "expected_baseline": "Current runner._scoring_history bool coercion is source-confirmed inconsistent; string ' false ' and explicit malformed falsey values should be RED for scoring-count assertions, but these proposed tests are UNEXECUTED.",
+      "commands": [
+        "python -m py_compile part2/capital_flow/tests/test_runner_role_consistency.py",
+        "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "concurrency": "Keep separate pinned corrected two-writer regression A-20261017-378cffe-two-writer-contract-corrected-0058.json and production-reader consistency acceptance; neither executed."
+    },
+    "queue_decision": "DO_NOT_ENQUEUE: general Gemini structured JSON/edit reliability unverified; failed task exhausted both attempts, do not repeat malformed task."
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'test -d /mnt/data/A-Woker-Lab/.git || { echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; }'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "also_absent": [
+      "/mnt/data/part2/capital_flow/.git",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "next_feasible_recovery": "Authorized isolated checkout pinned to exact d3d9b72d6595cf52c80dba2e03b14e06c29b2471; test-only overlay, capture syntax and targeted/full pytest exit codes/logs, preserve source hashes. No repeat DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
