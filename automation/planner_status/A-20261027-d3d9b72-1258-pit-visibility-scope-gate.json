@@ -1,0 +1,104 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 12:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "recent_diff_from_previous_A": {
+      "status": "identical",
+      "commits": 0,
+      "files": []
+    },
+    "last_commit_paths": [
+      "part2/capital_flow/handoff.py",
+      "part2/capital_flow/tests/test_handoff_context_role.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "8bedf711c98bd505f786c4968c52553b95eaa727",
+    "roadmap_path": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "ffe8fa1211aa75d537d8bf464aeed78dac20d33b",
+    "roadmap_at_ict": "2026-10-27 12:53 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404 absent on direct fetch",
+      "done": 18,
+      "failed": 18,
+      "counts_source": "Supervisor 12:53 ICT directly enumerated authoritative worker-control queue; not independently re-enumerated in this run"
+    },
+    "latest_durable": {
+      "A": "A-20261027-d3d9b72-1159-handoff-runner-split-gate.json",
+      "B": "B-20261027-d3d9b72-1231-min.json",
+      "C": "C-20261027-d3d9b72-blocked-1211.json"
+    }
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-handoff-role-dedicated-test-1148-01.json",
+    "proof_commit_sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "executor_reported_status": "PASS",
+    "executor_contract": [
+      "python -m pytest -q part2/capital_flow/tests/test_handoff_context_role.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_general_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "DISTINGUISH_ARCHIVE_WIDE_AUDIT_COUNTS_FROM_PIT_VISIBLE_HANDOFF_AND_HEALTH",
+    "finding": "Source-level integration oracle scope: runner.run_once computes audit_latest.context_only_observation_count as len(history)-len(scoring_history) over the full loaded archive, whereas handoff._visible_normalized and evidence_health.build_evidence_health use point_in_time_filter and exclude unavailable rows. Therefore equality of audit context count and handoff/health context count is NOT a valid acceptance invariant when the archive includes a future-available row. This is a previously untested semantic-scope gap in the A no-network acceptance contract, not a demonstrated production failure; runner context_only bool coercion remains a separate source-confirmed cross-surface mismatch.",
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6"
+    },
+    "test_only_contract": {
+      "path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+      "materialized": false,
+      "executed": false,
+      "fixture": "Write observations.jsonl in fresh tmp_path using two distinct FlowObservation.to_dict() JSONL rows in family='etf': visible scoring row provenance={'context_only':False}, available_at_ms=as_of-1000, observed_at_ms=as_of-1000; future-available context row provenance={'context_only':True}, available_at_ms=as_of+60000, observed_at_ms=as_of+60000; both effective_at_ms<=as_of and distinct source_record_id. run_once(local_dir=tmp_path,network=False,external_jsonl=(),as_of_ms=as_of).",
+      "assertions": "No source_errors; archive_records_loaded==2; scoring_records_loaded==1; persisted audit_latest.context_only_observation_count==1 (archive-wide); persisted anata_latest.families.etf.scoring_observation_count==1 and context_observation_count==0 (PIT-visible normalized); persisted anata_latest.evidence_health.families.etf.visible_observation_count==1 and scoring_observation_count==1; source_evidence excludes future row; persisted latest/audit/anata as_of_ms==as_of; handoff returned matches persisted. The audit count 1 vs handoff context count 0 is EXPECTED, not a failure. Also retain existing nine-case visible-row provenance role matrix, with absent key scoring and malformed explicit values context.",
+      "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py",
+      "full": "python -m pytest -q part2/capital_flow/tests",
+      "baseline_expected": "Scope fixture should PASS on current source if no other defect; nine-case role fixture predicted RED for runner ' false ', None, '', [] but UNEXECUTED."
+    },
+    "two_writer": "Preserve pinned A-20261017 corrected spec plus A-20261021 writer-B-last oracle. Independent writer serialization and production-reader snapshot consistency must both be demonstrated; same-clock stamps and hashes alone are insufficient. Both overlay tests absent at public HEAD; unexecuted."
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf \"%s\\n\" \"ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\" >&2; exit 42; fi'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "other_roots_checked": [
+      "/mnt/data/part2/capital_flow/.git",
+      "/workspace/A-Woker-Lab/.git",
+      "/home/oai/share/A-Woker-Lab/.git"
+    ],
+    "next_feasible_recovery": "Authorized isolated exact-SHA d3d9b72d6595cf52c80dba2e03b14e06c29b2471 checkout; hash untouched baseline, materialize test-only overlays, run targeted role/PIT and two-writer/reader tests plus full Capital Flow pytest; preserve logs, exit codes, hashes. Do not retry DNS clone or claim unexecuted results."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "automation": {
+    "title": "Anata Project Loop A",
+    "enabled_verified": true,
+    "original_schedule_unchanged": true
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
