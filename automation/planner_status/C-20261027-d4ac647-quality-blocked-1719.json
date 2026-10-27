@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 17:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "parent": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "latest_diff": [
+      "part2/capital_flow/runner.py",
+      "part2/capital_flow/tests/test_runner_role_consistency.py"
+    ],
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "677def70cb79e354f0145b151a7ced01c9f09595",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "ffd3f998ea46b13fc0e7e2474407f091ed594c19",
+    "roadmap_reviewed": "2026-10-27 16:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 19,
+      "failed": 19,
+      "method": "exact worker-control tree enumeration; pending path absent"
+    },
+    "latest_reports": {
+      "A": "A-20261027-d4ac647-1655-reader-boundary-acceptance.json",
+      "B": "B-20261027-d4ac647-1631-min.json",
+      "C": "C-20261027-d4ac647-quality-blocked-1611.json"
+    }
+  },
+  "quality": {
+    "finding": "Source confirms runner._scoring_history and handoff now delegate context_only classification to evidence_health._is_context_only; string ' false ' is scoring, explicit null context-only. Dedicated nine-case truth-table and offline run_once integration tests committed. Test source_record_id uses id(provenance), nonstable across processes; fixture hygiene only, not observed failure.",
+    "blocker": "No authorized disposable exact-SHA checkout at /mnt/data/A-Woker-Lab/.git; independent targeted/full pytest not executed. A owns producer/real-reader generation acceptance, B owns source breadth.",
+    "recovery": "Obtain authorized isolated exact-SHA checkout, run no-network targeted pytest for test_runner_role_consistency.py and test_v1_handoff.py, then python -m pytest -q part2/capital_flow/tests; preserve stdout/stderr, exit codes and exact test hashes. Stabilize test fixture identifiers only if authorized Gemini task and reliability proven."
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-runner-context-role-pytest-1445-01.json",
+    "executor_result": "PASS",
+    "proof_commit_sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "targeted": "EXECUTOR_REPORTED_PASS",
+    "full": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
