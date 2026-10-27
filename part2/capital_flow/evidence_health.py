@@ -8,6 +8,23 @@ from .contracts import FAMILIES, FlowObservation, point_in_time_filter
 EVIDENCE_HEALTH_SCHEMA = "cf-evidence-health-v2"
 
 
+def _is_context_only(provenance: Any) -> bool:
+    if not isinstance(provenance, Mapping):
+        return True
+    val = provenance.get("context_only", False)
+    if isinstance(val, bool):
+        return val
+    if isinstance(val, (int, float)):
+        return bool(val)
+    if isinstance(val, str):
+        cleaned = val.strip().lower()
+        if cleaned == "false":
+            return False
+        if cleaned == "true":
+            return True
+    return True
+
+
 def _age_seconds(as_of_ms: int, timestamp_ms: int | None) -> float | None:
     if timestamp_ms is None:
         return None
@@ -76,7 +93,7 @@ def build_evidence_health(
     families: dict[str, dict[str, Any]] = {}
     for family in FAMILIES:
         rows = by_family.get(family, [])
-        scoring = [row for row in rows if not bool(dict(row.provenance).get("context_only", False))]
+        scoring = [row for row in rows if not _is_context_only(row.provenance)]
         latest_effective = _latest(rows, "effective_at_ms")
         latest_available = _latest(rows, "available_at_ms")
         latest_observed = _latest(rows, "observed_at_ms")

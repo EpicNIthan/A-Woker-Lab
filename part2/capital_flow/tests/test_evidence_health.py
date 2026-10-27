@@ -10,8 +10,9 @@ from part2.capital_flow.runner import run_once
 
 
 class CapitalFlowEvidenceHealthTests(unittest.TestCase):
-    def _obs(self, *, family: str = "exchange_btc", observed_at: int = 2_000_000, available_at: int | None = 1_900_000, effective_at: int = 1_800_000, context_only: bool = False, cadence_seconds: int | None = 300) -> FlowObservation:
-        return FlowObservation(family=family, metric="btc_netflow" if family == "exchange_btc" else "net_flow_usd", asset="BTC" if family == "exchange_btc" else "USD", value=12.0, unit="BTC" if family == "exchange_btc" else "USD", effective_at_ms=effective_at, available_at_ms=available_at, observed_at_ms=observed_at, source="fixture_source", source_record_id=f"{family}:{effective_at}", cadence_seconds=cadence_seconds, provenance={"context_only": context_only})
+    def _obs(self, *, family: str = "exchange_btc", observed_at: int = 2_000_000, available_at: int | None = 1_900_000, effective_at: int = 1_800_000, context_only: bool | str | None = False, cadence_seconds: int | None = 300, provenance: dict[str, Any] | None = None) -> FlowObservation:
+        prov = dict(provenance) if provenance is not None else {"context_only": context_only}
+        return FlowObservation(family=family, metric="btc_netflow" if family == "exchange_btc" else "net_flow_usd", asset="BTC" if family == "exchange_btc" else "USD", value=12.0, unit="BTC" if family == "exchange_btc" else "USD", effective_at_ms=effective_at, available_at_ms=available_at, observed_at_ms=observed_at, source="fixture_source", source_record_id=f"{family}:{effective_at}", cadence_seconds=cadence_seconds, provenance=prov)
 
     def test_family_health_preserves_three_clocks_and_missingness(self) -> None:
         health = build_evidence_health([self._obs()], as_of_ms=2_100_000)
@@ -35,6 +36,35 @@ class CapitalFlowEvidenceHealthTests(unittest.TestCase):
         family = health["families"]["whale_lth"]
         self.assertFalse(family["missing"])
         self.assertTrue(family["scoring_missing"])
+
+    def test_context_only_string_parsing_fail_closed(self) -> None:
+        # Absent key defaults to scoring (context_only=False equivalent)
+        obs_absent = self._obs(provenance={})
+        health_absent = build_evidence_health([obs_absent], as_of_ms=2_100_000)
+        self.assertFalse(health_absent["families"]["exchange_btc"]["scoring_missing"])
+
+        # Boolean explicit values
+        obs_bool_false = self._obs(context_only=False)
+        health_bool_false = build_evidence_health([obs_bool_false], as_of_ms=2_100_000)
+        self.assertFalse(health_bool_false["families"]["exchange_btc"]["scoring_missing"])
+
+        obs_bool_true = self._obs(context_only=True)
+        health_bool_true = build_evidence_health([obs_bool_true], as_of_ms=2_100_000)
+        self.assertTrue(health_bool_true["families"]["exchange_btc"]["scoring_missing"])
+
+        # String values (case/whitespace-insensitive)
+        obs_str_false = self._obs(context_only="  FALSE  ")
+        health_str_false = build_evidence_health([obs_str_false], as_of_ms=2_100_000)
+        self.assertFalse(health_str_false["families"]["exchange_btc"]["scoring_missing"])
+
+        obs_str_true = self._obs(context_only="true")
+        health_str_true = build_evidence_health([obs_str_true], as_of_ms=2_100_000)
+        self.assertTrue(health_str_true["families"]["exchange_btc"]["scoring_missing"])
+
+        # Malformed explicit strings / unknown nonempty strings fail closed as context-only
+        obs_malformed = self._obs(context_only="maybe")
+        health_malformed = build_evidence_health([obs_malformed], as_of_ms=2_100_000)
+        self.assertTrue(health_malformed["families"]["exchange_btc"]["scoring_missing"])
 
     def test_context_only_does_not_refresh_scoring_freshness(self) -> None:
         scoring = self._obs(
