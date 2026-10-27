@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 01:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "parent": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "f7531127cc2491aa2abb21ff1b2d01d4ed483bcc",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d5202851fb0dbe5f836fa3a4e71e26cc21e9acf5",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "7bf550e72cb38210e241dbc05be23b7d80fbd2fa",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "9105de7030e1e975b12ce1950519913203f4592a",
+    "roadmap_latest": "2026-10-28 00:49 ICT",
+    "queue": {
+      "pending": 1,
+      "done": 22,
+      "failed": 19,
+      "source": "direct recursive tree enumeration at worker-control SHA; pending C-20261028-archive-lock-controlled-interleaving-0048-01.json"
+    },
+    "latest_durable": {
+      "A": "A-20261028-484ef5e-0006-archive-lock-integration-gates.json",
+      "B": "B-20261028-484ef5e-0031-min.json",
+      "C": "C-20261028-484ef5e-quality-blocked-0013.json"
+    }
+  },
+  "validation": {
+    "exact_sha_bounded_executor": "PASS_PRIOR_A_TASK_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-archive-crossprocess-dedup-2254-01.json",
+    "proof_commit_sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "workflow_run": 40544640420,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "new_evidence": {
+    "kind": "FAILED_C_TEST_ONLY_EXECUTOR_NO_PUBLIC_COMMIT",
+    "run": 40554220268,
+    "run_url": "https://github.com/EpicNIthan/A-Woker-Lab/actions/runs/40554220268",
+    "workflow_conclusion": "failure",
+    "attempts": 2,
+    "required_targeted": "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "executor_test_result": "3 failed, 3 passed in 4.67s",
+    "failures": [
+      "test_archive_controlled_interleaving_same_id: AssertionError: Worker B failed to attempt lock",
+      "test_archive_controlled_interleaving_distinct_ids: assert False for event_b_attempt.wait(timeout=2.0)",
+      "test_archive_crash_orphan_fail_closed: AssertionError: assert lock_path.exists()"
+    ],
+    "queue_bookkeeping": "warning: could not push queue bookkeeping",
+    "public_sha_unchanged": true,
+    "interpretation": "Failures are in uncommitted Gemini-generated test changes; they do not establish failure of current committed production lock. Task remains pending after failed queue bookkeeping."
+  },
+  "integration_decision": {
+    "name": "HOLD_PENDING_C_TASK_AND_ESCALATE_TEST_HARNESS_REPAIR",
+    "action": "Do not enqueue duplicate or blindly retry. Supervisor should reconcile existing pending C task and inspect failed generated test code/logs; require B_ATTEMPT set before B attempts lock, A pause only inside lock, and os._exit(17) while lock is still held; ensure events/joins bounded and child exitcodes checked. These are acceptance-contract corrections, not claims about the inaccessible generated patch. Keep original pinned two-writer generation contract diagnostic and unexecuted; known production consumer reads one handoff JSON artifact.",
+    "pinned_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "new_task_enqueued": 0
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git || { echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; }",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Supervisor reconcile failed pending task and inspect executor logs; authorized isolated exact-SHA checkout or independent GitHub test runner executes targeted/full pytest and controlled interleaving with captured exitcodes."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
