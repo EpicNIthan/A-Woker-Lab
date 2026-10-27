@@ -1,21 +1,30 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "A-20261027-atomic-handoff-visibility-1850-01",
-  "worker": "A",
-  "title": "Deterministic single-artifact atomic handoff visibility regression",
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+  ],
   "base_sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+  "executor_result": {
+    "attempt": 1,
+    "base_sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "commit_sha": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Add deterministic single-artifact atomic handoff visibility regression test under part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+  },
   "instructions": "A integration/completeness test-only gate. At EXACT base SHA, add ONLY NEW part2/capital_flow/tests/test_atomic_handoff_visibility.py. Do not modify production code or existing tests. Write standalone module-level pytest functions only (no unittest.TestCase), no network, no private dependencies. Test public storage.atomic_write_json for the single JSON handoff artifact (use tmp_path / 'anata_latest.json'): first publish full payload A with two correlated generation markers and nested fields; then start one background thread writing full payload B. Monkeypatch storage.os.replace with a narrowly scoped wrapper for this exact destination only: when writer B reaches replace, signal threading.Event 'entered' and wait for release Event with bounded timeout; all other replaces delegate immediately. While B is paused, parse destination with json.loads and assert it is exactly complete A, never missing/truncated/mixed fields; release B in a finally block, join with bounded timeout, propagate background exceptions, parse again and assert exactly complete B. Assert no leaked *.tmp files after completion. Use deterministic event synchronization rather than sleep. Ensure timeout fails loudly and does not hang pytest. Test should not claim deployed production-reader acceptance or cross-file snapshot atomicity: this is ONLY public single-file publication contract. Keep exact existing files byte-for-byte unchanged; compile new test; run targeted pytest then full Capital Flow pytest; commit ONLY if both PASS and changed paths exactly the single new file. If tests fail, fail closed without commit. Do not edit automation/.github, main, private, queue/control/status, secrets, prediction/API orchestration, journals, Telegram, MT5, broker/execution or Railway. Return minimal structured result.",
+  "max_attempts": 2,
   "read_paths": [
     "part2/capital_flow/storage.py",
     "part2/capital_flow/runner.py",
     "part2/capital_flow/tests/test_runner_role_consistency.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261027-atomic-handoff-visibility-1850-01",
   "tests": [
     "python -m pytest -q part2/capital_flow/tests/test_atomic_handoff_visibility.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "title": "Deterministic single-artifact atomic handoff visibility regression",
+  "worker": "A"
 }
