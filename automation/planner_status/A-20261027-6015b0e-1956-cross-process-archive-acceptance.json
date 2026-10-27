@@ -1,0 +1,100 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 19:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "parent": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "b2d2fcfc6f26d5a4c5f807fb99f11e8e0ac2a933"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "ba750a92f785455e47f70688d8aa2dc249ea426c",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "db629d9c4ec19c78c8380238424ca5eea5687cad",
+    "roadmap_latest": "2026-10-27 19:52 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 20,
+      "failed": 19,
+      "source": "Supervisor 19:52 ICT direct enumeration, plus pending directory 404 rechecked this run"
+    },
+    "latest_durable": {
+      "A": "A-20261027-6015b0e-1857-archive-race-acceptance.json",
+      "B": "B-20261027-6015b0e-1934-min.json",
+      "C": "C-20261027-6015b0e-quality-blocked-1911.json"
+    }
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-atomic-handoff-visibility-1850-01.json",
+    "proof_blob": "a584d14cff13c4cfa15886be3948f8f2ef7002cf",
+    "proof_commit_sha": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "executor_result": "PASS",
+    "executor_required_tests": [
+      "python -m pytest -q part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "CROSS_PROCESS_ARCHIVE_DEDUP_ACCEPTANCE_GAP",
+    "finding": "Prior proposed two-thread barrier test can validate intra-process locking but cannot establish cross-process archive dedup safety. Exact storage.append_observations performs load/check followed by unsynchronized append; two separate processes may both admit the same observation_id and write duplicate or interleaved JSONL. This is source-derived risk, NOT an observed production failure. Existing one-file os.replace regression does not cover it.",
+    "pinned_specs": [
+      "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+      "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+      "automation/planner_status/A-20261027-6015b0e-1857-archive-race-acceptance.json"
+    ],
+    "runnable_no_network_contract": {
+      "status": "SPEC_ONLY_NOT_EXECUTED",
+      "proposed_path": "part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+      "cases": [
+        "Retain same-ID and distinct-revision-key two-thread tests from 18:57 A contract; bound all waits, propagate worker exceptions, assert valid complete JSONL.",
+        "Add a process-level same-ID test with multiprocessing.get_context('spawn'), two top-level worker entrypoints, shared tmp_path/observations.jsonl, and one valid deterministic FlowObservation fixture serialized into both children.",
+        "In each child, locally wrap storage.load_observations to synchronize its first post-read empty snapshot with a multiprocessing.Barrier(2). Barrier.wait(timeout=3) may break under correct cross-process serialization; catch BrokenBarrierError and continue. Parent joins with bounded timeout, terminates stragglers in finally, and propagates child errors/exit codes.",
+        "After both children exit successfully, load every JSONL line via FlowObservation.from_dict. Same-ID case MUST contain exactly one valid row; two distinct revision_key/economic identity inputs MUST yield exactly two unique valid rows. Do not assert per-call appended count, which can legitimately be 0 for the losing writer.",
+        "Use no sleeps, network, live providers, private imports or shared external state. Assert no truncated/interleaved JSONL; explicitly record if only thread-level evidence was obtained. Cross-process test is necessary before claiming process-safe archive dedup."
+      ],
+      "commands": [
+        "python -m py_compile part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+        "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "pass_rule": "Exact pinned public SHA, stdout/stderr and exit codes recorded; duplicate rows, invalid JSONL, child failures or hangs are FAIL. This is producer archive acceptance, not deployed-reader acceptance."
+    },
+    "queue_decision": "NO_TASK: Gemini structured JSON reliability remains UNVERIFIED; no repeat malformed tasks, no enqueue or promotion."
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf \"ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n\" >&2; exit 42; fi'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA checkout through permitted repository materialization (do not retry DNS clone); run targeted thread+process archive test and full Capital Flow pytest; preserve logs and request C independent verification. No Specialist code edits by A."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
