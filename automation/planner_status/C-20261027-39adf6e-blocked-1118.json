@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 11:18 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "parent": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "latest_diff": [
+      "part2/capital_flow/evidence_health.py +18/-1",
+      "part2/capital_flow/tests/test_evidence_health.py +32/-2"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "4c633b41e83e06a87075e99dd4f261d119a6c783",
+    "roadmap_blob": "f28891b2dbade6272773e95a9be9a94258c21b75",
+    "roadmap_at_ict": "2026-10-27 10:51 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 17,
+      "failed": 18,
+      "directly_enumerated": true
+    },
+    "latest_reports": {
+      "A": "A-20261027-39adf6e-1058-falsey-metadata-role-gate.json",
+      "B": "B-20261027-39adf6e-1033-min.json",
+      "C": "C-20261027-39adf6e-blocked-1019.json"
+    }
+  },
+  "pinned_blobs": {
+    "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/tests/test_evidence_health.py": "99b1daec27c4944586d0e3b7653555fa7ce83001"
+  },
+  "quality_finding": "Current source retains handoff/runner bool(...) context_only coercion; string 'false' becomes context while evidence_health treats it as scoring. Missing key remains scoring. New failed Gemini task 1048 corrupts unrelated existing test expression at test_v1_handoff.py:173, SyntaxError during targeted collection (exit 2); full suite NOT_REACHED; no code committed. This is generated-edit integrity failure, not independently reproduced production failure.",
+  "validation": {
+    "exact_sha": "BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-context-role-coercion-0848-01.json",
+    "latest_failed": "automation/executor_queue/failed/C-20261027-handoff-context-role-truthtable-1048-01.json",
+    "executor_targeted": "FAILED_COLLECTION_SYNTAX_ERROR_EXIT_2",
+    "executor_full": "NOT_REACHED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_general_reliability": "UNVERIFIED"
+  },
+  "blocker": "Authorized disposable exact-SHA checkout absent at /mnt/data/A-Woker-Lab/.git; independent no-network cross-surface regression and full pytest unexecuted.",
+  "recovery": "Acquire authorized isolated checkout pinned to exact public SHA. Baseline existing 17 Capital Flow test files; use a new small dedicated test_handoff_context_role.py test-only overlay instead of rewriting existing test_v1_handoff.py; verify absent-key=>scoring, string ' false '=>scoring, true/unknown=>context, and falsey malformed fail-closed cases across handoff/runner/evidence-health. Run syntax compile, targeted and full python -m pytest -q part2/capital_flow/tests; retain logs, exit codes, test-overlay hashes. Only GitHub-hosted Gemini may repair public Specialist code after reliability proof; do not repeat failed variants.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
