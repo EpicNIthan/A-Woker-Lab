@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 02:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "parent": "cd28731ba33c8116ca0f9abbf1e4287289a6c540",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "51c780db9377d33ba163c141b3c4165f2c2cce47",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "733acbf0ca5fe8a0b06b0e5fd51c7fe8121bfe9e",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-28 ~02:51 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 24,
+      "failed": 20,
+      "pending_path": "404 absent",
+      "source": "direct worker-control directory enumeration"
+    },
+    "latest_durable_before_run": {
+      "A": "A-20261028-cd28731-0202-orphan-reader-integration-gate.json",
+      "B": "B-20261028-cd28731-0233-min.json",
+      "C": "C-20261028-cd28731-quality-blocked-0218.json"
+    }
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_EXECUTOR_ONLY",
+    "matching_done": "automation/executor_queue/done/A-20261028-archive-reader-visibility-0250-01.json",
+    "executor_status": "PASS",
+    "task_commit_sha": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "workflow_run": 40572449011,
+    "workflow_conclusion": "success",
+    "required_targeted": "python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py",
+    "required_full": "python -m pytest -q part2/capital_flow/tests",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "ACCEPT_READER_LOCK_INTEGRATION_RETAIN_ORPHAN_FAIL_CLOSED_GATE",
+    "integration_result": "Public load_observations now acquires the same ArchiveWriterLock as append_observations; append uses _load_observations_unlocked inside its existing lock, avoiding recursive deadlock. runner.run_once calls public load_observations so the previously identified in-flight partial JSONL read exposure is addressed for cooperating readers. No confirmed production incident.",
+    "remaining_blocker": "Crash-orphan .jsonl.lock now blocks BOTH writes and public reads (including offline run_once) until lock acquisition timeout; no automatic recovery and no documented safe operator recovery protocol. Single-file anata_latest.json is atomically replaced; pinned three-file generation mismatch remains diagnostic because known production consumer reads only one handoff.",
+    "test_contract": "At exact SHA in tmp_path, seed one valid row; spawn writer holding ArchiveWriterLock after flushing half of second JSON body; require PARTIAL event before starting reader. Reader must signal ATTEMPT immediately before public load_observations; assert no result before RELEASE (catch queue.Empty specifically), release writer in finally, bounded joins and exitcode==0, assert two unique complete records and no .lock. Add positive control for complete JSON body without newline. Separate crash child os._exit(17) inside lock; assert subsequent load_observations and append_observations raise bounded TimeoutError; only remove orphan lock after verifying no live owner, then assert recovery; do not auto-delete unknown live locks. Do not confuse per-file atomic visibility with three-file generation consistency.",
+    "pinned_two_writer_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "new_test_quality_caveat": "Current test lacks an explicit reader ATTEMPT handshake and uses broad pytest.raises(Exception) for Queue.get timeout, so it can pass a pre-reader scheduling delay. This is an acceptance gap, not evidence the production reader lock failed.",
+    "new_task_enqueued": 0,
+    "reason_no_queue": "Gemini structured JSON reliability remains UNVERIFIED; no repeat malformed or duplicate tasks. Fresh B/C exact-SHA reviews pending."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "result": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Supervisor provide authorized isolated exact-SHA checkout or independent test runner for targeted and full pytest; C validate reader ATTEMPT oracle, A document orphan-lock safe manual recovery; B/C reassess new public SHA."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_AT_1729584",
+    "B": "STALE_AT_cd28731",
+    "C": "STALE_AT_cd28731",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
