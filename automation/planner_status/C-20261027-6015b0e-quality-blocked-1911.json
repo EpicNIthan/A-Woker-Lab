@@ -1,0 +1,73 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 19:11 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "parent": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "pinned_blobs": {
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "b2d2fcfc6f26d5a4c5f807fb99f11e8e0ac2a933",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "3ea35d431ee1da8c0130ce6ae01e9b7af526a29f",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "62c0c04ab68b95e8c093e4f9e019bf18a22e851d",
+    "roadmap_reviewed": "2026-10-27 18:53 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 20,
+      "failed": 19,
+      "method": "Direct worker-control executor_queue tree enumeration; pending directory absent"
+    },
+    "latest_durable": {
+      "A": "A-20261027-d4ac647-1755-single-artifact-archive-dedup-gates.json",
+      "B": "B-20261027-d4ac647-1831-min.json",
+      "C": "C-20261027-d4ac647-quality-blocked-1814.json"
+    },
+    "latest_reports_stale_for_new_head": true
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-atomic-handoff-visibility-1850-01.json",
+    "proof_blob": "a584d14cff13c4cfa15886be3948f8f2ef7002cf",
+    "proof_commit_sha": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "executor_result": "PASS",
+    "executor_attempt": 1,
+    "targeted": "EXECUTOR_REPORTED_PASS",
+    "full": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "quality": {
+    "finding": "New test-only commit checks single-artifact JSON visibility before/after event-gated os.replace. No production source changed. Source review: assert len(tmp_files) >= 0 is vacuous; unused time import. Final no-temp-leak assertion is meaningful. Test does not establish deployed reader acceptance, multi-file generation coherence, or archive dedup concurrency safety. Prior context_only runner/handoff/evidence-health parser alignment remains source-confirmed.",
+    "blocker": "No authorized disposable exact-SHA checkout at /mnt/data/A-Woker-Lab/.git; independent targeted and full pytest not executed.",
+    "recovery": "Obtain authorized isolated checkout pinned to exact SHA (no DNS clone retries); run python -m pytest -q part2/capital_flow/tests/test_atomic_handoff_visibility.py part2/capital_flow/tests/test_runner_role_consistency.py part2/capital_flow/tests/test_v1_handoff.py then python -m pytest -q part2/capital_flow/tests; preserve logs, exit codes, SHA, and test-overlay hashes. A owns archive dedup and real reader acceptance; B owns first-party PIT source admission."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_STALE_SHA",
+    "B": "SOURCE_ADMISSION_PLATEAU_STALE_SHA",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
