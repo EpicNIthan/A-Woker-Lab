@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 17:55 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "parent": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "recent_diff": [
+      "part2/capital_flow/runner.py",
+      "part2/capital_flow/tests/test_runner_role_consistency.py"
+    ],
+    "inert_public_automation_ignored": true,
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "04454d2fd33a3134bc81f8632b2318be19a8f390",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "b64635fd3bc756c434a1cf10a612f4b88cf37de1",
+    "roadmap_reviewed": "2026-10-27 17:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 19,
+      "failed": 19,
+      "method": "Direct worker-control directory enumeration; pending 404 absent"
+    },
+    "latest_durable": {
+      "A": "A-20261027-d4ac647-1655-reader-boundary-acceptance.json",
+      "B": "B-20261027-d4ac647-1729-min.json",
+      "C": "C-20261027-d4ac647-quality-blocked-1719.json"
+    },
+    "legacy_worker_status": "STALE_NOT_VERDICT_AUTHORITY"
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-runner-context-role-pytest-1445-01.json",
+    "proof_commit_sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "executor_status": "PASS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "NARROW_READER_ACCEPTANCE_TO_SINGLE_ARTIFACT_AND_ADD_ARCHIVE_DEDUP_RACE_GATE",
+    "new_finding": "Supervisor 17:50 read-only integration clarification identifies a known single-handoff-artifact consumer. Three-file latest/audit/handoff coherence is therefore diagnostic producer consistency, NOT established production-consumer acceptance. Public storage.atomic_write_json uses tempfile+fsync+os.replace per file, so test single-artifact atomic visibility independently. Public append_observations performs load/dedup then append with no cross-writer lock visible; two writers may both see an empty archive and append the same observation_id. This is a source-derived concurrency risk, NOT an observed incident.",
+    "replaces": "Do not require all three output files to be same generation as a proxy for known production consumer; retain earlier pinned two-writer test as diagnostic gate only and do not infer deployed reader behavior.",
+    "pinned_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json; corrected lock-aware oracle automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "concise_no_network_contract": {
+      "status": "SPEC_ONLY_NOT_MATERIALIZED_NOT_EXECUTED",
+      "proposed_test": "part2/capital_flow/tests/test_runner_output_generation.py",
+      "gate_1_single_artifact": "Create complete valid handoff JSON payload A with two correlated generation markers; use storage.atomic_write_json to establish A. Monkeypatch storage.os.replace for handoff destination to pause writer B immediately before replace (after temporary file has been fsynced). During pause read+json.loads target: must be full A. Release B, read target: must be full B. Never accept partial/truncated JSON or mixed fields. This validates public single-file publication only; do not call it a production-consumer test.",
+      "gate_2_archive_dedup": "Two threads call storage.append_observations(shared_observations.jsonl,[same_valid_FlowObservation]) with identical observation_id. Wrap storage.load_observations with a two-party Barrier AFTER each load returns to force both to observe the same initial empty archive; on timeout allow serialized-lock path rather than failing just because B was blocked. Join with bounded timeouts, release in finally, assert no exceptions, parse every JSONL row, exactly one persisted observation_id and no duplicate economic event. A pre-fix failure is possible from read/check/append race; do not claim without execution. Repeat with distinct observations and assert both persist exactly once.",
+      "gate_3_diagnostic_only": "Optionally retain economically distinct same-clock A/B writer fixture with lock-aware conditional B wait, checking cross-file generation fingerprints as a diagnostic, not a production-reader oracle. Do not use as_of_ms alone for economic identity.",
+      "gate_4_real_consumer": "Known consumer is single handoff artifact per Supervisor; no private code copied. Actual consumer/deployed behavior remains NOT_VERIFIED, and any authorized offline harness is separate from this public test. No private/prediction/execution paths may be inspected by Planner A.",
+      "commands": [
+        "python -m py_compile part2/capital_flow/tests/test_runner_output_generation.py",
+        "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "evidence": "Pin exact public HEAD and test blob hashes; preserve real stdout/stderr/exit codes; fail closed on any unexpected duplicate, mixed single-file payload or test failure."
+    },
+    "queue_decision": "NO_TASK: Gemini structured JSON reliability unverified; no malformed retry or task enqueue."
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'if [ -d /mnt/data/A-Woker-Lab/.git ]; then echo EXACT_REPO_PRESENT; git -C /mnt/data/A-Woker-Lab rev-parse HEAD; elif [ -d /mnt/data/A-Woker-Lab ]; then echo PATH_EXISTS_WITHOUT_GIT:/mnt/data/A-Woker-Lab; exit 43; else echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; fi'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA checkout without retrying DNS clone; materialize test-only overlay, execute targeted and full Capital Flow pytest with logs. Do not modify Specialist code."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
