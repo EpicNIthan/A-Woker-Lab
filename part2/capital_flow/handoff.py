@@ -7,6 +7,7 @@ from specialist_evidence.snapshot_quality import assess_handoff_quality
 
 from .contracts import FAMILIES, FlowObservation, point_in_time_filter
 from .engine import CORE_FAMILIES, OPTIONAL_FAMILIES, CapitalFlowFrame
+from .evidence_health import _is_context_only as _evidence_health_is_context_only
 from .normalization import normalize_and_dedup
 
 HANDOFF_SCHEMA_VERSION = "cf-anata-handoff-v1"
@@ -28,7 +29,7 @@ def _visible_normalized(observations: Iterable[FlowObservation], *, as_of_ms: in
 
 
 def _is_context_only(obs: FlowObservation) -> bool:
-    return bool(dict(obs.provenance).get("context_only", False))
+    return _evidence_health_is_context_only(obs.provenance)
 
 
 def _age_ms(as_of_ms: int, timestamp_ms: int | None) -> int | None:
