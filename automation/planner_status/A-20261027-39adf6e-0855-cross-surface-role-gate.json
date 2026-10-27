@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 08:55 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "parent": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "diff": [
+      "part2/capital_flow/evidence_health.py",
+      "part2/capital_flow/tests/test_evidence_health.py"
+    ],
+    "test_file_count": 17,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "ab3a68e4f37fa5356e71a192dfbacc516e4dfb97",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "4bffd799945c0ad19f0c36fb40b75e671e51ea0e",
+    "roadmap_at_ict": "2026-10-27 08:53 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 17,
+      "failed": 16,
+      "directly_enumerated": true
+    },
+    "latest_durable": {
+      "A": "A-20261027-378cffe-0803-reader-protocol-acceptance-gap.json",
+      "B": "B-20261027-378cffe-0834-min.json",
+      "C": "C-20261027-378cffe-blocked-0811.json",
+      "all_stale_new_sha": true
+    }
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-context-role-coercion-0848-01.json",
+    "proof_commit_sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "executor_attempt": 2,
+    "prior_attempt": "MALFORMED_GEMINI_JSON",
+    "push_run_success": "40434987249",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_general_reliability": "UNVERIFIED",
+    "prior_task_immediate_dispatch": "VERIFIED",
+    "new_task_dispatched": false
+  },
+  "decision": {
+    "name": "RESET_A_ACCEPTANCE_ON_NEW_SHA_AND_REQUIRE_CROSS_SURFACE_ROLE_COHERENCE",
+    "finding": "The new C patch changes only evidence_health.py and its unit tests. On the same context_only='false' observation, evidence health now treats it as scoring, but runner._scoring_history and handoff._is_context_only still use bool('false') and treat it as context-only. Therefore unit-level evidence-health PASS is not end-to-end Capital Flow integration acceptance. This cross-output coherence gate belongs to A; C owns any source repair. The prior P0 two-writer and production-reader consistency acceptance remains independently unproven.",
+    "source_blobs": {
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_evidence_health.py": "99b1daec27c4944586d0e3b7653555fa7ce83001",
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/engine.py": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968"
+    },
+    "pinned_two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "pinned_oracle": "automation/planner_status/A-20261021-378cffe-two-writer-oracle-tightened-0858.json",
+    "new_no_network_test_only_overlay": {
+      "path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+      "source": "import pytest\nfrom part2.capital_flow.contracts import FlowObservation\nfrom part2.capital_flow.storage import append_observations\nfrom part2.capital_flow.runner import run_once\n\n@pytest.mark.parametrize(\"raw,scoring\", [(\"false\", True), (\"true\", False), (\"maybe\", False)])\ndef test_role_consistency_across_run_outputs(tmp_path, raw, scoring):\n    obs = FlowObservation(\n        family=\"exchange_btc\", metric=\"btc_netflow\", asset=\"BTC\",\n        value=12.0, unit=\"BTC\", effective_at_ms=1800000,\n        available_at_ms=1900000, observed_at_ms=2000000,\n        source=\"fixture_source\", source_record_id=\"one\",\n        cadence_seconds=300, provenance={\"context_only\": raw},\n    )\n    append_observations(tmp_path / \"observations.jsonl\", [obs])\n    result = run_once(local_dir=tmp_path, network=False, as_of_ms=2100000)\n    assert result[\"source_errors\"] == []\n    assert result[\"scoring_records_loaded\"] == int(scoring)\n    handoff = result[\"anata_output\"]\n    assert handoff[\"evidence_health\"][\"families\"][\"exchange_btc\"][\"scoring_missing\"] is (not scoring)\n    roles = {row[\"role\"] for row in handoff[\"source_evidence\"] if row[\"family\"] == \"exchange_btc\"}\n    assert roles == ({\"scoring\"} if scoring else {\"context\"})\n",
+      "expected_current_behavior": "string 'false' cross-surface test FAILS in runner/handoff (source prediction only, NOT EXECUTED); true/maybe expected consistent",
+      "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py",
+      "full": "python -m pytest -q part2/capital_flow/tests",
+      "acceptance": "Require scoring_records_loaded, evidence_health scoring_missing, and handoff source_evidence role agree on same stored observation; preserve PIT and no-network. Existing two-writer writer-B final-generation and supported production reader-consistency gates must also pass independently.",
+      "overlay_materialized": false
+    },
+    "tasks_enqueued": 0
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized isolated checkout pinned to 39adf6e51277b80059bc34b376fdb9d3aee2ff7f; verify 17-test baseline; materialize/hash test-only role-consistency and existing two-writer/reader overlays; run targeted and full Capital Flow pytest, record actual stdout/stderr/exit codes. No DNS clone retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "STALE_NEW_SHA",
+    "C": "STALE_NEW_SHA",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
