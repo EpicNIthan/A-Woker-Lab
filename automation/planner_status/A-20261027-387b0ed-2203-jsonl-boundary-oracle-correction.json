@@ -1,0 +1,108 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 22:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "parent": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "diff_scope": "test-only; one file +7/-5",
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "9dfa1a4a565ee3a49783751934d2439a6983d08a",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-27 21:47 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 21,
+      "failed": 19,
+      "method": "worker-control recursive tree enumeration; pending contents 404"
+    },
+    "latest_durable": {
+      "A": "A-20261027-387b0ed-2105-partial-archive-visibility-gate.json",
+      "B": "B-20261027-387b0ed-2133-min.json",
+      "C": "C-20261027-387b0ed-quality-blocked-2115.json"
+    }
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-atomic-handoff-test-hygiene-2050-01.json",
+    "proof_commit_sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "executor_result": "PASS",
+    "workflow_run_id": 40515396322,
+    "workflow_conclusion": "success",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "CORRECT_JSONL_PARTIAL_RECORD_ORACLE",
+    "finding": "The previous A 21:05 partial-record acceptance spec was too broad: storage.append_observations writes the entire JSON body then newline, and storage.load_observations strips each line before json.loads. A flushed COMPLETE JSON body without its newline is valid and load_observations can parse it; it does NOT itself prove a ValueError. Actual mid-body truncation (or concatenated complete JSON bodies from an interleaving append) is needed to test malformed-row visibility. Normal TextIO buffering means the fault injection must explicitly flush/fsync the selected prefix. This is a corrected test oracle, not a production failure.",
+    "pinned_specs": [
+      "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+      "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+      "automation/planner_status/A-20261027-387b0ed-2105-partial-archive-visibility-gate.json"
+    ],
+    "independent_microcheck": {
+      "status": "EXECUTED_STDLIB_ONLY_NOT_EXACT_REPO",
+      "results": [
+        "complete_without_newline:PARSE_OK:A",
+        "truncated_mid_json:PARSE_ERROR:Expecting value",
+        "concatenated_json:PARSE_ERROR:Extra data"
+      ]
+    },
+    "runnable_no_network_contract": {
+      "status": "SPEC_ONLY_NOT_EXECUTED",
+      "proposed_path": "part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+      "cases": [
+        "Use multiprocessing.get_context('spawn'), top-level child entrypoints, tmp_path/observations.jsonl and deterministic FlowObservation fixtures; bound Barrier/Event waits and joins, terminate stragglers, propagate child errors and exit codes.",
+        "Same-ID two-writer: coordinate the first load_observations post-read snapshot across processes with a bounded Barrier; permit BrokenBarrierError when legitimate serialization blocks the second reader. Final archive MUST contain exactly one unique valid row. Distinct-ID/economic identity control MUST contain exactly two valid rows.",
+        "Corrected mid-BODY fault injection: in writer A process only, wrap its archive append write and write a prefix of serialized JSON ending after a colon (invalid JSON), flush+fsync and signal parent, pause before writing the rest. Launch reader B while A is paused. A correct archive reader/lock must never expose a malformed record or throw invalid observation JSONL; release A in finally, then assert complete final JSONL. Do not confuse this forced mid-body window with normal buffered I/O.",
+        "Separate complete-BODY/no-newline case: flush+fsync a complete JSON body and pause before newline. Assert direct json.loads of the complete body SUCCEEDS; if a second writer is allowed to append before A's newline, require final archive lines to remain separately parseable (no `}{` concatenation). A ValueError before newline is NOT the acceptance oracle.",
+        "Keep corrected two-writer generation test lock-aware: B may legitimately block until A releases; distinguish producer three-file diagnostic from the actual single-atomic-handoff consumer. Do not assert cross-file atomicity is required by the deployed reader."
+      ],
+      "commands": [
+        "python -m py_compile part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+        "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "pass_rule": "Only an authorized exact-SHA isolated checkout counts; record SHA, source/overlay hashes, stdout/stderr and exit codes. Fail on duplicates, malformed final JSONL, unhandled reader errors, hangs or lost records; report fault-injection vs observed-production separately."
+    },
+    "queue_decision": "NO_TASK: Gemini structured JSON reliability UNVERIFIED; pending empty is insufficient."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git || { echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; }",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Obtain authorized isolated exact-SHA checkout/materialization without repeating DNS clone; execute corrected deterministic fault-injection and targeted/full Capital Flow pytest; C independently audits evidence. No A Specialist edits."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "automation_schedule_preserved": true
+}
