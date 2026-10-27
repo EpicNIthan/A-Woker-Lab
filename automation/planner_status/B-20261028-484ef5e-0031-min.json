@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 00:31 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "parent": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "diff_summary": "Archive writer lock and spawn tests; no new economic source, provider, PIT artifact, or source-admission contract.",
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "05c7586f7720af15fbad60e85022eee6edf83b13",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-27 23:51 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 22,
+      "failed": 19,
+      "provenance": "Latest Supervisor and C direct enumeration; matching done record re-fetched; former pending task now 404. Directory enumeration not exposed by this connector."
+    },
+    "latest_A": "A-20261028-484ef5e-0006-archive-lock-integration-gates.json",
+    "latest_B_prior": "B-20261027-387b0ed-2328-min.json",
+    "latest_C": "C-20261028-484ef5e-quality-blocked-0013.json"
+  },
+  "validation": {
+    "exact_sha_bounded_executor": "PASS",
+    "proof": "automation/executor_queue/done/A-20261027-archive-crossprocess-dedup-2254-01.json",
+    "proof_commit_sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "attempt": 2,
+    "workflow_run": 40544640420,
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "qualified_new_sources": 0,
+    "decision": "PLATEAU",
+    "reason": "No new first-party immutable artifact/event ID tied to economic BTC/ETH with effective/available/observed PIT clocks, independently proven non-overlap, appropriate context-versus-directional spot role, and deterministic no-network tests. Current diff is archive infrastructure only; rejected source families not re-admitted.",
+    "next": "Reopen only for a concrete qualifying first-party artifact with complete evidence; avoid repeated speculative browsing or near-identical tasks."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "blocker": {
+    "scope": "A/C integration and independent quality, not B source admission",
+    "detail": "Controlled interleaving, child exitcode assertions, orphan lock fail-closed and reader partial-row safety remain unproven; no independent exact-SHA targeted/full pytest. Supervisor has not issued PLATEAU."
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
