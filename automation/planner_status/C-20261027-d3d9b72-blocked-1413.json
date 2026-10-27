@@ -1,0 +1,77 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 14:13 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "parent": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "latest_diff": [
+      "part2/capital_flow/handoff.py",
+      "part2/capital_flow/tests/test_handoff_context_role.py"
+    ],
+    "blob_shas": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_handoff_context_role.py": "56cc3634d3afa53f7b5fb58e989c0011ecc81ec1",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "41aa6d2e3b180c10dc234202adfea89064181768",
+    "roadmap_blob": "772939fcac7185dacdaf11d6cbc56e781d013a12",
+    "roadmap_at_ict": "2026-10-27 13:49 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_directory": "404 absent",
+      "done": 18,
+      "failed": 19,
+      "directly_enumerated": true
+    },
+    "latest_reports": {
+      "A": "A-20261027-d3d9b72-1358-unittest-fixture-contract.json",
+      "B": "B-20261027-d3d9b72-1330-min.json",
+      "C": "C-20261027-d3d9b72-blocked-1318.json"
+    }
+  },
+  "quality": {
+    "finding": "Source-confirmed runner.py:60 _scoring_history uses bool(dict(obs.provenance).get('context_only',False)); string ' false ' becomes True and excluded from scoring; malformed explicit None/''/[] become False and admitted. Handoff and evidence_health use fail-closed parser; cross-component parity still broken.",
+    "classification": "SOURCE_CONFIRMED_NOT_INDEPENDENTLY_PYTEST_REPRODUCED",
+    "recent_executor_failure": "A-20261027-runner-context-role-parity-1347-01 failed because generated unittest.TestCase test method expected pytest tmp_path fixture; TypeError. Generated-test harness defect, not demonstrated production regression. No public commit.",
+    "separate_A": "Integration, PIT archive/visible scope, and concurrent reader acceptance remain A lane.",
+    "separate_B": "No newly qualifying first-party non-overlapping source; B source admission plateau."
+  },
+  "validation": {
+    "exact_sha": "BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-handoff-role-dedicated-test-1148-01.json",
+    "proof_commit_sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "proof_status": "PASS",
+    "latest_failed_targeted": "1 failed, 1 passed, 9 subtests passed; unittest tmp_path TypeError (executor generated test)",
+    "latest_failed_full": "NOT_REACHED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "independent_logs": "NONE"
+  },
+  "blocker": {
+    "checkout": "ABSENT:/mnt/data/A-Woker-Lab/.git",
+    "recovery": "Authorized disposable checkout pinned to exact public SHA; preserve original hashes, add isolated deterministic no-network runner role-parity regression using plain pytest functions with tmp_path OR unittest with tempfile.TemporaryDirectory; distinguish archive-wide from PIT-visible counts; run targeted and full python -m pytest -q part2/capital_flow/tests, retain logs/exit codes/overlay hashes; no DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "gemini_structured_json_reliability": "UNVERIFIED",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
