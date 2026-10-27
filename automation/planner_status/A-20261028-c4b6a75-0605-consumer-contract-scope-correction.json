@@ -1,0 +1,89 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 06:05 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/README.md": "506cee1a4f173ee818c4ffad3b684eab55599fa4",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "e13d85a53f712261ab81af8ca550c40cbc423d43",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 20,
+      "source": "direct worker-control directory enumeration; pending directory absent"
+    },
+    "latest_durable": {
+      "A": "A-20261028-c4b6a75-0505-two-writer-consumer-snapshot-contract.json",
+      "B": "B-20261028-c4b6a75-0529-min.json",
+      "C": "C-20261028-c4b6a75-quality-blocked-0520.json"
+    },
+    "legacy_worker_status_not_authoritative": true
+  },
+  "validation": {
+    "status": "PASS_BOUNDED_DONE_TASK_ALTERNATIVE",
+    "matching_done": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "workflow_run": 40581619175,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "THREE_OUTPUT_ATOMICITY_CONTRACT_SCOPE_CORRECTION",
+    "kind": "SUBSTANTIVE_INTEGRATION_DECISION_NOT_EXECUTED",
+    "pinned_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "previous_contract": "automation/planner_status/A-20261028-c4b6a75-0505-two-writer-consumer-snapshot-contract.json",
+    "source_evidence": [
+      "runner.run_once publishes latest.json, audit_latest.json, anata_latest.json using three independent atomic_write_json calls; interleaving can produce mixed as_of_ms",
+      "Capital Flow README explicitly designates cf-anata-handoff-v1 as the validated Anata-facing contract; legacy compact cf-output-v1 and rich audit are for compatibility/audit, not documented as a transactional triple",
+      "Public branch tree has no identified consumer that jointly reads all three files; this does not establish absence of a private consumer"
+    ],
+    "finding": "Previous unconditional three-file generation-coherence acceptance criterion was too broad. It is a useful optional consistency test, but a RED result alone does not establish a violated Anata-facing contract unless a real consumer requires atomic cross-file snapshots. Do not call it a confirmed production defect or block promotion solely on speculative triple-file atomicity.",
+    "improved_test_contract": "On an authorized exact-SHA isolated checkout, keep the existing no-network A/B interleaving test as characterization (S seed, A paused after latest.json, B completes, release A, record transient/final generations). Separately identify a real consumer and its required read set. If consumer reads only anata_latest.json, assert single-file atomic JSON visibility and matching as_of_ms for that handoff; if consumer actually requires all three as one transaction, promote cross-file equality to a hard acceptance and capture deterministic RED evidence. No source modification in Planner A.",
+    "additional_gates": [
+      "Independent targeted reader/writer pytest and full Capital Flow pytest not run; retain C quality gate",
+      "Orphan PID-only lock remains fail-closed; require documented operator-only no-live-owner and JSONL integrity verification, never auto-reap",
+      "Do not enqueue Gemini until structured JSON reliability proven and executable, consumer-backed defect established"
+    ],
+    "tasks_enqueued": 0,
+    "next_feasible_recovery": "Obtain authorized disposable checkout pinned to c4b6a75b904644c9f51b849032a332bfaebfad94; run python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py and python -m pytest -q part2/capital_flow/tests; identify actual handoff consumer read contract before treating three-file test RED as a correctness defect."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
