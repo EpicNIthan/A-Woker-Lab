@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import os
 import threading
-import time
 from pathlib import Path
 
 import pytest
@@ -77,10 +76,13 @@ def test_atomic_handoff_visibility(tmp_path: Path) -> None:
             parsed_during_pause = json.load(f)
         assert parsed_during_pause == payload_a
 
-        # Verify no temporary files are leaked in the parent directory while paused
-        tmp_files = list(destination.parent.glob("*.tmp"))
-        # mkstemp creates temporary files, which should exist during write before replace
-        assert len(tmp_files) >= 0
+        # Verify precisely one live temporary file for destination exists matching mkstemp prefix and .tmp suffix
+        expected_prefix = destination.name + "."
+        tmp_files = [
+            p for p in destination.parent.glob("*.tmp")
+            if p.name.startswith(expected_prefix)
+        ]
+        assert len(tmp_files) == 1
 
     finally:
         # Release B in a finally block
