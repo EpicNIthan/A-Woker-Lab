@@ -1,0 +1,89 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 10:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "parent": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "recent_diff": [
+      "part2/capital_flow/evidence_health.py +18/-1",
+      "part2/capital_flow/tests/test_evidence_health.py +32/-2"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "8b6834c5ccad434ecd20aedd923529fd82f3fb14",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "f28891b2dbade6272773e95a9be9a94258c21b75",
+    "roadmap_updated_at_ict": "2026-10-27 10:51 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 17,
+      "failed": 18,
+      "directly_enumerated": true
+    },
+    "latest_durable": {
+      "A": "A-20261027-39adf6e-1001-failed-oracle-quarantine.json",
+      "B": "B-20261027-39adf6e-1033-min.json",
+      "C": "C-20261027-39adf6e-blocked-1019.json"
+    },
+    "latest_executor_failure": "automation/executor_queue/failed/C-20261027-handoff-context-role-truthtable-1048-01.json"
+  },
+  "validation": {
+    "status": "BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-context-role-coercion-0848-01.json",
+    "proof_commit_sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_json_general_reliability": "UNVERIFIED",
+    "immediate_queue_push_dispatch": "VERIFIED_FOR_PRIOR_C_TASK_ONLY",
+    "github_combined_status_checks": 0
+  },
+  "decision": {
+    "name": "EXTEND_A_CROSS_SURFACE_FAIL_CLOSED_ACCEPTANCE_TO_FALSEY_MALFORMED_METADATA",
+    "new_finding": "Previous six-case A test misses explicit falsey malformed provenance values. Exact evidence_health._is_context_only treats context_only=null, empty string and empty list as context-only (fail closed), while runner._scoring_history and handoff._is_context_only use bool(value), classifying all three as scoring. FlowObservation.to_dict/from_dict preserves these provenance values through JSONL, so this is a source-confirmed cross-surface integration gap, not merely an in-memory hypothetical. The existing string-' false ' mismatch remains.",
+    "scope": "A acceptance completeness, not B source breadth or C implementation/quality repair",
+    "pinned_two_writer_spec": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "pinned_writer_b_oracle": "automation/planner_status/A-20261021-378cffe-two-writer-oracle-tightened-0858.json",
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+      "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/contracts.py": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+    },
+    "test_only_contract": {
+      "path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+      "source": "import json\nimport pytest\nfrom part2.capital_flow.contracts import FlowObservation\nfrom part2.capital_flow.runner import run_once\nfrom part2.capital_flow.storage import append_observations\n\n@pytest.mark.parametrize(\"provenance,scoring\", [\n    ({}, True), ({\"context_only\": False}, True),\n    ({\"context_only\": True}, False),\n    ({\"context_only\": \" false \"}, True),\n    ({\"context_only\": \"TRUE\"}, False),\n    ({\"context_only\": \"maybe\"}, False),\n    ({\"context_only\": None}, False),\n    ({\"context_only\": \"\"}, False),\n    ({\"context_only\": []}, False),\n])\ndef test_role_integrity_no_network(tmp_path, provenance, scoring):\n    obs = FlowObservation(\n        family=\"exchange_btc\", metric=\"btc_netflow\", asset=\"BTC\",\n        value=12.0, unit=\"BTC\", effective_at_ms=1800000,\n        available_at_ms=1900000, observed_at_ms=2000000,\n        source=\"fixture_source\", source_record_id=\"one\",\n        cadence_seconds=300, provenance=provenance,\n    )\n    append_observations(tmp_path / \"observations.jsonl\", [obs])\n    result = run_once(local_dir=tmp_path, network=False, as_of_ms=2100000)\n    assert result[\"source_errors\"] == []\n    assert result[\"archive_records_loaded\"] == 1\n    assert result[\"scoring_records_loaded\"] == int(scoring)\n    handoff = result[\"anata_output\"]\n    family = handoff[\"families\"][\"exchange_btc\"]\n    health = handoff[\"evidence_health\"][\"families\"][\"exchange_btc\"]\n    assert family[\"scoring_observation_count\"] == int(scoring)\n    assert family[\"context_observation_count\"] == int(not scoring)\n    assert health[\"scoring_observation_count\"] == int(scoring)\n    roles = [x[\"role\"] for x in handoff[\"source_evidence\"]\n             if x[\"family\"] == \"exchange_btc\" and x[\"source\"] == \"fixture_source\"]\n    assert roles == ([\"scoring\"] if scoring else [\"context\"])\n    for filename in (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\"):\n        assert json.loads((tmp_path / filename).read_text())[\"as_of_ms\"] == 2100000\n",
+      "materialized": false,
+      "executed": false,
+      "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py",
+      "full": "python -m pytest -q part2/capital_flow/tests",
+      "acceptance": "Nine independent archived single-observation fixtures; compare runner scoring, handoff family scoring/context, evidence health scoring, source_evidence role, and persisted triplet timestamps. Expected RED for current source (source-level prediction only), GREEN only after Gemini-owned repair and actual tests. Keep existing test files byte-for-byte; do not modify public Specialist code in A."
+    },
+    "two_writer_acceptance": "Separate gate: pinned conditional writer-B-last, final three output stamps exactly B; reader consistency requires actual production snapshot reader or atomic publication, not writer lock alone."
+  },
+  "blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf '%s\\n' 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Obtain authorized isolated checkout pinned to public 39adf6e SHA; baseline and hash unchanged existing 17 tests, materialize only new A test overlay and pinned two-writer/reader test-only overlays, run targeted and full Capital Flow pytest, preserve stdout/stderr/exit codes and hashes; do not retry DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
