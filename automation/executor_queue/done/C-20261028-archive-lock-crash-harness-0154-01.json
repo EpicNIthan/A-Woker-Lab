@@ -1,0 +1,30 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261028-archive-lock-crash-harness-0154-01",
+  "worker": "C",
+  "title": "Fix deterministic crash-orphan lock test handshake and assert child exit codes",
+  "base_sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+  "read_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2,
+  "instructions": "C-LANE QUALITY TEST-ONLY, narrowly supersedes FAILED C-20261028-archive-lock-controlled-interleaving-0048-01 (do NOT recreate its broad 3-test patch). Exact base_sha ONLY. Modify only existing part2/capital_flow/tests/test_archive_concurrent_dedup.py; never edit production storage.py or any other file. FIRST improve current two multiprocessing spawn concurrency tests by asserting every spawned child exitcode == 0 after bounded join, every result status == OK and returned append counts sum to 1 for same ID or 2 for distinct IDs, and deterministic cleanup in try/finally (terminate+join any living children, close queues). Preserve current tests and idempotence. SECOND add ONE focused deterministic orphan-lock fail-closed test with a top-level spawn-safe child target: child enters `with ArchiveWriterLock(archive_path):`, sets a `multiprocessing.Event` (acquired) while lock is held, waits on a parent release Event with bounded timeout, and executes `os._exit(17)` DIRECTLY INSIDE the `with` suite before normal context-manager exit; parent starts child, waits bounded for acquired Event, verifies .jsonl.lock exists while child alive, releases child, joins with timeout and asserts exitcode==17, verifies orphan lock remains, and asserts a NEW ArchiveWriterLock(path, timeout=0.1, poll_interval=0.01) raises TimeoutError; finally only after child is dead safely unlink that test's orphan lockfile. Crucial: do NOT use multiprocessing.Queue to send readiness immediately before os._exit because Queue feeder buffering loses messages; Event.set() + parent handshake only. Do NOT call os._exit after exiting the lock context, and do NOT call append_observations in crash child. Use pytest.raises and explicit bounded waits/joins, no sleep-only races. Avoid production changes, external network, extra dependencies, and any broad controlled-interleaving tests in THIS task. Run python -m py_compile on modified test, then required targeted and full Capital Flow pytest; only commit if both PASS, git diff --check PASS, changed paths exactly one allowlisted test file, and all child cleanup bounded. If failures persist, FAIL without committing. Do not touch main, private, automation/**, .github/**, queue/control/status, secrets, prediction/API orchestration/journals, Telegram, MT5, broker/execution, or Railway. This test proves only orphan-lock fail-closed, NOT automatic crash recovery, partial-row reader safety, or controlled two-writer interleaving.",
+  "executor_result": {
+    "status": "PASS",
+    "model": "gemini-3.5-flash-lite",
+    "key_index": 1,
+    "summary": "Fix deterministic crash-orphan lock test handshake, assert spawned child exit codes, verify returned append counts summing correctly, ensure deterministic cleanup in try/finally blocks, and add focused orphan-lock fail-closed test with spawn-safe child target executing os._exit(17) inside ArchiveWriterLock suite.",
+    "base_sha": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "commit_sha": "cd28731ba33c8116ca0f9abbf1e4287289a6c540",
+    "attempt": 1
+  }
+}
