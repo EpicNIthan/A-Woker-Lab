@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 22:17 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "parent": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c3a641a76737e71f5ca80b437567bd255238e9da",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "7fab7e6f4061cf21a05624ebde79e52598383d56",
+    "roadmap_latest": "2026-10-27 21:47 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 21,
+      "failed": 19,
+      "method": "worker-control directory enumeration; pending directory absent"
+    },
+    "latest_reports": {
+      "A": "A-20261027-387b0ed-2203-jsonl-boundary-oracle-correction.json",
+      "B": "B-20261027-387b0ed-2133-min.json",
+      "C": "C-20261027-387b0ed-quality-blocked-2115.json"
+    }
+  },
+  "quality": {
+    "finding": "Current Gemini test-only commit makes destination-specific .tmp assertion meaningful for a single atomically replaced JSON handoff; not evidence for cross-process JSONL archive safety or deployed-reader behavior. Runner/handoff role parser parity for string ' false ' is present at source level. A 22:03 corrected the archive fault-injection oracle: a complete JSON body without newline is parseable; only mid-body truncated or concatenated bodies demonstrate malformed-row visibility. This correction is a SPEC, not executed Capital Flow regression or production incident.",
+    "blocker": "Authorized isolated exact-SHA checkout absent at /mnt/data/A-Woker-Lab/.git; independent targeted/full pytest and process-level archive dedup/partial-record fault injection NOT RUN.",
+    "recovery": "Materialize authorized isolated checkout pinned to public SHA without DNS clone. Run no-network targeted test_atomic_handoff_visibility.py, test_runner_role_consistency.py, test_v1_handoff.py and corrected spawn-based archive same-ID/distinct-ID, mid-body and complete-body/no-newline tests; run python -m pytest -q part2/capital_flow/tests; preserve stdout/stderr, exit codes, test-overlay hashes and exact SHA."
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-atomic-handoff-test-hygiene-2050-01.json",
+    "proof_blob": "83aa0011065ebba12a3a263dc7d887cf5bafe1f8",
+    "executor_result": "PASS",
+    "executor_commit_sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
