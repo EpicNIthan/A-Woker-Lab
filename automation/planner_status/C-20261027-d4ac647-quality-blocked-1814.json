@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 18:14 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "parent": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "latest_diff": [
+      "part2/capital_flow/runner.py",
+      "part2/capital_flow/tests/test_runner_role_consistency.py"
+    ],
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "4810cf1eb8c1647ef77ad1d7f19c7a56ae8a89e2",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "b64635fd3bc756c434a1cf10a612f4b88cf37de1",
+    "roadmap_reviewed": "2026-10-27 17:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 19,
+      "failed": 19,
+      "method": "worker-control exact tree, no pending directory"
+    },
+    "latest_reports": {
+      "A": "A-20261027-d4ac647-1755-single-artifact-archive-dedup-gates.json",
+      "B": "B-20261027-d4ac647-1729-min.json",
+      "C": "C-20261027-d4ac647-quality-blocked-1719.json"
+    }
+  },
+  "quality": {
+    "finding": "runner._scoring_history and handoff delegate context_only classification to evidence_health._is_context_only. String ' false ' is scoring; malformed explicit values fail closed. Nine-case and offline integration tests committed. id(provenance) fixture ID is process-unstable; test hygiene only, not a demonstrated runtime failure.",
+    "blocker": "No authorized disposable checkout at /mnt/data/A-Woker-Lab/.git. Independent targeted/full pytest not executed. A owns single-artifact reader and archive dedup concurrency gates; B owns source admission.",
+    "recovery": "Obtain authorized isolated checkout pinned to exact SHA; run python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py part2/capital_flow/tests/test_v1_handoff.py then python -m pytest -q part2/capital_flow/tests; preserve logs, exit codes, test blob hashes; no DNS clone retries."
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-runner-context-role-pytest-1445-01.json",
+    "proof_blob": "a36ac8ddb63fc52ca465ce995d914d0be8fc9bd5",
+    "executor_result": "PASS",
+    "proof_commit_sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "targeted": "EXECUTOR_REPORTED_PASS",
+    "full": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
