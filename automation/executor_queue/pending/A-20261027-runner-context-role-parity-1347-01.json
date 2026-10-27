@@ -1,0 +1,25 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261027-runner-context-role-parity-1347-01",
+  "worker": "A",
+  "title": "Runner scoring-history context-role parity with isolated no-network regression",
+  "base_sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+  "instructions": "EXACT PUBLIC BASE_SHA ONLY. A integration/completeness bounded repair. In part2/capital_flow/runner.py replace ONLY the context-only classification used by _scoring_history with delegation to the EXISTING proven part2.capital_flow.evidence_health._is_context_only(provenance) (distinct alias import); preserve all other runner, collection, archive, scoring, PIT, timestamps, frozen strategy and output behavior. CREATE ONLY a NEW small test part2/capital_flow/tests/test_runner_role_consistency.py. NEVER modify existing test files or evidence_health.py or handoff.py. Truth table provenance -> expected context-only: {} false (scoring); {'context_only':False} false; {'context_only':True} true; {'context_only':' false '} false; {'context_only':'TRUE'} true; {'context_only':'maybe'} true (fail closed); {'context_only':None} true; {'context_only':''} true; {'context_only':[]} true. First test _scoring_history directly on distinct immutable FlowObservation objects, one per case, asserting scoring row inclusion/exclusion. Second deterministic no-network integration test(s) with fresh tmp_path observations.jsonl via FlowObservation.to_dict and run_once(local_dir=tmp_path,network=False,external_jsonl=(),as_of_ms=fixed_clock): assert archive_records_loaded, scoring_records_loaded, audit_latest context count, handoff family scoring/context counts, evidence_health scoring/context counts and source_evidence roles. Ensure all observations are PIT-visible and have unique source_record_id. Additional PIT-scope fixture: one visible scoring row and one FUTURE-available context row; archive-wide audit context count may be 1 while PIT-visible handoff context count 0, which is EXPECTED, not a defect; do not incorrectly assert these counts equal. Do not overbuild; if runner interface differs inspect source and adapt test without altering semantics. Before running tests syntax-compile runner and NEW test and verify all existing test file blob hashes unchanged. Run targeted NEW pytest then full Capital Flow pytest. Commit ONLY if both pass, exact base still current, and changed-file allowlist exact. No other source or test edits, no main/private/automation/.github/queue/control/status, secrets, prediction/API orchestration/journals/Telegram/MT5/broker/execution. Never weaken tests or change their expected truth table to make green. If failed, report accurate failure and leave code uncommitted.",
+  "read_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/evidence_health.py",
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/tests/test_handoff_context_role.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/tests/test_runner_role_consistency.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2
+}
