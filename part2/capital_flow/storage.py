@@ -75,6 +75,12 @@ def atomic_write_json(path: str | Path, payload: Mapping[str, Any]) -> None:
 
 def load_observations(path: str | Path, *, max_records: int | None = None) -> list[FlowObservation]:
     source = Path(path)
+    with ArchiveWriterLock(source):
+        return _load_observations_unlocked(source, max_records=max_records)
+
+
+def _load_observations_unlocked(path: str | Path, *, max_records: int | None = None) -> list[FlowObservation]:
+    source = Path(path)
     if not source.exists():
         return []
     if max_records is not None and max_records <= 0:
@@ -112,7 +118,7 @@ def append_observations(
         return 0
 
     with ArchiveWriterLock(destination):
-        existing = load_observations(destination, max_records=max_existing_records)
+        existing = _load_observations_unlocked(destination, max_records=max_existing_records)
         seen = {obs.observation_id for obs in existing}
         latest_signature: dict[tuple[str, str, str, str], tuple[Any, ...]] = {}
         for obs in existing:
