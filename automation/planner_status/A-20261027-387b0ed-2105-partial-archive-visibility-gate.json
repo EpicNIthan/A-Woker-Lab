@@ -1,0 +1,99 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 21:05 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "parent": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "diff_scope": "test hygiene only; no A-lane production archive/runner changes",
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "faa2d8322713034467f2e0c7d29d5f5d6f32cc82",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "7b655713295e63c1e7d2f98ffd44779cb0d60b16",
+    "roadmap_latest": "2026-10-27 20:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 21,
+      "failed": 19,
+      "method": "authoritative worker-control directory enumeration; pending path 404"
+    },
+    "latest_durable": {
+      "A": "A-20261027-6015b0e-1956-cross-process-archive-acceptance.json",
+      "B": "B-20261027-6015b0e-2032-min.json",
+      "C": "C-20261027-6015b0e-quality-blocked-2011.json"
+    },
+    "prior_lane_verdicts": "STALE_AFTER_PUBLIC_HEAD_CHANGE"
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-atomic-handoff-test-hygiene-2050-01.json",
+    "proof_commit_sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "executor_result": "PASS",
+    "workflow_run": "40515396322",
+    "workflow_conclusion": "success",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "CROSS_PROCESS_ARCHIVE_PARTIAL_RECORD_VISIBILITY_ACCEPTANCE",
+    "finding": "At pinned storage.py, append_observations performs an unsynchronized read/check/append and writes each JSONL record with two separate handle.write calls (body then newline). Besides duplicate-ID races, a partial row becoming visible to a second process before newline can make load_observations raise ValueError. This is a source-derived fault-injection risk, NOT an observed production incident. The new HEAD only improves one-file atomic handoff test hygiene; it does not close archive writer/reader acceptance.",
+    "pinned_specs": [
+      "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+      "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+      "automation/planner_status/A-20261027-6015b0e-1956-cross-process-archive-acceptance.json"
+    ],
+    "runnable_no_network_contract": {
+      "status": "SPEC_ONLY_NOT_EXECUTED",
+      "proposed_path": "part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+      "cases": [
+        "Use multiprocessing.get_context('spawn'), top-level worker entrypoints, tmp_path/observations.jsonl, deterministic valid FlowObservation fixtures; bound all joins/events, terminate stragglers and propagate child errors/exit codes.",
+        "Same-ID two-process case: in each child instrument storage.load_observations to synchronize immediately after the initial empty read using a bounded shared Barrier; tolerate BrokenBarrierError when legitimate cross-process serialization prevents both reads concurrently. Require exactly one valid JSONL row and one unique observation_id.",
+        "Distinct-ID and distinct revision/economic identity control: require exactly two complete valid JSONL rows, no lost update or malformed/interleaved line.",
+        "NEW partial-record visibility case: in writer A only, wrap exact archive append handle so the first body write is flushed to disk and A is event-paused before its newline write; start reader/writer B only after parent receives body-flushed event. Release A in finally after bounded observation; require B not to fail reading partial JSONL and both rows to persist validly. This is controlled fault injection, not a claim of normal buffering behavior; a valid cross-process lock must protect reader from the partial window.",
+        "Keep corrected lock-aware two-writer generation test as producer diagnostic; single handoff artifact consumer contract is separate. Do not misclassify three-file coherence as a deployed-reader requirement."
+      ],
+      "commands": [
+        "python -m py_compile part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+        "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "pass_rule": "Run in authorized isolated exact-SHA checkout only; record stdout/stderr, exit codes, fixture overlay hash and public HEAD; no network/private imports; failures, duplicates, invalid JSONL, child errors/hangs are FAIL."
+    },
+    "queue_decision": "NO_TASK: Gemini JSON reliability remains unverified; pending empty alone is insufficient; no repeat malformed tasks."
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf \"ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n\" >&2; exit 42; fi'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Use authorized disposable exact-SHA checkout/materialization (no DNS clone retry); execute targeted process-level dedup and partial-record fault-injection tests plus full Capital Flow pytest; independently review results before any promotion."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "STALE_REASSESSMENT_REQUIRED",
+    "C": "STALE_REASSESSMENT_REQUIRED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
