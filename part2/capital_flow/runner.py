@@ -8,7 +8,7 @@ from typing import Iterable
 
 from .contracts import FlowObservation, utc_now_ms
 from .engine_v1_1 import CapitalFlowEngineV11
-from .evidence_health import build_evidence_health
+from .evidence_health import build_evidence_health, _is_context_only as _evidence_health_is_context_only
 from .handoff import build_anata_handoff
 from .output import CapitalFlowOutputBuilder
 from .providers import DefiLlamaStablecoinCollector, FarsideEtfCollector, JsonlFlowAdapter
@@ -57,7 +57,7 @@ def _collect_live(*, observed_at_ms: int, include_backfill: bool) -> tuple[list[
 
 
 def _scoring_history(observations: Iterable[FlowObservation]) -> list[FlowObservation]:
-    return [obs for obs in observations if not bool(dict(obs.provenance).get("context_only", False))]
+    return [obs for obs in observations if not _evidence_health_is_context_only(obs.provenance)]
 
 
 def run_once(
