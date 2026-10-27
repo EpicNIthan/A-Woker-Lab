@@ -1,0 +1,27 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "base_sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+  "executor_result": {
+    "error": "ExecutorError: Gemini exhausted bounded repair attempts; last test output:\n$ python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py\nexit=2\n\n==================================== ERRORS ====================================\n_________ ERROR collecting part2/capital_flow/tests/test_v1_handoff.py _________\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/python.py:508: in importtestmodule\n    mod = import_path(\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/pathlib.py:596: in import_path\n    importlib.import_module(module_name)\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1204: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1176: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:690: in _load_unlocked\n    ???\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:179: in exec_module\n    source_stat, co = _rewrite_test(fn, self.config)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:348: in _rewrite_test\n    tree = ast.parse(source, filename=strfn)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/ast.py:50: in parse\n    return compile(source, filename, mode, flags,\nE     File \"/home/runner/work/A-Woker-Lab/A-Woker-Lab/work/part2/capital_flow/tests/test_v1_handoff.py\", line 173\nE       usdc = next(item for item in context[\"components\" if item[\"symbol\"].upper() == \"USDC\"] if item[\"symbol\"].upper() == \"USDC\")\nE                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nE   SyntaxError: expected 'else' after 'if' expression\n=========================== short test summary info ============================\nERROR part2/capital_flow/tests/test_v1_handoff.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.21s\n",
+    "status": "FAILED"
+  },
+  "instructions": "PUBLIC Capital Flow quality repair only, exact base_sha. Previous C handoff attempt FAILED because its GENERATED TEST ORACLE WAS WRONG: it asserted provenance {} => context. THIS IS FALSE. Non-negotiable exact truth table (provenance, is_context_only): ({}, false), ({'context_only':false}, false), ({'context_only':true}, true), ({'context_only':' false '}, false), ({'context_only':'TRUE'}, true), ({'context_only':'maybe'}, true). In handoff.py only, replace the bool(dict(obs.provenance).get('context_only',False)) predicate by delegating to existing evidence_health._is_context_only(obs.provenance), imported under a distinct alias; do not change evidence_health.py. Keep existing handoff._is_context_only(obs) signature. In existing test_v1_handoff.py add one small deterministic no-network test with actual constructed frozen FlowObservation (no dataclass mutation) per truth-table row; verify handoff['families']['miner']['scoring_observation_count'] == (0 if is_context_only else 1), context_observation_count == (1 if is_context_only else 0), and source_evidence role == ('context' if is_context_only else 'scoring'). For ABSENT KEY {} the required scoring_observation_count is ONE and expected_context is FALSE. Do not introduce ({}, True) under any circumstances. Preserve PIT, family scoring, causal quality, source evidence clocks, schema, normalization, and all other code. No runner.py changes; its separate defect remains. Only allowed two write paths, do not modify other files. Run both specified pytest commands in order, and commit only if BOTH pass. If a generated test contradicts truth table, repair test oracle, never change production behavior to fit bad test. Return minimal structured JSON changed files; fail closed on test or parse error. No main/private/automation/control/workflows/prediction/API/journals/Telegram/MT5/broker/execution/secrets.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/evidence_health.py",
+    "part2/capital_flow/tests/test_v1_handoff.py",
+    "part2/capital_flow/contracts.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261027-handoff-context-role-truthtable-1048-01",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "Stage 2a: handoff context-only parser parity with explicit absent-is-scoring oracle",
+  "worker": "C"
+}
