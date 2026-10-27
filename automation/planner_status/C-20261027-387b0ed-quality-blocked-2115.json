@@ -1,0 +1,72 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 21:15 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "parent": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "7f50294574337056d450c2145850d54074b2efc0",
+    "roadmap_path": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "7b655713295e63c1e7d2f98ffd44779cb0d60b16",
+    "roadmap_latest": "2026-10-27 20:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 21,
+      "failed": 19,
+      "pending_directory": "404",
+      "method": "authoritative worker-control directory enumeration"
+    },
+    "latest_reports": {
+      "A": "A-20261027-387b0ed-2105-partial-archive-visibility-gate.json",
+      "B": "B-20261027-6015b0e-2032-min.json",
+      "C": "C-20261027-6015b0e-quality-blocked-2011.json"
+    }
+  },
+  "quality": {
+    "finding": "New Gemini test-only commit replaces vacuous len(tmp_files)>=0 with exact one destination-prefixed .tmp file during paused os.replace; verified source match with storage.mkstemp(prefix=destination.name+'.',suffix='.tmp). This is meaningful test hygiene, NOT deployed-reader acceptance or cross-process archive atomicity. Runner/handoff context_only parser parity is present at source level; independent exact-SHA regression remains unexecuted.",
+    "blocker": "No authorized disposable exact-SHA checkout at /mnt/data/A-Woker-Lab/.git. Cannot independently execute targeted/full pytest. Archive append remains unsynchronized two-write JSONL and A's partial-record visibility concern is not independently reproduced.",
+    "recovery": "Materialize authorized isolated checkout pinned to public SHA without DNS clone; execute no-network python -m pytest -q part2/capital_flow/tests/test_atomic_handoff_visibility.py part2/capital_flow/tests/test_runner_role_consistency.py part2/capital_flow/tests/test_handoff_context_role.py and full python -m pytest -q part2/capital_flow/tests, preserving stdout/stderr, exit codes, exact SHA; separately review A's process-level archive tests."
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261027-atomic-handoff-test-hygiene-2050-01.json",
+    "proof_blob": "83aa0011065ebba12a3a263dc7d887cf5bafe1f8",
+    "executor_result": "PASS",
+    "executor_commit_sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "executor_attempt": 1,
+    "targeted_pytest": "EXECUTOR_REQUIRED_PASS_NOT_INDEPENDENTLY_RUN",
+    "full_pytest": "EXECUTOR_REQUIRED_PASS_NOT_INDEPENDENTLY_RUN",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_SAME_SHA",
+    "B": "SOURCE_ADMISSION_PLATEAU_STALE_SHA",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE_SAME_SHA",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
