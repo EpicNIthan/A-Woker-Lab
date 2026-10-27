@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 07:18 ICT",
+  "verdict": "QUALITY_BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "parent": "8010dfae0827004c1ff7c5eee672b99ca0ccb7cb",
+    "latest_diff": [
+      "part2/capital_flow/normalization.py +39/-18",
+      "part2/capital_flow/tests/test_contracts_normalization.py +91/-0"
+    ],
+    "test_files": 17,
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "d6f05ee13b9ebbb79e2e9e31e63d99ca7b90d19b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "82ff9f5b990975e20aa30014143848e75042e8e1",
+    "roadmap_at_ict": "2026-10-27 06:53 ICT",
+    "queue": {
+      "pending": 0,
+      "pending_path": "404_NOT_FOUND",
+      "done": 16,
+      "failed": 16,
+      "directly_enumerated": true
+    },
+    "latest_reports": {
+      "A": "A-20261027-378cffe-0655-semantic-witness-preflight.json",
+      "B": "B-20261027-378cffe-0627-min.json",
+      "C": "C-20261027-378cffe-blocked-0611.json"
+    }
+  },
+  "pinned_blobs": {
+    "part2/capital_flow/handoff.py": "c5ffcd4aeb83198ee07b42160ff87862d020bbf4",
+    "part2/capital_flow/runner.py": "61a792aafcb8b8ff4b1c9e4460cf93e51d59203c",
+    "part2/capital_flow/normalization.py": "b09eeaa972cf65b9142996e665c91df05fbbe2f5",
+    "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+    "part2/capital_flow/tests/test_contracts_normalization.py": "8bfd0557050ac72a5e45bace98460d536b789e52"
+  },
+  "quality_finding": "Source-confirmed handoff.py:31 and runner.py:60 use bool(provenance.context_only); bool('false') is True. This can move a scoring observation into context-only and alter scoring_history, evidence counts, freshness. Existing test_v1_handoff.py covers booleans but no string-'false' end-to-end regression; NOT a reproduced pytest failure.",
+  "validation": {
+    "exact_sha": "BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/C-20261009-same-revision-conflict-1547-01.json",
+    "proof_blob": "0e5838c0af268be8efffba5c92a17be9b7e46960",
+    "proof_commit_sha": "378cffee64e9933b28ed9a40b936724db3beb09e",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "immediate_queue_dispatch": "UNVERIFIED"
+  },
+  "blocker": "AUTHORIZED_EXACT_SHA_CHECKOUT_ABSENT:/mnt/data/A-Woker-Lab/.git",
+  "recovery": "Use authorized disposable exact-SHA checkout; run unchanged baseline, no-network string-'false' regression in test_v1_handoff.py, and python -m pytest -q part2/capital_flow/tests. Retain stdout/stderr, exit codes, fixture/test-overlay hashes; do not repeat DNS clone.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_BLOCKED",
+    "Supervisor": "CONTINUE",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
