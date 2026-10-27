@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-27 15:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "previous_sha": "d3d9b72d6595cf52c80dba2e03b14e06c29b2471",
+    "ahead_by": 1,
+    "changed_paths": [
+      "part2/capital_flow/runner.py",
+      "part2/capital_flow/tests/test_runner_role_consistency.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "part2/capital_flow/features.py": "af20e0ced4df0f5af3c73553dc2ad0b1b6cc072c"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "94b052e3755a7e70667b212681a5391597140c77",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_reviewed": "2026-10-27 15:48 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 19,
+      "failed": 19,
+      "source": "Supervisor 15:48 ICT direct enumeration; pending path 404 at 15:59 ICT; done/failed not independently enumerated"
+    },
+    "latest_durable": {
+      "A": "A-20261027-d4ac647-1458-economic-generation-gate.json",
+      "B": "B-20261027-d4ac647-1532-min.json",
+      "C": "C-20261027-d4ac647-quality-evidence-1516.json"
+    },
+    "supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "validation": {
+    "status": "EXACT_SHA_BOUNDED_EXECUTOR_DONE_PASS_ONLY",
+    "proof": "automation/executor_queue/done/A-20261027-runner-context-role-pytest-1445-01.json",
+    "proof_commit_sha": "d4ac647f34f7a4116c53219da4099212022c96dd",
+    "executor_status": "PASS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "SPLIT_SINGLE_WRITER_RAW_READER_NEGATIVE_CONTROL_FROM_PRODUCTION_READER_ACCEPTANCE",
+    "finding": "At exact SHA runner.run_once writes latest.json, audit_latest.json, anata_latest.json sequentially with separate storage.atomic_write_json/os.replace operations. A single paused writer creates an observable raw-read mixed-generation window even if two writers are serialized. The earlier two-writer test alone cannot establish production-reader coherence. This is a source-derived possibility, not a production race observation.",
+    "new_contract": {
+      "kind": "runnable no-network additive test; append to previously proposed unmaterialized test_runner_output_generation.py",
+      "source": "Test uses pinned previous _economic_rows/_snapshot/CLOCK/FILES helpers and imports json, threading, Path, runner; verifies A/B oracles are economically distinct for each output before assertion.",
+      "python_source": "def test_single_writer_raw_read_window(tmp_path, monkeypatch):\n    # Add to proposed test_runner_output_generation.py beside _economic_rows/_snapshot.\n    histories = {\"writer-A\": _economic_rows(1), \"writer-B\": _economic_rows(-1)}\n    selected = {\"name\": \"writer-B\"}\n    def offline_load(_path, *, max_records=None):\n        name = threading.current_thread().name\n        return list(histories[name if name in histories else selected[\"name\"]])\n    monkeypatch.setattr(runner, \"load_observations\", offline_load)\n    oracles = {}\n    for name in histories:\n        selected[\"name\"] = name\n        root = tmp_path / name\n        runner.run_once(local_dir=root, network=False, external_jsonl=(), as_of_ms=CLOCK)\n        oracles[name] = _snapshot(root)\n    assert all(oracles[\"writer-A\"][f] != oracles[\"writer-B\"][f] for f in FILES), \"non-distinct economic oracle\"\n    shared = tmp_path / \"shared\"\n    shared.mkdir()\n    for f in FILES:\n        (shared / f).write_text(json.dumps(oracles[\"writer-B\"][f]), encoding=\"utf-8\")\n    reached, release = threading.Event(), threading.Event()\n    errors = []\n    original = runner.atomic_write_json\n    def gated_write(path, payload):\n        original(path, payload)\n        if threading.current_thread().name == \"writer-A\" and Path(path).name == \"latest.json\":\n            reached.set()\n            assert release.wait(15), \"writer release timeout\"\n    monkeypatch.setattr(runner, \"atomic_write_json\", gated_write)\n    def writer():\n        try:\n            runner.run_once(local_dir=shared, network=False, external_jsonl=(), as_of_ms=CLOCK)\n        except BaseException as exc:\n            errors.append(repr(exc))\n    thread = threading.Thread(target=writer, name=\"writer-A\")\n    thread.start()\n    try:\n        assert reached.wait(15), \"writer never reached latest.json\"\n        during = _snapshot(shared)\n        assert during[\"latest.json\"] == oracles[\"writer-A\"][\"latest.json\"]\n        assert during[\"audit_latest.json\"] == oracles[\"writer-B\"][\"audit_latest.json\"]\n        assert during[\"anata_latest.json\"] == oracles[\"writer-B\"][\"anata_latest.json\"]\n    finally:\n        release.set()\n        thread.join(20)\n    assert not thread.is_alive() and not errors, errors\n    assert _snapshot(shared) == oracles[\"writer-A\"]\n",
+      "commands": [
+        "python -m py_compile part2/capital_flow/tests/test_runner_output_generation.py",
+        "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py -k 'single_writer_raw_read_window or two_writers_same_clock_distinct_economic_generations'",
+        "python -m pytest -q part2/capital_flow/tests"
+      ],
+      "expected": "Raw-reader negative control passes by observing A latest + B audit/handoff while writer A paused, then all A after release. This is not a production-reader acceptance PASS.",
+      "production_reader_gate": "Identify and pin actual production consumer read path. Under same pause, exercise real reader in a separate thread, release writer, assert it returns one coherent generation A or B (never mixed) or explicit retry/fail-closed; do not count a synthetic raw reader as the real reader. If no identifiable consumer path, gate remains BLOCKED; no invented test results.",
+      "status": "NOT_MATERIALIZED_NOT_EXECUTED"
+    },
+    "no_new_task_reason": "Gemini structured-JSON reliability UNVERIFIED; proposed contract needs exact-repo verification; queue empty does not waive reliability gate."
+  },
+  "blocker": {
+    "attempted_operation": "bash -lc 'test -d /mnt/data/A-Woker-Lab/.git || { echo ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git >&2; exit 42; }'",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_stderr": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized isolated exact-SHA checkout (not repeated DNS clone); materialize candidate test only, identify real reader path, run targeted and full Capital Flow pytest with exit codes/logs and preserve hashes. No Specialist edits by Planner A."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU",
+    "promotion": "BLOCKED"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
