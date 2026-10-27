@@ -1,0 +1,85 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 03:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "9f91a5ae89567ce6955ce5d922544ba7bc8b7569",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "21089a642efd01a51733eab51d9e0288a2be4432",
+    "queue": {
+      "pending": 1,
+      "done": 24,
+      "failed": 20,
+      "source": "direct worker-control tree/contents enumeration",
+      "pending_path": "automation/executor_queue/pending/C-20261028-reader-attempt-oracle-0350-01.json"
+    },
+    "latest_durable": {
+      "A": "A-20261028-1729584-0258-reader-lock-integration-review.json",
+      "B": "B-20261028-1729584-0325-min.json",
+      "C": "C-20261028-1729584-quality-blocked-0319.json"
+    },
+    "worker_status_files": "loop-A/B/C are legacy and not current exact-SHA verdicts"
+  },
+  "validation": {
+    "status": "EXECUTOR_PASS_BUT_QUEUE_UNRECONCILED_NOT_FORMAL_EXACT_SHA_VALIDATED",
+    "workflow_run": 40581619175,
+    "workflow_conclusion": "success",
+    "executor_reported_status": "PASS",
+    "executor_reported_base_sha": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "executor_reported_commit_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "attempt": 1,
+    "required_targeted": "python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py",
+    "required_full": "python -m pytest -q part2/capital_flow/tests",
+    "executor_test_evidence": "PASS inferred from bounded executor success; independent test output not available",
+    "matching_done_task": "ABSENT; original task still pending after failed bookkeeping push",
+    "exact_sha_actions_checks": "NO_MATCHING_CHECK_RUNS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "ACCEPT_C_TEST_ORACLE_IMPROVEMENT_BLOCK_ON_ORPHAN_RECOVERY_AND_QUEUE_RECONCILIATION",
+    "finding": "Latest test-only commit adds reader ATTEMPT event, specific queue.Empty while writer lock held, child exit-code checks, and complete JSON-without-newline positive control. Existing production reader/writer shared lock is unchanged. The new event is immediately before the call, not an instrumentation hook inside lock acquisition, so it materially improves but cannot mathematically eliminate process preemption as a false positive. No confirmed production incident.",
+    "pinned_two_writer_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "two_writer_scope": "Three-output generation coherence remains diagnostic only for known single-handoff consumer; do not misstate it as production consumer failure.",
+    "orphan_lock_gate": "ArchiveWriterLock writes only PID to .jsonl.lock; a crash leaves it, blocking both load_observations and append_observations until TimeoutError. PID alone cannot safely authorize automatic stale-lock removal (PID reuse/host ambiguity). Require a documented operator-only, fail-closed recovery with proof no live owner and archive JSONL integrity before lock removal; never auto-delete unknown lock.",
+    "queue_bookkeeping": "Workflow 40581619175 succeeded and public code advanced, but worker-control pending file remains. Job log verbatim: 'warning: could not push queue bookkeeping'. Executor suppresses underlying git exception, so root cause is not proven. Supervisor roadmap commit 9f91a5ae landed at 2026-10-27T20:50:55Z during executor run 20:50:38Z-20:51:09Z; concurrent non-fast-forward is plausible, not established.",
+    "next_feasible_recovery": "Supervisor reconcile pending task to done only after verifying exact c4b6a75 commit and bounded test evidence; do not re-run duplicate. Arrange isolated exact-SHA checkout or independent runner for targeted and full Capital Flow pytest; independently validate safe orphan-lock manual recovery. Refresh A/B/C on c4b6a75 before promotion.",
+    "new_task_enqueued": 0,
+    "reason_no_queue": "Pending task exists; Gemini JSON reliability UNVERIFIED; no duplicate/retry."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_AT_c4b6a75",
+    "B": "STALE_AT_1729584",
+    "C": "STALE_AT_1729584",
+    "Supervisor": "CONTINUE_NOT_PLATEAU_AT_1729584"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
