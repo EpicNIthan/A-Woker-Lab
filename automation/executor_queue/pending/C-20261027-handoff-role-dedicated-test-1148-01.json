@@ -1,0 +1,23 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261027-handoff-role-dedicated-test-1148-01",
+  "worker": "C",
+  "title": "Stage 2a: handoff context-role parity with a NEW isolated regression file",
+  "base_sha": "39adf6e51277b80059bc34b376fdb9d3aee2ff7f",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/evidence_health.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/tests/test_v1_handoff.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_handoff_context_role.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_handoff_context_role.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "instructions": "EXACT PUBLIC BASE_SHA ONLY. C quality-only bounded repair. PREVIOUS GEMINI FAILURES: wrong missing-key oracle, then accidental SyntaxError from rewriting the large existing test_v1_handoff.py. Do NOT edit ANY existing test file, especially test_v1_handoff.py: it must remain BYTE-FOR-BYTE UNCHANGED. Only modify handoff.py and CREATE one small NEW file tests/test_handoff_context_role.py. In handoff.py replace ONLY the body of _is_context_only(obs) by delegation to the existing proven evidence_health._is_context_only(obs.provenance), importing it with a distinct alias; do NOT modify evidence_health.py or runner.py. Nonnegotiable truth table for provenance -> expected context-only: {} -> False (SCORING, one scoring row); {'context_only':False} -> False; {'context_only':True} -> True; {'context_only':' false '} -> False; {'context_only':'TRUE'} -> True; {'context_only':'maybe'} -> True (fail closed); {'context_only':None} -> True; {'context_only':''} -> True; {'context_only':[]} -> True. Explicit falsey malformed values are CONTEXT, not scoring; missing key alone is scoring. New dedicated test must construct fresh frozen FlowObservation per case (do not mutate dataclasses), exercise actual handoff _family_support and _source_evidence or build_anata_handoff with deterministic no-network fixtures, assert exactly one scoring vs context count and correct source_evidence role for each case; optionally assert causal provenance clocks. Use existing test_v1_handoff.py only as READ-ONLY fixture guidance; do not import its test class if it causes side effects. Keep all existing PIT, normalization, evidence, score, schema and other behavior intact. Before tests, syntax-compile NEW test and handoff, and confirm existing test_v1_handoff.py SHA remains unchanged. Run targeted NEW pytest then full Capital Flow pytest exactly as specified. Commit ONLY if both pass and changed-file allowlist is exact; otherwise fail closed. Return minimal structured JSON. Never touch main, private, automation, workflow, queue/control/status, secrets, prediction/API orchestration/journals/Telegram/MT5/broker/execution."
+}
