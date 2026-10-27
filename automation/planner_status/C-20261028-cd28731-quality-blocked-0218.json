@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 02:18 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "cd28731ba33c8116ca0f9abbf1e4287289a6c540",
+    "parent": "484ef5efc0446f2c69cdbebdbd2a1a4b48238e3b",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "0c621b16188742212e557535aa002ff7c7f22ac0",
+      "part2/capital_flow/storage.py": "f7531127cc2491aa2abb21ff1b2d01d4ed483bcc",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "a9b5a3e2539c271ce2c9978034247339abb13649",
+    "roadmap_blob": "2242a5eb6847be7138830aac8cfa05d1820597d5",
+    "queue": {
+      "pending": 0,
+      "done": 23,
+      "failed": 20
+    },
+    "latest_A": "A-20261028-cd28731-0202-orphan-reader-integration-gate.json",
+    "latest_B": "B-20261028-484ef5e-0129-c-failed-plateau.json",
+    "latest_C_prior": "C-20261028-484ef5e-quality-executor-failed-0118.json"
+  },
+  "quality": {
+    "finding": "New test-only commit adds bounded spawn child exit-code assertions, append-count checks, and Event-handshake crash-orphan fail-closed regression. Orphan .jsonl.lock persists after os._exit(17); this is a recovery blocker, not automatic recovery. load_observations() reads unlocked while append_observations() writes JSONL in place under writer-only lock, so partial-row reader exposure remains untested. Test imports unused time. No production source changed in latest diff.",
+    "blocker": "Independent exact-SHA targeted/full pytest unavailable: no authorized disposable checkout. Cross-process controlled reader/writer partial-row test and recovery policy not established.",
+    "recovery": "Supervisor arrange authorized isolated exact-SHA checkout or independent GitHub test runner. Run deterministic no-network role string-'false' regression, archive concurrency/crash test and full Capital Flow pytest with logs/exit codes; add bounded reader/writer interleave proof via Gemini only after structured-JSON reliability is verified and queue remains empty. Do not duplicate failed task."
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/C-20261028-archive-lock-crash-harness-0154-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "cd28731ba33c8116ca0f9abbf1e4287289a6c540",
+    "workflow_run": 40564495803,
+    "executor_targeted": "PASS_REPORTED_NOT_INDEPENDENT",
+    "executor_full": "PASS_REPORTED_NOT_INDEPENDENT",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_AT_CURRENT_SHA",
+    "B": "SOURCE_ADMISSION_PLATEAU_STALE_PREVIOUS_SHA",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
