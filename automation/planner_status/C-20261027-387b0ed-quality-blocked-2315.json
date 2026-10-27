@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-27 23:15 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "387b0ed027074bc5b31d96f8b9cdd6cbad17e8ff",
+    "parent": "6015b0e5fe1e5038de69cbd4f11dcb6402328c67",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_sha": "446e89d454cfe679ac9b5cdf75a0146188efed34",
+    "roadmap_blob": "ff6e54e5327eeb689f20df74ac087eb78be60ce4",
+    "roadmap_latest": "2026-10-27 22:55 ICT",
+    "queue": {
+      "pending": 1,
+      "done": 21,
+      "failed": 19
+    },
+    "pending_task": "A-20261027-archive-crossprocess-dedup-2254-01.json",
+    "latest_A": "A-20261027-387b0ed-2259-executor-diff-check-queue-reconciliation.json",
+    "latest_B": "B-20261027-387b0ed-2234-min.json",
+    "latest_C": "C-20261027-387b0ed-quality-blocked-2217.json"
+  },
+  "quality": {
+    "finding": "Single-file atomic handoff test has corrected destination-specific temp assertion; runner string-' false ' scoring-role parity is source-covered. Neither establishes cross-process JSONL archive deduplication, partial-row reader safety or deployed-reader acceptance.",
+    "blocker": "New exact-SHA archive executor task failed before tests/commit: workflow 40535760665 completed failure; A report quotes git diff --check exit 2 and failed queue bookkeeping push. Task remains pending; do not enqueue duplicate. Authorized independent checkout /mnt/data/A-Woker-Lab/.git absent.",
+    "recovery": "Maintainer/Supervisor inspect executor candidate diff and git diff --check diagnostics, reconcile queue bookkeeping without altering protected workflows in C; obtain authorized isolated exact-SHA checkout; run deterministic no-network targeted role/atomic/archive tests and python -m pytest -q part2/capital_flow/tests, save logs/exit codes."
+  },
+  "validation": {
+    "exact_sha_executor_done": "PASS C-20261027-atomic-handoff-test-hygiene-2050-01.json",
+    "new_archive_executor": "FAIL_BEFORE_TEST",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
