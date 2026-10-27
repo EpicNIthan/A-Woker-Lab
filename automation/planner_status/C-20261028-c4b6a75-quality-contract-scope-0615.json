@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 06:15 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "part2/capital_flow/README.md": "506cee1a4f173ee818c4ffad3b684eab55599fa4"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "7233a090882db56f38e16d1b8200b326d0217a07",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "daf438b1f882ef565e279c247c039d666f231b86",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 20,
+      "provenance": "Latest direct worker-control enumeration in A 06:05 and B 05:29; connector independently fetched matching done task; no fresh direct tree enumeration available"
+    },
+    "latest_A": "A-20261028-c4b6a75-0605-consumer-contract-scope-correction.json",
+    "latest_B": "B-20261028-c4b6a75-0529-min.json",
+    "latest_C_previous": "C-20261028-c4b6a75-quality-blocked-0520.json"
+  },
+  "quality": {
+    "finding": "A 06:05 correctly narrowed cross-file atomicity: runner writes three independently atomic outputs, but README names only anata_latest.json cf-anata-handoff-v1 as validated Anata-facing contract. A mixed-generation trio is a characterization risk, not proven consumer-contract violation. Current reader ATTEMPT event precedes actual lock acquisition, so scheduling false-positive is possible. The shared context_only parser is used by runner/handoff, but test_v1_handoff contains only bool True/False cases; string-'false' end-to-end regression remains unexecuted. PID-only orphan lock fails closed; never auto-delete.",
+    "blocker": "Authorized disposable exact-SHA checkout absent (/mnt/data/A-Woker-Lab/.git); no independent pytest or deterministic two-writer characterization; actual consumer read-set unverified.",
+    "recovery": "Obtain authorized disposable checkout at exact public SHA; run deterministic no-network string-'false' context_only handoff regression, reader/writer targeted pytest, full python -m pytest -q part2/capital_flow/tests with exit codes/logs; characterize two-writer generations and establish actual consumer contract before classifying triple-file mismatch as defect; operator-only orphan lock recovery after positive no-live-owner and JSONL integrity proof."
+  },
+  "validation": {
+    "exact_sha_executor": "PASS_MATCHING_DONE_TASK",
+    "task": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "workflow_run": 40581619175,
+    "executor_targeted": "PASS_REPORTED_BY_BOUNDED_GEMINI_NOT_INDEPENDENT",
+    "executor_full": "PASS_REPORTED_BY_BOUNDED_GEMINI_NOT_INDEPENDENT",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "independent_context_only_regression": "NOT_RUN",
+    "independent_two_writer_test": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
