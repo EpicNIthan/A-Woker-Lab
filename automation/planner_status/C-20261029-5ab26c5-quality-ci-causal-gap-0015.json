@@ -1,0 +1,71 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 00:15 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "e2f60e28f25584f3d6aac318e521a02065b3bef2",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "ebc7f72e9bd96bb8eda6c07a04aca2c17294b96c",
+    "queue_last_exact_tree_count": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "as_of": "2026-10-28 23:58 ICT A report; not independently recounted this run"
+    },
+    "reports": {
+      "A": "A-20261028-5ab26c5-2358-ci-coverage-gap-blocked-plateau.json",
+      "B": "B-20261028-5ab26c5-2329-source-plateau.json",
+      "C_previous": "C-20261028-5ab26c5-quality-causal-order-2316.json"
+    },
+    "supervisor": "2026-10-28 23:53 ICT NOT_PLATEAU"
+  },
+  "quality": {
+    "finding": "Source-pinned run_once independently replaces anata_latest.json; atomic visibility tests cannot establish causal generation ordering for equal-as_of_ms competing writers. Potential stale overwrite remains NOT REPRODUCED. Shared context-only parser handles string 'false'; end-to-end role regression remains NOT RUN. Existing ordinary lock release tests exist; replacement-lock test reacquisition follows manual cleanup.",
+    "blocker": "Authorized disposable exact-SHA checkout absent (/mnt/data/A-Woker-Lab/.git). No DNS clone retry. Current public validate.yml may run full suite on dispatch but no pinned equal-clock two-writer regression exists; full-suite PASS alone would not close causal-order gap.",
+    "recovery": "Provision authorized exact-SHA disposable checkout or approved independent CI test overlay; run no-network equal-T two-writer and string-'false' role regressions, targeted archive/atomic tests, then python -m pytest -q part2/capital_flow/tests; preserve exact SHA, overlay hash, exit codes, logs, non-skipped counts."
+  },
+  "validation": {
+    "matching_done": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "public_commit_combined_statuses": 0,
+    "public_commit_pr_workflow_runs": 0,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "independent_context_only": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
