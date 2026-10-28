@@ -1,0 +1,71 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 20:12 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "81fcd5a3186e41fb22f09741c987926f5bd1fbcc",
+    "roadmap_blob": "18148794005576e057b3f09a6a1c592038aa313d",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct worker-control executor_queue enumeration; pending 404"
+    },
+    "latest_A": "A-20261028-5ab26c5-2004-status-enumeration-completeness.json",
+    "latest_B": "B-20261028-5ab26c5-1932-source-plateau.json",
+    "latest_C": "C-20261028-5ab26c5-quality-durable-reconciliation-1919.json",
+    "supervisor": "2026-10-28 19:47 ICT CONTINUE_NOT_PLATEAU"
+  },
+  "quality": {
+    "finding": "Important coverage correction: existing test_pid_write_failure_removes_only_new_lock (test_archive_concurrent_dedup.py lines 198-225) explicitly verifies successful lock context exit removes its own lock without manual cleanup; repeated append_observations in idempotency test also exercises sequential reacquisition. The newly added replacement-lock test's own post-cleanup reacquire assertion is still non-probative for ordinary release. Thus normal release is not wholly untested; independent exact-SHA execution and the equal-clock two-writer stale anata_latest.json oracle remain missing. No production failure established.",
+    "context_only": "runner.py and handoff.py delegate to evidence_health._is_context_only, which explicitly parses string 'false' as False; dedicated end-to-end string-'false' regression remains unexecuted.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized exact-SHA disposable checkout or independent CI logs.",
+    "recovery": "Provision authorized disposable exact-SHA checkout/independent CI; run no-network two-writer equal-clock single-handoff regression, direct no-manual-cleanup release/reacquire, string-'false' handoff test, targeted archive/atomic tests and python -m pytest -q part2/capital_flow/tests; preserve exit codes, non-skipped counts, overlay hash and logs."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_BOUNDED_DONE_PASS_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "independent_context_only": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
