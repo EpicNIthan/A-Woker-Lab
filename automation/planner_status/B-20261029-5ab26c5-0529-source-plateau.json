@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-29 05:29 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "economic_source_change": false,
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "0b9e08d23961b1121c9f8a14f5e3e2fd98016592",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 04:49 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "evidence": "complete 1290-entry worker-control tree reported by Supervisor 04:49 and A 05:00, reconfirmed by C 05:18; B did not independently enumerate complete tree"
+    },
+    "latest_durable": {
+      "A": "A-20261029-5ab26c5-0500-causal-snapshot-witness-blocked.json",
+      "B_previous": "B-20261029-5ab26c5-0426-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-snapshot-witness-0518.json"
+    }
+  },
+  "validation": {
+    "matching_done": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "evidence": [
+      "exact public README.md blob 506cee1a4f173ee818c4ffad3b684eab55599fa4: frozen PIT and non-overlap contracts",
+      "exact public SOURCES.md blob 20db257961638d4f00289d003c4d95409298c85f: first-observed revision and no historical pre-bootstrap replay",
+      "exact public latest commit modifies lock ownership and regression tests only"
+    ],
+    "reason": "No new immutable first-party BTC/ETH artifact/event ID with effective, available and observed PIT clocks, independent non-overlap proof, correct context-vs-directional spot role, and deterministic no-network test contract. Previously rejected source families remain excluded."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "No new qualifying source. Independently executed exact-public-SHA two-writer causal-retention and role regressions unavailable without authorized disposable checkout and approved test-only overlay; stale overwrite remains UNREPRODUCED. Gemini structured JSON reliability unverified.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
