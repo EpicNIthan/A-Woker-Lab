@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 16:15 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "1dbf2fd7b1b06b13f413870f9148e83f262d3e9e",
+    "roadmap_blob": "0ab1ee9563adefbc0a03e42532d6d081208d78da",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct worker-control directory listing; pending absent"
+    },
+    "latest_reports": {
+      "A": "A-20261028-5ab26c5-1604-execution-blocker-evidence-freeze.json",
+      "B": "B-20261028-5ab26c5-1534-source-plateau.json",
+      "C_previous": "C-20261028-5ab26c5-quality-execution-first-1513.json"
+    },
+    "supervisor": "2026-10-28 15:51 ICT CONTINUE_NOT_PLATEAU"
+  },
+  "quality": {
+    "finding": "At fixed as_of_ms, a run based on an older archive snapshot may overwrite the newer anata_latest.json handoff: runner publishes without a snapshot-generation admission gate. This is source-derived only, not a reproduced failure or production incident. Existing atomic JSON tests do not prove freshness. Replacement lock regression does not independently establish ordinary owner release; lstat/unlink interleaving remains theoretical. String 'false' context-only is handled by shared parser; independent end-to-end regression unexecuted.",
+    "priority": "Execute already specified no-network fixed-clock two-writer test before further speculative analysis; no established three-file transactional consumer contract."
+  },
+  "validation": {
+    "exact_sha": "PASS_REPORTED_MATCHING_BOUNDED_DONE_TASK_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": {
+    "checkout": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "git_checkout_found": false,
+    "clone_retried": false,
+    "pytest_executed": false
+  },
+  "recovery": "Provision authorized disposable exact-SHA checkout or independent CI; run Event-gated two-writer single-handoff test with same as_of_ms and source_record_id witness, normal lock-release/reacquire and context-only targeted tests, then python -m pytest -q part2/capital_flow/tests. Preserve SHA, overlay hash, child exit codes, non-skipped counts, logs. Do not enqueue Gemini before reliable JSON mitigation and execution evidence.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
