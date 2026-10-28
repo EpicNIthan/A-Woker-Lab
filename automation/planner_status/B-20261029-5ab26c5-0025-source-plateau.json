@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-29 00:25 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "latest_commit": "worker-c: Preserve replacement lock on original owner's exit and test lock ownership",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "new_economic_source_code": false
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "ea55c17d3c5b3f41f66dab39773f566f0a8db8f7",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "exact Git trees; no pending directory; done and failed trees truncated=false"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-28 23:53 ICT NOT_PLATEAU",
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-2358-ci-coverage-gap-blocked-plateau.json",
+      "B_previous": "B-20261028-5ab26c5-2329-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-ci-causal-gap-0015.json"
+    }
+  },
+  "validation": {
+    "matching_done": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "targeted_and_full_tests": "listed in executor task; not independently rerun",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "reason": "No new source-backed first-party immutable BTC/ETH artifact/event ID with economic entity, effective/available/observed PIT clocks, non-overlap proof, correct context-vs-directional-spot role, and deterministic no-network contract. Latest Specialist diff is only archive-lock ownership and tests.",
+    "rejected_families_readmitted": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "Independent exact-SHA equal-clock two-writer single anata_latest.json regression and string-false context-only regression not executed; authorized disposable checkout or approved CI overlay needed. Suspected stale overwrite not reproduced. No new B source task justified.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
