@@ -1,0 +1,59 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 09:29 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "previous_B_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "commits_ahead": 2,
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "economic_source_added": false,
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "cf976c5ae00852f2dd42fedfea259db4c0cc808e",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "queue": {
+      "pending": 0,
+      "done": 27,
+      "failed": 22,
+      "verification": "latest Supervisor roadmap and C 09:19 direct enumeration; direct connector directory enumeration unsupported"
+    },
+    "latest_A": "A-20261028-f1de106-0903-lock-ownership-recovery-gate.json",
+    "latest_B_previous": "B-20261028-c4b6a75-0833-fixture-failure-plateau.json",
+    "latest_C": "C-20261028-f1de106-quality-lock-ownership-0919.json"
+  },
+  "validation": {
+    "matching_done": "automation/executor_queue/done/C-20261028-restore-original-orphan-test-verbatim-0900-01.json",
+    "matching_executor_commit": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "executor_status": "PASS_REPORTED",
+    "workflow_run": 40618085779,
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "reason": "Two commits since previous B assessment change only archive lock cleanup and deterministic tests, not first-party economic sources. No new candidate proves immutable artifact/event ID, BTC/ETH economic entity, effective/available/observed PIT clocks, independent non-overlap, context-vs-directional spot role, and no-network test contract.",
+    "rejected_families_unchanged": true
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "next": "No B Gemini task. Await new qualifying first-party evidence; A/C own independent lock-ownership/recovery and full exact-SHA tests. No promotion until same-SHA A/B/C plus independent Supervisor PLATEAU.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
