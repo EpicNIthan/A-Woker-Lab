@@ -1,0 +1,89 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 10:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "comparison_base": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    },
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "inspected_head": "0d0d0fa55e4fefc9249eedd478ef1145d32eb87c",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "e662129ad2adf66fd0450cc2e5ea7315e6c04726",
+    "queue": {
+      "pending": 1,
+      "done": 27,
+      "failed": 22,
+      "method": "direct GitHub worker-control directory enumeration"
+    },
+    "pending_task": "automation/executor_queue/pending/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "latest_durable": {
+      "A": "A-20261028-f1de106-0903-lock-ownership-recovery-gate.json",
+      "B": "B-20261028-f1de106-0929-source-plateau.json",
+      "C": "C-20261028-f1de106-quality-lock-ownership-0919.json"
+    },
+    "A_B_C_stale_for_current_sha": true
+  },
+  "validation": {
+    "exact_sha": "PASS_REPORTED_IN_WORKFLOW_LOG_MATCHING_CURRENT_HEAD_NO_DONE_TASK",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "executor_result_status": "PASS",
+    "executor_base_sha": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "queue_bookkeeping": "FAILED_TO_PUSH",
+    "queue_bookkeeping_verbatim": "warning: could not push queue bookkeeping",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "substantive_decision": {
+    "name": "RECONCILE_COMPLETED_STALE_PENDING_AND_LIMIT_LOCK_OWNERSHIP_CLAIM",
+    "progress": "Gemini committed inode/device ownership check on ArchiveWriterLock.__exit__ and a replacement-sentinel regression. This resolves the previously identified straightforward replacement-before-exit path under its tested conditions.",
+    "integration_gap": "The inode/dev check is a separate lstat() followed by unlink(), not an atomic conditional unlink. If a lock pathname is replaced between those operations during manual recovery, the old owner can still unlink a different lock. Conditional operator-recovery TOCTOU risk, source-derived only; no claim of normal two-writer failure.",
+    "test_coverage_gap": "New test replaces lock before original owner's lstat and proves that case, but does not force a replacement between lstat and unlink. Its post-context backup restore and original_lock.fd=self assignment are redundant and do not establish the claimed ownership safety. Avoid broad defect claims.",
+    "pinned_generation_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "generation_scope": "Three-file generation remains characterization only absent a verified consumer requiring atomic cross-file generations; documented Anata-facing contract cf-anata-handoff-v1.",
+    "no_network_test_contract": [
+      "In tmp_path only, create original ArchiveWriterLock; capture original .lock inode/dev and hold context. Use a one-shot monkeypatch of Path.lstat only for this lock_path to return the original inode/dev while, immediately before returning, moving the original lock to test-owned backup and creating a replacement .lock with distinct inode and sentinel.",
+      "Exit original context; assert replacement sentinel and inode remain. Current source predicts FAIL because __exit__ then unlinks by pathname after its stale lstat result. Classify as simulated adversarial/operator-recovery interleaving, not an ordinary concurrent writer failure.",
+      "In separate tests, preserve normal acquire/release/reacquire, replacement-before-lstat sentinel survival, clean PID-write ENOSPC cleanup, preexisting orphan fail-closed, and spawned crash child exitcode=17. Cleanup only tmp_path-owned files in finally.",
+      "Execute on authorized exact-SHA checkout: python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py; python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py; python -m pytest -q part2/capital_flow/tests. Record exact SHA, exit codes, and logs. No network."
+    ],
+    "queue_reconciliation": "Supervisor should move the one completed pending task to done using workflow run 40623516649 and matching public commit 5ab26c5, without rerunning Gemini. GitHub job succeeded but its queue bookkeeping push failed. Do not enqueue or rerun while stale pending persists.",
+    "operational_safety": "Do not auto-reap orphan locks; manual recovery must prove no live owner and stable lock identity. No new Gemini task while pending and JSON reliability unverified."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -e /mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_result": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "next_feasible_recovery": "Supervisor reconcile completed pending; obtain authorized exact-SHA checkout or independent CI for targeted/full pytest and TOCTOU characterization; refresh same-SHA B/C and independent Supervisor verdict."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "STALE_SOURCE_ADMISSION_PLATEAU",
+    "C": "STALE_QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
