@@ -1,0 +1,71 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 09:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "parent": "0f70aa4d6d7511c270a2493da79677903c27f239",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "69414da35e6fc63c9dc6fec6e8291a25c45e1e5b",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "69f2eee39aa9bfa6e69886e32de38bf75ed08076",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "inspected_head": "75063a347dac80f5cc8b4804ac71e0ef5d28ffb3",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "718e8975da2c7ab9e21d872a567135c851d5dae2",
+    "queue": {
+      "pending": 0,
+      "done": 27,
+      "failed": 22,
+      "method": "direct worker-control contents enumeration; pending directory absent"
+    },
+    "latest_A": "A-20261028-f1de106-0903-lock-ownership-recovery-gate.json",
+    "latest_A_blob": "b80b08d43177a6f1cf59e2f7ea07f5d05d5ef0ad",
+    "latest_B": "B-20261028-c4b6a75-0833-fixture-failure-plateau.json",
+    "latest_B_blob": "961df99d53d53c016edfefc2a4bd60aa05bbfbb1",
+    "latest_C_previous": "C-20261028-c4b6a75-quality-executor-fixture-failed-0810.json",
+    "latest_C_previous_blob": "5043f358b3da1384674dab3df3b15538472a5bcf"
+  },
+  "quality": {
+    "finding": "Exact source: ArchiveWriterLock.__enter__ now inode/dev guards newly created lock cleanup after PID-write error; __exit__ still unlinks lock_path by path without confirming identity. If a live owner's lock is manually replaced, old owner can remove the replacement on exit. Conditional operator-recovery race, not reproduced or a confirmed normal-operation defect.",
+    "context_only": "Previous string-'false' bool inversion concern not supported by current source: runner/handoff delegate to evidence_health._is_context_only, which parses string 'false' as False. End-to-end independent regression still NOT RUN.",
+    "crash_test": "Restored test_archive_orphan_lock_fail_closed asserts child exit 17 and fail-closed orphan behavior; exact-SHA executor PASS reported, not independently executed.",
+    "recovery": "In authorized disposable exact-SHA checkout, run no-network lock-ownership replacement test with distinct inode and sentinel, clean ENOSPC cleanup, preexisting orphan and real child crash; run targeted test_v1_handoff.py, archive concurrent/visibility and python -m pytest -q part2/capital_flow/tests; preserve exit codes/logs. Do not auto-reap unknown orphan locks; operator must prove owner dead and lock identity stable."
+  },
+  "validation": {
+    "matching_done": "automation/executor_queue/done/C-20261028-restore-original-orphan-test-verbatim-0900-01.json",
+    "matching_done_blob": "e2d63639f6a9b2e0d0fb789a1a8c339a1f547672",
+    "matching_executor_commit": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "matching_executor_status": "PASS_REPORTED",
+    "matching_workflow_run": 40618085779,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "authorized_checkout": "ABSENT:/mnt/data/A-Woker-Lab/.git",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_SAME_SHA",
+    "B": "STALE_SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE_SAME_SHA",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
