@@ -17,5 +17,14 @@
     "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "max_attempts": 2,
+  "executor_result": {
+    "status": "PASS",
+    "model": "gemini-3.5-flash-lite",
+    "key_index": 1,
+    "summary": "Implement narrow owner-identity guard in ArchiveWriterLock.__exit__ and add deterministic regression test preserving replacement locks and verifying ordinary reacquisition.",
+    "base_sha": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "attempt": 1
+  }
 }
