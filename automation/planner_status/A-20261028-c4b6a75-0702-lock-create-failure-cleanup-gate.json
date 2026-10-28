@@ -1,0 +1,86 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 07:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "0c621b16188742212e557535aa002ff7c7f22ac0"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "418e49f255d38ba44242fb24aa78bad5f5783825",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "e7c4d5cf5cd151420a96ed5669abdb1f9a484439",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 20,
+      "provenance": "Direct worker-control directory enumeration; pending path 404; done/failed 25/20"
+    },
+    "latest_durable": {
+      "A": "A-20261028-c4b6a75-0605-consumer-contract-scope-correction.json",
+      "B": "B-20261028-c4b6a75-0628-min.json",
+      "C": "C-20261028-c4b6a75-quality-contract-scope-0615.json"
+    },
+    "legacy_worker_status_not_authoritative": true
+  },
+  "validation": {
+    "status": "PASS_MATCHING_BOUNDED_DONE_TASK_ALTERNATIVE",
+    "matching_done": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "workflow_run": 40581619175,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "ARCHIVE_LOCK_ACQUIRE_FAILURE_LEAK",
+    "kind": "NEW_SOURCE_CONFIRMED_FAILURE_PATH_UNEXECUTED",
+    "pinned_two_writer_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "consumer_scope_correction": "automation/planner_status/A-20261028-c4b6a75-0605-consumer-contract-scope-correction.json",
+    "finding": "ArchiveWriterLock.__enter__ creates observations.jsonl.lock via os.open(O_CREAT|O_EXCL), then writes the PID with os.write. If os.write raises (e.g. I/O error) after successful file creation, the except block closes fd and re-raises but never unlinks the just-created lock. This leaves an orphan lock even without a process crash; future readers/writers time out. This is directly visible in pinned storage.py source, not an executed reproduction or production incident.",
+    "test_contract": [
+      "On isolated exact-SHA checkout add TEST-ONLY deterministic case in part2/capital_flow/tests/test_archive_concurrent_dedup.py using tmp_path; seed one valid observation and assert no pre-existing .jsonl.lock.",
+      "With monkeypatch.context, replace storage.os.write only during ArchiveWriterLock.__enter__ to raise OSError(ENOSPC, 'simulated lock PID write failure'); call with ArchiveWriterLock(archive,timeout=0.05,poll_interval=0.005) inside pytest.raises(OSError). Restore os.write before any subsequent assertions.",
+      "Assert no leaked .jsonl.lock after failed __enter__; current pinned code predicts FAIL. Record exact exception, path, and file existence. Separately prove a new ArchiveWriterLock(archive,timeout=0.05,poll_interval=0.005) can be acquired after the failed attempt; current code predicts TimeoutError.",
+      "In finally, only for this isolated tmp_path fixture and after confirming no live owner, remove the deliberately orphaned test lock so the suite cannot contaminate other tests. Never introduce automatic stale lock deletion in production.",
+      "Run targeted python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py then python -m pytest -q part2/capital_flow/tests; capture exit codes and exact SHA. No network. Do not treat test contract as executed."
+    ],
+    "integration_priority": "Narrow acquisition-failure cleanup proof is a more defensible A integration gate than unconditional three-output atomicity; the latter remains characterization until a real consumer contract requires it. Existing crash-orphan fail-closed behavior must remain protected; any production repair is Gemini-only after reliable JSON and queue gates.",
+    "tasks_enqueued": 0,
+    "next_feasible_recovery": "Provide authorized isolated checkout pinned to c4b6a75b904644c9f51b849032a332bfaebfad94; run this deterministic acquisition-failure test, reader/writer targeted tests, and full Capital Flow suite; C independently assesses evidence; Supervisor gates any Gemini task. Do not rerun DNS clone."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -e /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "observed_result": "ABSENT:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "independent_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
