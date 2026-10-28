@@ -291,3 +291,62 @@ def test_archive_orphan_lock_fail_closed(tmp_path: Path) -> None:
                 lock_path.unlink()
         except Exception:
             pass
+
+
+def test_lock_ownership_guard_preserves_replacement(tmp_path: Path) -> None:
+    archive = tmp_path / "ownership.jsonl"
+    lock_path = Path(str(archive) + ".lock")
+    backup_path = tmp_path / "ownership.jsonl.lock.bak"
+
+    backup_created = False
+    replacement_created = False
+    try:
+        with ArchiveWriterLock(archive) as original_lock:
+            assert lock_path.exists()
+            # Rename original lock to simulate relocation / ownership shift
+            os.replace(lock_path, backup_path)
+            backup_created = True
+            assert not lock_path.exists()
+
+            # Create replacement lock with distinct sentinel text
+            sentinel = "REPLACEMENT_SENTINEL"
+            replacement_path = lock_path
+            replacement_fd = os.open(replacement_path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o644)
+            try:
+                os.write(replacement_fd, sentinel.encode("utf-8"))
+                replacement_stat = os.fstat(replacement_fd)
+            finally:
+                os.close(replacement_fd)
+            replacement_created = True
+
+            assert replacement_path.exists()
+            assert replacement_path.read_text(encoding="utf-8") == sentinel
+
+        # Exiting original lock context should NOT unlink the replacement lock
+        assert replacement_path.exists()
+        assert replacement_path.read_text(encoding="utf-8") == sentinel
+        current_stat = replacement_path.lstat()
+        assert current_stat.st_ino == replacement_stat.st_ino
+        assert current_stat.st_dev == replacement_stat.st_dev
+
+        # Cleanup replacement
+        replacement_path.unlink()
+        replacement_created = False
+
+        # Restore original lock from backup to test normal release path
+        os.replace(backup_path, lock_path)
+        backup_created = False
+        original_lock.fd = original_lock.fd  # dummy reference
+    finally:
+        # Clean only test-owned paths
+        for p in (lock_path, backup_path):
+            try:
+                if p.exists():
+                    p.unlink()
+            except Exception:
+                pass
+
+    # Assert ordinary lock release allows immediate reacquire
+    with ArchiveWriterLock(archive, timeout=1.0) as lk:
+        assert lock_path.exists()
+    assert not lock_path.exists()

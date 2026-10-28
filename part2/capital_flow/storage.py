@@ -57,17 +57,25 @@ class ArchiveWriterLock:
         return self
 
     def __exit__(self, exc_type: Any, exc_val: Any, exc_tb: Any) -> None:
+        owned_stat = None
         if self.fd is not None:
+            try:
+                owned_stat = os.fstat(self.fd)
+            except Exception:
+                owned_stat = None
             try:
                 os.close(self.fd)
             except Exception:
                 pass
             self.fd = None
-        try:
-            if self.lock_path.exists():
-                self.lock_path.unlink()
-        except Exception:
-            pass
+
+        if owned_stat is not None:
+            try:
+                current_stat = self.lock_path.lstat()
+                if current_stat.st_ino == owned_stat.st_ino and current_stat.st_dev == owned_stat.st_dev:
+                    self.lock_path.unlink()
+            except Exception:
+                pass
 
 
 def atomic_write_json(path: str | Path, payload: Mapping[str, Any]) -> None:
