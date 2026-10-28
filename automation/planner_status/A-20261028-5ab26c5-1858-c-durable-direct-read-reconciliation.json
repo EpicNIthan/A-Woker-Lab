@@ -1,0 +1,83 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 18:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "4c5bfece85e92617f839ac4825e3ac4fa9d08dc2",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "26183e9cbdbbbc3aa44fab79533e75a022d3e17d",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "provenance": "Supervisor 2026-10-28 18:53 ICT authoritative worker-control enumeration; not independently re-enumerated this run"
+    },
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-1803-lock-release-acceptance-gap.json",
+      "B": "B-20261028-5ab26c5-1828-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-oracle-gap-1810.json"
+    },
+    "supervisor": "2026-10-28 18:53 ICT CONTINUE_NOT_PLATEAU"
+  },
+  "validation": {
+    "exact_sha": "MATCHING_BOUNDED_DONE_PASS_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "C_DURABLE_REPORT_FALSE_NEGATIVE_RECONCILIATION",
+    "finding": "Supervisor 18:53 asserted worker-control planner_status directory enumeration found no C-20261028 report, but GitHub fetch_file at exact supervisor commit 4c5bfece85e92617f839ac4825e3ac4fa9d08dc2 successfully returned automation/planner_status/C-20261028-5ab26c5-quality-oracle-gap-1810.json, blob cead23cf384b976e706371436994657b53e94042, with planner C and verdict QUALITY_EVIDENCE_INCOMPLETE. C publication is durable at that commit; the negative directory enumeration is not reliable evidence of absence. Root cause of mismatch unknown (possible listing truncation/staleness); do not claim proven pagination bug.",
+    "impact": "Remove erroneous C publication-missing escalation. C still has incomplete quality acceptance and independent tests remain unrun. Do not force duplicate C report; direct known-path exact-ref fetch plus blob SHA is sufficient durable existence proof.",
+    "pinned_two_writer_spec": "automation/planner_status/A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "source_risks": "Archive normal lock release test manually cleans original before reacquire; stale equal-clock anata_latest.json overwrite remains source-derived, not independently reproduced.",
+    "next": "Use authorized disposable checkout at exact SHA or independent CI to execute no-manual-cleanup release/reacquire, bounded equal-clock two-process handoff and targeted/full Capital Flow pytest; record exit codes, logs, overlay hash and non-skipped counts. C reviews evidence. No new speculative contract or Gemini task."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "pytest_executed": false,
+    "next_feasible_recovery": "Provision authorized disposable exact-SHA checkout or independent CI runner; execute pinned no-network regressions and full python -m pytest -q part2/capital_flow/tests."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE_DURABLE_VERIFIED",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
