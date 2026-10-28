@@ -246,3 +246,48 @@ def test_preexisting_orphan_lock_is_preserved(tmp_path: Path) -> None:
                 lock_path.unlink()
         except Exception:
             pass
+
+
+def test_archive_orphan_lock_fail_closed(tmp_path: Path) -> None:
+    archive = tmp_path / "orphan.jsonl"
+    lock_path = Path(str(archive) + ".lock")
+
+    ctx = mp.get_context("spawn")
+    acquired_event = ctx.Event()
+    release_event = ctx.Event()
+
+    p = ctx.Process(
+        target=_orphan_lock_child_target,
+        args=(str(archive), acquired_event, release_event),
+    )
+
+    try:
+        p.start()
+        # Wait for child to acquire lock
+        assert acquired_event.wait(timeout=5.0), "Child failed to acquire lock in time"
+        assert lock_path.exists(), ".jsonl.lock must exist while child holds lock"
+
+        # Release child to proceed and crash via os._exit(17)
+        release_event.set()
+        p.join(timeout=5.0)
+        if p.is_alive():
+            p.terminate()
+            p.join()
+
+        assert p.exitcode == 17
+        assert lock_path.exists(), "Orphan lock file must remain after child crash"
+
+        # Verify subsequent lock attempt fails with TimeoutError due to orphan lock
+        with pytest.raises(TimeoutError):
+            with ArchiveWriterLock(archive, timeout=0.1, poll_interval=0.01):
+                pass
+    finally:
+        if p.is_alive():
+            p.terminate()
+            p.join()
+        # Safely cleanup orphan lockfile only after child is confirmed dead
+        try:
+            if lock_path.exists():
+                lock_path.unlink()
+        except Exception:
+            pass
