@@ -1,0 +1,29 @@
+{
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "base_sha": "0f70aa4d6d7511c270a2493da79677903c27f239",
+  "executor_result": {
+    "attempt": 1,
+    "base_sha": "0f70aa4d6d7511c270a2493da79677903c27f239",
+    "commit_sha": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Restored exact previously passing test_archive_orphan_lock_fail_closed function at the end of test_archive_concurrent_dedup.py with clean whitespace and newline."
+  },
+  "instructions": "C QUALITY ONLY, exact base SHA. Previous C task FAILED at git diff --check exit=2 (likely whitespace error), no public commit. Do NOT redesign or rewrite any existing code. Append EXACTLY the formerly passing test function below to END of part2/capital_flow/tests/test_archive_concurrent_dedup.py, after a blank line. It existed at parent c4b6a75 and was accidentally deleted in 0f70aa4. Existing _orphan_lock_child_target, mp, os, Path, pytest and ArchiveWriterLock imports/helper already exist. Do not change the two new tests or any other lines. Ensure no trailing whitespace on ANY added line, no tabs, no conflict markers, final newline, and run git diff --check successfully before tests. Test MUST be collected by exact node ID, then run all three listed pytest commands with exit 0; py_compile and git diff --check; commit only if all pass. If whitespace check fails, inspect/strip trailing spaces in added lines and retry within bounded attempts, do not push broken code. The EXACT function to append, unchanged:\n\ndef test_archive_orphan_lock_fail_closed(tmp_path: Path) -> None:\n    archive = tmp_path / \"orphan.jsonl\"\n    lock_path = Path(str(archive) + \".lock\")\n\n    ctx = mp.get_context(\"spawn\")\n    acquired_event = ctx.Event()\n    release_event = ctx.Event()\n\n    p = ctx.Process(\n        target=_orphan_lock_child_target,\n        args=(str(archive), acquired_event, release_event),\n    )\n\n    try:\n        p.start()\n        # Wait for child to acquire lock\n        assert acquired_event.wait(timeout=5.0), \"Child failed to acquire lock in time\"\n        assert lock_path.exists(), \".jsonl.lock must exist while child holds lock\"\n\n        # Release child to proceed and crash via os._exit(17)\n        release_event.set()\n        p.join(timeout=5.0)\n        if p.is_alive():\n            p.terminate()\n            p.join()\n\n        assert p.exitcode == 17\n        assert lock_path.exists(), \"Orphan lock file must remain after child crash\"\n\n        # Verify subsequent lock attempt fails with TimeoutError due to orphan lock\n        with pytest.raises(TimeoutError):\n            with ArchiveWriterLock(archive, timeout=0.1, poll_interval=0.01):\n                pass\n    finally:\n        if p.is_alive():\n            p.terminate()\n            p.join()\n        # Safely cleanup orphan lockfile only after child is confirmed dead\n        try:\n            if lock_path.exists():\n                lock_path.unlink()\n        except Exception:\n            pass\n\nDo not modify production storage, other tests, automation/**, .github/**, main, private, secrets, prediction/API orchestration/journals/Telegram/MT5/broker/execution or Railway. Do not enqueue other tasks.",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261028-restore-original-orphan-test-verbatim-0900-01",
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py::test_archive_orphan_lock_fail_closed",
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "title": "Restore exact previously passing child-crash orphan regression with whitespace-clean append",
+  "worker": "C"
+}
