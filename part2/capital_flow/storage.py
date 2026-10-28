@@ -34,12 +34,25 @@ class ArchiveWriterLock:
                     raise TimeoutError(f"Timed out acquiring archive writer lock for {self.path}")
                 time.sleep(self.poll_interval)
             except Exception:
+                # Cleanup only if we successfully created this exact new lock file
                 if self.fd is not None:
+                    try:
+                        new_stat = os.fstat(self.fd)
+                    except Exception:
+                        new_stat = None
                     try:
                         os.close(self.fd)
                     except Exception:
                         pass
                     self.fd = None
+
+                    if new_stat is not None:
+                        try:
+                            current_stat = self.lock_path.lstat()
+                            if current_stat.st_ino == new_stat.st_ino and current_stat.st_dev == new_stat.st_dev:
+                                self.lock_path.unlink()
+                        except Exception:
+                            pass
                 raise
         return self
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import errno
 import multiprocessing as mp
 import os
 from pathlib import Path
@@ -194,44 +195,52 @@ def test_archive_idempotent_repeated_append(tmp_path: Path) -> None:
     assert loaded[0].observation_id == obs.observation_id
 
 
-def test_archive_orphan_lock_fail_closed(tmp_path: Path) -> None:
-    archive = tmp_path / "orphan.jsonl"
+def test_pid_write_failure_removes_only_new_lock(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    archive = tmp_path / "pid_fail.jsonl"
     lock_path = Path(str(archive) + ".lock")
 
-    ctx = mp.get_context("spawn")
-    acquired_event = ctx.Event()
-    release_event = ctx.Event()
+    assert not lock_path.exists()
 
-    p = ctx.Process(
-        target=_orphan_lock_child_target,
-        args=(str(archive), acquired_event, release_event),
-    )
+    original_write = os.write
+    def mock_write(fd, data):
+        if fd >= 0:
+            raise OSError(errno.ENOSPC, "simulated PID write failure")
+        return original_write(fd, data)
+
+    monkeypatch.setattr(os, "write", mock_write)
+
+    with pytest.raises(OSError) as exc_info:
+        with ArchiveWriterLock(archive, timeout=0.05, poll_interval=0.005):
+            pass
+
+    assert exc_info.value.errno == errno.ENOSPC
+    assert not lock_path.exists()
+
+    # Restore monkeypatch before a second successful lock acquisition
+    monkeypatch.undo()
+
+    with ArchiveWriterLock(archive, timeout=1.0, poll_interval=0.01):
+        assert lock_path.exists()
+
+    assert not lock_path.exists()
+
+
+def test_preexisting_orphan_lock_is_preserved(tmp_path: Path) -> None:
+    archive = tmp_path / "orphan_fixed.jsonl"
+    lock_path = Path(str(archive) + ".lock")
+
+    sentinel = "PREEXISTING_ORPHAN_SENTINEL"
+    lock_path.write_text(sentinel, encoding="utf-8")
+    assert lock_path.exists()
 
     try:
-        p.start()
-        # Wait for child to acquire lock
-        assert acquired_event.wait(timeout=5.0), "Child failed to acquire lock in time"
-        assert lock_path.exists(), ".jsonl.lock must exist while child holds lock"
-
-        # Release child to proceed and crash via os._exit(17)
-        release_event.set()
-        p.join(timeout=5.0)
-        if p.is_alive():
-            p.terminate()
-            p.join()
-
-        assert p.exitcode == 17
-        assert lock_path.exists(), "Orphan lock file must remain after child crash"
-
-        # Verify subsequent lock attempt fails with TimeoutError due to orphan lock
         with pytest.raises(TimeoutError):
-            with ArchiveWriterLock(archive, timeout=0.1, poll_interval=0.01):
+            with ArchiveWriterLock(archive, timeout=0.05, poll_interval=0.005):
                 pass
+
+        assert lock_path.exists()
+        assert lock_path.read_text(encoding="utf-8") == sentinel
     finally:
-        if p.is_alive():
-            p.terminate()
-            p.join()
-        # Safely cleanup orphan lockfile only after child is confirmed dead
         try:
             if lock_path.exists():
                 lock_path.unlink()
