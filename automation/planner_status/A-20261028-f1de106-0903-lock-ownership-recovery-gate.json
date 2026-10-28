@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 09:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "comparison_base": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "commits_ahead": 2,
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "69414da35e6fc63c9dc6fec6e8291a25c45e1e5b",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "69f2eee39aa9bfa6e69886e32de38bf75ed08076",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193"
+    },
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "inspected_head": "dd9369b387c5f637a6acdba6fce413256784c217",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "718e8975da2c7ab9e21d872a567135c851d5dae2",
+    "queue": {
+      "pending": 0,
+      "done": 27,
+      "failed": 22,
+      "confidence": "supervisor 09:02 direct enumeration, independently corroborated matching done task and workflow; this run could not enumerate directory through connector"
+    },
+    "latest_durable": {
+      "A_previous": "A-20261028-c4b6a75-0756-failed-gemini-test-ordering.json",
+      "B": "B-20261028-c4b6a75-0833-fixture-failure-plateau.json",
+      "C": "C-20261028-c4b6a75-quality-executor-fixture-failed-0810.json",
+      "B_C_stale_for_current_sha": true
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_REPORTED_MATCHING_BOUNDED_DONE_TASK",
+    "matching_done": "automation/executor_queue/done/C-20261028-restore-original-orphan-test-verbatim-0900-01.json",
+    "executor_commit_sha": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "workflow_run": 40618085779,
+    "workflow_conclusion": "success",
+    "executed_test_logs_visible": "NO; done task lists required exact-node, concurrent, full pytest; executor PASS and workflow success are not independent test evidence",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "substantive_decision": {
+    "name": "LOCK_OWNERSHIP_REPLACEMENT_IS_OPERATOR_RECOVERY_SAFETY_GATE",
+    "proof_level": "EXACT_SHA_SOURCE_DERIVED_CONDITIONAL_RACE_NOT_EXECUTED",
+    "source_observation": "storage.ArchiveWriterLock.__enter__ now inode/dev-checks cleanup on PID-write failure, but __exit__ unconditionally unlinks lock_path if it exists. If an operator removes/replaces a lock while its prior owner is still alive, that owner can unlink the replacement at exit. This is a recovery/interleaving hazard, not a proven normal two-writer defect.",
+    "pinned_generation_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "generation_scope": "Three-file generation test is characterization only; cf-anata-handoff-v1 is documented consumer. Do not promote mixed generations to confirmed defect absent a consumer requiring all three files atomically.",
+    "no_network_test_contract": [
+      "Disposable tmp_path archive; enter ArchiveWriterLock and capture lstat inode/dev of .jsonl.lock; while original context remains live, rename that lock to a test-owned backup and create a replacement .lock with a distinct inode and sentinel text. Exit original context.",
+      "Assert replacement sentinel/inode survive old owner's __exit__; current source predicts assertion failure because __exit__ unlinks by path without ownership check. Cleanup only test-owned files in finally. This deliberately models unsafe operator recovery; do not run against real archives.",
+      "Separate positive controls: clean-path ENOSPC test leaves no newly created lock and reacquires; preexisting sentinel times out unchanged; real spawned child exits 17 and leaves orphan fail-closed. Assert all three exact node IDs and subprocess exit codes.",
+      "Run python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py; python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py; python -m pytest -q part2/capital_flow/tests; record exact checkout SHA and exit codes. No network."
+    ],
+    "operational_recovery": "Until a verified recovery protocol exists, never auto-reap orphan locks. Operator must prove no live owner, verify stable lock identity and archive integrity, and avoid replacing lock while an owner is active. No new Gemini task justified; queue empty but JSON reliability unverified."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -e /mnt/data/A-Woker-Lab/.git",
+    "verbatim_result": "ABSENT:/mnt/data/A-Woker-Lab/.git",
+    "direct_directory_read": "fetch_file automation/planner_status -> UNKNOWN: InvalidInputException: GitHub path points to a directory, not a file",
+    "alternate_tree_fetch": "URLError <urlopen error [Errno -3] Temporary failure in name resolution>",
+    "clone_retried": false,
+    "next_feasible_recovery": "Authorized exact-SHA local checkout or independent CI runner to execute targeted/full Capital Flow tests and ownership replacement characterization. Refresh B/C same-SHA and independent Supervisor PLATEAU before any promotion."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "STALE_SOURCE_ADMISSION_PLATEAU",
+    "C": "STALE_QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_verified_enabled": true,
+  "original_hourly_schedule_preserved": true
+}
