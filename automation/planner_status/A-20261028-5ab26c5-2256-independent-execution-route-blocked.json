@@ -1,0 +1,94 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 22:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "e8902307571d0763895d704606eb166a168ca071",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "531a9ecd399061f3fc3ea942ede03d2b5aac5c5c",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "nontruncated exact-ref recursive Git tree (1272 entries)"
+    },
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-2204-single-handoff-contract-reconciliation.json",
+      "B": "B-20261028-5ab26c5-2231-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-single-handoff-gate-2217.json"
+    },
+    "supervisor": "2026-10-28 22:49 ICT NOT_PLATEAU"
+  },
+  "validation": {
+    "exact_sha": "MATCHING_BOUNDED_DONE_PASS_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "INDEPENDENT_EXECUTION_TRANSPORT_BLOCKED",
+    "finding": "Refreshed exact current runner/storage/handoff and both relevant tests. The refined same-T two-writer single anata_latest.json causal snapshot-order oracle remains appropriate; atomic JSON replacement does not prove monotonic snapshot freshness. This is source-derived only and NOT a reproduced bug. Existing ordinary lock release coverage makes duplicate lock task unjustified. No new speculative regression contract or Gemini task.",
+    "active_contract": "automation/planner_status/A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "contract_blob": "0023f300329cdfd7f946c6235836e5f03a6aba59",
+    "acceptance": "At exact public SHA, run two spawned no-network run_once calls at equal T on same disposable local_dir; hold A after it reads old archive but before anata_latest publish; append valid PIT BTC ETF rowB, run B and verify its source_evidence contains rowB; release A and require final anata_latest to retain rowB, no duplicate archive row, both children exit 0; run targeted archive/atomic tests and full python -m pytest -q part2/capital_flow/tests. Preserve overlay hash, exit codes, logs, non-skipped counts."
+  },
+  "execution_blocker": {
+    "attempts": [
+      {
+        "operation": "test -d /mnt/data/A-Woker-Lab/.git",
+        "path": "/mnt/data/A-Woker-Lab/.git",
+        "exit_code": 42,
+        "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git"
+      },
+      {
+        "operation": "curl --connect-timeout 5 --max-time 25 -fsSL https://api.github.com/repos/EpicNIthan/A-Woker-Lab/tarball/5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431 -o /mnt/data/anata-public-5ab26c5.tar.gz",
+        "path": "/mnt/data/anata-public-5ab26c5.tar.gz",
+        "exit_code": 6,
+        "verbatim_error": "curl: (6) Could not resolve host: api.github.com"
+      }
+    ],
+    "clone_retried": false,
+    "pytest_executed": false,
+    "next_feasible_recovery": "Use an authorized exact-SHA disposable checkout supplied to the test runner or independent CI with repository access; do not retry DNS from this runtime. Run pinned no-network two-writer regression, targeted archive/atomic tests, and full Capital Flow suite; submit reproducible exact-SHA logs and test overlay hash for C review."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true,
+  "automation_enabled_verified": true
+}
