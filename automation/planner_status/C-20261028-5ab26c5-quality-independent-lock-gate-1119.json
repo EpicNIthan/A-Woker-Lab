@@ -1,0 +1,71 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 11:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "inspected_head": "ffeda132c27698f57b59f37d863d49eb1372a79f",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "b5e5b49b869cd0f02f68ce569a713c8a0b2dda68",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "recursive exact worker-control tree"
+    },
+    "latest": {
+      "A": "A-20261028-5ab26c5-1100-queue-reconciled-independent-acceptance.json",
+      "B": "B-20261028-5ab26c5-1029-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-ownership-validation-1015.json"
+    }
+  },
+  "quality": {
+    "finding": "Current ArchiveWriterLock.__exit__ checks fstat-owned inode/device against lstat(lock_path) before unlink, protecting replacement-before-lstat; lstat-to-unlink is non-atomic, so a manual-recovery replacement between these calls could still be deleted. Source-derived TOCTOU, not reproduced or a confirmed production incident.",
+    "test_gap": "Existing replacement test restores and cleans test-owned locks before ordinary reacquire, so it does not independently prove normal release. Context-only string 'false' end-to-end test not independently run; current parser previously reported to handle it.",
+    "recovery": "Use authorized disposable exact-SHA checkout or independent CI; deterministic one-shot lstat/unlink interleaving with replacement sentinel, normal release/reacquire, ENOSPC cleanup, orphan fail-closed, child exitcode=17; run targeted tests and python -m pytest -q part2/capital_flow/tests with logs and exit codes. No auto-reap."
+  },
+  "validation": {
+    "exact_sha": "PASS_BOUNDED_EXECUTOR_MATCHES_DONE_TASK",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "executor_targeted": "PASS_REPORTED_BY_BOUNDED_GATE_NOT_INDEPENDENT",
+    "executor_full": "PASS_REPORTED_BY_BOUNDED_GATE_NOT_INDEPENDENT",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "checkout": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
