@@ -1,0 +1,21 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261028-restore-crash-orphan-regression-0857-01",
+  "worker": "C",
+  "title": "Restore actual child-crash orphan-lock fail-closed regression without removing new ENOSPC tests",
+  "base_sha": "0f70aa4d6d7511c270a2493da79677903c27f239",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "part2/capital_flow/storage.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py::test_archive_orphan_lock_fail_closed",
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "instructions": "C QUALITY TEST-ONLY, exact base_sha. The immediately preceding Gemini PASS 0f70aa4d replaced and DELETED existing test_archive_orphan_lock_fail_closed while adding two ENOSPC/orphan-sentinel tests, violating preservation of crash-orphan regression. Restore the ORIGINAL real child-process crash test as a THIRD distinct test function named EXACTLY test_archive_orphan_lock_fail_closed in part2/capital_flow/tests/test_archive_concurrent_dedup.py, while preserving BOTH new test_pid_write_failure_removes_only_new_lock and test_preexisting_orphan_lock_is_preserved and all other tests unmodified. Existing helper _orphan_lock_child_target is still defined and MUST be exercised. Use mp.get_context('spawn'), acquired_event and release_event, child Process(target=_orphan_lock_child_target,args=(str(archive),acquired_event,release_event)), bounded waits, assert child acquired lock, release_event.set, join bounded, terminate/join if needed, assert child exitcode==17 (os._exit), assert orphan .jsonl.lock exists after crash, then assert ArchiveWriterLock(timeout=0.1,poll_interval=0.01) raises TimeoutError; finally terminate/join any live child and clean ONLY test-owned orphan lock after child confirmed dead. Use a unique tmp_path archive, never share with other tests. The restored test MUST be collected under the exact node ID in first tests command. Do not remove or rewrite the two new tests; preserve full prior concurrency coverage. No production edits. Run py_compile on modified test, git diff --check, exact-node targeted pytest, full concurrent-dedup pytest and FULL Capital Flow pytest before commit; fail closed on any nonzero exit. Only allowed test file, no automation/**, .github/**, main, private, secrets, prediction/API orchestration/journals/Telegram/MT5/broker/execution or Railway. Do not enqueue other tasks."
+}
