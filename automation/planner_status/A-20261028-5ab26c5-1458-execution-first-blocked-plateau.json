@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 14:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "3a9b5cd20b14f7ca9effeb245c3272501713a421",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "12c83a0315ecb4fa93521fa620627e831dfc1cec",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "recursive worker-control exact-HEAD Git tree enumeration; pending directory absent"
+    },
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+      "B": "B-20261028-5ab26c5-1425-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-snapshot-order-1420.json"
+    },
+    "supervisor": "2026-10-28 14:47 ICT CONTINUE_NOT_PLATEAU",
+    "stale_worker_status_excluded": true
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "workflow_event": "push",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "FREEZE_SOURCE_ONLY_ORACLE_REQUIRE_EXECUTED_EVIDENCE",
+    "type": "EXECUTION_FIRST_INTEGRATION_GATE",
+    "pinned_original_two_writer_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "pinned_single_consumer_contract": "automation/planner_status/A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "finding": "Exact-SHA runner.run_once reads a locked archive snapshot, releases that lock, then writes latest.json, audit_latest.json and anata_latest.json sequentially without snapshot-generation admission. The existing bounded fixed-T two-process single-handoff regression is already sufficiently precise; inventing another source-only refinement would not improve confidence. Do not treat earlier three-file atomicity as a consumer requirement. Prioritize independent red/green execution, not another unexecuted hypothetical or Gemini task.",
+    "proof_level": "SOURCE_DERIVED_NOT_REPRODUCED_NOT_PRODUCTION_INCIDENT",
+    "executable_acceptance": [
+      "Use authorized disposable git checkout pinned to 5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431; verify git rev-parse HEAD and no source edits.",
+      "Create test-only overlay part2/capital_flow/tests/test_runner_single_handoff_stale.py with top-level multiprocessing spawn targets, child-local monkeypatch of runner.atomic_write_json, bounded Event/Queue, and finally release/terminate cleanup.",
+      "At fixed as_of_ms T, A reads empty archive and pauses before replacing anata_latest.json; append unique valid PIT BTC ETF rowB (effective/available/observed <=T); B runs and publishes; assert B handoff source_evidence.clock_provenance references rowB, then release A and assert final single handoff still retains rowB; record actual baseline result, no assumed FAIL.",
+      "Execute python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py; python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py; python -m pytest -q part2/capital_flow/tests. Capture exact SHA, overlay hash, exit codes, non-skipped counts and logs; C independently audits.",
+      "Do not require unrelated latest.json and audit_latest.json transactional update; keep archive lock replacement TOCTOU as separate unproven operator-interleaving concern."
+    ],
+    "next_feasible_recovery": "Authorize an exact-SHA disposable checkout or independent CI runner to execute the existing pinned regression and full suite; only after independent evidence and proven Gemini JSON reliability consider one narrow exact-base task."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "tests_attempted": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
