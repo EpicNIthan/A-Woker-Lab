@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 15:13 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_head": "86ba897860b43add53ebb6092d175b6c83c7ed77",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "12c83a0315ecb4fa93521fa620627e831dfc1cec",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct authoritative directories; pending absent (404)"
+    },
+    "latest_reports": {
+      "A": "A-20261028-5ab26c5-1458-execution-first-blocked-plateau.json",
+      "B": "B-20261028-5ab26c5-1425-source-plateau.json",
+      "C_previous": "C-20261028-5ab26c5-quality-snapshot-order-1420.json"
+    },
+    "supervisor": "2026-10-28 14:47 ICT CONTINUE_NOT_PLATEAU"
+  },
+  "quality": {
+    "finding": "At fixed as_of_ms, run_once can publish anata_latest.json derived from an older archive snapshot after a newer run has published its handoff; source-derived possibility only, no deterministic reproduction. Latest lock-owner regression protects a replacement sentinel but its reacquire check occurs after manual lockfile cleanup, so does not independently prove ordinary release by the original owner. Do not infer a three-file transactional consumer contract.",
+    "proof_level": "SOURCE_DERIVED_NOT_REPRODUCED_NOT_PRODUCTION_INCIDENT",
+    "priority": "EXECUTION_FIRST: stop refining hypothetical oracle; use A's already-pinned deterministic two-writer single-handoff test and preserve logs. Context-only string 'false' shared parser currently handles False; end-to-end independent regression unexecuted."
+  },
+  "validation": {
+    "exact_sha": "PASS_REPORTED_MATCHING_BOUNDED_DONE_TASK",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": {
+    "exact_checkout": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "tests_attempted": false
+  },
+  "recovery": "Authorize disposable checkout or independent CI pinned to exact SHA. Run no-network Event-gated two-writer stale-handoff red/green, targeted lock/orphan/context-only regressions and python -m pytest -q part2/capital_flow/tests; preserve overlay hash, child exitcodes, non-skipped counts, logs. No Gemini task until JSON reliability verified and queue empty.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
