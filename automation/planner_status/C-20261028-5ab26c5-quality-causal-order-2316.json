@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 23:16 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "7363a3ba2aac156c3e80c5c76cccbc3fde102fb2",
+    "roadmap_blob": "531a9ecd399061f3fc3ea942ede03d2b5aac5c5c",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22
+    },
+    "latest_reports": {
+      "A": "A-20261028-5ab26c5-2256-independent-execution-route-blocked.json",
+      "B": "B-20261028-5ab26c5-2231-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-single-handoff-gate-2217.json"
+    },
+    "supervisor": "2026-10-28 22:49 ICT NOT_PLATEAU"
+  },
+  "quality": {
+    "finding": "Exact source still writes single anata_latest.json without causal generation guard; equal-as_of_ms older-snapshot overwrite is plausible but NOT reproduced. Existing atomic-visibility test is not a two-run snapshot-order test. Shared _is_context_only parser handles string 'false' as False; end-to-end role test NOT RUN. Ordinary lock release already has coverage; replacement-lock test reacquire occurs after manual cleanup.",
+    "blocker": "No authorized disposable exact-SHA test checkout: /mnt/data/A-Woker-Lab/.git absent. No repeat DNS clone.",
+    "recovery": "Provision authorized exact-SHA disposable checkout or independent CI; run bounded no-network same-T two-writer single-handoff regression, string-'false' role regression, targeted archive/atomic tests, then python -m pytest -q part2/capital_flow/tests. Preserve overlay hash, exit codes, logs and non-skipped counts."
+  },
+  "validation": {
+    "matching_done": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "queue_workflow_run": 40623516649,
+    "queue_workflow_conclusion": "success",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "independent_context_only": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
