@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 15:34 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "diff_scope": "archive lock ownership and regression tests; no economic source or collector change"
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "ecf31d4bbbb102acd8dd60c6568100f47d39e0f2",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "12c83a0315ecb4fa93521fa620627e831dfc1cec",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct authoritative worker-control contents listing; pending directory absent (404)"
+    },
+    "latest_A": "A-20261028-5ab26c5-1458-execution-first-blocked-plateau.json",
+    "latest_B_previous": "B-20261028-5ab26c5-1425-source-plateau.json",
+    "latest_C": "C-20261028-5ab26c5-quality-execution-first-1513.json",
+    "supervisor": "2026-10-28 14:47 ICT CONTINUE_NOT_PLATEAU",
+    "stale_loop_status_excluded": true
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "reason": "No newly verified immutable first-party BTC/ETH economic artifact/event with effective, available and observed PIT clocks, independent non-overlap, correct context-vs-directional spot role, and testable no-network contract. Exact recent public diff is lock/tests only.",
+    "rejected_source_families_not_readmitted": true
+  },
+  "cross_lane": "A/C independently prioritize execution of existing fixed-clock two-writer single-handoff stale-publication regression; risk is source-derived, not reproduced or production incident. This is integration/quality, not B source breadth.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "next": "Do not enqueue Gemini task until structured-JSON mitigation and independent exact-SHA test evidence verified; A/C/Supervisor own those gates. B admits only genuinely new independent first-party BTC/ETH evidence.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
