@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 02:12 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "dba198e7666d48dc0853c86f52504521106b3e1b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "09656452fc21a32083d86b0bff18b94848cec794",
+    "roadmap_supervisor": "2026-10-29 01:45 ICT NOT_PLATEAU",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "exact worker-control executor_queue subtrees truncated=false; pending absent"
+    },
+    "latest_reports": {
+      "A": "A-20261029-5ab26c5-0202-snapshot-lock-boundary-execution-blocked.json",
+      "B": "B-20261029-5ab26c5-0127-source-plateau.json",
+      "C_previous": "C-20261029-5ab26c5-quality-nested-provenance-oracle-0113.json"
+    }
+  },
+  "quality": {
+    "finding": "Source review confirms run_once appends then loads observations under separate archive-lock scopes, then writes anata_latest.json outside those scopes. Atomic file replacement does not prove causal retention when two equal-T writers race; stale overwrite remains a HYPOTHESIS, NOT REPRODUCED. Non-vacuous oracle must prove B completes with rowB while A is paused before anata_latest write, then after A release final nested source_evidence[*].clock_provenance.effective.source_record_id remains rowB. The shared evidence_health._is_context_only parser handles string 'false' correctly and both runner/handoff import it; an end-to-end role regression is still NOT RUN. Existing normal lock-release coverage exists; replacement-lock reacquire follows manual cleanup.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized disposable exact-SHA checkout or approved CI overlay; do not retry DNS clone.",
+    "recovery": "Provision authorized disposable checkout pinned to exact public SHA or approved independent CI overlay; run bounded no-network same-T two-writer regression with child exit codes, string-'false' end-to-end context/scoring regression, targeted archive/atomic tests and full python -m pytest -q part2/capital_flow/tests; retain overlay hash, logs, exit codes, non-skipped counts."
+  },
+  "validation": {
+    "matching_done": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "queue_workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "independent_context_only": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
