@@ -1,0 +1,86 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 06:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "atomic_test": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "1debf0e1aeaeed3b43c4c60fe8781e6777cf2f1f",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 05:46 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "evidence": "Supervisor 05:46 complete 1293-entry nontruncated worker-control tree; compare 05:00 A to current worker-control HEAD shows only B/C status and roadmap changed, no queue paths"
+    },
+    "latest_durable": {
+      "A_previous": "A-20261029-5ab26c5-0500-causal-snapshot-witness-blocked.json",
+      "B": "B-20261029-5ab26c5-0529-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-snapshot-witness-0518.json"
+    }
+  },
+  "validation": {
+    "method": "matching bounded worker-control done task",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "FREEZE_REVIEWED_ORACLE_AND_PRIORITIZE_EXECUTION",
+    "kind": "INTEGRATION_GATE_DECISION_NOT_TEST_RESULT",
+    "finding": "A 05:00 causal snapshot witness is independently accepted by C 05:18 and Supervisor 05:46. Exact public runner loads archive before publishing latest/audit/anata separately; handoff exposes nested clock_provenance.effective.source_record_id. Further speculative oracle edits have diminishing value. Freeze existing reviewed same-T two-writer contract until independent RED/GREEN evidence; do not treat atomic JSON completeness or same-clock publication order as monotonic generation proof.",
+    "runnable_no_network_contract": "In approved disposable exact-SHA checkout only: spawn-safe A run_once(network=False,external_jsonl=(),as_of_ms=T) pauses only before runner.atomic_write_json(anata_latest.json) after reading empty archive; append valid rowB with PIT clocks<=T; B run_once same T must finish while A paused, report archive_records_loaded=1 and scoring_records_loaded=1, and publish nested source_evidence[etf,fixture_two_writer,scoring].clock_provenance.effective.source_record_id=rowB. Release A; require A archive_records_loaded=0, child exitcodes=0, and final anata_latest.json retains B's handoff/rowB. Include reverse completion-order control, bounded waits, finally cleanup, and evidence logs. Do not claim RED or GREEN without execution.",
+    "commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py",
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "test_overlay": "NOT_PRESENT_NEEDS_APPROVAL",
+    "suspected_stale_overwrite": "UNREPRODUCED",
+    "no_gemini_task": "JSON reliability UNVERIFIED; no independently executed RED; pending empty alone insufficient."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "pytest_executed": false,
+    "clone_retried": false,
+    "next_feasible_recovery": "Authorized disposable exact-public-SHA checkout and approved test-only overlay; execute frozen contract and full Capital Flow suite, retain HEAD, overlay SHA256, stdout/stderr, exit codes, non-skipped counts, then C review."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
