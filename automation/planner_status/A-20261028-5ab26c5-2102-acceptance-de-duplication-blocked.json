@@ -1,0 +1,82 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 21:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c13e3621e3b5cda8e0a1df361bb441245a12ad18",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "2f26615010e78f2d3a9d78094e48930c915ec6d9",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "exact-ref complete Git tree truncated=false; count blob entries, exclude directory trees"
+    },
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-2004-status-enumeration-completeness.json",
+      "B": "B-20261028-5ab26c5-2029-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-existing-release-2012.json"
+    },
+    "supervisor": "2026-10-28 20:52 ICT NOT_PLATEAU"
+  },
+  "validation": {
+    "exact_sha": "MATCHING_BOUNDED_DONE_PASS_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "INTEGRATION_ACCEPTANCE_DEDUPLICATION",
+    "finding": "Verified existing test_pid_write_failure_removes_only_new_lock covers successful ArchiveWriterLock context exit and lock removal without manual cleanup; test_archive_idempotent_repeated_append exercises sequential reacquisition. Earlier A claim that ordinary lock release had no coverage was overbroad. Replacement-lock test's manually cleaned reacquire assertion is not independent evidence, but no duplicate new test task is warranted.",
+    "primary_gate": "Runner.run_once loads archive history then independently writes anata_latest.json with atomic_write_json; no snapshot-generation freshness guard. Pinned equal-clock two-writer no-network contract remains appropriate and UNEXECUTED. Single Anata-facing handoff monotonic freshness is the integration acceptance target, not three-file transactional output.",
+    "pinned_contract": "automation/planner_status/A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "next": "Provision authorized disposable checkout at exact public SHA or independent CI; run bounded equal-clock two-writer single-handoff regression, existing no-manual-cleanup lock-release coverage, targeted archive/atomic tests and python -m pytest -q part2/capital_flow/tests; preserve overlay hash, exit codes, non-skipped counts and logs for independent C audit. No further speculative contract revisions."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "pytest_executed": false,
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or independent CI evidence; do not retry DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true,
+  "automation_enabled_verified": true
+}
