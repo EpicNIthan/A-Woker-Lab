@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 18:10 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "4465b44936cfbd490e38bb04d9cb623dde9eae5d",
+    "roadmap_blob": "cd2aea66e140fc8e7c463868c40198c12d1d4881",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22
+    },
+    "latest_A": "A-20261028-5ab26c5-1803-lock-release-acceptance-gap.json",
+    "latest_B": "B-20261028-5ab26c5-1732-source-plateau.json",
+    "previous_C": "C-20261028-5ab26c5-quality-exact-sha-execution-blocker-1712.json",
+    "supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "quality": {
+    "finding": "Replacement-lock sentinel regression contains no-op original_lock.fd = original_lock.fd and manually removes original lock before reacquire: ordinary __exit__ release is not independently proven. runner.py may overwrite newer anata_latest.json with older equal-clock snapshot; source-derived hypothesis, not reproduced. Shared evidence_health parser explicitly maps string 'false' to False; end-to-end regression unexecuted.",
+    "blocker": "Authorized disposable exact-SHA checkout absent (/mnt/data/A-Woker-Lab/.git). No independent execution logs.",
+    "recovery": "Provision authorized disposable exact-SHA runner; run no-manual-cleanup normal lock release/reacquire, deterministic no-network two-writer single-handoff, context-only role regression, targeted concurrency/atomic tests and full python -m pytest -q part2/capital_flow/tests; preserve SHA, overlay hash, child exit codes, non-skipped counts and logs."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_BOUNDED_DONE_PASS_ONLY",
+    "done_task": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
