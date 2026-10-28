@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 07:11 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "0c621b16188742212e557535aa002ff7c7f22ac0",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "70d678524ad9553c8e81b32b815684717b879f5a",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "e7c4d5cf5cd151420a96ed5669abdb1f9a484439",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 20,
+      "source": "direct worker-control directory enumeration; pending/ absent"
+    },
+    "latest_A": "A-20261028-c4b6a75-0702-lock-create-failure-cleanup-gate.json",
+    "latest_B": "B-20261028-c4b6a75-0628-min.json",
+    "previous_C": "C-20261028-c4b6a75-quality-contract-scope-0615.json"
+  },
+  "quality": {
+    "finding": "NEW source-confirmed acquisition-error cleanup gap: ArchiveWriterLock.__enter__ creates exclusive .jsonl.lock then os.write(PID); if os.write raises, except closes fd but does not unlink its newly created lock. A subsequent read/write may time out. This is code-path inspection, NOT an executed reproduction or production incident.",
+    "secondary": "evidence_health._is_context_only correctly parses string 'false' and runner/handoff call this shared parser; end-to-end string-'false' role regression remains independently unexecuted. Reader ATTEMPT event is before lock acquisition, not definitive lock-entry proof. Triple-file mixed generation remains characterization only absent consumer contract.",
+    "blocker": "No authorized exact-SHA isolated checkout; independent targeted/full pytest and deterministic os.write-failure regression NOT RUN.",
+    "recovery": "In authorized disposable exact-SHA checkout, test-only monkeypatch os.write to raise OSError(ENOSPC) during ArchiveWriterLock.__enter__; assert lock cleanup and next acquisition; restore patch immediately, isolate temp path, remove test orphan only after no live owner proof. Run targeted test_archive_concurrent_dedup.py, test_v1_handoff.py string-'false' end-to-end, reader visibility, then full python -m pytest -q part2/capital_flow/tests; preserve logs/exit codes. Production fix Gemini-only after gates; never auto-delete unknown orphan locks."
+  },
+  "validation": {
+    "exact_sha_executor": "PASS_MATCHING_DONE_TASK",
+    "task": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "workflow_run": 40581619175,
+    "executor_targeted": "PASS_REPORTED_NOT_INDEPENDENT",
+    "executor_full": "PASS_REPORTED_NOT_INDEPENDENT",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "acquire_failure_regression": "NOT_RUN",
+    "context_only_regression": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "schedule_preserved": true
+}
