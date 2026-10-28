@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 17:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "88fb6c2ec7d828e77c1a1d305fd79b0f8dd910b3",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "0a9963b96f2c4b9e4edd8a71e1f251dabe4f0184",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "Direct worker-control tree enumeration; pending/ HTTP 404."
+    },
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-1604-execution-blocker-evidence-freeze.json",
+      "B": "B-20261028-5ab26c5-1632-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-execution-blocker-1615.json"
+    },
+    "supervisor": "2026-10-28 16:47 ICT CONTINUE_NOT_PLATEAU",
+    "stale_worker_status_excluded": true
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_event": "push",
+    "workflow_conclusion": "success",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "EXACT_REPO_EXECUTION_BLOCKER_NO_SOURCE_ONLY_CHURN",
+    "pinned_original_two_writer_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "current_single_consumer_spec": "automation/planner_status/A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "integration_finding": "runner.py:120-144 loads archive snapshot, builds handoff, then atomically writes anata_latest.json without snapshot-generation admission. Older A can theoretically overwrite newer B at identical as_of_ms. Existing atomic visibility test only checks complete JSON, not freshness. This is source-derived and NOT reproduced. Original 2026-10-14 three-file generation oracle is not established as an Anata consumer requirement.",
+    "substantive_A_lane_decision": "No further source-only test contract churn and no Gemini task. Maintain pinned bounded two-process, equal-clock single-handoff regression as the next required evidence. New public HEAD would invalidate validation and verdicts.",
+    "runnable_no_network_commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py",
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "acceptance": "At same fixed T, A pauses before writing anata_latest after reading old archive; append PIT rowB; B publishes handoff with rowB source_record_id; release A; final handoff must retain B. Assert both exitcodes 0, no archive duplicate, bounded event timeouts, test overlay hash and exact checkout SHA; preserve actual red/green logs.",
+    "next_feasible_recovery": "Provision authorized disposable exact-SHA checkout or independent CI runner; run pinned no-network overlay, targeted and full Capital Flow pytest, retain logs/non-skipped counts; Planner C independently audits."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "tests_attempted": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
