@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 23:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      ".github/workflows/validate.yml": "0f6b0e6319ab5c1e998e261c0b52ab8b14ae4e99"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "893569513d48b6f5bcc9fd67764855419244ed8e",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "exact-ref recursive Git tree, truncated=false"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "ebc7f72e9bd96bb8eda6c07a04aca2c17294b96c",
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-2256-independent-execution-route-blocked.json",
+      "B": "B-20261028-5ab26c5-2329-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-causal-order-2316.json"
+    },
+    "supervisor": "2026-10-28 23:53 ICT NOT_PLATEAU"
+  },
+  "validation": {
+    "exact_sha": "MATCHING_BOUNDED_DONE_PASS_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "queue_workflow_run": 40623516649,
+    "queue_workflow_head_sha": "8ced9cd233e413f11d08a98764cf50d0b8293160",
+    "queue_workflow_conclusion": "success",
+    "public_commit_check_runs": 0,
+    "public_commit_combined_status": "pending (0 statuses)",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "INDEPENDENT_CI_COVERAGE_SPLIT",
+    "finding": "New execution-path reconciliation: public validate.yml supports workflow_dispatch and full python -m pytest -q part2/capital_flow/tests on selected ref, but no pinned two-writer regression file exists on current HEAD; a clean full-suite CI pass would NOT establish equal-T causal snapshot-order correctness. The successful Gemini queue run is on worker-control SHA, not an independent public-HEAD check run. No workflow dispatched due protected workflow boundary. Existing deterministic single anata_latest.json test contract is adequate; do not publish another speculative revision.",
+    "active_contract": "automation/planner_status/A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "contract_blob": "0023f300329cdfd7f946c6235836e5f03a6aba59",
+    "source_evidence": "runner.run_once loads archive snapshot and independently calls atomic_write_json on latest, audit_latest, anata_latest; atomic visibility test proves whole-file replacement, not causal generation order. Stale overwrite remains plausible, NOT reproduced.",
+    "no_new_task_reason": "No independently observed red regression and Gemini structured-JSON reliability unverified; pending empty is not sufficient."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "pytest_executed": false,
+    "next_feasible_recovery": "Authorized disposable checkout pinned to public SHA or independent CI with test overlay: execute no-network same-T two-writer single anata_latest.json regression, targeted archive/atomic tests and full Capital Flow pytest; capture source SHA, overlay hash, child exit codes, logs, non-skipped counts; send to C. Existing dispatch-only workflow can at most provide separate full-suite evidence if explicitly authorized and exact run head_sha matches."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true,
+  "automation_enabled_verified": true
+}
