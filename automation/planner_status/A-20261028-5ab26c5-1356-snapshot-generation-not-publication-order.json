@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 13:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "03732a6c3b821fa78c7a3a737b03ccc42280d98b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "beb60c466f1ecf0330ffbfa2a499fe6ec14da719",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct worker-control queue directory listings; pending 404 absent"
+    },
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-1257-equal-clock-snapshot-order-gate.json",
+      "B": "B-20261028-5ab26c5-1330-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-equal-clock-1317.json"
+    },
+    "supervisor": "2026-10-28 13:54 ICT CONTINUE_NOT_PLATEAU"
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "SNAPSHOT_ORDER_NOT_COMPLETION_ORDER",
+    "pinned_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "previous_contract": "automation/planner_status/A-20261028-5ab26c5-1257-equal-clock-snapshot-order-gate.json",
+    "finding": "Correct prior ambiguity: publication completion order is NOT a valid monotonic-generation guard. A reads old archive snapshot, B reads later appended row at same as_of_ms T, B publishes, then A completes last. Last-writer-wins by publication order incorrectly accepts stale A. A fix needs a causally ordered snapshot version captured at read and compared atomically at publication; as_of_ms alone, content hash alone, and publish-time sequence alone do not establish snapshot freshness. Existing atomic_write_json guarantees complete JSON, not monotonic snapshot freshness. Source-derived risk only; no independent reproduction or production incident.",
+    "runnable_no_network_contract": [
+      "On disposable checkout at exact public SHA, test-only spawn worker A calls runner.run_once(local_dir=tmp_path,network=False,as_of_ms=T); monkeypatch runner.atomic_write_json inside A child to block ONLY immediately before replacing anata_latest.json, after A captured its empty archive snapshot and built its handoff; use bounded multiprocessing Event/Queue and finally release/terminate.",
+      "After A_ready, append one valid PIT BTC ETF FlowObservation rowB with effective_at_ms, available_at_ms and observed_at_ms <= T using append_observations; run worker B at identical T on same local_dir to completion; assert B anata_output source_evidence contains rowB source_record_id and A handoff excludes it.",
+      "Before releasing A, assert disk anata_latest.json equals B's complete JSON. Release A, assert both child exitcodes 0 and final disk handoff still equals B's (or explicitly ordered superseding generation) and includes rowB; assert one archive row and no duplicates. Baseline at current SHA expected to fail stale-retention assertion; record observed result rather than assert an unexecuted failure.",
+      "Negative controls: a guard based only on as_of_ms T or write-completion order must fail; ensure snapshot-order rule is preserved when equal T and when bounded history max_records=100000 saturates (record count alone is not a durable generation token). Do not require unrelated latest.json and audit_latest.json to update transactionally.",
+      "Commands: python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py; python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_archive_reader_writer_visibility.py; python -m pytest -q part2/capital_flow/tests. Capture exact git HEAD, test-overlay hash, exit codes, non-skipped counts, logs and red/green."
+    ],
+    "separate_gate": "Archive lock lstat/unlink manual replacement TOCTOU and normal release/reacquire, ENOSPC, orphan/crash remain separate; no auto-reap.",
+    "next": "Obtain authorized disposable exact-SHA checkout or independent authorized CI, execute no-network regression and full suite; C independently audits. No Gemini task until structured JSON reliability proven and integration solution/test evidence adequate."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or independent CI, then run targeted and full pytest with evidence."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
