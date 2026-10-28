@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 02:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "ignore_public_automation": true
+  },
+  "control": {
+    "prewrite_sha": "dff113068fa104bc3d1b293bf644f03f1743cc26",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 02:52 ICT Supervisor NOT_PLATEAU",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "worker-control executor_queue direct directory listings; pending directory absent"
+    },
+    "latest_durable": {
+      "A": "A-20261029-5ab26c5-0202-snapshot-lock-boundary-execution-blocked.json",
+      "B": "B-20261029-5ab26c5-0231-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-independent-causal-oracle-0212.json"
+    }
+  },
+  "validation": {
+    "method": "matching bounded worker-control done-task",
+    "task": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "PINNED_REGRESSION_FILE_IS_NOT_IN_PUBLIC_TREE",
+    "kind": "VERIFIED_TEST_MATERIALIZATION_GAP_NOT_RUNTIME_REPRODUCTION",
+    "pinned_spec": "automation/planner_status/A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "finding": "Pinned test command names part2/capital_flow/tests/test_runner_single_handoff_stale.py, but exact public SHA does not contain that file (GitHub contents 404; test directory enumerated). Even after checkout provisioning, that command cannot run until an authorized test-only overlay is materialized. This is separate from the source-derived, still UNREPRODUCED equal-T stale publication hypothesis.",
+    "no_network_contract": [
+      "Materialize a disposable test-only overlay at part2/capital_flow/tests/test_runner_single_handoff_stale.py against exact public SHA; keep public Specialist branch unchanged. Use top-level spawn-safe multiprocessing child targets and bounded Event/Queue timeouts.",
+      "A child run_once(network=False,as_of_ms=T,local_dir=tmp_path) blocks ONLY its own anata_latest.json atomic_write_json just before replace; signal A_ready after snapshot/handoff construction. B parent appends one unique valid scoring ETF rowB with effective/available/observed <=T, then B child run_once at identical T must finish exitcode=0 while A is blocked.",
+      "Before A release assert B handoff nested source_evidence(etf,fixture_two_writer,scoring).clock_provenance.effective.source_record_id == rowB, archive_records_loaded==1, appended_observations==0, disk anata_latest equals B output. Release A in finally; bounded join/terminate, assert both child exitcodes 0, A output excludes rowB, and final disk handoff retains B rowB. Baseline may FAIL; record actual result, never assume.",
+      "Capture exact SHA, overlay SHA256, child exitcodes, non-skipped pytest counts and logs; then run targeted archive/atomic and full Capital Flow suite. Independent C reviews evidence."
+    ],
+    "commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py",
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "no_gemini_task": "Gemini structured JSON reliability unverified; missing test overlay and no independent red reproduction."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "secondary_attempt": "GitHub fetch_file exact-SHA part2/capital_flow/tests/test_runner_single_handoff_stale.py",
+    "secondary_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}",
+    "clone_retried": false,
+    "pytest_executed": false,
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout plus approved ephemeral test overlay, or independent CI overlay; run three pytest commands and capture evidence."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
