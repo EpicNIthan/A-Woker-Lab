@@ -1,0 +1,73 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 01:13 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "f3814cbeab7add89369c58bd3e131506ed9b9454",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "fe85a6ae65946945c6b9c71c8c9701e52773182f",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "exact worker-control queue contents; no pending directory"
+    },
+    "latest_reports": {
+      "A": "A-20261029-5ab26c5-0056-precise-source-provenance-oracle-blocked.json",
+      "B": "B-20261029-5ab26c5-0025-source-plateau.json",
+      "C_previous": "C-20261029-5ab26c5-quality-ci-causal-gap-0015.json"
+    },
+    "supervisor": "2026-10-29 00:53 ICT NOT_PLATEAU"
+  },
+  "quality": {
+    "finding": "Source-pinned handoff._source_evidence groups by (family,source,role) and stores source_record_id only inside clock_provenance.effective/availability/observed; asserting source_evidence[*].source_record_id is an invalid two-writer oracle. A's 00:56 correction to nested provenance is supported. runner.run_once publishes anata_latest.json separately without visible generation guard; equal-T stale overwrite remains a hypothesis, NOT REPRODUCED. evidence_health._is_context_only('false') returns False, but end-to-end role regression remains NOT RUN. Existing ordinary lock release coverage exists; replacement-lock reacquire follows manual cleanup.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized exact-SHA disposable checkout or approved CI test overlay. No clone retry.",
+    "recovery": "Provide authorized exact-SHA checkout or approved CI overlay. Execute bounded no-network equal-T two-writer test asserting nested rowB clock provenance and final single anata_latest.json causal retention; string-'false' role regression; targeted archive/atomic and full Capital Flow pytest. Preserve SHA, overlay hash, exit codes, non-skipped counts and logs."
+  },
+  "validation": {
+    "matching_done": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "independent_context_only": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
