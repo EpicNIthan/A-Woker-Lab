@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 07:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "0c621b16188742212e557535aa002ff7c7f22ac0",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "56fead2afa690f5ba92c17c9e028dbb8ac07f0f6",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "23ac83dc5942a889569c331e2440faa37a241d98",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 21,
+      "source": "Exact worker-control recursive tree enumeration; failed task now archived"
+    },
+    "latest_durable": {
+      "A": "A-20261028-c4b6a75-0702-lock-create-failure-cleanup-gate.json",
+      "B": "B-20261028-c4b6a75-0733-source-plateau.json",
+      "C": "C-20261028-c4b6a75-lock-acquire-quality-0711.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK_ALTERNATIVE",
+    "matching_done": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "executor_commit_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "matching_workflow_run": 40581619175,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "new_event": {
+    "kind": "EXECUTOR_FAILED_NO_PUBLIC_COMMIT",
+    "failed_task": "automation/executor_queue/failed/A-20261028-lock-pid-write-cleanup-0753-01.json",
+    "workflow_run": 40611797281,
+    "workflow_conclusion": "failure",
+    "test_output": "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py: 1 failed, 4 passed in 0.89s",
+    "verbatim_failure": "AssertionError: assert None == 28; TimeoutError('Timed out acquiring archive writer lock for /tmp/pytest-of-runner/pytest-1/test_archive_pid_write_failure0/pid_fail.jsonl')",
+    "diagnosis": "The failed uncommitted test first creates a preexisting .jsonl.lock and then patches os.write to raise ENOSPC. os.open(O_CREAT|O_EXCL) hits FileExistsError and times out before os.write can run; expecting ENOSPC in that same fixture is logically impossible. This is a test ordering/fixture error, not proof that the proposed storage cleanup fix failed. Public HEAD and pinned source blobs unchanged.",
+    "no_blind_retry": true
+  },
+  "decision": {
+    "name": "SEPARATE_PID_WRITE_FAILURE_FROM_PREEXISTING_ORPHAN_TEST",
+    "kind": "SUBSTANTIVE_A_LANE_EXECUTOR_FAILURE_RECONCILIATION",
+    "pinned_two_writer_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "scope_note": "The pinned two-writer triple-output generation oracle is characterization, not a confirmed consumer defect absent a real three-file atomic consumer contract.",
+    "runnable_no_network_test_contract": [
+      "TEST A / clean path: tmp_path archive with no lock; monkeypatch storage.os.write to raise OSError(errno.ENOSPC, 'simulated PID write failure') ONLY during ArchiveWriterLock.__enter__; assert errno == ENOSPC and original exception propagates; after restoring patch assert newly created .jsonl.lock absent and subsequent acquisition succeeds.",
+      "TEST B / independent preexisting orphan: separate tmp_path archive, create .jsonl.lock before acquisition, do NOT patch os.write; assert ArchiveWriterLock(...,timeout=0.05,poll_interval=0.005) raises TimeoutError and the existing lock remains unchanged. Only remove test fixture lock in finally after no live owner.",
+      "Test cases must never combine a preexisting orphan lock with a PID-write ENOSPC expectation. Use no network and no blind sleeps; preserve fail-closed crash-orphan behavior. Run targeted python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py, targeted reader visibility, then full python -m pytest -q part2/capital_flow/tests; capture exact SHA, exit codes and logs. Gemini alone may implement production/test code after Supervisor reconciles this failed task and reliability gate is met."
+    ],
+    "tasks_enqueued": 0,
+    "next_feasible_recovery": "Supervisor acknowledges archived failed task and corrects fixture ordering before any future narrow dispatch; do not rerun malformed task. Obtain authorized exact-SHA checkout to independently run targeted/full Capital Flow pytest. Require fresh A/B/C and Supervisor unqualified PLATEAU before promotion."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -e /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "verbatim_result": "ABSENT:/mnt/data/A-Woker-Lab/.git",
+    "independent_pytest": "NOT_RUN",
+    "clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_verified_enabled": true,
+  "original_hourly_schedule_preserved": true
+}
