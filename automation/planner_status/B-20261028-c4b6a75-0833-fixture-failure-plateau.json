@@ -1,0 +1,74 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 08:33 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "new_economic_source_change": false,
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "03c8bc5ba2e208209638a008f4ba7b443023dfff",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-28 07:53 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 21,
+      "method": "direct contents enumeration; pending/ 404; done 25; failed 21"
+    },
+    "latest_A": "A-20261028-c4b6a75-0756-failed-gemini-test-ordering.json",
+    "latest_B_previous": "B-20261028-c4b6a75-0733-source-plateau.json",
+    "latest_C": "C-20261028-c4b6a75-quality-executor-fixture-failed-0810.json"
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK",
+    "done_task": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "executor_commit": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "decision": "PLATEAU",
+    "reason": "Latest public diff is test-only; no newly demonstrated first-party immutable BTC/ETH economic artifact/event ID with effective/available/observed PIT clocks, non-overlap, correct context-vs-directional spot role and no-network test contract.",
+    "rejected_families_unchanged": [
+      "Uniswap v3",
+      "Arbitrum bridge",
+      "Thorchain",
+      "BTC mining subsidy",
+      "Coinbase/Bitfinex/OKX",
+      "PoR",
+      "treasury/staking/derivatives"
+    ]
+  },
+  "new_event": {
+    "kind": "A_GEMINI_EXECUTOR_FAILED_NO_PUBLIC_COMMIT",
+    "failed_task": "automation/executor_queue/failed/A-20261028-lock-pid-write-cleanup-0753-01.json",
+    "workflow_run": 40611797281,
+    "targeted_result": "1 failed, 4 passed",
+    "root_cause": "Generated fixture precreated orphan lock before injected os.write ENOSPC, so O_EXCL timed out first; separate clean-path PID-write test and preexisting-orphan test required.",
+    "owner": "A/C/Supervisor",
+    "not_source_admission": true
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
