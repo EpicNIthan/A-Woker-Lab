@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 12:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "9c7ceb89e8aefe64b838a20dd0a29c58eb5b6271",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "086cfcf2943609ba147423852df0a061a571bec0",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct full worker-control recursive git tree; pending directory absent"
+    },
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-1156-single-handoff-stale-publication-gate.json",
+      "B": "B-20261028-5ab26c5-1229-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-handoff-staleness-1215.json"
+    },
+    "supervisor": "2026-10-28 12:50 ICT CONTINUE_NOT_PLATEAU"
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_result": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "EQUAL_AS_OF_CLOCK_IS_NOT_A_PUBLICATION_GENERATION_TOKEN",
+    "pinned_spec": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "prior_single_handoff_contract": "automation/planner_status/A-20261028-5ab26c5-1156-single-handoff-stale-publication-gate.json",
+    "finding": "run_once reads an archive snapshot then publishes the single Anata-facing cf-anata-handoff-v1 file via unguarded atomic_write_json. Handoff exposes as_of_ms but no monotonic archive snapshot generation. A and B can share identical as_of_ms while B includes newly appended causally visible source evidence and A does not. A timestamp-only compare/guard would accept the stale A overwrite; require a publication-order or archive-generation ordering rule. Source-derived potential, not reproduced or a production incident.",
+    "runnable_no_network_contract": [
+      "On authorized disposable checkout pinned to exact public SHA, add test-only part2/capital_flow/tests/test_runner_single_handoff_stale.py; use top-level spawn child worker, tmp_path, fixed T, Event/Queue barriers and bounded timeouts; no sleeps as ordering oracle.",
+      "Start child A runner.run_once(network=False,as_of_ms=T) on empty archive; monkeypatch runner.atomic_write_json in A only to capture A handoff and pause BEFORE its anata_latest.json replace; parent verifies A_ready and no A handoff publication.",
+      "Parent appends one distinct valid BTC ETF scoring FlowObservation with effective_at_ms, available_at_ms and observed_at_ms <= T; run B runner.run_once(network=False,as_of_ms=T) to completion on same local_dir. Assert A/B as_of_ms equal T; A source_evidence excludes rowB; B source_evidence clock_provenance includes source_record_id rowB; persisted file equals B anata_output.",
+      "Release A in finally; require both process exitcodes 0, final file valid JSON and still equals B output (never A), one archive row and no duplicates; sequential C positive control. A guard that compares only as_of_ms must fail this acceptance; do not require unrelated latest.json and audit_latest.json to update transactionally.",
+      "Commands: python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py; python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_archive_reader_writer_visibility.py; python -m pytest -q part2/capital_flow/tests. Record SHA, non-skipped counts, exit codes, logs, and test overlay hash."
+    ],
+    "separate_gate": "Archive lock lstat/unlink operator-replacement TOCTOU and normal release/reacquire, ENOSPC, orphan/crash fail-closed remain independent tests. No automatic orphan reaping.",
+    "next": "Obtain authorized exact-SHA checkout or independent test CI; execute red/green no-network regression and targeted/full Capital Flow suite; quality C reviews evidence. Do not queue Gemini while structured JSON reliability unverified; Supervisor CONTINUE and promotion blocked."
+  },
+  "execution_blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or independent CI, then run test-only overlay and targeted/full Capital Flow pytest."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
