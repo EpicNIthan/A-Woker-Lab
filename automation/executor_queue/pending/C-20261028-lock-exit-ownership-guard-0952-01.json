@@ -1,0 +1,21 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "C-20261028-lock-exit-ownership-guard-0952-01",
+  "worker": "C",
+  "title": "Preserve replacement lock on original owner's exit and test lock ownership",
+  "base_sha": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+  "instructions": "C QUALITY ONLY. On exact public base_sha, in part2/capital_flow/storage.py ArchiveWriterLock.__exit__, the current code closes self.fd then unconditionally unlinks lock_path by pathname. This can delete another owner's replacement lock if the original lock pathname was moved/replaced while the original context remained active. Implement a narrowly scoped fail-closed owner-identity guard: before closing the owned fd, capture its os.fstat identity (st_dev, st_ino); close it; unlink the pathname only if current lock_path.lstat() still matches that captured identity. If the pathname is absent, replaced, or stat fails, never unlink it. Preserve normal successful lock release and existing __enter__ PID-write failure cleanup. Do not auto-reap orphan locks, trust PID alone, or modify archive data. In part2/capital_flow/tests/test_archive_concurrent_dedup.py add a deterministic tmp_path no-network regression: enter original lock; rename original .lock to a test-owned backup; create distinct replacement .lock with sentinel text/inode; exit original lock; assert replacement sentinel and identity remain; clean only test-owned paths in finally. Also assert ordinary lock release allows immediate reacquire. Preserve existing clean ENOSPC, preexisting sentinel fail-closed, child crash exitcode 17 and concurrent reader/writer tests unchanged. Run git diff --check, targeted tests and full Capital Flow suite; commit only on PASS. Never touch automation/**, .github/**, private, main, secrets, prediction/API orchestration/journals/Telegram/MT5/broker/execution, or Railway. No broad refactor; do not enqueue another task.",
+  "read_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2
+}
