@@ -1,0 +1,72 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 03:15 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "part2/capital_flow/tests/test_handoff_context_role.py": "56cc3634d3afa53f7b5fb58e989c0011ecc81ec1",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c8f3199fcb0cf0c7962e43aa35f76f1ef25e593b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "ab017d1b890f83d2f7a47f6cc211dc604ab34683",
+    "roadmap_latest": "2026-10-29 02:52 ICT Supervisor NOT_PLATEAU",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "worker-control direct queue directory and complete done/failed git trees"
+    },
+    "latest_reports": {
+      "A": "A-20261029-5ab26c5-0259-regression-overlay-absent-blocked.json",
+      "B": "B-20261029-5ab26c5-0231-source-plateau.json",
+      "C_previous": "C-20261029-5ab26c5-quality-independent-causal-oracle-0212.json"
+    }
+  },
+  "quality": {
+    "finding": "Correction: exact-SHA test_runner_role_consistency.py already contains deterministic no-network run_once integration with provenance.context_only=' false ', verifies scoring_records_loaded=1, archive_records_loaded=2, and both scoring/context roles. test_handoff_context_role.py also includes a string-' false ' truth-table case. These are EXISTING SOURCE TESTS, not independently executed in this run. Separately, proposed equal-T two-writer test_runner_single_handoff_stale.py is ABSENT from the exact public tree (confirmed by directory enumeration and GitHub 404), so its pinned command cannot execute without approved test-only overlay. Equal-T stale overwrite is a HYPOTHESIS, not reproduced; atomic write does not prove causal ordering.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; missing approved ephemeral two-writer regression overlay; do not retry DNS clone.",
+    "recovery": "Provision authorized disposable exact-SHA checkout or approved independent CI overlay. First run existing python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py part2/capital_flow/tests/test_handoff_context_role.py; add approved test-only same-T two-writer overlay with nested source_evidence[*].clock_provenance.effective.source_record_id oracle, bounded child exitcodes; then targeted archive/atomic and full python -m pytest -q part2/capital_flow/tests. Preserve logs, overlay hash, exitcodes, non-skipped counts."
+  },
+  "validation": {
+    "matching_done": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_role_targeted": "NOT_RUN",
+    "independent_archive_atomic": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN_MISSING_TEST_OVERLAY",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
