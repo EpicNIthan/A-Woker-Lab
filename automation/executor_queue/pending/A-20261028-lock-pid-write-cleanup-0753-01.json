@@ -1,0 +1,23 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261028-lock-pid-write-cleanup-0753-01",
+  "worker": "A",
+  "title": "Repair newly-created archive lock leakage if PID write raises",
+  "base_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "instructions": "A INTEGRATION, exact base SHA. Source-confirmed issue: ArchiveWriterLock.__enter__ exclusively creates .jsonl.lock then os.write(PID) may raise; current except closes fd but leaves newly-created lock. Minimal production fix ONLY in storage.py: on error after THIS attempt created lock, close fd and remove ONLY that new lock (guard against deleting another owner's lock using inode/device where practical), re-raise original error. Never remove existing lock on FileExistsError, timeout, or crash orphan; keep fail-closed policy. Add deterministic offline tmp_path pytest in test_archive_concurrent_dedup.py: monkeypatch storage.os.write in narrow context to raise OSError(errno.ENOSPC, 'simulated PID write failure') during __enter__, assert original OSError, lock removed after failure, then restore patch and assert next lock acquisition succeeds; also verify preexisting orphan lock is preserved. Preserve normal lock/read/write API, crash-orphan and reader visibility tests. No sleeps as sole synchronization. Run py_compile both edited files, git diff --check, targeted concurrent-dedup and reader-visibility pytest, then FULL Capital Flow pytest before commit; any nonzero -> fail closed, no push. Only two allowed files; no automation/**, .github/**, main, private, secrets, prediction/API/orchestration/journals/Telegram/MT5/broker/execution, Railway; no further tasks."
+}
