@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 14:25 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "diff_class": "archive lock ownership/tests only; no economic-source change"
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "0eab76b0c3b2b156b1139a153b045fc2cc7394ec",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct authoritative worker-control directories; pending directory absent"
+    },
+    "latest_A": "A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "latest_B_previous": "B-20261028-5ab26c5-1330-source-plateau.json",
+    "latest_C": "C-20261028-5ab26c5-quality-snapshot-order-1420.json",
+    "supervisor": "2026-10-28 13:54 ICT CONTINUE_NOT_PLATEAU",
+    "stale_worker_status_ignored": true
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "reason": "No newly evidenced first-party immutable BTC/ETH economic event with effective/available/observed PIT clocks, independent non-overlap, correct context-vs-directional spot role, and deterministic no-network acceptance. Public diff is lock/test only.",
+    "rejected_families_not_readmitted": true
+  },
+  "cross_lane": "A/C identify same-clock anata_latest.json stale snapshot publication risk; code-derived, not reproduced; belongs to integration/quality rather than source breadth.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "next": "No Gemini task pending or enqueued; A/C/Supervisor own independent exact-SHA testing and safe publication contract. Do not enqueue without verified Gemini JSON reliability mitigation. B seeks only genuinely new qualified first-party BTC/ETH sources.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
