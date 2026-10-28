@@ -1,0 +1,23 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "A-20261028-pid-write-cleanpath-fixture-0853-01",
+  "worker": "A",
+  "title": "Fix lock PID-write exception cleanup with independent clean-path and orphan regression fixtures",
+  "base_sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+  "max_attempts": 2,
+  "read_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+  ],
+  "tests": [
+    "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "python -m pytest -q part2/capital_flow/tests/test_archive_reader_writer_visibility.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "instructions": "A INTEGRATION, EXACT base_sha; this replaces failed task A-20261028-lock-pid-write-cleanup-0753-01, which failed because its generated test PRECREATED an orphan .lock then expected an ENOSPC os.write: O_EXCL necessarily timed out first. Implement only the source-confirmed ArchiveWriterLock.__enter__ cleanup gap in storage.py: when THIS acquisition successfully created the lock but writing the owner PID raises OSError, close fd, remove ONLY this newly-created lock (compare inode/dev with fstat/lstat where practical), and re-raise original OSError; NEVER delete preexisting locks, never auto-reap unknown crash orphans; preserve FileExistsError timeout fail-closed and existing APIs. Test MUST be TWO SEPARATE test functions with INDEPENDENT tmp_path archives, not one combined fixture: (1) test_pid_write_failure_removes_only_new_lock: start with assert not lock_path.exists(); monkeypatch storage.os.write narrowly to raise OSError(errno.ENOSPC,'simulated PID write failure') during ArchiveWriterLock.__enter__; assert errno == errno.ENOSPC, no newly created .lock remains; restore monkeypatch before a second successful lock acquisition, assert lock removed after exit. CRITICAL: DO NOT CREATE A LOCK BEFORE THE ENOSPC TEST, or the PID write is unreachable. (2) test_preexisting_orphan_lock_is_preserved: use a DIFFERENT archive path and create .lock with fixed sentinel text, NO os.write patch; assert TimeoutError from ArchiveWriterLock(timeout=0.05,poll_interval=0.005) and exact sentinel unchanged; cleanup only test-created fixture in finally. Keep tests deterministic, offline, no sleep as sole oracle; preserve existing reader/writer visibility and orphan-crash behavior. Before commit run python -m py_compile on both changed files, git diff --check, all three listed pytest commands in order with zero exit status (targeted then FULL Capital Flow); no code push on failure, no broad redesign. Only two allowed public Specialist paths, no automation/**, .github/**, control/status, main, private, secrets, prediction/API orchestration/journals/Telegram/MT5/broker/execution or Railway. Do not enqueue further tasks."
+}
