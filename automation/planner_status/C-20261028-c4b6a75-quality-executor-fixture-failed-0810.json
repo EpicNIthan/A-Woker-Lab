@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-28 08:10 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "parent": "1729584d6687b5ce3cca6cb7c6d0555e0acd871e",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/storage.py": "813a0ca2094266610a603a0a58b7781a98467bca",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "0c621b16188742212e557535aa002ff7c7f22ac0",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c1ae9b60c03f8e3e0dbc25d5bcdc8cb4a8600a93",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "23ac83dc5942a889569c331e2440faa37a241d98",
+    "queue": {
+      "pending": 0,
+      "done": 25,
+      "failed": 21,
+      "source": "fresh complete worker-control recursive tree enumeration; pending directory absent"
+    },
+    "latest": {
+      "A": "A-20261028-c4b6a75-0756-failed-gemini-test-ordering.json",
+      "A_blob": "2b51bf37575ad22f1850f581ec5183e84540f906",
+      "B": "B-20261028-c4b6a75-0733-source-plateau.json",
+      "B_blob": "ffbcf9fcd3c090a6fd1cb9c0d5f26f9d7c747845",
+      "C_previous": "C-20261028-c4b6a75-lock-acquire-quality-0711.json",
+      "C_previous_blob": "56391902a62d052ec101d2977126516ca83c5b75"
+    }
+  },
+  "quality": {
+    "finding": "New failed Gemini lock-cleanup task was archived with no public code commit: its generated test pre-created an orphan .jsonl.lock, so os.open(O_EXCL) timed out before patched os.write could raise ENOSPC. Test-fixture ordering error; does not disprove source-confirmed cleanup gap.",
+    "failed_task": "automation/executor_queue/failed/A-20261028-lock-pid-write-cleanup-0753-01.json",
+    "failed_task_blob": "af1a6737a24f7ec9167626980c32dfa0e6a6c172",
+    "failed_run": 40611797281,
+    "failed_targeted": "1 failed, 4 passed in 0.89s (executor generated, uncommitted)",
+    "secondary": "evidence_health._is_context_only parses string 'false' as False and runner/handoff delegate to it; prior bool(...) role inversion concern is not supported by current source, but end-to-end regression remains unexecuted independently. Orphan lock recovery must remain fail-closed.",
+    "recovery": "In an authorized disposable checkout pinned to public SHA, use two distinct tmp_path fixtures: (1) clean lock path + narrow os.write ENOSPC injection to assert original error and removal only of newly created lock, then reacquisition; (2) independent preexisting orphan lock to assert TimeoutError and preservation. Preserve logs and exit codes; run targeted archive, test_v1_handoff.py, reader visibility and full Capital Flow pytest. No blind retry or auto-deletion of unknown orphan locks."
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/C-20261028-reader-attempt-oracle-0350-01.json",
+    "matching_done_blob": "13d9a85d654c533748b2cd394c01ba2b5020e0b7",
+    "matching_executor_commit": "c4b6a75b904644c9f51b849032a332bfaebfad94",
+    "matching_workflow_run": 40581619175,
+    "matching_executor": "PASS_REPORTED",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "lock_cleanup_regression": "NOT_RUN_INDEPENDENTLY",
+    "context_only_regression": "NOT_RUN_INDEPENDENTLY",
+    "isolated_checkout": "ABSENT:/mnt/data/A-Woker-Lab/.git",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
