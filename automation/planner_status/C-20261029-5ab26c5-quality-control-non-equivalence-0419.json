@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 04:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "part2/capital_flow/tests/test_handoff_context_role.py": "56cc3634d3afa53f7b5fb58e989c0011ecc81ec1"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "82441d98f62398d2e110e24c9bd8eb53b2c7133d",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "2a50ccb71f5ff771061e1ac41fd57a34bc021061",
+    "roadmap_latest": "2026-10-29 03:50 ICT Supervisor NOT_PLATEAU",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct worker-control executor_queue tree (no pending entries), complete done and failed git trees, truncated=false"
+    },
+    "latest_reports": {
+      "A": "A-20261029-5ab26c5-0403-control-checkout-provenance-blocked.json",
+      "B": "B-20261029-5ab26c5-0333-source-plateau.json",
+      "C_previous": "C-20261029-5ab26c5-quality-role-test-existing-overlay-absent-0315.json"
+    }
+  },
+  "quality": {
+    "finding": "Independently re-fetched exact public and worker-control file blobs: worker-control is NOT an exact-SHA Capital Flow test surrogate. Public runner da38db8 vs control 25dd287, public handoff 23d704d vs control 119194d, public storage 70f9da7 vs control e7ad0a4. Running control pytest cannot establish public 5ab26c5 quality. Existing public tests contain string-' false ' handoff and deterministic run_once role coverage, but these were not executed independently. Equal-clock two-writer anata_latest.json stale overwrite remains an UNREPRODUCED hypothesis; test_runner_single_handoff_stale.py is absent and requires an approved test-only overlay.",
+    "control_blobs": {
+      "part2/capital_flow/runner.py": "25dd28765c660a73063feec1c081180ee153f914",
+      "part2/capital_flow/handoff.py": "119194dd63a8a3a29f05a317931872a65066cfb2",
+      "part2/capital_flow/storage.py": "e7ad0a46a6032d41c9a48a0a09126bc60d38b7cd"
+    },
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized disposable exact-public-SHA checkout or approved two-writer test-only overlay. Do not clone/retry DNS.",
+    "recovery": "Provision authorized disposable checkout with git rev-parse HEAD exactly 5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431; execute existing role tests, approved bounded same-T two-writer overlay (oracle source_evidence[*].clock_provenance.effective.source_record_id), targeted archive/atomic tests, and full Capital Flow pytest; preserve logs, overlay SHA256, child exit codes, non-skipped counts."
+  },
+  "validation": {
+    "matching_done": "C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "independent_role_targeted": "NOT_RUN",
+    "independent_archive_atomic": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN_MISSING_APPROVED_OVERLAY",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
