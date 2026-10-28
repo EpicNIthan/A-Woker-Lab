@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-28 22:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "pinned_source_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_atomic_handoff_visibility.py": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "ref_before_write": "271ad69cd3f73a271e801ec3ac3ea12161b0196c",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "6b7338a63d3e76d1bdd9c5a641689520bab681e1",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "latest 21:53 ICT Supervisor exact-ref complete-tree count; current pending directory 404; matching done blob directly fetched; this invocation did not independently enumerate all done/failed tree entries"
+    },
+    "latest_durable": {
+      "A": "A-20261028-5ab26c5-2102-acceptance-de-duplication-blocked.json",
+      "B": "B-20261028-5ab26c5-2128-source-plateau.json",
+      "C": "C-20261028-5ab26c5-quality-independent-execution-gate-2117.json"
+    },
+    "supervisor": "2026-10-28 21:53 ICT NOT_PLATEAU"
+  },
+  "validation": {
+    "exact_sha": "MATCHING_BOUNDED_DONE_PASS_ONLY",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "independent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "SINGLE_HANDOFF_ACCEPTANCE_CONTRACT_SUPERSEDES_OLD_MULTI_FILE_ORACLE",
+    "old_pinned": "automation/planner_status/A-20261014-378cffe-two-writer-generation-test-1557.json",
+    "old_blob": "384f46b0bd43b541d4a2fe9a8af6f4e27de9ff0c",
+    "active_contract": "automation/planner_status/A-20261028-5ab26c5-1356-snapshot-generation-not-publication-order.json",
+    "active_contract_blob": "0023f300329cdfd7f946c6235836e5f03a6aba59",
+    "finding": "Directly compared pinned specifications against exact current runner/storage/handoff/atomic-test blobs. The 2026-10-14 contract asserts three latest files must have matching as_of_ms; that is NOT the Anata-facing acceptance criterion. Use the refined 2026-10-28 deterministic same-T two-writer single anata_latest.json stale-publication oracle. Runner.run_once independently calls atomic_write_json for latest, audit_latest and anata_latest; atomicity protects complete JSON, not causal archive-snapshot generation. A older snapshot must not overwrite B newer snapshot after B publishes at equal T. Potential failure is source-derived and NOT reproduced.",
+    "runnable_no_network_contract": [
+      "Disposable exact-SHA checkout, no network: child A run_once(local_dir=tmp_path, network=False, as_of_ms=T) captures old archive; block its anata_latest.json publish using bounded child Event/Queue.",
+      "Append valid PIT BTC ETF rowB with effective/available/observed <=T; child B run_once at identical T completes and its anata_output source_evidence includes rowB source_record_id.",
+      "Assert disk anata_latest.json equals B before A release; release A in finally; both children exit 0 within timeout; final handoff still includes rowB and is B's or an explicitly causally newer generation; archive exactly one row with no duplicates.",
+      "Do not treat equal as_of_ms, content hash alone, publish completion order, or history record count as a generation token. Do not require unrelated latest.json/audit_latest.json transactionality. Preserve test overlay hash and exact-SHA red/green logs.",
+      "Run targeted python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py; python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py; python -m pytest -q part2/capital_flow/tests."
+    ],
+    "no_new_task_reason": "No independent regression evidence or verified Gemini structured-JSON mitigation; no repeat malformed task."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if test -d /mnt/data/A-Woker-Lab/.git; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_retried": false,
+    "pytest_executed": false,
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA checkout or independent CI evidence. Execute pinned equal-clock two-writer single-handoff regression, targeted lock/atomic tests and full Capital Flow pytest; deliver SHA, overlay hash, exit codes, non-skipped counts, logs to Planner C."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true,
+  "automation_enabled_verified": true
+}
