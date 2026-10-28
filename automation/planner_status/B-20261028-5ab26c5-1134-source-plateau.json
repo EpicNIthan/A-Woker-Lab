@@ -1,0 +1,57 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-28 11:34 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "recent_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "new_economic_sources": 0
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "19e9e1bc1b5da65e733dedff466a39bdceb6022f",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "direct GitHub contents enumeration; pending directory absent"
+    },
+    "latest_A": "A-20261028-5ab26c5-1100-queue-reconciled-independent-acceptance.json",
+    "latest_B_previous": "B-20261028-5ab26c5-1029-source-plateau.json",
+    "latest_C": "C-20261028-5ab26c5-quality-independent-lock-gate-1119.json"
+  },
+  "validation": {
+    "exact_sha": "PASS_MATCHING_BOUNDED_DONE_TASK",
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "reason": "The exact-SHA commit changes only archive-lock code and regression tests. No new first-party immutable economic artifact/event ID, BTC/ETH entity, effective/available/observed PIT clocks, non-overlap proof, context-vs-directional role, or deterministic no-network source contract is established.",
+    "rejected_families_not_readmitted": true
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "CONTINUE_NOT_PLATEAU"
+  },
+  "next": "A/C and independent Supervisor to verify deterministic lock TOCTOU and exact-SHA tests; B to admit only genuinely new first-party economic source contracts. No Gemini task while structured-JSON reliability unverified. No promotion.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
