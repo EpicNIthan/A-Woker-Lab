@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 00:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "one test-only +112-line spawn preflight; no production diff",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "context_parser": "9acde817964824086608f6572f361216ac4bd014",
+      "handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "read_head": "921a23c36dabab01476eee169ab641b76a3c7111",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap_blob": "66bb4feade7f0f55507caebed7b2bd3915ddcea3",
+    "latest_reports": {
+      "A": "a44cb56f4ee7188b214aace3d3d1f413e1e00ac4",
+      "B": "d38d89d2c1e9de7c631e29a19747132eb09ff027",
+      "C_previous": "3c4999abc17c34aa65c6ae18828b966be6492685"
+    },
+    "exact_sha_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0"
+  },
+  "quality": {
+    "finding": "Direct exact-SHA test/task review: sequential child A joins before rowB append and child B start; child Queue carries full anata_output despite compact-only contract, and no whole-test finally cleanup. It does not exercise concurrent stale writer or three-file coherence. Context-only string 'false' is parsed correctly by evidence_health._is_context_only and shared by handoff/runner. No production race defect reproduced.",
+    "blocker": "No authorized disposable exact-SHA executable checkout or independently executed bounded A-paused/B-publishes/A-resumes regression. Gemini event-barrier attempt failed malformed JSON before pytest; structured-JSON reliability UNVERIFIED.",
+    "recovery": "Authorized disposable exact-SHA no-network run: top-level spawn child with bounded Events, pause A before final anata_latest.json, append valid PIT rowB, finish B, snapshot all three files, release A in whole-test finally, retain exit codes/hashes and collect-only/targeted/full pytest logs; classify stale/mixed/no-overwrite/invalid-test. Do not enqueue duplicate malformed task."
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "hosted_run": "40860520862",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
