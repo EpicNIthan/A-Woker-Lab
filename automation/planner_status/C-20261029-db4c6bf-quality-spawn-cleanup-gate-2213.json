@@ -1,0 +1,71 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 22:13 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (+112, test only)"
+    ],
+    "production_diff": false,
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "context_parser": "9acde817964824086608f6572f361216ac4bd014",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "70c916b83dbae8ce61acbd7892552de9d47d8c12",
+    "tree_entries": 1348,
+    "truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap_blob": "f769cbaf7f578760a8082422b7a899985130b6a1",
+    "latest_reports": {
+      "A": "f214db40ca667a37640feabcead21b21e34a86dd",
+      "B": "c2f229cab768e0824d868cd0a327a040ebcba478",
+      "C_previous": "ad38bfe703c406cfe42c79047f6bdd1cccfc52fd"
+    },
+    "validation_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0"
+  },
+  "quality": {
+    "finding": "Current exact-SHA evidence_health._is_context_only parses string 'false' as False and is imported by handoff/runner; no role inversion demonstrated. Spawn preflight A exits before rowB append/B start; no concurrent-write proof. Runner emits latest.json, audit_latest.json and anata_latest.json through separate atomic writes, so stale overwrite/mixed generation remains plausible but unproven. A's latest review additionally flags missing whole-test finally cleanup and oversized Queue payload in the spawned test harness; these are harness-quality concerns, not proof of production failure.",
+    "blocker": "No authorized disposable exact-SHA executable checkout; independent targeted/full pytest and controlled synchronized two-writer regression unexecuted. Prior Gemini hosted Event-barrier generation failed before pytest due to malformed JSON; structured-JSON reliability unverified.",
+    "recovery": "Acquire authorized disposable checkout pinned to public SHA; use test-only no-network overlay with spawn-safe top-level targets, compact queues, bounded joins/gets, finally release/terminate; pause A before anata_latest.json, append PIT-visible rowB, run B and snapshot all three files, release A, compare bytes/provenance. Capture process exits, pytest collect-only/targeted/full logs and hashes; classify stale overwrite vs mixed generation vs no overwrite vs invalid test. Do not enqueue failed-task variants."
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "workflow_run": "40860520862",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS_SEQUENTIAL_PREFLIGHT",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
