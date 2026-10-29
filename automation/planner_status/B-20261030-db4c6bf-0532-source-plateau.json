@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-30 05:32 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (+112); no production or economic-source change",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_head": "116297aeb3b26045ac1840dedb18de9f04e8e4ce",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "proof": "Nontruncated authoritative Git trees: executor_queue has README.md,TASK_TEMPLATE.json,done,failed; done=30,failed=26; no pending tree"
+    },
+    "roadmap": "automation/supervisor_roadmap.md top review 2026-10-30 04:47 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-0457-generation-delta-oracle-execution-blocked.json",
+      "B_previous": "B-20261030-db4c6bf-0429-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-exact-sha-contract-gate-0414.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "hosted_run": 40860520862,
+    "independent_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "reason": "No newly evidenced first-party immutable economic BTC/ETH event/artifact ID with effective/available/observed PIT clocks, independent non-overlap proof, correct context-vs-directional spot role, and deterministic no-network contract. Existing Farside ETF, DefiLlama stablecoin, mempool mining context do not establish a new independent directional source. Do not recycle rejected Uniswap v3, Arbitrum, Thorchain, subsidy, exchange/PoR, treasury, staking, derivatives candidates without concrete new proof."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "Source breadth has no qualifying new independent evidence; A/C/Supervisor need controlled A-paused/B-publishes/A-resumes three-output generation oracle and independent tests. Sequential preflight is not concurrent proof. Hosted paused-A task failed before pytest due malformed Gemini JSON; suspected stale overwrite remains unproven.",
+  "next": "No new Gemini task until structured-JSON mitigation verified and exact pending empty; A/C/Supervisor own concurrency/quality proof. Revalidate all verdicts if public HEAD advances. Promotion only with exact-SHA validation and A/B/C/Supervisor PLATEAU.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
