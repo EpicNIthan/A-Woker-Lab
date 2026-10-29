@@ -1,0 +1,37 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "SUPERVISOR-20261029-two-writer-syntax-safe-1255-01",
+  "worker": "SUPERVISOR",
+  "title": "Test-only syntax-safe two-writer stale-handoff causal retention",
+  "base_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+  "instructions": "QUALITY EVIDENCE ONLY. Add exactly one new deterministic pytest file. No production edits or changes to existing tests, automation, workflows, either main, private, secrets, prediction/API, Telegram/MT5/broker/execution, or Railway. This replaces failed syntax-only task SUPERVISOR-20261029-two-writer-causal-retention-repro-1154-01; its unterminated string at line 117 prevented collection, NOT evidence of a race. Keep the Python test short and syntactically valid: no multiline f-strings or complex inline code generation; use simple single-line assert messages. Reuse FlowObservation construction from test_archive_concurrent_dedup.py and the exact runner.run_once signature. Use multiprocessing.get_context('spawn') with TOP-LEVEL child functions and shared tmp_path directory, two Events (A paused and A release), one Queue, bounded wait/get/join and finally cleanup; no sleeps as oracle. Child A runs run_once(network=False, local_dir=shared, as_of_ms=T) on empty archive. Monkeypatch only runner.atomic_write_json in child A to block on exact anata_latest.json BEFORE its write, signal parent, wait bounded release, then call original. A must have loaded 0 archive and 0 scoring records; convey counts via Queue. Parent waits for A pause, then starts child B: append exactly one valid scoring BTC ETF net_flow_usd FlowObservation with source_record_id='rowB' to shared observations.jsonl using storage.append_observations; run_once(network=False, local_dir=shared, as_of_ms=T) at SAME T. B must load exactly 1 archive and 1 scoring row and finish. Assert B exits 0 and reports both counts, inspect persisted anata_latest.json before A release and prove nested source_evidence[*].clock_provenance.effective.source_record_id == 'rowB'. Release A, assert A exits 0 and reports zero counts; inspect final persisted anata_latest.json and REQUIRE rowB remains (causal retention). Include a separate sequential reverse-order fixed-T control where a completed B handoff remains after another run_once. All assertions non-vacuous; never fabricate provenance or mock B output. Crucial: if exact-HEAD test genuinely FAILS due to stale overwrite, do NOT delete, skip, weaken, xfail or change assertions; do NOT edit production. Let task fail and preserve pytest RED. If collection/syntax fails, bounded repair may ONLY fix test syntax/harness correctness, never weaken causal assertion. Tests must use no network/credentials. Commit only this one test if collection, targeted and full Capital Flow pytest all PASS; no NO_CHANGE.",
+  "read_paths": [
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/storage.py",
+    "part2/capital_flow/contracts.py",
+    "part2/capital_flow/handoff.py",
+    "part2/capital_flow/tests/test_archive_concurrent_dedup.py",
+    "part2/capital_flow/tests/test_atomic_handoff_visibility.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_runner_single_handoff_stale.py"
+  ],
+  "tests": [
+    "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_single_handoff_stale.py",
+    "python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 2,
+  "executor_result": {
+    "status": "FAILED",
+    "run_id": 40826017928,
+    "classification": "INVALID_TEST_FIXTURE_PIT_AND_PROCESS_TOPOLOGY",
+    "error": "Hosted executor run 40826017928: pytest --collect-only PASS (2 tests). Targeted pytest FAILED (2 tests), full Capital Flow pytest NOT_RUN. Generated fixture had rowB available_at_ms=T+1000 and observed_at_ms=T+1000 while as_of_ms=T, so rowB was not PIT visible; even sequential control failed to find rowB. Generated B work ran in parent rather than independent child process. No causal-retention race established. Bounded attempts 1 and 2 exhausted. Queue bookkeeping push failed (likely control ref advanced during executor), leaving task pending. Supervisor reconciled queue as FAILED without Specialist code commit.",
+    "commit_sha": null,
+    "targeted_pytest": "2 failed",
+    "collection": "2 tests collected",
+    "full_pytest": "NOT_RUN",
+    "race_proven": "NO",
+    "attempt": 2
+  }
+}
