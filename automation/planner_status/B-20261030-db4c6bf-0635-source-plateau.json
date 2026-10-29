@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-30 06:35 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "test-only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (+112); no economic-source/production changes",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f",
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "e4e49186a5bb5c38824b7f420631c70e2baf8cb3",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "proof": "worker-control executor_queue root contains no pending directory; done and failed contents enumerated independently"
+    },
+    "roadmap_blob": "ab6b201fa677746d345dfa950d1c234506c96dd8",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-0556-execution-evidence-freeze-blocked.json",
+      "B_previous": "B-20261030-db4c6bf-0532-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-execution-blocker-0615.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "independent_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "reason": "No newly proven immutable first-party BTC/ETH economic artifact/event ID with effective/available/observed PIT clocks, independent non-overlap, correct context-vs-directional spot role and deterministic no-network contract. Existing ETF/stablecoin/mining sources are not new independent directional evidence."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "No qualifying new source; paused-A/B-publishes/A-resumes generation-delta and three-output consistency proof unexecuted; malformed Gemini JSON blocks hosted test before pytest. Do not enqueue near-duplicate tasks until mitigation verified.",
+  "next": "Hold source task; A/C/Supervisor own executable concurrency oracle and independent validation. Revalidate on HEAD advance. Promotion requires exact-SHA validation and all four PLATEAU.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
