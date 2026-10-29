@@ -1,0 +1,22 @@
+{
+  "schema": "anata-gemini-task-v1",
+  "task_id": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+  "worker": "SUPERVISOR",
+  "title": "Small test-only spawned A pause/release barrier before Capital Flow final handoff publication",
+  "base_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+  "instructions": "STAGE 2A ONLY: create exactly ONE short deterministic no-network pytest in the new allowed test file. This tests a spawn-safe Event barrier, NOT the concurrent two-writer race yet. Reuse the existing two-child spawn preflight's top-level child pattern, shared tmp_path, T=1700000000000, multiprocessing.get_context('spawn'), and bounded Queue/Process joins. A top-level child runs real runner.run_once(network=False,local_dir=shared_tmp_path,as_of_ms=T) on an empty archive; in that child ONLY, temporarily wrap runner.atomic_write_json so that just before writing anata_latest.json it sets an Event named A_paused and waits for release_A with a bounded 10-second timeout, raising if the wait expires; delegate all writes to the original function. Parent starts A, waits A_paused with bounded timeout, asserts A is still alive and anata_latest.json does not exist, sets release_A, receives only compact result counters/errors (NOT full anata_output), joins A, checks exitcode=0, 0 archive/0 scoring, no source_errors, and parses all three final JSON output files. Always release_A and terminate/join surviving child in finally; no timing sleeps. Use one top-level child target; no nested spawn target, network, credentials, production code changes, skipped/xfail tests, weakened assertions, changes to automation/.github, main, private, prediction/API, journals, Telegram, MT5, broker/execution, or Railway. Do NOT append rowB or start B yet; do NOT claim any race is proved or ruled out. Keep Python code compact and syntactically simple to avoid earlier Gemini malformed-JSON output. Before committing, require pytest collection, targeted PASS, and full Capital Flow pytest PASS; if any fail, record failure and do not commit.",
+  "read_paths": [
+    "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+    "part2/capital_flow/runner.py",
+    "part2/capital_flow/storage.py"
+  ],
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_runner_paused_a_event_preflight.py"
+  ],
+  "tests": [
+    "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_paused_a_event_preflight.py",
+    "python -m pytest -q part2/capital_flow/tests/test_runner_paused_a_event_preflight.py",
+    "python -m pytest -q part2/capital_flow/tests"
+  ],
+  "max_attempts": 1
+}
