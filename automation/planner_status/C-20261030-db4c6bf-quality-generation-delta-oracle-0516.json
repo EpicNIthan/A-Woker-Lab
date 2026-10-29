@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 05:16 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (+112), no production changes",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_head": "97c30489b6dabbfbf56cec6b87ee09b3a21dc450",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "source": "nontruncated Git trees; pending directory absent"
+    },
+    "blobs": {
+      "roadmap": "f20e63c3d28caf28565508663b22058c4f403c73",
+      "A": "4a9c82a3fcbcd558fdc4b9ad81e6899a79f4e748",
+      "B": "320e1750ca793e0019fea6a49bac8e71bc9ee7a5",
+      "C_previous": "37e8e4c30e246f49998fb779c04ac5c18a7f123b",
+      "exact_sha_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "failed_barrier": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Source-verified generation-oracle gap: runner.py writes latest.json and audit_latest.json before anata_latest.json; the existing test joins A before B and asserts only anata_latest.json. In a future A-paused/B-publishes/A-resumes test, matching as_of_ms cannot identify generations. Require A pre-B latest/audit baselines and a proven B delta in both before interpreting any three-file final-state comparison; otherwise INVALID_TEST. No stale-overwrite defect experimentally established.",
+    "context_only_string_false": "evidence_health._is_context_only explicitly parses string 'false' as False and handoff/runner delegate to it; no independent end-to-end regression in test_v1_handoff.py executed.",
+    "blocker": "No authorized exact-SHA disposable checkout at /mnt/data/A-Woker-Lab/.git; Gemini paused-A executor failed before pytest with invalid JSON. Structured-JSON reliability UNVERIFIED.",
+    "recovery": "In authorized exact-SHA checkout, spawn-safe bounded Event pauses A before anata_latest replace; hash/parse A latest/audit baseline; append PIT rowB; B completes while A paused; require B latest/audit differ from A and B anata source_record_id=rowB; snapshot all three B hashes, release A in finally, compare final triple and exitcodes, preserve collect-only/targeted/full pytest logs. Do not enqueue malformed variant."
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "hosted_run": 40860520862,
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
