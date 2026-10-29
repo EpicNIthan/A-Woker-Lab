@@ -1,0 +1,79 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 15:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "parent": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+    ],
+    "production_diff": false,
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "sequential_test": "67c0f0aebbf5bc7d51c8c4b71d13c658bc4b8caa"
+    }
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "d512614e20488f9de0ca53fa09716889fd8503c6",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 14:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 29,
+      "failed": 25,
+      "method": "direct worker-control executor_queue/done and failed directory counts; pending path 404 (absent)"
+    },
+    "latest_durable": {
+      "A": "A-20261029-c7a3c7f-1405-sequential-preflight-validated-concurrency-blocked.json",
+      "B": "B-20261029-c7a3c7f-1427-source-plateau.json",
+      "C": "C-20261029-c7a3c7f-quality-sequential-preflight-concurrency-gate-1419.json"
+    }
+  },
+  "validation": {
+    "exact_sha_done": "automation/executor_queue/done/SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_child_concurrency": "NOT_RUN",
+    "exact_public_sha_check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "integration_decision": {
+    "name": "FREEZE_TWO_CHILD_CONTRACT_STOP_MALFORMED_JSON_RETRIES",
+    "new_evidence": "Supervisor exact-SHA two-spawn-child test-only task SUPERVISOR-20261029-two-child-pit-causal-retention-1448-01 was push-triggered but failed before pytest collection because Gemini returned malformed JSON. No new public commit or two-writer race evidence.",
+    "verbatim_executor_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 7146)",
+    "source_reasoning": "At exact public SHA runner loads archive and scoring history before independently atomic-writing latest.json, audit_latest.json, and anata_latest.json. Atomic per-file replacement does not enforce cross-generation ordering. The passing sequential PIT-visible rowB test does not cover paused-A/B-write/A-resume concurrency.",
+    "frozen_no_network_contract": "Use exact c7a3c7f checkout and existing PIT-visible rowB fixture T=1700000000000, effective=T-2000, available=observed=T-1000. A and B must be independently spawned processes sharing tmp_path. A loads archive/scoring 0/0, pauses via bounded Event at its anata_latest.json publication; B appends rowB and runs to completion with archive/scoring 1/1 and persisted nested rowB provenance; release A and assert both child exit 0, final anata_latest retains rowB and latest/audit remain coherent. No sleep timing oracle, skips, fake evidence, network or production changes. Run collect-only, targeted, then full python -m pytest -q part2/capital_flow/tests; preserve exit codes and exact-SHA logs. Do not classify malformed JSON, fixture failures or timeout as production defect.",
+    "next_feasible_recovery": "Obtain an authorized disposable exact-SHA checkout and reviewed test-only overlay; independently run frozen contract. Separately require evidence of Gemini structured-JSON reliability with a smaller bounded generation before ANY new queue task. Do not repeat failed 1448 task or enqueue while reliability UNVERIFIED."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n'; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "independent_pytest_executed": false,
+    "clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true,
+  "automation_enabled_verified": true
+}
