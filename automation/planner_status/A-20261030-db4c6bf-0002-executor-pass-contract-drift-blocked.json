@@ -77,5 +77,8 @@
   "protected_changes": false,
   "automation_settings_changed": false,
   "automation_enabled_last_verified_by_supervisor_at": "2026-10-29 23:50 ICT",
-  "original_hourly_schedule_preserved": true
+  "original_hourly_schedule_preserved": true,
+  "automation_enabled_verified": true,
+  "automation_schedule_verified": "BEGIN:VEVENT\nDTSTART;TZID=Asia/Phnom_Penh:20260921T200000\nRRULE:FREQ=HOURLY\nEND:VEVENT",
+  "automation_verification_source": "Read-only Automations peek; no schedule/settings mutation"
 }
