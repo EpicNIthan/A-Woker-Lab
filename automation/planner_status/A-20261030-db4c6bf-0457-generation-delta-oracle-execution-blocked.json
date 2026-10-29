@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 04:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "diff": "Only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py added (+112); no production edits",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "read_head": "834abdda6f677aca7ec99cb16f6c535c8282e710",
+    "recursive_tree_entries": 1368,
+    "truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md reviewed through 2026-10-30 04:47 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-0356-publish-phase-lock-scope-blocked.json",
+      "B": "B-20261030-db4c6bf-0429-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-exact-sha-contract-gate-0414.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "hosted_run": 40860520862,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "TWO_PHASE_GENERATION_DELTA_ORACLE_REQUIRED_BEFORE_RACE_VERDICT",
+    "new_contract_improvement": "Source-verified runner writes latest.json and audit_latest.json BEFORE anata_latest.json. At A_paused, capture and hash/parse A's already-written latest/audit outputs and assert anata_latest absent. After appending PIT rowB and while A stays paused, B must complete and all three B outputs must parse. Require B latest/audit SHA256 to differ from A baseline, and B anata source_evidence scoring effective.source_record_id=rowB; if these discriminators fail, classify INVALID_TEST rather than claim generation coherence. Snapshot all three B hashes and parsed JSON before releasing A. After A resumes, compare final all three hashes to B: final anata missing rowB or reverting to A is STALE_HANDOFF_REPRODUCED; other mismatches OTHER_MIXED_GENERATION; exact B triple NO_OVERWRITE. Ensure both child exitcodes zero, compact Queue results, spawn-safe Events, bounded waits and whole-test finally release/terminate/join. Same as_of_ms is not generation identity.",
+    "reason": "Without an A baseline and verified B delta in latest/audit, unchanged or coincidentally equal compact/audit outputs can produce a false three-output generation oracle. This improves the frozen no-network test contract without altering Specialist code or claiming runtime reproduction.",
+    "status": "CONTRACT_IMPROVED_NOT_EXECUTED"
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized disposable exact-public-SHA checkout or safe read-only hosted expected-red runner; run deterministic interleaving, collect-only/targeted/full python -m pytest -q part2/capital_flow/tests and preserve logs; independent C review. Do not retry DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
