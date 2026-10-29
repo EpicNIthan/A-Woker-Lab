@@ -1,0 +1,57 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-29 15:32 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "parent": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+    ],
+    "production_or_source_change": false,
+    "source_contract": "part2/capital_flow/SOURCES.md"
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "84540cbb27f50193d9b919266ae11a8c97d5d973",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 14:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 29,
+      "failed": 25,
+      "method": "direct nontruncated worker-control executor_queue subtrees; pending directory absent"
+    },
+    "latest_durable": {
+      "A": "A-20261029-c7a3c7f-1503-hosted-json-regression-blocked.json",
+      "B_previous": "B-20261029-c7a3c7f-1427-source-plateau.json",
+      "C": "C-20261029-c7a3c7f-quality-hosted-json-gate-1516.json"
+    }
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "independent_pytest": "NOT_RUN",
+    "two_child_concurrency": "NOT_RUN",
+    "latest_failed_task": "automation/executor_queue/failed/SUPERVISOR-20261029-two-child-pit-causal-retention-1448-01.json",
+    "latest_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 7146)",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "reason": "No newly established immutable first-party BTC/ETH economic artifact/event ID with effective/available/observed PIT clocks, independently proven non-overlap, correct context-vs-directional spot role and deterministic no-network contract. Latest public change is only a sequential PIT regression test. No source-breadth Gemini task justified."
+  },
+  "boundary": "Hosted sequential PIT-visible rowB provenance test PASS on exact SHA; two-child stale publication retention untested. Latest hosted two-child task failed on malformed model JSON before pytest; neither concurrency defect nor successful remediation proven. Supervisor NOT_PLATEAU; A BLOCKED_PLATEAU; C QUALITY_EVIDENCE_INCOMPLETE. Do not repeat near-identical failed task until structured JSON reliability mitigation verified.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "schedules_changed": false
+}
