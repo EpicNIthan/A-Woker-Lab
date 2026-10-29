@@ -1,0 +1,83 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 12:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "atomic_test": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "60c03fa77fe95b4f912ce25f25c6624acd93548f",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "e99af331ef61293e15d67fc54a030dbed181a728",
+    "roadmap_latest": "2026-10-29 11:56 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 23
+    },
+    "latest_durable": {
+      "A_previous": "A-20261029-5ab26c5-1055-execution-only-handoff-blocked.json",
+      "B": "B-20261029-5ab26c5-1131-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-execution-evidence-gate-1117.json"
+    }
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "public_exact_sha_check_runs": 0,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "integration_decision": {
+    "name": "HOSTED_EXECUTOR_REACHABLE_BUT_TEST_GENERATION_SYNTAX_BLOCKED",
+    "finding": "New hosted worker-control push run 40820459339 reached pytest collection at exact public base_sha; this supersedes the earlier assumption that no executable environment exists. The generated test failed Python parsing before the two-writer interleaving or causal-retention assertions executed. No race reproduced, no PASS, no public commit. Archive load/append locking and atomic JSON writes still do not independently establish cross-writer generation ordering. Do not requeue the malformed task or infer production defect from this syntax failure.",
+    "frozen_no_network_contract": "Same fixed T; independent spawn-safe child A loads archive=0 and scoring=0 and pauses immediately before anata_latest.json publication; child B appends rowB and loads/scoring=1/1, publishes nested source_evidence[*].clock_provenance.effective.source_record_id=rowB; verify disk B while A paused, release A, verify B still on disk; reverse-order sequential control, bounded child exits, no network or fake provenance.",
+    "next_feasible_recovery": "Obtain an authorized, human-reviewed syntax-valid test-only overlay in a disposable checkout pinned to exact public SHA, first run Python syntax/pytest collection preflight, then deterministic targeted two-writer pytest and full python -m pytest -q part2/capital_flow/tests; retain overlay SHA256, logs, exit codes and non-skipped counts for independent Planner C review. No Gemini retry until structured-JSON reliability is verified and a new narrow task is justified."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n'; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "hosted_attempt": "automation/executor_queue/failed/SUPERVISOR-20261029-two-writer-causal-retention-repro-1154-01.json",
+    "hosted_run_id": 40820459339,
+    "hosted_run_conclusion": "failure",
+    "hosted_pytest_exit_code": 2,
+    "hosted_verbatim_error": "SyntaxError: unterminated string literal (detected at line 117)",
+    "hosted_error_path": "part2/capital_flow/tests/test_runner_single_handoff_stale.py:117",
+    "hosted_full_suite": "NOT_RUN",
+    "public_test_overlay": "ABSENT_HTTP_404",
+    "clone_retried": false,
+    "local_pytest_executed": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
