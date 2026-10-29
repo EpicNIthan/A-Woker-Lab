@@ -1,0 +1,86 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 23:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (+112 lines, test-only)"
+    ],
+    "production_diff": false,
+    "verified_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "read_head": "9f41c4649dbdc5167e3fad474c9e6eb07c86754f",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "done_tree_truncated": false,
+      "failed_tree_truncated": false
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "ea260158d27e38ab24e1ca0a99c7b2c3f3acaaec",
+    "roadmap_latest": "2026-10-29 22:50 ICT",
+    "latest_durable": {
+      "A": "A-20261029-db4c6bf-2157-spawn-harness-lifecycle-execution-blocked.json",
+      "B": "B-20261029-db4c6bf-2230-source-plateau.json",
+      "C": "C-20261029-db4c6bf-quality-spawn-cleanup-gate-2213.json"
+    },
+    "legacy_worker_status_stale": true
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "workflow_run": "40860520862",
+    "workflow_conclusion": "success",
+    "combined_commit_status_count": 0,
+    "matching_public_sha_workflow_runs": 0,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "FREEZE_SOURCE_ONLY_REVIEW_REQUIRE_EXECUTABLE_EXPECTED_RED_EVIDENCE",
+    "evidence": "At the pinned SHA, runner.run_once loads archive, constructs a snapshot, and calls atomic_write_json separately for latest.json, audit_latest.json and anata_latest.json. storage.load_observations locks archive reads, while storage.atomic_write_json uses per-file os.replace; no generation-wide publication lock is visible. Existing spawn preflight joins A before rowB append and B spawn, so it is sequential and cannot prove concurrent safety or failure.",
+    "conclusion": "Potential A-paused/B-publishes/A-resumes stale final handoff is a source-supported hypothesis, not a reproduced defect. No further A-lane contract churn or speculative repair. The only productive next gate is independently executable exact-SHA evidence; expected-RED may be legitimate and must not be hidden behind a PASS-only Gemini commit policy.",
+    "no_network_execution_handoff": "In authorized disposable checkout at db4c6bf1ba8f81ee4f4ae27ba59da756594db853, keep source immutable and stage test-only overlay: spawn-safe top-level child A wraps runner.atomic_write_json only for anata_latest.json, signals A_paused and awaits release_A bounded; parent asserts A alive, appends PIT-visible rowB at T=1700000000000 (effective=T-2000, available=observed=T-1000), spawns B and requires B complete while A paused with 1 archive/1 scoring and rowB provenance; snapshot all three B output bytes, release A in finally, bound Queue gets and process joins/termination, then compare final bytes/provenance and classify STALE_HANDOFF_REPRODUCED/OTHER_MIXED_GENERATION/NO_OVERWRITE/INVALID_TEST. Capture collection, targeted pytest, full python -m pytest -q part2/capital_flow/tests as separate logs with exit codes. No network or production edits.",
+    "next": "Authorized disposable exact-SHA checkout or safe read-only hosted execution, then independent C review of real results. Do not enqueue any Gemini task until JSON reliability is established; no promotion without all A/B/C and Supervisor gates."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "exact_checkout_available": false,
+    "dns_clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
