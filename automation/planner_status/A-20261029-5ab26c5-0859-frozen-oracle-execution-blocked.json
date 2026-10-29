@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 08:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "atomic_visibility_test": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "test_only_overlay_present": false,
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "f51a065597eac5de95245b73c2a630c3baabe72b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 08:55 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22
+    },
+    "latest_durable": {
+      "A_previous": "A-20261029-5ab26c5-0759-exact-sha-execution-blocked.json",
+      "B": "B-20261029-5ab26c5-0825-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-execution-only-gate-0817.json"
+    }
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "exact_public_check_runs": 0,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "integration_decision": {
+    "name": "FROZEN_ORACLE_EXECUTION_PREREQUISITE_BLOCKED",
+    "finding": "Fresh source review confirms archive append and read each hold ArchiveWriterLock separately; runner then builds frame/handoff and independently publishes latest.json, audit_latest.json, anata_latest.json via atomic replacement. Existing atomic visibility regression verifies complete replacement, not generation ordering. Suspected same-T stale overwrite is UNREPRODUCED, not an established bug. Do not refine frozen oracle or enqueue speculative Gemini repair.",
+    "frozen_no_network_contract": "Authorized disposable checkout at exact SHA; approved spawn-safe test-only overlay; fixed T; A loads 0 archive rows and pauses before anata_latest publish; B appends rowB and completes while A remains paused, with archive/scoring counts 1/1 and nested source_evidence[*].clock_provenance.effective.source_record_id=rowB; resume A; final anata_latest must preserve B; reverse-order control; bounded child waits/exit codes, stdout/stderr, overlay SHA256, non-skipped counts.",
+    "commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py",
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ]
+  },
+  "execution_blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "overlay_fetch_error": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "clone_retried": false,
+    "pytest_executed": false,
+    "next_feasible_recovery": "Provision authorized disposable exact-SHA checkout and approved test-only overlay or equivalent independent exact-SHA CI environment. Run frozen two-writer regression, targeted archive/atomic tests and full Capital Flow suite; preserve artifacts; request Planner C independent review."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
