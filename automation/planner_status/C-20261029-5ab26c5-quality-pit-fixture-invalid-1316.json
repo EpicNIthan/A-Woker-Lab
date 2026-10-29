@@ -1,0 +1,74 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 13:16 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "contracts": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6",
+      "parser": "9acde817964824086608f6572f361216ac4bd014",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "archive_test": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "e4e47084bd8737d3cb7a7faa3215b5464c553f44",
+    "roadmap_blob": "e2a1470bf3df73c24eb153dceadb59089869055d",
+    "roadmap_latest": "2026-10-29 12:56 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 24
+    },
+    "latest_reports": {
+      "A": "A-20261029-5ab26c5-1300-pit-fixture-integration-gate-blocked.json",
+      "B": "B-20261029-5ab26c5-1229-source-plateau.json",
+      "C_previous": "C-20261029-5ab26c5-quality-hosted-syntax-failure-1218.json"
+    }
+  },
+  "quality": {
+    "finding": "Independently inspected exact-SHA contracts.FlowObservation.visible_at and handoff._visible_normalized: rowB available_at_ms=T+1000 is PIT-invisible at as_of_ms=T, even if runner archive_records_loaded=1 and scoring_records_loaded=1. Hosted sequential control also failed rowB provenance. Hosted B ran in parent, not separate spawned child. Two failing tests therefore do NOT prove stale overwrite or a production defect. Shared evidence_health._is_context_only maps string 'false' to False; role inversion not established.",
+    "blocker": "Invalid PIT fixture and process topology in hosted test-only attempt; no authorized disposable exact-SHA checkout/test overlay for independent C execution.",
+    "recovery": "Before further tasks, review test-only fixture with fixed T, effective/available/observed<=T, rowB nested source_record_id, sequential B-visible control PASS, then two independent spawn children A/B with bounded synchronization; prove A=0/B=1 and final on-disk retention across latest/audit/anata. Preserve collection, targeted/full pytest logs, exit codes and overlay digest. Do not change production or weaken genuine RED."
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "matching_done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "hosted_failed_task": "automation/executor_queue/failed/SUPERVISOR-20261029-two-writer-syntax-safe-1255-01.json",
+    "hosted_failed_task_blob": "5cadb943188471f2f25cd23f054b7ba852c526a0",
+    "hosted_run_id": 40826017928,
+    "hosted_collection": "PASS_2_COLLECTED",
+    "hosted_targeted": "FAILED_2_TESTS_EXIT_1",
+    "hosted_full": "NOT_RUN",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_writer_race": "NOT_ESTABLISHED",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
