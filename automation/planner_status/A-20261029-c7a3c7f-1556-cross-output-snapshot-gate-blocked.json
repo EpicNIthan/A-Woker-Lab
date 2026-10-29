@@ -1,0 +1,83 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 15:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "parent": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+    ],
+    "production_diff": false,
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "sequential_test": "67c0f0aebbf5bc7d51c8c4b71d13c658bc4b8caa"
+    }
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "9438d303d6f42845b1478bbedec7dfa6ef6b274c",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 15:52 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 29,
+      "failed": 25,
+      "method": "15:16 C and 15:32 B full-tree counts, 15:52 Supervisor reconciliation; compare af341730..9438d303 confirms only B/C status and roadmap changes, no queue changes"
+    },
+    "latest_durable": {
+      "A": "A-20261029-c7a3c7f-1503-hosted-json-regression-blocked.json",
+      "B": "B-20261029-c7a3c7f-1532-source-plateau.json",
+      "C": "C-20261029-c7a3c7f-quality-hosted-json-gate-1516.json"
+    }
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "executor_required_tests": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_pit_visible_handoff.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_pit_visible_handoff.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_child_concurrency": "NOT_RUN",
+    "github_combined_statuses": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "integration_decision": {
+    "name": "FREEZE_SOURCE_TEST_RETRY; ADD_EXACT_OUTPUT_SNAPSHOT_WITNESS_TO_APPROVED_TEST_CONTRACT",
+    "new_evidence": "Current runner computes a snapshot before separately publishing latest.json, audit_latest.json and anata_latest.json. Per-file atomic_write_json uses os.replace, not cross-generation commit. Latest hosted two-child task failed before pytest due invalid Gemini JSON; no race reproduced.",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261029-two-child-pit-causal-retention-1448-01.json",
+    "verbatim_executor_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 7146)",
+    "contract_improvement": "At exact c7a3c7f in a disposable test-only checkout: use top-level multiprocessing spawn child targets, fixed T=1700000000000, valid rowB effective=T-2000, available=observed=T-1000. A loads 0/0, waits at anata_latest.json atomic_write_json with bounded Event. B independently appends rowB, runs to completion with 1/1 and nested scoring rowB provenance; parent snapshots raw bytes (or SHA256) of ALL THREE output JSON files after B. Release A and join both with timeouts. Assert both child exitcodes zero and A/B counts nonvacuous; final all three JSON files parse; compare each final file's bytes to B snapshot and assert nested final anata_latest rowB provenance. This detects mixed-generation publication without guessing latest/audit schema keys. Include sequential control, collect-only, targeted, full Capital Flow pytest. No sleeps as timing oracle, network, skips, production edits, or claims of defect on fixture/timeout/model failure.",
+    "next_feasible_recovery": "Obtain approved exact-SHA disposable checkout and test-only overlay; execute frozen contract with byte-snapshot witness. Separately demonstrate bounded structured-JSON reliability before any new Gemini queue task; do not retry failed 1448."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n'; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "independent_pytest_executed": false,
+    "clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
