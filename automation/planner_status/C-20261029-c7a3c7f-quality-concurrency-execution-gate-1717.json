@@ -1,0 +1,76 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 17:17 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "parent": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+    ],
+    "production_diff": false,
+    "blobs": {
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "test_v1_handoff": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "sequential_test": "67c0f0aebbf5bc7d51c8c4b71d13c658bc4b8caa"
+    }
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "observed_head": "79f60a4b97c6aeb6e31a17b166bf48b0f493f215",
+    "tree_truncated": false,
+    "tree_entries": 1331,
+    "queue": {
+      "pending": 0,
+      "done": 29,
+      "failed": 25
+    },
+    "roadmap_path": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "26cdfbb8ea38efa7aca0ae9c5185d27e1411e5b6",
+    "roadmap_latest": "2026-10-29 16:54 ICT",
+    "latest_report_blobs": {
+      "A": "39c697f05c09dfe0408411aa8b3666527ca206aa",
+      "B": "33632c39231020b5362f5e63fd5e61072923d813",
+      "C": "19f2e75c3a06a0db4dde89921422486a5e2aa048"
+    }
+  },
+  "quality": {
+    "finding": "Exact-SHA handoff.py and runner.py delegate context_only role to evidence_health._is_context_only, which explicitly maps string 'false' to False; role inversion is not established. Latest 73-line sequential PIT rowB test does not test concurrent writers. Runner publishes latest.json, audit_latest.json and anata_latest.json via separate atomic writes; stale-snapshot overwrite or mixed-generation output remains plausible but UNREPRODUCED.",
+    "blocker": "No authorized disposable exact-SHA checkout with approved test-only overlay for independent two-child regression. Hosted two-child task failed before pytest on malformed Gemini JSON; structured-JSON reliability UNVERIFIED.",
+    "verbatim_hosted_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 7146)",
+    "recovery": "Obtain authorized disposable exact-SHA test checkout and reviewed overlay. Spawn two independent children with bounded Events: A loads empty archive and pauses before final anata_latest publication; B appends PIT-visible rowB (effective=T-2000, available=observed=T-1000), runs and exits; snapshot all three B outputs; release A and verify final rowB and cross-output bytes, child exitcodes and JSON parsing. Run collect-only, targeted and full no-network pytest; retain logs, exit codes and hashes. Classify fixture/timeout failures separately from reproducible race. Do not enqueue duplicate malformed-JSON tasks."
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01.json",
+    "done_task_blob": "4edd3abfcde0526cfcecd81c76ea4970bc37a080",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS_SEQUENTIAL_ONLY",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS_SEQUENTIAL_ONLY",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_child_concurrency": "NOT_RUN",
+    "failed_task_blob": "9fb0860924da98588592fd5cefc9168f08676eb4",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
