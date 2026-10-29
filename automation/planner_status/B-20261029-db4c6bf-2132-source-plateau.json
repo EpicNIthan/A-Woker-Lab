@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-29 21:32 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py"
+    ],
+    "production_or_economic_source_diff": false,
+    "source_contract": "part2/capital_flow/SOURCES.md"
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "8e14d06576afc72b1937a533865a2259ab9b9d89",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_tree_truncated": false,
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 20:54 ICT",
+    "latest_durable": {
+      "A": "A-20261029-db4c6bf-2056-expected-red-execution-gate-blocked.json",
+      "B_previous": "B-20261029-db4c6bf-2026-source-plateau.json",
+      "C": "C-20261029-db4c6bf-quality-expected-red-execution-gate-2114.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "independent_pytest": "NOT_RUN",
+    "controlled_concurrent_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "latest_failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "latest_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "reason": "No newly proven immutable first-party BTC/ETH artifact/event ID, effective/available/observed PIT clocks, non-overlap proof, correct context-vs-directional spot role, and deterministic no-network contract. Latest diff is a sequential test only."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "Independent controlled concurrent two-writer/three-file coherence oracle unexecuted; hosted paused-A test generation failed before pytest on invalid Gemini JSON. Suspected stale overwrite remains unproven.",
+  "next": "Do not enqueue near-duplicate Gemini task. C/Supervisor own reviewed exact-SHA test-only independent interleaving evidence. B awaits genuinely independent qualifying BTC/ETH first-party source. No promotion without current exact-SHA validation and four unqualified PLATEAU verdicts.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
