@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 00:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": [
+      {
+        "path": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+        "change": "added",
+        "lines": 112
+      }
+    ],
+    "production_diff": false,
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "read_head": "970cad2d4889db2ab73ec14570749021b6980093",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "source": "Fresh worker-control executor_queue directory enumeration: no pending directory; done 30; failed 26"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-30 00:45 ICT",
+    "latest_planner_reports": {
+      "A": "A-20261030-db4c6bf-0002-executor-pass-contract-drift-blocked.json",
+      "B": "B-20261030-db4c6bf-0030-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-harness-contract-gate-0019.json"
+    },
+    "durable_worker_status": {
+      "A": "loop-A.json (2026-10-05T18:57:00Z; head ded21ded9; stale)",
+      "B": "loop-B.json (2026-10-08; head 11c62fae; stale)",
+      "C": "loop-C.json (head 06c57813; stale)"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "hosted_run": "40860520862",
+    "matching_public_sha_actions_runs": 0,
+    "combined_commit_statuses": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "RECONCILE_STALE_WORKER_A_BLOCKER_WITH_CURRENT_SOURCE",
+    "new_verified_finding": "Durable automation/worker_status/loop-A.json still asserts AmericanBitcoinTreasuryCollector is absent from runner registration at old head ded21ded9 (2026-10-05). Exact current runner blob da38db87 imports AmericanBitcoinTreasuryCollector and registers ('american_bitcoin_treasury', AmericanBitcoinTreasuryCollector(), {}) in _collect_live. Therefore the old loop-A integration claim is stale and must not be re-enqueued or counted as an active missing-registration blocker. This does not establish new independent live-source admission or a new passing test.",
+    "active_gap": "The committed two-child test joins A before rowB append and B launch, sends full anata_output through Queue instead of compact provenance, and lacks whole-test finally cleanup. No controlled overlap or tri-file coherence test has executed. Runner writes latest.json, audit_latest.json and anata_latest.json in three independent atomic_write_json calls; stale overwrite remains hypothetical.",
+    "decision": "Keep active A integration gate focused on deterministic A-paused/B-publishes/A-resumes tri-file regression; do not recycle obsolete ABTC-registration status, modify Specialist code, or enqueue malformed Gemini task.",
+    "runnable_no_network_contract": "On disposable exact-SHA checkout, use top-level spawn child and ctx.Event barrier in child A's wrapper of runner.atomic_write_json immediately before anata_latest.json; assert A_paused and A alive; append PIT-visible rowB at T=1700000000000 (effective T-2000, available/observed T-1000); run child B to completion while A blocked; snapshot bytes of latest.json, audit_latest.json and anata_latest.json; release A in whole-test finally; bound Queue/joins, terminate survivors; compare final files and rowB provenance; classify STALE_HANDOFF_REPRODUCED/OTHER_MIXED_GENERATION/NO_OVERWRITE/INVALID_TEST; retain collect-only, targeted, and python -m pytest -q part2/capital_flow/tests exit codes/logs; request independent C review. No network or production edits."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Provide authorized disposable checkout pinned to db4c6bf1ba8f81ee4f4ae27ba59da756594db853 or safe read-only hosted test runner. Do not retry DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true,
+  "automation_schedule_verified": "BEGIN:VEVENT\nDTSTART;TZID=Asia/Phnom_Penh:20260921T200000\nRRULE:FREQ=HOURLY\nEND:VEVENT"
+}
