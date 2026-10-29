@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 20:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py"
+    ],
+    "production_diff": false,
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "41919ecceb9d3c46526178996346bae15f61bc1d",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 20:54 ICT",
+    "latest_durable": {
+      "A": "A-20261029-db4c6bf-1958-overlap-oracle-gate-blocked.json",
+      "B": "B-20261029-db4c6bf-2026-source-plateau.json",
+      "C": "C-20261029-db4c6bf-quality-interleaving-blocker-2016.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "latest_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "STOP_CONTRACT_CHURN_RUN_EXPECTED_RED_OUTSIDE_PASS_ONLY_EXECUTOR",
+    "finding": "At exact SHA, runner.run_once reads archive once then writes latest.json, audit_latest.json, anata_latest.json separately through runner.atomic_write_json. Existing spawned A/B preflight is sequential. The paused-A/B-completes/A-resumes overwrite is plausible but NOT reproduced; no material improvement to prior reviewed oracle justifies further speculative revisions.",
+    "no_network_contract": "Disposable exact-SHA test-only overlay: spawn top-level A/B with separate bounded result queues and ctx.Events A_paused/release_A; A intercepts runner.atomic_write_json only for anata_latest.json before writing, parent proves A alive/paused after first two outputs; append PIT-visible rowB at T=1700000000000, effective=T-2000, available=observed=T-1000; run B and verify 1 archive/1 scoring, no errors and rowB provenance; capture all three B output bytes while A remains paused; release A in finally, bounded joins/terminations, compare final bytes and provenance. Classify STALE_HANDOFF_REPRODUCED, OTHER_MIXED_GENERATION, NO_OVERWRITE or INVALID_TEST; preserve collect-only, targeted and full pytest exitcodes. Expected RED cannot be committed through PASS-only Gemini gate.",
+    "next": "Obtain authorized disposable exact-SHA checkout and reviewed test-only overlay; execute controlled interleaving and full Capital Flow pytest, then request independent C review. Do not enqueue a repeat of malformed Gemini JSON tasks."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "checkout_available": false,
+    "dns_clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
