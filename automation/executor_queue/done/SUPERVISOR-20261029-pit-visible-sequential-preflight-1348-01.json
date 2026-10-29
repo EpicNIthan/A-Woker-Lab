@@ -1,10 +1,19 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01",
-  "worker": "SUPERVISOR",
-  "title": "Freeze PIT-visible sequential causal provenance preflight before two-writer regression",
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+  ],
   "base_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+  "executor_result": {
+    "attempt": 1,
+    "base_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "commit_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "key_index": 1,
+    "model": "gemini-3.5-flash-lite",
+    "status": "PASS",
+    "summary": "Implement quality evidence pytest file test_runner_pit_visible_handoff.py isolating sequential point-in-time causal provenance preflight."
+  },
   "instructions": "QUALITY EVIDENCE ONLY. Create ONE NEW short pytest file part2/capital_flow/tests/test_runner_pit_visible_handoff.py; DO NOT edit production code, existing tests, automation/**, .github/**, either main, private, secrets, prediction/API orchestration/journals, Telegram/MT5/broker/execution, or Railway. This task deliberately isolates the SEQUENTIAL point-in-time preflight; DO NOT attempt concurrency or add multiprocessing yet. At exact base_sha, use tmp_path and real FlowObservation plus storage.append_observations to create exactly one BTC ETF net_flow_usd scoring row (source='farside_etf', source_record_id='rowB', valid source-native effective/available/observed timestamps all <= fixed as_of_ms T, e.g. effective=T-2000, available=T-1000, observed=T-1000, with available<=observed). Use real runner.run_once(network=False, local_dir=tmp_path, as_of_ms=T) and assert archive_records_loaded==1, scoring_records_loaded==1, and nested anata_output['source_evidence'][*]['clock_provenance']['effective']['source_record_id']=='rowB'. Independently parse persisted tmp_path/'anata_latest.json' and assert same rowB causal provenance and role='scoring'; rerun run_once at SAME T sequentially and assert rowB remains. Assert no source errors. Use no fake provenance, network, credentials, time.sleep, mocks of handoff, or skipped/xfail assertions. Keep syntax simple; pytest collection MUST pass. This repairs the precise previous invalid fixture (available/observed=T+1000 at as_of=T) without claiming any two-writer race is proven. If any test fails, do not weaken assertions or edit production; record bounded FAILED and preserve trace. Only commit the one new test after collection, targeted and full Capital Flow pytest PASS. No NO_CHANGE unless exact test already exists.",
+  "max_attempts": 2,
   "read_paths": [
     "part2/capital_flow/runner.py",
     "part2/capital_flow/contracts.py",
@@ -12,13 +21,13 @@
     "part2/capital_flow/handoff.py",
     "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01",
   "tests": [
     "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_pit_visible_handoff.py",
     "python -m pytest -q part2/capital_flow/tests/test_runner_pit_visible_handoff.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 2
+  "title": "Freeze PIT-visible sequential causal provenance preflight before two-writer regression",
+  "worker": "SUPERVISOR"
 }
