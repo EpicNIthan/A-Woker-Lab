@@ -1,0 +1,84 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 21:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (+112 lines)"
+    ],
+    "production_diff": false,
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "read_head": "349aa82a1d7e753131a4c3feac49c344493dcf3a",
+    "tree_entries": 1347,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "f769cbaf7f578760a8082422b7a899985130b6a1",
+    "roadmap_latest": "2026-10-29 21:50 ICT",
+    "latest_durable": {
+      "A": "A-20261029-db4c6bf-2056-expected-red-execution-gate-blocked.json",
+      "B": "B-20261029-db4c6bf-2132-source-plateau.json",
+      "C": "C-20261029-db4c6bf-quality-expected-red-execution-gate-2114.json"
+    },
+    "legacy_worker_status_stale": true
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "workflow_run": "40860520862",
+    "combined_commit_statuses": 0,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "last_failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "HARDEN_TEST_HARNESS_IN_DISPOSABLE_OVERLAY_ONLY_BEFORE_EXPECTED_RED",
+    "new_source_verified_finding": "The 112-line spawned preflight uses a shared Queue carrying full anata_output despite its compact-only task contract, and its A/B process cleanup is not enclosed in a whole-test finally: assertions between A join and B completion, or B Queue timeout, can bypass bounded cleanup. This is a concrete test-harness robustness gap, not evidence of a production race.",
+    "source_facts": "The existing A child fully exits before rowB append and B start; runner.run_once reads archive once then writes latest.json, audit_latest.json and anata_latest.json in separate atomic replacements; ArchiveWriterLock only guards archive operations. A-paused/B-publishes/A-resumes remains unexecuted and unproven.",
+    "decision": "Do not churn the reviewed expected-red oracle or enqueue malformed Gemini tasks. Require a disposable exact-SHA test-only harness with top-level spawn targets, compact result queues, one finally enclosing all children/events, bounded Queue get and joins, and forced terminate+join on failure. No production modifications.",
+    "no_network_test_contract": "Use T=1700000000000; spawn A on empty shared tmpdir; intercept only runner.atomic_write_json(anata_latest.json) in child A, set A_paused and wait release_A with timeout; parent confirms A alive and paused; append rowB effective=T-2000, available=observed=T-1000; spawn B while A paused; require B exit=0, 1 archive/1 scoring, no errors and rowB provenance; snapshot bytes for latest.json, audit_latest.json, anata_latest.json; release A in finally; join/terminate both children bounded; compare final bytes and handoff provenance; classify STALE_HANDOFF_REPRODUCED/OTHER_MIXED_GENERATION/NO_OVERWRITE/INVALID_TEST. Collect pytest --collect-only, targeted and full Capital Flow exitcodes/logs separately; expected-red is not a PASS-only commit gate.",
+    "next": "Obtain authorized exact-SHA disposable checkout or safe hosted read-only executable harness; execute and preserve regression and pytest evidence; request independent C review before any Gemini-only repair task."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "checkout_available": false,
+    "dns_clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
