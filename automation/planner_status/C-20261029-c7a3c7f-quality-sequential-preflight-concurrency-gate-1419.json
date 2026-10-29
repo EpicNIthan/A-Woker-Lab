@@ -1,0 +1,71 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 14:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "parent": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+    ],
+    "production_diff": false,
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "test_v1_handoff": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "new_sequential_test": "67c0f0aebbf5bc7d51c8c4b71d13c658bc4b8caa"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "dadf744e3b31627b73b0155a98425c3e601023d3",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "cd4c0cc8e466b1e6dbc5c1db2ba0b73e1d1049f4",
+    "queue": {
+      "pending": 0,
+      "done": 29,
+      "failed": 24,
+      "source": "complete nontruncated recursive worker-control tree"
+    },
+    "latest_reports": {
+      "A": "A-20261029-c7a3c7f-1405-sequential-preflight-validated-concurrency-blocked.json",
+      "B": "B-20261029-5ab26c5-1326-source-plateau.json",
+      "C_previous": "C-20261029-5ab26c5-quality-pit-fixture-invalid-1316.json"
+    }
+  },
+  "quality": {
+    "finding": "New 73-line no-network sequential PIT preflight fixes prior T+1000 invisible-row fixture: rowB effective=T-2000, available=observed=T-1000 <= as_of=T; verifies archive/scoring=1, role=scoring, nested rowB provenance in returned and persisted anata_latest, repeated sequential run. This tests sequential causal visibility ONLY. It does not spawn A/B, force A=0/B=1 snapshots, or prove non-regression of three output files after an older writer resumes. Stale-publication overwrite remains UNPROVEN and NOT RULED OUT; string-'false' role inversion remains unestablished.",
+    "blocker": "Independent two-spawn-child controlled interleaving and full exact-SHA C pytest not executed; authorized disposable exact-SHA checkout/test-only overlay unavailable.",
+    "recovery": "Reuse PIT-visible sequential fixture in reviewed test-only overlay at exact SHA; spawn independent A/B children with bounded pause witness before A publication, verify A=0/B=1 and final B source_record_id retention in latest/audit/anata, reverse-order control, collect-only/targeted/full no-network pytest logs and exit codes. No production edit or blind retry."
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01.json",
+    "matching_done_blob": "4edd3abfcde0526cfcecd81c76ea4970bc37a080",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "hosted_workflow_run": 40831591729,
+    "hosted_workflow_conclusion": "success",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS_NOT_INDEPENDENTLY_RUN",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS_NOT_INDEPENDENTLY_RUN",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU_CURRENT_SHA",
+    "B": "SOURCE_ADMISSION_PLATEAU_PREVIOUS_SHA_STALE",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE_CURRENT_SHA",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
