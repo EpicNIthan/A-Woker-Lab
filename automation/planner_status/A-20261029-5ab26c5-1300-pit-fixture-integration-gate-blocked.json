@@ -1,0 +1,94 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 13:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "contracts": "b344ffda28812c106acbcf89e1beaf3bdccbd1f6"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "1a678edfa80e1e391024af0e5258571a0ce0271d",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "e2a1470bf3df73c24eb153dceadb59089869055d",
+    "roadmap_latest": "2026-10-29 12:56 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 24
+    },
+    "latest_durable": {
+      "A_previous": "A-20261029-5ab26c5-1204-hosted-regression-syntax-blocked.json",
+      "B": "B-20261029-5ab26c5-1229-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-hosted-syntax-failure-1218.json"
+    },
+    "stale_worker_status_not_authoritative": true
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "hosted_attempt": {
+    "task": "automation/executor_queue/failed/SUPERVISOR-20261029-two-writer-syntax-safe-1255-01.json",
+    "run_id": 40826017928,
+    "conclusion": "failure",
+    "collection": "PASS_2_TESTS",
+    "targeted": "FAILED_2_TESTS_EXIT_1",
+    "full_capital_flow": "NOT_RUN",
+    "verbatim_failure": "AssertionError: assert False",
+    "error_locations": [
+      "part2/capital_flow/tests/test_runner_single_handoff_stale.py:92",
+      "part2/capital_flow/tests/test_runner_single_handoff_stale.py:157"
+    ],
+    "fixture_clocks": "rowB and rowControlB available_at_ms=T+1000, observed_at_ms=T+1000, while as_of_ms=T",
+    "topology": "A spawned child, B ran in parent rather than independent spawned child",
+    "race_proven": false,
+    "production_bug_proven": false,
+    "public_commit_created": false,
+    "queue_bookkeeping": "Supervisor reconciled stranded pending after executor push conflict; queue now empty"
+  },
+  "integration_decision": {
+    "name": "INVALID_PIT_FIXTURE_BLOCKS_CAUSAL_GENERATION_ORACLE",
+    "finding": "Exact runner.py:120-123 loads archive and scoring rows before PIT filtering; its archive_records_loaded=1/scoring_records_loaded=1 are not evidence of one causally visible row. contracts.FlowObservation.visible_at requires available_at_ms<=as_of_ms; handoff.build_anata_handoff uses PIT-normalized rows for source_evidence. Thus both hosted tests failed their rowB provenance assertions even in the sequential control. This invalid fixture cannot establish a concurrent stale overwrite; do not repair production based on it.",
+    "frozen_no_network_contract": "Pin exact public SHA and fixed T. Create real BTC etf/net_flow_usd scoring FlowObservation rowB with effective_at_ms<=T, available_at_ms<=T and observed_at_ms<=T (and available<=observed). Prove sequential control first: archive=1, scoring=1, audit.visible_observation_count>=1, and nested anata.source_evidence[*].clock_provenance.effective.source_record_id=rowB. Then use TWO independent multiprocessing.spawn children A/B, shared tmp_path, bounded event/queue/join/exitcode cleanup. A reads archive=0/scoring=0 and pauses only before exact anata_latest.json atomic publication. B appends rowB, reads archive=1/scoring=1, publishes and exits; verify persisted B provenance and capture all three output JSON files. Release A; verify B provenance remains and none of latest.json, audit_latest.json, anata_latest.json regresses from the B snapshot. No network, fake provenance, sleeps as oracle, assertion weakening, or production edits. Collection preflight, targeted pytest, full python -m pytest -q part2/capital_flow/tests, and independent C audit required.",
+    "next_feasible_recovery": "Planner C independently reviews corrected PIT-visible fixture and separate-child topology before any new bounded task. Obtain authorized exact-SHA disposable checkout or independently reviewed test-only overlay; execute sequential preflight then two-writer targeted/full pytest, retain logs and overlay digest. Do not requeue either failed Gemini task while structured JSON reliability remains unverified."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n'; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "public_test_overlay": "HTTP_404",
+    "clone_retried": false,
+    "local_pytest_executed": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
