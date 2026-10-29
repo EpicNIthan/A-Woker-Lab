@@ -1,0 +1,76 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 09:18 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "archive_test": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "atomic_test": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "3fd1e2432deb19a63aaa7ba62f394a3318f6ba7b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "a79d6124ef970e1aec2818f07df7e7221390fb6c",
+    "roadmap_latest": "2026-10-29 08:55 ICT",
+    "last_authoritative_queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "as_of": "2026-10-29 08:55 ICT",
+      "basis": "Supervisor nontruncated worker-control tree; not independently re-enumerated in this run"
+    },
+    "latest_reports": {
+      "A": "A-20261029-5ab26c5-0859-frozen-oracle-execution-blocked.json",
+      "B": "B-20261029-5ab26c5-0825-source-plateau.json",
+      "C_previous": "C-20261029-5ab26c5-quality-execution-only-gate-0817.json"
+    }
+  },
+  "quality": {
+    "finding": "Fresh exact-SHA inspection confirms runner/handoff call shared evidence_health._is_context_only; its string 'false' parser branch is present. Existing public role tests cover string ' false '. Raw bool('false') role inversion is not an established current defect. Atomic replacement alone cannot prove same-T inter-writer generation ordering; stale anata_latest.json overwrite remains UNREPRODUCED.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; APPROVED_OVERLAY_NOT_PRESENT. Frozen spawn-safe same-T two-writer causal-retention regression cannot execute.",
+    "recovery": "Provision authorized disposable checkout pinned to exact public SHA and approved test-only overlay; run A loads 0 rows then pauses, B loads/scoring 1 rowB and completes, verify nested source_evidence[*].clock_provenance.effective.source_record_id=rowB and final B retention after A resumes, plus reverse-order control; preserve overlay SHA256, stdout/stderr, child exit codes and non-skipped counts."
+  },
+  "validation": {
+    "matching_done": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "next_commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_v1_handoff.py",
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ]
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
