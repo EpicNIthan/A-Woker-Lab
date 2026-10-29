@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 19:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py"
+    ],
+    "production_diff": false,
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "direct_public_check_runs": 0,
+    "direct_public_commit_statuses": 0
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "bbdbf58131cbd06cb0315259dc28a43ad97842e1",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 18:55 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "latest_durable": {
+      "A": "A-20261029-db4c6bf-1755-spawn-stage-interleaving-blocked.json",
+      "B": "B-20261029-db4c6bf-1834-source-plateau.json",
+      "C": "C-20261029-db4c6bf-quality-spawn-interleaving-gate-1815.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "workflow_run": "https://github.com/EpicNIthan/A-Woker-Lab/actions/runs/40860520862",
+    "workflow_conclusion": "success",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_interleaving": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "last_failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "KEEP_CONCURRENCY_ORACLE_EXTERNAL_AS_EXPECTED_RED_TEST_UNTIL_REPRODUCED",
+    "new_finding": "Exact runner source writes latest.json then audit_latest.json then anata_latest.json as three independent atomic replacements, after archive snapshot load. If test-only child A is held immediately before its anata_latest.json write after seeing empty archive, B can append PIT-visible rowB and complete all three outputs, then A can replace only anata_latest.json with its stale empty snapshot. The final three-file byte-equality witness should fail on the present source if the interleaving is reached; this is a predicted RED outcome, not an executed defect. Do not queue a task that requires all tests PASS before committing an expected-red regression. Keep the red test as a disposable overlay until reproduction and approved production fix.",
+    "pinned_no_network_contract": "At exact db4c6bf SHA in a disposable checkout, use multiprocessing.get_context('spawn') and top-level child target, shared tmp_path, T=1700000000000. A calls real run_once(network=False,local_dir=tmp_path,as_of_ms=T) with test-only child-local wrapper around runner.atomic_write_json: at anata_latest.json, set A_paused and wait bounded for release_A, raising on timeout. Parent verifies A_paused and A alive; appends one BTC ETF rowB effective=T-2000, available=observed=T-1000; starts independent B and waits bounded for successful exit, archive/scoring=1/1, nested scoring source_record_id=rowB. Snapshot exact bytes of latest.json, audit_latest.json, anata_latest.json after B. Release A in finally and bounded join/terminate survivors. Assert A 0/0, both exit=0, no source_errors, final files parse, final three bytes equal B snapshots and persisted rowB provenance. Record which assertion fails and distinguish fixture/timeout/serialization failures from confirmed stale publication. No sleeps, network, skips, xfail, production edits, or new Gemini queue.",
+    "next_sequence": "First obtain authorized exact-SHA disposable checkout and reviewed test-only overlay, run collect-only and targeted red reproduction, preserve stderr/exitcodes/hash; then require approved Gemini-only production fix after JSON reliability proven, with targeted and full python -m pytest -q part2/capital_flow/tests green, followed by independent Planner C review. Do not repeat malformed task."
+  },
+  "execution_blocker": {
+    "operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n'; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized exact-db4c6bf disposable checkout plus reviewed test-only overlay; run controlled interleaving and collect-only/targeted/full no-network pytest as applicable, preserve outputs; avoid DNS clone retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
