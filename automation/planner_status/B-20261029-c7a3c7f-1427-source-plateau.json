@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-29 14:27 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "parent": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+    ],
+    "production_or_source_change": false,
+    "source_contract": "part2/capital_flow/SOURCES.md"
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "d18f29af2349b7586fd80dd1e6b251a72befde9c",
+    "queue": {
+      "pending": 0,
+      "done": 29,
+      "failed": 24,
+      "method": "complete nontruncated recursive worker-control tree"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 13:50 ICT",
+    "latest_durable": {
+      "A": "A-20261029-c7a3c7f-1405-sequential-preflight-validated-concurrency-blocked.json",
+      "B_previous": "B-20261029-5ab26c5-1326-source-plateau.json",
+      "C": "C-20261029-c7a3c7f-quality-sequential-preflight-concurrency-gate-1419.json"
+    }
+  },
+  "validation": {
+    "exact_sha_done": "automation/executor_queue/done/SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "hosted_run": 40831591729,
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "reason": "Latest change is only a sequential PIT-visible regression test, not a new first-party economic source. No new immutable BTC/ETH event/artifact ID with effective/available/observed PIT clocks, proven independent non-overlap, context-vs-directional role, and deterministic no-network source contract. No B executor task justified."
+  },
+  "quality_boundary": "Sequential PIT preflight passes under hosted executor, but independent two-child concurrent causal-retention regression and independent exact-SHA pytest remain unexecuted; stale overwrite neither proven nor ruled out.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "schedules_changed": false
+}
