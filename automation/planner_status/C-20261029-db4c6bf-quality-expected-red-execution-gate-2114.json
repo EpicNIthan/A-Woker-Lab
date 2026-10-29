@@ -1,0 +1,73 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 21:14 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py"
+    ],
+    "production_diff": false,
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "context_parser": "9acde817964824086608f6572f361216ac4bd014",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "6dd849425bab431867d04295a6152c5061ded061",
+    "tree_truncated": false,
+    "automation_tree_entries": 1293,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap_blob": "982ac9830dfec7353195e197d3258cf572e43ce6",
+    "latest_reports": {
+      "A": "c1b8a6040dcd5dee53a1109c94040e490cf6955c",
+      "B": "5a81c6a1157cdac9210f03ecf6d59fff10a43219",
+      "C_previous": "76268cdc32ca7bd493897897781d9d1e8620d3d8"
+    },
+    "validation_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "failed_task_blob": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+  },
+  "quality": {
+    "finding": "Exact-SHA source inspection: evidence_health._is_context_only handles string 'false' as False, and handoff/runner share it; role inversion not established. Spawned A exits before rowB append and B start; test proves sequential provenance only. runner.run_once publishes latest.json, audit_latest.json and anata_latest.json as separate atomic replacements; stale overwrite/mixed generation plausible but NOT reproduced.",
+    "blocker": "Authorized disposable exact-SHA checkout absent at /mnt/data/A-Woker-Lab/.git; deterministic synchronized two-writer expected-red oracle unexecuted. Hosted Event-barrier task failed before pytest on invalid Gemini JSON; structured-JSON reliability UNVERIFIED.",
+    "recovery": "Use authorized disposable exact-SHA checkout and reviewed test-only no-network overlay. Spawn A and pause before anata_latest.json, append PIT-visible rowB, run B to completion, snapshot all three B outputs, release A in finally, compare bytes and rowB provenance. Capture bounded exitcodes, pytest collect-only/targeted/full logs and hashes; classify reproduced overwrite vs mixed-generation vs no-overwrite vs invalid test. Do not enqueue another malformed-JSON variant."
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK",
+    "task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "workflow_run": "40860520862",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS_SEQUENTIAL_SPAWN",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "failed_task_pytest": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
