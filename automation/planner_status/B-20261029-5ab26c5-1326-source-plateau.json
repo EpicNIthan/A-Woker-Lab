@@ -1,0 +1,71 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-29 13:26 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "economic_source_change": false,
+    "source_contract": "part2/capital_flow/SOURCES.md"
+  },
+  "control": {
+    "branch": "worker-control",
+    "observed_prewrite_sha": "40eb0b88d13139e2c7419a339b7a51d6e80be145",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 12:56 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 24,
+      "method": "nontruncated recursive worker-control tree enumeration"
+    },
+    "latest_durable": {
+      "A": "A-20261029-5ab26c5-1300-pit-fixture-integration-gate-blocked.json",
+      "B_previous": "B-20261029-5ab26c5-1229-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-pit-fixture-invalid-1316.json"
+    }
+  },
+  "validation": {
+    "matching_done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "reason": "No new immutable first-party economic BTC/ETH event ID with effective/available/observed PIT clocks, independent non-overlap proof, correct context-vs-directional role and deterministic no-network test contract. Public diff is archive lock ownership/test only. No B source task is justified."
+  },
+  "new_blocker": {
+    "classification": "INVALID_HOSTED_PIT_FIXTURE_NOT_RACE_EVIDENCE",
+    "task": "automation/executor_queue/failed/SUPERVISOR-20261029-two-writer-syntax-safe-1255-01.json",
+    "run_id": 40826017928,
+    "collection": "PASS_2_TESTS",
+    "targeted": "FAILED_2_TESTS",
+    "full_suite": "NOT_RUN",
+    "exact_fixture": "rowB available_at_ms=T+1000 and observed_at_ms=T+1000 while as_of_ms=T; B PIT-invisible even in sequential control; B ran in parent, not independent spawned child",
+    "race_proven": false,
+    "next_action": "C/Supervisor review a corrected PIT-visible two-spawn-child test-only fixture and sequential control before any bounded retry; no production repair inferred."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
