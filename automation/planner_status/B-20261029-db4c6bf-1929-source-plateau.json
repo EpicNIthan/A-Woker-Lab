@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-29 19:29 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py"
+    ],
+    "economic_source_or_production_diff": false,
+    "source_contract": "part2/capital_flow/SOURCES.md"
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "0757d0f9dd583dc511f28d8d7f19cb421883b4bc",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 18:55 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_provenance": "C 19:11 full nontruncated 1339-entry tree; not independently re-enumerated by B; current prewrite HEAD only adds C status",
+    "latest_durable": {
+      "A": "A-20261029-db4c6bf-1755-spawn-stage-interleaving-blocked.json",
+      "B_previous": "B-20261029-db4c6bf-1834-source-plateau.json",
+      "C": "C-20261029-db4c6bf-quality-event-json-failure-1911.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK",
+    "matching_done_task": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "independent_pytest": "NOT_RUN",
+    "controlled_interleaving": "NOT_RUN",
+    "latest_failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "latest_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "reason": "No new immutable first-party BTC/ETH artifact/event ID with effective/available/observed PIT clocks, independent non-overlap, correct context-vs-directional spot role, and testable no-network contract. Latest public commit only adds sequential spawn preflight test; no economic source change."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "Hosted paused-A Event-barrier task failed before pytest due to malformed Gemini JSON. Sequential two-child preflight does not test controlled overlap or three-file coherence; stale overwrite unproven. C/Supervisor own quality/execution gate; B remains source breadth only.",
+  "next": "No near-identical Gemini task. Await genuinely new admissible first-party source proof; promotion requires current exact-SHA validation and A/B/C plus independent Supervisor PLATEAU.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
