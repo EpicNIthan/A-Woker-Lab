@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 17:55 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py"
+    ],
+    "production_diff": false,
+    "blobs": {
+      "new_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "direct_public_checks": 0,
+    "direct_public_statuses": 0
+  },
+  "control": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "worker-control",
+    "prewrite_sha": "baae443fef625a2a75598558d8b40da53ddc92fe",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 17:50 ICT",
+    "tree_truncated": false,
+    "tree_entries": 1334,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 25
+    },
+    "latest_durable": {
+      "A": "A-20261029-c7a3c7f-1659-archive-lock-scope-execution-blocked.json",
+      "B": "B-20261029-c7a3c7f-1729-source-plateau.json",
+      "C": "C-20261029-c7a3c7f-quality-concurrency-execution-gate-1717.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_EXECUTOR_DONE_TASK",
+    "matching_done_task": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_workflow_run": "https://github.com/EpicNIthan/A-Woker-Lab/actions/runs/40860520862",
+    "workflow_conclusion": "success",
+    "required_tests": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_interleaving": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED_COMPLEX_TASKS"
+  },
+  "integration_decision": {
+    "name": "SEQUENTIAL_SPAWN_STAGE_VALIDATED; CONTROLLED_INTERLEAVING_STILL_UNTESTED",
+    "new_finding": "Exact new 112-line test uses two separately spawned children but runs them strictly sequentially: child A completes before rowB is appended and child B starts. This verifies process-spawn viability, archive 0/0 -> 1/1 and nested PIT rowB provenance, not overlapping publication or three-file generation coherence. It queues full anata_output rather than only minimal provenance; stage-2 child messages should be bounded to counters, nested source_record_id/role, error strings and exit codes.",
+    "source_mechanism": "runner.run_once loads a snapshot, then separately calls runner.atomic_write_json on latest.json, audit_latest.json, anata_latest.json. storage.load_observations locks only the read; storage.atomic_write_json uses per-file os.replace. No whole-generation lock or cross-file transaction is established by these blobs. Stale overwrite remains a test hypothesis, not a reproduced production defect.",
+    "bounded_next_test_contract": "TEST-ONLY on exact SHA. Reuse top-level spawn child target, same shared tmp_path and T=1700000000000; child A runs no-network on empty archive and test-only wraps runner.atomic_write_json, signalling Event when about to publish anata_latest.json and waiting on release_A with a bounded timeout. Parent waits for A_paused, appends PIT-visible BTC ETF rowB (effective=T-2000, available=observed=T-1000), starts independent B and waits for B exit=0, 1/1 counts, nested role=scoring and source_record_id=rowB. Parent parses and snapshots bytes of latest.json, audit_latest.json, anata_latest.json after B. In finally release A and terminate/join survivors; require A exit=0, A 0/0, all final JSON parse, final three bytes equal B snapshots and persisted rowB provenance. Do not use sleeps as timing oracle, skip, xfail, or production edits; distinguish fixture/timeout/executor JSON failures from a confirmed race.",
+    "commands_if_exact_checkout_available": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests",
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_writer_causal_retention.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_writer_causal_retention.py"
+    ]
+  },
+  "execution_blocker": {
+    "operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n'; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Obtain approved exact-db4c6bf disposable checkout and reviewed test-only controlled-interleaving overlay through authorized runner/artifact handoff; run collect-only, targeted, full no-network pytest, preserve logs and hashes, request independent Planner C review. Do not retry previous DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "STALE_FOR_NEW_SHA_SOURCE_ADMISSION_PLATEAU",
+    "C": "STALE_FOR_NEW_SHA_QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
