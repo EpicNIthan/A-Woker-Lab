@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-29 11:31 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "economic_source_change": false,
+    "source_contract_blobs": {
+      "part2/capital_flow/SOURCES.md": "20db257961638d4f00289d003c4d95409298c85f",
+      "part2/capital_flow/README.md": "506cee1a4f173ee818c4ffad3b684eab55599fa4"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "b5ec8d3077f69817be4428c11f9181947a1a137b",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "e98b3247d6e03736c5004c0be304368003e2c0f0",
+    "roadmap_latest": "2026-10-29 10:46 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "Latest C 11:17 nontruncated 1309-entry worker-control tree; counts cross-checked against A 10:55 and Supervisor 10:46; not independently re-enumerated by B"
+    },
+    "latest_durable": {
+      "A": "A-20261029-5ab26c5-1055-execution-only-handoff-blocked.json",
+      "B_previous": "B-20261029-5ab26c5-1027-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-execution-evidence-gate-1117.json"
+    }
+  },
+  "validation": {
+    "matching_done": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "matching_done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "independent_pytest": "NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "reason": "No new immutable first-party BTC/ETH economic event ID with effective/available/observed PIT clocks, independent non-overlap proof, correct context-vs-directional spot role and deterministic no-network contract; current public diff only archive lock and regression."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "Authorized disposable exact-public-SHA checkout and approved spawn-safe test-only overlay unavailable; equal-clock two-writer anata_latest.json causal-retention test NOT_RUN and stale overwrite UNREPRODUCED. Gemini structured-JSON reliability UNVERIFIED.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
