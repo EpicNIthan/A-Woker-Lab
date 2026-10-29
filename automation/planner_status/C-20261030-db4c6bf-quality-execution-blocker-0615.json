@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 06:15 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (+112); no production edits",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "prewrite_head": "15cc4e7b2ec915a644ac23de6132b56acf21d9cf",
+    "tree_entries": 1372,
+    "truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "blobs": {
+      "roadmap": "ab6b201fa677746d345dfa950d1c234506c96dd8",
+      "A": "2a52de4497370536c366fee993959a2354aaf784",
+      "B": "03346a652bf572578905af7b19781b6572edd3f8",
+      "C_previous": "5affcc8d4d370f3282d05f1cfab89b82fa892430",
+      "exact_sha_done": "c9671db6967da7295c8846d8a561be08a3146cf0"
+    }
+  },
+  "quality": {
+    "finding": "No new experimental evidence. Current two-child test completes A before starting B, asserts only anata_latest.json, and does not test concurrent three-file generation consistency. Both children use same as_of_ms, which is not generation identity. No production race reproduced. The string-'false' parser concern is resolved statically by evidence_health._is_context_only, but independent end-to-end regression is unexecuted.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized disposable exact-SHA test checkout. Gemini paused-A task failed before pytest due malformed structured JSON; reliability UNVERIFIED.",
+    "recovery": "Obtain authorized disposable exact-SHA checkout or safe read-only hosted test environment. Run deterministic no-network paused-A/B-completes/A-resumes regression with distinct rowB provenance and all three JSON snapshots/hashes, bounded finally cleanup and child exitcodes; preserve collect-only, targeted and full Capital Flow pytest logs."
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "hosted_run": 40860520862,
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
