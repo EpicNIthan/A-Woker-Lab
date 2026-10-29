@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 04:14 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py added (+112); production unchanged",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_head": "374ceff668551878b1d7eeb127b68bd2f448d6dd",
+    "tree_entries": 1366,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "blobs": {
+      "roadmap": "0455caf354ceaf1d8a330c7edc8b2a98adadc26d",
+      "A": "f10e28044a1e7d1eb23caed8725980f2da50809d",
+      "B": "bcf2576d0c053a9888f5bfd5bc3dcc75f87b3f19",
+      "C_previous": "ce0024fcfa15250fafd96e4b3edf96f80009d93b",
+      "exact_sha_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "failed_barrier": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Direct code and done-task comparison: exact-SHA executor PASS does not establish test-contract completeness. Committed sequential spawn test sends entire anata_output through Queue despite compact-provenance requirement, lacks encompassing finally child cleanup, and asserts persisted anata_latest.json only. A joins before B starts; both use same T. Runner independently publishes latest.json, audit_latest.json, anata_latest.json; three-output generation coherence and concurrent stale-overwrite remain untested, not confirmed defects.",
+    "context_only_string_false": "Shared parser delegated in handoff.py; independent end-to-end string-'false' regression NOT_RUN.",
+    "blocker": "Authorized disposable exact-SHA checkout absent at /mnt/data/A-Woker-Lab/.git. Paused-A task failed before pytest: ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803).",
+    "recovery": "In authorized exact-SHA checkout run bounded spawn Event A-paused/B-completes/A-resumes no-network test; inspect all three output JSONs, source_record_id and hashes, ensure finally cleanup/exitcodes; preserve targeted and full pytest logs. Do not enqueue until Gemini structured-JSON reliability proven."
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "hosted_run": 40860520862,
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
