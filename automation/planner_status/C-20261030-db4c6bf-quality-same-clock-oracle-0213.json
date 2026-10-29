@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 02:13 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "diff": "one added 112-line sequential spawn test; no production change",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "context_parser": "9acde817964824086608f6572f361216ac4bd014"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "read_head": "7b3430a084bd6f84abfd70aca7bff990f3a5761c",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "source": "02:03 A exact-tree audit and 01:47 Supervisor roadmap; not independently enumerated this run"
+    },
+    "blobs": {
+      "roadmap": "e300b31bd1ffbfe523de30c25f51c45724eed7d2",
+      "A": "6f41735d2a91f2b847566cd001e4957e84224432",
+      "B": "4cdef0f74cab621e8615dafba33c40e67f6e7487",
+      "C_previous": "f3776a2eeec81f591da0dae651a8fdf52e31651d",
+      "exact_sha_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "failed_barrier": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Two spawned children run sequentially (A joins before rowB append/B launch); full anata_output crosses Queue despite compact-only contract; no whole-test finally cleanup. All three JSONs are separately atomic-replaced. NEW ORACLE CAUTION: both runs use identical as_of_ms=T, so matching timestamps cannot establish same-generation output. Compare rowB source_record_id and byte snapshots from B while A paused. No production race reproduced.",
+    "context_only_string_false": "shared parser source-inspected; independent end-to-end role-inversion regression NOT_RUN",
+    "blocker": "Authorized exact-SHA executable checkout absent (/mnt/data/A-Woker-Lab/.git). Independent no-network two-writer test and targeted/full pytest NOT_RUN. Gemini structured-JSON reliability UNVERIFIED; paused-A task failed malformed JSON before pytest.",
+    "recovery": "Acquire authorized disposable exact-SHA checkout or safe read-only hosted test runner. Bound spawn Event barrier before A anata_latest.json; append PIT rowB; finish B while A paused; snapshot all 3 output bytes and verify rowB role=scoring/source_record_id; release A in encompassing finally; compare final outputs; preserve child exitcodes, collect-only/targeted/full pytest logs and classify observed result. Do not retry malformed task."
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "hosted_run": "40860520862",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
