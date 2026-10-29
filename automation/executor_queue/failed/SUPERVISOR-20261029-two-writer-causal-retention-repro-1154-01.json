@@ -1,10 +1,14 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "SUPERVISOR-20261029-two-writer-causal-retention-repro-1154-01",
-  "worker": "SUPERVISOR",
-  "title": "Test-only same-clock two-writer handoff causal-retention regression",
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_runner_single_handoff_stale.py"
+  ],
   "base_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+  "executor_result": {
+    "error": "ExecutorError: Gemini exhausted bounded repair attempts; last test output:\n$ python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py\nexit=2\n\n==================================== ERRORS ====================================\n_ ERROR collecting part2/capital_flow/tests/test_runner_single_handoff_stale.py _\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/python.py:528: in importtestmodule\n    mod = import_path(\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/pathlib.py:640: in import_path\n    importlib.import_module(module_name)\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/importlib/__init__.py:126: in import_module\n    return _bootstrap._gcd_import(name[level:], package, level)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n<frozen importlib._bootstrap>:1204: in _gcd_import\n    ???\n<frozen importlib._bootstrap>:1176: in _find_and_load\n    ???\n<frozen importlib._bootstrap>:1147: in _find_and_load_unlocked\n    ???\n<frozen importlib._bootstrap>:690: in _load_unlocked\n    ???\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:176: in exec_module\n    source_hash, co = _rewrite_test(fn, self.config)\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/_pytest/assertion/rewrite.py:339: in _rewrite_test\n    tree = ast.parse(source, filename=strfn)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/ast.py:50: in parse\n    return compile(source, filename, mode, flags,\nE     File \"/home/runner/work/A-Woker-Lab/A-Woker-Lab/work/part2/capital_flow/tests/test_runner_single_handoff_stale.py\", line 117\nE       assert status_b == \"OK\", f\"Child B failed: {res_b}\nE                                ^\nE   SyntaxError: unterminated string literal (detected at line 117)\n=========================== short test summary info ============================\nERROR part2/capital_flow/tests/test_runner_single_handoff_stale.py\n!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!\n1 error in 0.22s\n",
+    "status": "FAILED"
+  },
   "instructions": "SUPERVISOR QUALITY EVIDENCE ONLY. Create ONLY part2/capital_flow/tests/test_runner_single_handoff_stale.py. Do not edit runner.py, storage.py, any other production file, existing tests, automation/**, .github/**, main, private, secrets, API/prediction/orchestration, execution/broker/Telegram/MT5, or Railway. Purpose: execute a deterministic no-network two-INDEPENDENT-PROCESS regression against the exact pinned public HEAD, to establish whether same-as_of_ms T concurrent run_once publications can overwrite a newer archived/scoring handoff with an older 0-row snapshot. Use multiprocessing get_context('spawn'), top-level spawn-safe child targets, shared tmp_path local_dir, bounded synchronization events/queues/joins, assert child exitcodes and clean up in finally; never rely on sleep as the synchronization oracle. Child A calls runner.run_once(network=False, as_of_ms=T) on initially empty archive and must demonstrably report archive_records_loaded=0 and scoring_records_loaded=0; intercept ONLY its runner.atomic_write_json call for exact local_dir/anata_latest.json in that child to pause BEFORE publication, and signal parent. While A is paused, child B appends exactly one real scoring FlowObservation with source_record_id='rowB' (family='etf', metric='net_flow_usd', asset='BTC', valid effective/available/observed PIT times <= T) using storage.append_observations, then calls runner.run_once(network=False, as_of_ms=T) and completes. Assert B reports archive_records_loaded=1 and scoring_records_loaded=1; assert B handoff contains causal provenance of rowB via nested source_evidence[*].clock_provenance.effective.source_record_id (inspect actual handoff schema; do not fabricate). Verify persisted anata_latest.json contains rowB while A is paused; release A; after A exits assert persisted anata_latest.json STILL retains rowB, never regresses to 0-row older handoff. Include reverse-order sequential control at fixed T showing B persists without overlapping stale A. Assertions must be non-vacuous and prove both children read different snapshots. Test must be independent of internet, credentials, timing flakiness, and any mock that fakes B provenance. Run targeted pytest then full Capital Flow pytest as supplied. IMPORTANT: if the test reproduces RED on this exact HEAD, DO NOT weaken or skip the causal-retention assertion and DO NOT patch production to make it green; let the bounded executor report FAILED with real pytest trace and do not commit. If it passes honestly, commit only this new test after targeted and full PASS. A NO_CHANGE result is not acceptable unless this exact regression already exists on HEAD. Planner C will independently audit any evidence before promotion.",
+  "max_attempts": 1,
   "read_paths": [
     "part2/capital_flow/runner.py",
     "part2/capital_flow/storage.py",
@@ -14,12 +18,12 @@
     "part2/capital_flow/tests/test_archive_concurrent_dedup.py",
     "part2/capital_flow/tests/test_v1_handoff.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/tests/test_runner_single_handoff_stale.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "SUPERVISOR-20261029-two-writer-causal-retention-repro-1154-01",
   "tests": [
     "python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 1
+  "title": "Test-only same-clock two-writer handoff causal-retention regression",
+  "worker": "SUPERVISOR"
 }
