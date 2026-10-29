@@ -1,0 +1,87 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 02:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": [
+      {
+        "path": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+        "change": "added",
+        "additions": 112
+      }
+    ],
+    "production_diff": false,
+    "source_inspected": [
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "part2/capital_flow/runner.py"
+    ],
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "read_head": "cbcfa8833075ada078a9c16a44a9b984c4910462",
+    "tree_sha": "fda1ab35b090d51dbe33e7b863049bbdacff0555",
+    "tree_entries": 1362,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "pending_dir": "absent 404",
+      "source": "fresh nontruncated recursive exact-worker-control tree, confirmed done/failed directory counts"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-30 02:54 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-0203-same-clock-oracle-execution-blocked.json",
+      "B": "B-20261030-db4c6bf-0231-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-same-clock-oracle-0213.json"
+    },
+    "legacy_worker_status": "loop-A/B/C.json stale; current planner reports authoritative"
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "hosted_run": "40860520862",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "RECONCILE_COMPLETE_CONTROL_TREE; HOLD_UNEXECUTED_RACE_CONTRACT",
+    "new_completeness_finding": "GitHub contents listing for automation/planner_status returned exactly 1000 entries, omitting 122 newer C reports; its lexicographic latest C appeared stale (2026-10-25). Exact worker-control recursive tree is nontruncated and reveals 356 C reports, including current 2026-10-30 02:13 C exact-SHA QUALITY_EVIDENCE_INCOMPLETE. Never use contents listing alone to choose C verdict or promotion.",
+    "test_contract_status": "FROZEN_UNEXECUTED",
+    "source_verified": "Committed test runs A to completion before rowB append and B launch; Queue includes full anata_output and lacks encompassing finally cleanup. Runner publishes three outputs with separate atomic replaces. Both children use same as_of_ms; timestamp match cannot prove generation coherence. No stale overwrite reproduced.",
+    "next_no_network_execution": "In disposable exact-SHA checkout, run collect-only and targeted pytest, spawn A and block at runner.atomic_write_json(anata_latest.json) via Event; append PIT rowB; finish B while A blocked; snapshot B latest/audit/anata output bytes and rowB provenance; release A in whole-test finally, bound queues/joins and terminate survivors; compare final three outputs with B snapshot; classify STALE_HANDOFF_REPRODUCED/OTHER_MIXED_GENERATION/NO_OVERWRITE/INVALID_TEST; run full python -m pytest -q part2/capital_flow/tests and preserve logs/exitcodes. Independent C review required."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or safe hosted read-only test runner; no DNS clone retry and no workflow edit."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
