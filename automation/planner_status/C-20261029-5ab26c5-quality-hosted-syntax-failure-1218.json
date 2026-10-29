@@ -1,0 +1,72 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 12:18 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "parser": "9acde817964824086608f6572f361216ac4bd014",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "archive_test": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "fa1590102cedd3d9c0ece069643707b286d3c5f4",
+    "tree_entries": 1313,
+    "tree_truncated": false,
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "e99af331ef61293e15d67fc54a030dbed181a728",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 23
+    },
+    "latest_reports": {
+      "A": "A-20261029-5ab26c5-1204-hosted-regression-syntax-blocked.json",
+      "B": "B-20261029-5ab26c5-1131-source-plateau.json",
+      "C_previous": "C-20261029-5ab26c5-quality-execution-evidence-gate-1117.json"
+    }
+  },
+  "quality": {
+    "finding": "New hosted test-only Gemini attempt ran but its generated two-writer test failed Python syntax at line 117 before collection/interleaving. This proves hosted executor dispatch is available, not that a stale overwrite exists. Exact public shared parser evidence_health._is_context_only maps string 'false' to False; role inversion not established. Same-clock stale-snapshot overwrite remains UNREPRODUCED.",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261029-two-writer-causal-retention-repro-1154-01.json",
+    "failed_task_blob": "91656e7d65bd5ba4fce5cd66cd6e768c58879c56",
+    "blocker": "Generated test SyntaxError: unterminated string literal (detected at line 117); no authorized independent exact-SHA disposable checkout/test-only overlay.",
+    "recovery": "Human-review a syntax-valid spawn-safe test-only overlay at exact public SHA. Run pytest collection preflight then fixed-T two-process A=0/B=1 nested source_record_id=rowB causal-retention oracle, reverse-order control, targeted and full Capital Flow pytest. Preserve overlay SHA256, logs, exit codes, child counts; do not infer defect or modify production from syntax failure."
+  },
+  "validation": {
+    "matching_done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "matching_executor_status": "PASS",
+    "matching_executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "hosted_run_id": 40820459339,
+    "hosted_targeted": "FAILED_COLLECTION_EXIT_2_SYNTAX",
+    "hosted_full": "NOT_RUN",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_writer": "NOT_EXECUTED",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
