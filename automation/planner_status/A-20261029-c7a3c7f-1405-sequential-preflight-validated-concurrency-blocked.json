@@ -1,0 +1,87 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 14:05 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "parent": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "latest_diff": [
+      "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+    ],
+    "production_diff": false,
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "new_sequential_test": "part2/capital_flow/tests/test_runner_pit_visible_handoff.py"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "c538a9607c3b5e623f15fcee17090c10e8ebba02",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 13:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 29,
+      "failed": 24,
+      "method": "nontruncated recursive tree and queue directories"
+    },
+    "latest_durable": {
+      "A_previous": "A-20261029-5ab26c5-1300-pit-fixture-integration-gate-blocked.json",
+      "B": "B-20261029-5ab26c5-1326-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-pit-fixture-invalid-1316.json"
+    },
+    "previous_A_B_C_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "previous_verdicts_stale_for_new_head": true,
+    "worker_status_json_legacy_not_authoritative": true
+  },
+  "validation": {
+    "exact_sha_done_task": "automation/executor_queue/done/SUPERVISOR-20261029-pit-visible-sequential-preflight-1348-01.json",
+    "task_base_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "executor_result_status": "PASS",
+    "executor_commit_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "hosted_workflow_run_id": 40831591729,
+    "hosted_workflow_conclusion": "success",
+    "task_required_tests": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_pit_visible_handoff.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_pit_visible_handoff.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "validation_class": "MATCHING_EXECUTOR_PASS_ALTERNATIVE_B",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "exact_sha_check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "integration_decision": {
+    "name": "SEQUENTIAL_PIT_PREFLIGHT_VALIDATED_CONCURRENT_PUBLICATION_STILL_UNPROVEN",
+    "positive": "New 73-line exact-SHA no-network test uses fixed T and real PIT-visible rowB (effective T-2000, available/observed T-1000), asserts archive/scoring=1, scoring role and nested rowB source_record_id in returned and persisted anata_latest.json, and re-runs at same T. The hosted executor marked the narrow task PASS and committed only the new test; previous PIT-invisible fixture was corrected.",
+    "remaining_gap": "Sequential test has no two-writer interleaving, no independent spawned B process, and no cross-file generation-order assertions for latest.json, audit_latest.json and anata_latest.json. Runner loads archive/scoring before writing these three files independently; atomic replacement protects individual files but not monotonic multi-file generation ordering. Stale-snapshot overwrite is NOT_ESTABLISHED, not disproven.",
+    "frozen_no_network_contract": "At exact public SHA and fixed T, keep passing sequential PIT-visible rowB preflight. In a test-only overlay, spawn two independent processes. A loads 0 archive/scoring rows and pauses before anata_latest.json atomic publication, with bounded pause witness. B appends real PIT-visible rowB, loads 1 archive/1 scoring, completes all three writes, and exits; verify persisted nested B provenance and capture all three JSON outputs. Release A; assert both children exit 0, A=0/B=1 witnesses, final B causal provenance remains and no output file regresses. Use bounded Event/Queue/join/finally cleanup, no network, sleeps-as-oracle, fake evidence, skips/xfail, or production edits. Collect-only, targeted, full python -m pytest -q part2/capital_flow/tests, and independent C review required.",
+    "next_feasible_recovery": "C independently audit new exact-SHA sequential preflight and the two-spawn-child overlay contract. Obtain an authorized disposable checkout at c7a3c7f and reviewed test-only overlay to execute; preserve pytest logs/exit codes/overlay digest. Do not enqueue malformed Gemini repeat or speculative production repair while structured JSON reliability is unverified."
+  },
+  "execution_blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n'; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "local_pytest_executed": false,
+    "clone_retried": false
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "PREVIOUS_SHA_SOURCE_ADMISSION_PLATEAU_STALE",
+    "C": "PREVIOUS_SHA_QUALITY_EVIDENCE_INCOMPLETE_STALE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true,
+  "automation_enabled_verified": true
+}
