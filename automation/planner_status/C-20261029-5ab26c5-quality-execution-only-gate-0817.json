@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-29 08:17 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "archive_test": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "runner_role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "28cb9d6eac44228da2e45b2035e21eeef457b23f",
+    "roadmap_blob": "ae3b0001f07ae94cbdec3a07c12cb8fd76d42132",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "verified_nontruncated_subtrees": true
+    },
+    "latest_reports": {
+      "A": "A-20261029-5ab26c5-0759-exact-sha-execution-blocked.json",
+      "A_blob": "db89a4995f4e4d083b28623a32619d297b8fbebf",
+      "B": "B-20261029-5ab26c5-0725-source-plateau.json",
+      "B_blob": "13555a729d59a931950773a7e670c6c3e7c22a96",
+      "C_previous": "C-20261029-5ab26c5-quality-exact-sha-execution-gate-0710.json"
+    }
+  },
+  "quality": {
+    "finding": "Existing public role regressions cover string ' false ' via shared parser; raw bool('false') inversion is not an established current defect. Separate same-T stale anata_latest.json overwrite remains source-plausible but UNREPRODUCED; atomic replacement does not prove generation ordering.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; approved disposable exact-SHA checkout and test-only two-writer overlay unavailable.",
+    "recovery": "Provision authorized disposable exact-public-SHA checkout and approved spawn-safe test-only overlay. Run frozen paused A (0 rows) / completed B (1 rowB, same T) causal-retention test plus reverse-order control; assert nested source_evidence[*].clock_provenance.effective.source_record_id=rowB; run role, archive/atomic targeted tests and full Capital Flow pytest. Preserve pinned SHA, overlay SHA256, stdout/stderr, exit codes and non-skipped counts."
+  },
+  "validation": {
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "done_blob": "3a41edfecc221b966f79971b807874fa8da35883",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_conclusion": "success",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
