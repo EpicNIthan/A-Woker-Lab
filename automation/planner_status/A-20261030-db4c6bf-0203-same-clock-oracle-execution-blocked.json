@@ -1,0 +1,83 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 02:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": [
+      {
+        "path": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+        "change": "added",
+        "additions": 112
+      }
+    ],
+    "production_diff": false,
+    "exact_blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    }
+  },
+  "control": {
+    "branch": "worker-control",
+    "read_head": "2ca14523fabc921735284bfccabfdcd66c6fb449",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "pending_dir": "absent (404)",
+      "source": "fresh exact worker-control recursive tree and queue directory counts"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-30 01:47 ICT",
+    "latest_planner_reports": {
+      "A": "A-20261030-db4c6bf-0057-stale-worker-status-reconciled-blocked.json",
+      "B": "B-20261030-db4c6bf-0133-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-independent-execution-gate-0111.json"
+    },
+    "legacy_worker_status": "loop-A/B/C.json are stale and do not supersede current exact-SHA planner reports"
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "hosted_run": "40860520862",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "SAME_AS_OF_CLOCK_IS_NOT_GENERATION_ID; EXECUTION_EVIDENCE_REQUIRED",
+    "source_verified_finding": "Exact test runs both children with as_of_ms=T=1700000000000, and runner builds all three output artifacts with that same T; A and B differ by archive rowB availability, not clock. Therefore matching as_of/timestamps across outputs is NOT a valid generation-coherence oracle. The committed test runs A then B sequentially, passes full anata_output through Queue despite compact-only contract, and lacks whole-test finally cleanup. Runner independently atomic-replaces latest.json, audit_latest.json, anata_latest.json; stale overwrite is plausible, not reproduced.",
+    "decision": "Freeze further static contract revisions; require controlled exact-SHA execution and rowB source_record_id provenance plus B-stage byte snapshots, not timestamp-only equality, before defect or repair verdict.",
+    "no_network_contract": "In disposable checkout pinned to SHA, use spawn-safe top-level child with Event barrier immediately before child A's runner.atomic_write_json(anata_latest.json); assert A paused/alive; append one PIT-visible rowB (effective=T-2000, available=observed=T-1000, source=farside_etf, source_record_id=rowB) to shared archive; start B and require B exitcode=0 while A still paused; snapshot and parse latest.json/audit_latest.json/anata_latest.json; check B's anata handoff rowB role=scoring and effective provenance source_record_id=rowB; release A in encompassing finally, bound Queue/joins and terminate survivors; compare final tri-file bytes and provenance against B snapshot, classify STALE_HANDOFF_REPRODUCED/OTHER_MIXED_GENERATION/NO_OVERWRITE/INVALID_TEST. Run python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py, targeted test(s), and python -m pytest -q part2/capital_flow/tests; retain exitcodes and logs. No network, production edits, or false PASS claims."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized disposable checkout pinned to db4c6bf1ba8f81ee4f4ae27ba59da756594db853 or independent safe hosted read-only test environment; do not retry DNS clone. Obtain C independent review after execution."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
