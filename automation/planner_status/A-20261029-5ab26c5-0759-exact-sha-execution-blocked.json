@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-29 07:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "parent": "f1de106d54d945c78f4627a1a325ba8397eb167a",
+    "latest_diff": [
+      "part2/capital_flow/storage.py",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py"
+    ],
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "atomic_test": "c06587133a4444d90df4d2f8cbc4f599a0240ca7"
+    },
+    "public_test_files": 22,
+    "overlay_present": false,
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_sha": "3a89b17b3585c74935b5b204aec485ec2fb2f3a5",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-29 07:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 28,
+      "failed": 22,
+      "method": "Nontruncated worker-control recursive Git tree 1299 entries"
+    },
+    "latest_durable": {
+      "A_previous": "A-20261029-5ab26c5-0704-frozen-oracle-execution-blocked.json",
+      "B": "B-20261029-5ab26c5-0725-source-plateau.json",
+      "C": "C-20261029-5ab26c5-quality-exact-sha-execution-gate-0710.json"
+    }
+  },
+  "validation": {
+    "done_task": "automation/executor_queue/done/C-20261028-lock-exit-ownership-guard-0952-01.json",
+    "executor_status": "PASS",
+    "executor_commit_sha": "5ab26c5289cb5c4b0480eab3a7c217b2f6ea1431",
+    "workflow_run": 40623516649,
+    "workflow_branch": "worker-control",
+    "workflow_conclusion": "success",
+    "exact_public_check_runs": 0,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "decision": {
+    "name": "EXECUTION_ONLY_GATE_NO_SPECULATIVE_REPAIR",
+    "finding": "Rechecked exact public blobs and reviewed frozen oracle: runner reads archive at line 121, publishes latest/audit/anata independently at 142-144; storage atomic replacement is not inter-writer generation ordering. Existing atomic visibility test does not establish same-clock causal retention. No evidence justifies modifying frozen test contract or sending speculative Gemini repair; suspected stale overwrite UNREPRODUCED.",
+    "frozen_test_contract": "Approved disposable checkout pinned to exact public SHA; approved spawn-safe test-only overlay; fixed T, writer A reads empty archive and pauses before anata_latest atomic publication, writer B appends rowB and completes at same T with archive/scoring loaded counts 1/1 and nested clock_provenance.effective.source_record_id=rowB, then resume A; final disk retains B. Reverse completion-order control, bounded waits, cleanup, child exitcodes, overlay SHA256, non-skipped counts and stdout/stderr.",
+    "commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py",
+      "python -m pytest -q part2/capital_flow/tests/test_archive_concurrent_dedup.py part2/capital_flow/tests/test_atomic_handoff_visibility.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ]
+  },
+  "execution_blocker": {
+    "attempted_operation": "if [ -d /mnt/data/A-Woker-Lab/.git ]; then git -C /mnt/data/A-Woker-Lab rev-parse HEAD; else printf 'ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\\n' >&2; exit 42; fi",
+    "path": "/mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "overlay_fetch": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "clone_retried": false,
+    "pytest_executed": false,
+    "next_feasible_recovery": "Provision authorized disposable exact-public-SHA checkout and approved test-only overlay (or independently authorized exact-SHA CI test execution). Execute frozen regression and full suite, preserve artifacts, request Planner C independent review."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "original_hourly_schedule_preserved": true
+}
