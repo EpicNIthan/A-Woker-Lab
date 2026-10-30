@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 07:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "diff": "one added sequential spawn preflight test (+112), no production edits",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "read_head": "f79d105dc232dc4f765b874c963ea3332879c55d",
+    "tree_entries": 1374,
+    "truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md, 2026-10-30 06:45 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-0556-execution-evidence-freeze-blocked.json",
+      "B": "B-20261030-db4c6bf-0635-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-execution-blocker-0615.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "hosted_run": 40860520862,
+    "commit_statuses": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "ACCEPT_SEQUENTIAL_SMOKE_ONLY_REJECT_UNPROVEN_GENERATION_COHERENCE",
+    "status": "BLOCKED_PLATEAU_EXECUTION_GATE",
+    "finding": "At pinned source SHA, A process fully exits before B starts; the test only asserts final anata_latest.json and sends full anata_output in queue. It does not check latest.json/audit_latest.json generation identity or paused-A interleaving. runner.py writes three independent atomic JSON files outside ArchiveWriterLock. Thus exact-SHA executor PASS is valid for the sequential preflight but not for concurrent generation safety. Freeze further static contract changes; only executable evidence can change the A verdict.",
+    "runnable_no_network_contract": "In an authorized disposable checkout pinned to db4c6bf1ba8f81ee4f4ae27ba59da756594db853, collect-only and run existing sequential preflight; separately run a spawn-safe no-network A-paused-before-anata-write/B-publishes-PIT-rowB/A-resumes interleaving with bounded Events and whole-test finally cleanup, compact child queues and checked exitcodes. Confirm A baseline 0/0, B 1/1, rowB effective.source_record_id, B hashes of latest/audit differing from A, and all three final JSON SHA256 matching B. If no generation delta or barrier completion: INVALID_TEST, not PASS. Preserve logs and request C audit.",
+    "required_commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "tests_executed_this_run": false
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "recovery": "Use authorized disposable exact-SHA checkout or safe read-only hosted test runner; run paused-A/B-publishes/A-resumes harness plus targeted/full pytest and preserve artifacts. No DNS clone retry and no malformed Gemini task replay."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automation_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
