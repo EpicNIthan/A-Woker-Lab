@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-30 17:34 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Single +112-line sequential test; no new economic source or production edit",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f",
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "f4e220c22a01bd8c223bfa2be694ede315682a31",
+    "authoritative_queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_basis": "Planner C 17:12 direct nontruncated executor_queue subtree enumeration, cross-checked by comparison of control commit 0c94dd2.. to f4e220c.. (only A/C statuses and roadmap changed, no queue paths)",
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 2026-10-30 16:47 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1706-reader-snapshot-boundary-blocked.json",
+      "B_previous": "B-20261030-db4c6bf-1628-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-reader-snapshot-gate-1712.json"
+    }
+  },
+  "source_admission": {
+    "qualified_new_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "criteria": "Immutable first-party BTC/ETH economic event ID; effective, available and observed PIT clocks; independent non-overlap proof; context versus directional spot role; deterministic no-network contract",
+    "finding": "No qualifying new artifact, original publication/observation clocks or independence proof. Source contract and latest test-only diff do not justify a new source task."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_TEST_CONTRACT_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "independent_pytest": "NOT_RUN",
+    "controlled_two_writer_three_file": "NOT_RUN",
+    "reader_interleave": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "verbatim_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "No new source meets B PIT/independence criteria. Separate A/C/Supervisor quality gate lacks controlled reader snapshot and concurrent three-file exact-SHA proof; supported multi-file reader contract not established. Existing test is sequential and has compact-IPC/cleanup gaps; no production race proven.",
+  "next": "B: wait for concrete first-party source artifact and independent non-overlap/PIT proof. A/C/Supervisor: authorized exact-SHA no-network tests and reader contract verification. No duplicate Gemini task before structured JSON mitigation.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
