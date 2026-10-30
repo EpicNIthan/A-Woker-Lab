@@ -1,0 +1,83 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 17:06 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "One +112-line sequential test; no production edits; inert public automation/** ignored",
+    "pinned_blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "engine": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "features": "af20e0ced4df0f5af3c73553dc2ad0b1b6cc072c"
+    }
+  },
+  "control": {
+    "prewrite_sha": "419e4584d6c09a552ec40f35f3c85a9ea3d7e91d",
+    "tree_entries": 1405,
+    "truncated": false,
+    "authoritative_queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 2026-10-30 16:47 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1557-archive-lock-scope-three-file-oracle-blocked.json",
+      "B": "B-20261030-db4c6bf-1628-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-source-checked-three-file-gate-1619.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_CONTRACT_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "workflow_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "READER_VISIBILITY_IS_A_SEPARATE_GATE_FROM_TWO_WRITER_SERIALIZATION",
+    "source_finding": "Pinned runner.py calls atomic_write_json separately for latest.json, audit_latest.json, anata_latest.json. Pinned storage.py atomic_write_json performs one os.replace per file. Thus even a future whole-run writer mutex cannot make a reader that opens all three files between replaces observe one atomic generation. The existing two-writer final-state test alone cannot prove reader-visible three-file consistency. This is a source-level conditional multi-file-reader exposure, not proof any production reader consumes all three.",
+    "new_runnable_no_network_contract": "In an authorized exact-SHA disposable checkout, run a deterministic single-refresh reader interleave first: (1) run real runner.run_once(network=False,as_of_ms=T,local_dir=shared) on empty archive and snapshot three A files; (2) append exactly one PIT-visible rowB using existing FlowObservation fixture, and independently compute B reference in another tmp directory; (3) spawn B with a top-level target wrapping only runner.atomic_write_json: delegate original latest.json write, set Event after_first_replace, then wait release Event with bounded timeout before audit_latest.json; (4) while B paused, parse all three shared files; assert observed latest matches B reference while audit and anata still match A reference, with audit visible/normalized counts and rowB provenance as independent oracles; same as_of_ms is NOT a generation identifier; (5) release B, join/cleanup all children in finally, confirm final triple matches B reference. The intermediate mixed state is a RED baseline for any requirement that readers obtain an atomic three-file bundle; if only anata_latest.json is a supported consumer contract, record that narrower contract rather than invent a production defect. Then execute prior paused-A-before-third-write/B-with-rowB two-writer contract, allowing B to wait under a serialized repair; mixed final generations FAIL, missing controlled overlap/provenance INVALID_TEST, deadlock FAIL.",
+    "gate": "Do not promote based on writer serialization alone. First identify/confirm whether any authorized reader treats the three files as one snapshot; if yes require generation/manifest or reader snapshot protocol and executed regression. No code changes authorized by Planner A."
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "status": "NOT_RUN",
+    "next_feasible_recovery": "Authorized disposable exact-db4c6bf1 checkout or safe hosted read-only harness; execute collect-only, targeted/full tests and controlled reader and two-writer regressions; preserve logs and obtain independent Planner C review. Do not retry DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
