@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 17:12 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112 lines in one sequential test; no production changes",
+    "blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "prewrite_head": "77314f03627484e493d2f275f8b3517af69975cb",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_basis": "Direct nontruncated worker-control executor_queue subtree listings; pending directory absent",
+    "blobs": {
+      "roadmap": "aa43805e13906d9cdf717824b839bb439dd678e9",
+      "A": "8894767fccfec68e4df54b98edddf52bad515653",
+      "B": "a565516bca9e0912dca65fb457b61904be5e2368",
+      "C_previous": "b72e9eb7d7b7273fc1a875cd95dff89882c34c01",
+      "executor_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "executor_failed": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Source-level reader-snapshot gap: runner.run_once writes latest.json, audit_latest.json, anata_latest.json in separate atomic_write_json calls; storage.atomic_write_json replaces only one file per call. A reader opening all three between writes can observe mixed generations even if future writers serialize. This is conditional on an actual supported multi-file reader; no reader contract or production defect proven. The committed two-child test runs sequentially, checks only anata_latest.json, queues full anata_output against compact task contract, and lacks bounded finally cleanup.",
+    "context_only": "handoff._is_context_only delegates to evidence_health._is_context_only; string 'false' is parsed False in source; end-to-end regression NOT_RUN.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; independent executable exact-SHA checkout unavailable. No verified Gemini structured-JSON reliability.",
+    "recovery": "Authorized disposable exact-SHA no-network checkout or safe read-only hosted harness. First establish whether any supported consumer treats three files as one snapshot; if so execute deterministic reader interleave after first replace with distinct PIT rowB generation, parse all three, preserve reference snapshots. Separately execute paused-A-before-third-write two-writer interleave with bounded process exitcodes, finally cleanup, and full three-file provenance. Serialized B may wait. Mixed generation FAIL where snapshot contract applies; absent controlled interleave/provenance INVALID_TEST."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_HARNESS_CONTRACT_DEVIATIONS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "controlled_reader_interleave": "NOT_RUN",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
