@@ -1,0 +1,87 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 03:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Exactly one added +112-line sequential spawn preflight at part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; no production fix",
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "role_integration_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_preflight": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "33f3311585842dbd9f24cbc61cca9c7cab2067ae",
+    "queue_path": "automation/executor_queue",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "evidence": "Supervisor 02:49 nontruncated 1435-entry tree at current worker-control HEAD; pending path 404; matching done-task fetched. Counts corroborated, not independently enumerated in this run."
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_review": "2026-10-31 02:49 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-0205-archive-layer-vs-handoff-generation-execution-blocked.json",
+      "B": "B-20261031-db4c6bf-0225-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-layer-boundary-execution-gate-0212.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "REUSE_EXISTING_ROLE_INTEGRATION_FIXTURE; ADD_EXACT_IDENTITY_TO_ROLE_ORACLE_BEFORE_ANY_NEW_RACE_HARNESS",
+    "why_new": "Existing test checks role set and scoring/context counts but not record identity and not persisted anata_latest.json. Handoff groups by (family,source,role) and exposes effective/availability/observed source_record_id; existing fixture has exactly one scoring and one context record, making a strict deterministic oracle without new fixtures, network, or production changes.",
+    "runnable_no_network_test_contract": "# Add inside existing test_run_once_runner_context_role_integration after res is built:\nfor payload in (\n    res[\"anata_output\"],\n    json.loads((tmp_path / \"anata_latest.json\").read_text(encoding=\"utf-8\")),\n):\n    matching = [e for e in payload[\"source_evidence\"]\n                if e[\"family\"] == \"etf\" and e[\"source\"] == \"test_integration_source\"]\n    assert len(matching) == 2\n    by_role = {e[\"role\"]: e for e in matching}\n    assert set(by_role) == {\"scoring\", \"context\"}\n    for role, rid in ((\"scoring\", \"score_rec_1445_01\"),\n                      (\"context\", \"context_rec_1445_01\")):\n        assert by_role[role][\"observation_count\"] == 1\n        for clock in (\"effective\", \"availability\", \"observed\"):\n            assert by_role[role][\"clock_provenance\"][clock][\"source_record_id\"] == rid",
+    "targeted_command": "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py::test_run_once_runner_context_role_integration",
+    "full_command": "python -m pytest -q part2/capital_flow/tests",
+    "two_writer_followup": "After executable checkout: bounded A/APPENDER/B phase-witnessed overlap, distinguish B not reaching phase (INCONCLUSIVE) from stale handoff, recovery C; never claim a reproduced race from source alone.",
+    "test_contract_status": "SPECIFIED_NOT_EXECUTED"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_task_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_result_status": "PASS",
+    "executor_run": "40860520862",
+    "gate": "Alternative (b) only; executor task required collect-only, targeted and full pytest before commit; independent pytest NOT RUN; sequential test is not concurrency evidence",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "witnessed_two_writer": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "malformed_push_run": "40868824814"
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_attempted": false,
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA executable checkout or no-network hosted test runner; run identity oracle and existing targeted tests, then witnessed two-writer and recovery, then full Capital Flow pytest, preserve logs for C review."
+  },
+  "automation": {
+    "A_enabled": true,
+    "B_enabled": true,
+    "C_enabled": true,
+    "Supervisor_enabled": true,
+    "all_hourly_schedules_unchanged": true,
+    "verified_via": "read-only automation peek; no updates"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
