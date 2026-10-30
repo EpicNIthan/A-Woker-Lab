@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 18:14 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "one +112-line sequential test; no production changes",
+    "pinned_blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "readme": "506cee1a4f173ee818c4ffad3b684eab55599fa4",
+      "handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "prewrite_sha": "313e1e79e86d8f06f444cca36a3c18d46d7cc2e1",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_basis": "worker-control executor_queue tree nontruncated; pending absent; done/failed independently counted",
+    "roadmap_blob": "1657867b124507ae684762c2b6283f7eb04e2e44",
+    "latest_reports": {
+      "A": "A-20261030-db4c6bf-1803-supported-handoff-gate-prioritized-blocked.json",
+      "A_blob": "b22dc23ac613383ebfe97a9f36d90fe2af0f5aea",
+      "B": "B-20261030-db4c6bf-1734-source-plateau.json",
+      "B_blob": "5521661c42201a61a3e26866e636d5bcfa2e9204",
+      "C": "C-20261030-db4c6bf-quality-reader-snapshot-gate-1712.json",
+      "C_blob": "49a84ead9acc5c9d0224c5a023fda76aacd9def9"
+    }
+  },
+  "quality": {
+    "finding": "Prioritize supported cf-anata-handoff-v1 final-state retention: README identifies Anata-facing handoff, but no supported three-file atomic reader contract established. Existing test starts B after A joins, queues full anata_output and checks only anata_latest.json; does not test overlapping writers or bounded finally cleanup. Three separate JSON writes pose conditional reader-consistency risk, not a reproduced defect. evidence_health._is_context_only parses string 'false' as False; end-to-end role regression unexecuted.",
+    "blocker": "No authorized disposable exact-SHA executable checkout or safe read-only hosted harness; Gemini structured-JSON reliability UNVERIFIED after malformed response before pytest.",
+    "recovery": "At exact SHA run deterministic no-network paused-A-before-anata_latest.json write / PIT rowB B test, allow serialized B wait, prove final supported handoff retains rowB with distinct provenance; bounded Events/Queue/join and finally cleanup. Separately run string-'false' context-only end-to-end test in test_v1_handoff.py, collect-only/targeted and full Capital Flow pytest with logs. Three-file atomic reader assertion only after supported consumer contract is established."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_HARNESS_CONTRACT_DEVIATIONS",
+    "done_task_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "failed_task_blob": "a065ba42eaca103a42f39d95749157ef7652d7ba",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "context_false_end_to_end": "NOT_RUN",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
