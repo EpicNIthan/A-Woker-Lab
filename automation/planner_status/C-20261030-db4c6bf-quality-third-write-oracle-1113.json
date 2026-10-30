@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 11:13 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only +112-line sequential two-child spawn preflight test; no production changes",
+    "blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "prewrite_head": "a6a2f7dbb48a2f118f356236d5df5ad934322ba9",
+    "tree_truncated": false,
+    "tree_entries": 1387,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "blobs": {
+      "roadmap": "b9b7f60ed10c36a3e5411214e780cc9ec69fe0d3",
+      "A": "0226560e141ed94627a630095369382011601f68",
+      "B": "7d83a75b7e47f6eab199edd6fea680896ded8b8e",
+      "C_previous": "70c7717a569f5bbf8e5f2d92778f0b77046111fc",
+      "executor_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "executor_failed": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Source-pinned runner.py independently confirms three separate atomic_write_json calls in order latest.json, audit_latest.json, anata_latest.json. A-only test wrapper paused immediately before third write is a feasible deterministic interleaving oracle without production changes; existing committed test instead joins A before B, lacks finally cleanup, and checks only anata_latest.json. No concurrent mixed-generation race demonstrated.",
+    "required_oracle": "A paused with first two files present and third absent; append PIT-visible rowB; B completes with distinct latest hash and rowB source_record_id, audit visible count=1, all three B snapshots parse; release A and prove final latest/audit=B but anata=A no-rowB; require bounded events, exit codes, compact IPC, finally cleanup; INVALID_TEST if overlap or generation delta absent.",
+    "context_only": "Shared parser source previously inspected; string-'false' end-to-end regression NOT_RUN.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized disposable exact-SHA checkout or read-only executable harness. Gemini structured-JSON reliability UNVERIFIED after malformed JSON failure.",
+    "recovery": "Authorized disposable exact-SHA checkout or safe hosted read-only harness; execute controlled A-pause/B-publish/A-resume and collect-only/targeted/full Capital Flow pytest with logs; independent C verdict."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
