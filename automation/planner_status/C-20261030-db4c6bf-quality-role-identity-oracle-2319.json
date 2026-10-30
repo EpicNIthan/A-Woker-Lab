@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 23:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112 lines in sequential two-child spawn preflight test only",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "context_parser": "9acde817964824086608f6572f361216ac4bd014",
+      "role_integration_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "88a2fd8941b07edfb889b99f2ece4625eb054582",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "tree_truncated": false,
+    "roadmap_blob": "6f53dc5bfe29b74f6cf3ca100de628d7166dd2fa",
+    "latest_A": "A-20261030-db4c6bf-2302-reuse-existing-role-regression-execution-blocked.json",
+    "latest_B": "B-20261030-db4c6bf-2232-source-plateau.json",
+    "latest_C_previous": "C-20261030-db4c6bf-quality-lock-timeout-hierarchy-2213.json",
+    "supervisor_review": "2026-10-30 22:47 ICT"
+  },
+  "quality": {
+    "finding": "Existing no-network runner role integration test checks scoring_records_loaded=1, context_only_observation_count=1 and only set of handoff roles {'scoring','context'} for two same-source rows. These assertions can all remain true if the two row identities are swapped between scoring and context. This is a specific regression-oracle coverage gap, not evidence of a current role inversion: shared parser explicitly maps string ' false ' to False.",
+    "blocker": "No authorized disposable exact-SHA executable checkout or independent pytest logs. Concurrent A/APPENDER/B and sequential recovery remain unexecuted; Gemini structured JSON reliability unverified.",
+    "recovery": "On authorized exact-SHA no-network checkout, reuse test_runner_role_consistency.py and add identity-specific assertions on source_evidence clock_provenance.effective.source_record_id: score_rec_1445_01 must be scoring and context_rec_1445_01 context; assert persisted anata_latest.json identities too. Run targeted role and spawn tests, witnessed bounded two-writer diagnostic with recovery, then full python -m pytest -q part2/capital_flow/tests; preserve logs. No duplicate Gemini task until structured JSON reliability proven."
+  },
+  "validation": {
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_task_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS_WITH_HARNESS_DEVIATIONS",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "context_false_end_to_end": "EXISTING_TEST_PRESENT; INDEPENDENT_NOT_RUN; ROW_IDENTITY_NOT_ASSERTED",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
