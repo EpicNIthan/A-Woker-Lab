@@ -1,21 +1,25 @@
 {
-  "schema": "anata-gemini-task-v1",
-  "task_id": "SUPERVISOR-20261031-role-identity-0453-01",
-  "worker": "SUPERVISOR",
-  "title": "Pin Capital Flow source-record identity to scoring/context roles in returned and saved handoff",
+  "allowed_write_paths": [
+    "part2/capital_flow/tests/test_runner_role_consistency.py"
+  ],
   "base_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+  "executor_result": {
+    "error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "status": "FAILED"
+  },
   "instructions": "TEST-ONLY QUALITY ORACLE. Edit ONLY existing test_run_once_runner_context_role_integration in the allowed test file. Its fixtures already contain score_rec_1445_01 (provenance context_only=' false ') and context_rec_1445_01 (context_only=None). Keep existing assertions. For BOTH res['anata_output']['source_evidence'] and parsed tmp_path/'anata_latest.json'['source_evidence'], assert that the entries' clock_provenance.effective.source_record_id map score_rec_1445_01 to role='scoring' and context_rec_1445_01 to role='context' (and no swapped identity). Use short simple assertions, no new fixtures or imports beyond json already present. No production changes, no network, credentials, skips/xfail, assertion weakening, automation/.github/main/private/prediction/API orchestration/journals/Telegram/MT5/broker/execution/Railway. Require collect-only, targeted and FULL Capital Flow pytest PASS before committing. If failure, do not commit and preserve error. This proves identity-to-role only, NOT concurrent-writer safety.",
+  "max_attempts": 1,
   "read_paths": [
     "part2/capital_flow/tests/test_runner_role_consistency.py",
     "part2/capital_flow/handoff.py"
   ],
-  "allowed_write_paths": [
-    "part2/capital_flow/tests/test_runner_role_consistency.py"
-  ],
+  "schema": "anata-gemini-task-v1",
+  "task_id": "SUPERVISOR-20261031-role-identity-0453-01",
   "tests": [
     "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_role_consistency.py",
     "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py::test_run_once_runner_context_role_integration",
     "python -m pytest -q part2/capital_flow/tests"
   ],
-  "max_attempts": 1
+  "title": "Pin Capital Flow source-record identity to scoring/context roles in returned and saved handoff",
+  "worker": "SUPERVISOR"
 }
