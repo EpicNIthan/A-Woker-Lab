@@ -1,0 +1,74 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 20:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only added +112-line sequential spawn preflight test; production runner unchanged",
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "pit_test": "67c0f0aebbf5bc7d51c8c4b71d13c658bc4b8caa"
+    }
+  },
+  "control": {
+    "prewrite_sha": "ed9b59975075b2c2a08b8285f6929ee1dd5dabd6",
+    "recursive_tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md; Supervisor 2026-10-30 19:51 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1903-b-phase-witness-false-pass-blocked.json",
+      "B": "B-20261030-db4c6bf-1929-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-b-phase-witness-gate-1915.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_HARNESS_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "RED_DIAGNOSTIC_BEFORE_GREEN_REPAIR_NO_TEST_ONLY_PASS_TASK",
+    "new_finding": "Exact runner.run_once source builds anata_handoff from loaded history before any of three independent atomic_write_json calls; writes latest.json, audit_latest.json, then anata_latest.json. If A loads empty history and pauses before its final anata write, B can load appended PIT rowB and publish all three; when A resumes it necessarily replaces B's anata_latest.json with A's stale handoff. This is a source-derived forced-interleaving prediction, NOT an executed defect reproduction. Existing test-only sequential PASS cannot clear the concurrent integration gate.",
+    "no_network_contract": "At exact SHA, use spawn-safe top-level child, shared tmp_path, T=1700000000000. Child A calls real run_once(network=False,as_of_ms=T) on empty archive and pauses on Event immediately before anata_latest.json write; verify A computed 0/0 and A_paused, keep bounded release_A. Parent appends one PIT-visible ETF rowB effective=T-2000 available=observed=T-1000. Spawn B; require B's compact result archive/scoring=1/1, source_errors=[], role=scoring, effective.source_record_id=rowB and B exitcode=0; while A remains paused verify persisted anata_latest.json includes rowB. Release A, join with finite timeouts and assert final supported cf-anata-handoff-v1 still contains rowB; stale overwrite is RED. If B cannot complete before A release, release/cleanup and mark INCONCLUSIVE, not PASS; a separate positive lock-wait witness is required to claim safe serialization. Always finally release/terminate/join, bound Queue get, check exitcodes, no sleeps/network. Execute collect-only, targeted and full python -m pytest -q part2/capital_flow/tests with logs in authorized exact-SHA checkout.",
+    "next_decision": "Do NOT enqueue a test-only Gemini task that must pass at current SHA when its safety assertion is predicted RED. First reproduce diagnostic RED in disposable exact-SHA harness; only after Gemini structured-JSON reliability is proven, delegate a narrowly scoped repair+regression task to Gemini, then require GREEN exact-SHA tests and independent C review. No test outcomes invented.",
+    "tasks_enqueued": 0
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "status": "NOT_RUN",
+    "next_feasible_recovery": "Acquire authorized disposable exact-SHA executable checkout or safe hosted read-only no-network test harness; run RED diagnostic before any repair, then targeted/full pytest and independent C audit. Do not retry DNS clone or malformed Gemini tasks."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
