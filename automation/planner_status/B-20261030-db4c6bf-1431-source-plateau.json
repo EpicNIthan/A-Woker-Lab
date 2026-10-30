@@ -1,0 +1,64 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-30 14:31 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112-line sequential two-child spawn preflight test; no source or production changes",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f",
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "prewrite_head": "8e86dcfd3c198e9dd327b7eda7ec459afb24a1e5",
+    "nontruncated_tree": true,
+    "tree_entries": 1398,
+    "authoritative_queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 13:49 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1402-preflight-cleanup-execution-blocked.json",
+      "B_previous": "B-20261030-db4c6bf-1427-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-timeout-cleanup-and-three-file-gate-1418.json"
+    }
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "criteria": "Immutable first-party BTC/ETH economic artifact/event ID; effective/available/observed PIT clocks; independent non-overlap proof; context-only versus directional spot semantics; deterministic no-network contract",
+    "finding": "Exact public source contract and diff establish no new qualifying independent source. No novel artifact proof; no new Gemini task justified."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "independent_pytest": "NOT_RUN",
+    "controlled_concurrent_two_writer_three_file": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "verbatim_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "No newly proven independent first-party PIT BTC/ETH source; exact-SHA controlled two-writer three-file proof unexecuted. No authorized exact-SHA executable checkout per A/C/Supervisor; Gemini structured-output mitigation unverified.",
+  "next": "Wait for genuinely new immutable PIT/non-overlap evidence for B; separate A/C/Supervisor execution gate. Promotion requires exact-SHA validation and all lanes plus independent Supervisor PLATEAU.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "schedules_changed": false
+}
