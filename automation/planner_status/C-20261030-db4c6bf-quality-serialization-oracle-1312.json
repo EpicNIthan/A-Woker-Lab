@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 13:12 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only +112-line sequential test_runner_two_child_spawn_preflight.py; no production change",
+    "blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "prewrite_head": "fb24d015fa68eb0ffabd5021dca376fdccef69bf",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "blobs": {
+      "roadmap": "bbedc5c1f856788946f32a994c480200834b1030",
+      "A": "4466a32ea22043f3f48bd428a2449e4ca90fd2a0",
+      "B": "7a5d9b55b58d4f0d53778ea24fb5d231c8e1333b",
+      "C_previous": "679dc594f8e87786bb8d46f7b39c0a0095c87d28",
+      "executor_done": "c9671db6967da7295c8846d8a561be08a3146cf0"
+    }
+  },
+  "quality": {
+    "finding": "Acceptance-oracle separation: for current SHA, pausing A before third JSON write while B publishes can diagnose mixed generations. For a future transaction-serialized fix, B may legitimately wait for A's release; requiring B to finish while A remains paused would falsely reject a correct lock. Post-release require bounded A/B completion and coherent B generation across latest.json, audit_latest.json and anata_latest.json. Existing test is sequential, checks only anata_latest.json, and cannot prove concurrent safety; no race reproduced.",
+    "context_only": "Shared evidence_health._is_context_only explicitly parses string 'false' as False; independent end-to-end regression NOT_RUN.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized executable exact-SHA checkout. Gemini structured-JSON reliability UNVERIFIED after malformed-response failure before pytest.",
+    "recovery": "Authorized disposable exact-SHA checkout or safe hosted read-only harness; bounded spawn Events, compact IPC, A/B rowB PIT generation delta, three-file JSON parse/hash/provenance, child exitcodes, finally cleanup; collect-only/targeted/full Capital Flow pytest with logs. Re-pin/revalidate if HEAD changes."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
