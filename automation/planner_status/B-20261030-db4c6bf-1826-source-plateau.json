@@ -1,0 +1,64 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-30 18:26 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112-line sequential test part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; no production/source additions",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f",
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_sha": "c53529d11eda35a47c1a447d05b057d372fcf46d",
+    "recursive_tree_truncated": false,
+    "recursive_tree_entries": 1410,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md; Supervisor 2026-10-30 17:55 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1803-supported-handoff-gate-prioritized-blocked.json",
+      "B_previous": "B-20261030-db4c6bf-1734-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-supported-handoff-gate-1814.json"
+    },
+    "legacy_worker_statuses": "Read loop-A/B/C; stale, not authoritative"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "requirements": "Immutable first-party economic BTC/ETH event/artifact ID; effective/available/observed PIT clocks; non-overlap proof; context-vs-directional spot semantics; deterministic no-network test",
+    "finding": "No newly verified qualifying first-party source artifact with PIT availability and independent non-overlap evidence; no new source task justified. Do not recycle rejected families."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_TEST_CONTRACT_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "independent_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "supported_anata_handoff_final_state": "NOT_PROVEN",
+    "three_file_atomic_reader_contract": "NOT_ESTABLISHED",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "verbatim_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "B source breadth has no qualifying independent new PIT economic BTC/ETH evidence. Separate A/C/Supervisor promotion gate needs exact-SHA no-network controlled concurrent writers for supported cf-anata-handoff-v1, independent pytest and safe executable checkout. Do not treat hypothetical three-file reader inconsistency as proven defect.",
+  "next": "Wait for concrete first-party source artifact and independent non-overlap/PIT proof; no near-identical Gemini task until structured JSON mitigation verified; A/C/Supervisor own quality and integration recovery.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
