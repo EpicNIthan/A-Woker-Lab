@@ -1,0 +1,64 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 15:10 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only one +112-line sequential spawn preflight test; no production edit",
+    "blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "prewrite_head": "2896f03a7f0bc90d4ee773d1e49f5a0b400f8119",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "blobs": {
+      "roadmap": "f517bb24ab6a579d3741d9572e217ec30b5af337",
+      "A": "7d7eec48d2e57146757e7f8a515e15e78bdc42c7",
+      "B": "fa219d6928abd0702a1f11dc7e818985c9bf990b",
+      "C_previous": "b67b55d141703e8ac2f19dc580d2d1dd30725741",
+      "executor_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "executor_failed": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "New A 14:55 exact-task-contract comparison: done executor PASS produced test that queues full anata_output instead of compact counters/provenance, and timeout terminate paths omit bounded join/finally cleanup. Current test is sequential and checks only anata_latest.json, not three-file concurrency. These are harness compliance gaps, not a reproduced production race or failed pytest.",
+    "context_only": "Source-inspected parser normalizes string 'false'; independent end-to-end regression NOT_RUN.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized executable exact-SHA checkout. Gemini structured-JSON reliability UNVERIFIED after malformed JSON before pytest.",
+    "recovery": "Use authorized disposable exact-SHA checkout or hosted read-only harness. Collect-only, targeted and full Capital Flow pytest with logs; controlled spawn-Event A/B with distinct PIT rowB generations, correlate latest.json/audit_latest.json/anata_latest.json, permit serialized B wait, bounded process exitcodes and finally cleanup. Mixed generations FAIL; no overlap/generation proof INVALID_TEST."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "commit_check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
