@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 10:15 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only +112 lines: sequential test_runner_two_child_spawn_preflight.py; no production edits",
+    "blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    }
+  },
+  "control": {
+    "prewrite_head": "5a751d062785aba14aa4438ceb167d9ed957b149",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "blobs": {
+      "roadmap": "5bcc2fa1533e116a9b3b78165e69d86a80160168",
+      "A": "3cf13753d304d33ea5b55d0095421f336da0535d",
+      "B": "7c5bcd9c5ea9c6fe2f34d3c41b88eaaa0edc816b",
+      "C_previous": "43b5f3996ce00e28bcad9ec6c12af4d9956732c3",
+      "executor_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "executor_failed": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Exact committed test joins A before starting B; sends entire anata_output through Queue contrary to compact-IPC task instruction, lacks whole-test finally cleanup, and checks only B's anata_latest.json. It neither snapshots A generation nor parses latest.json/audit_latest.json; same as_of_ms is not a generation oracle. No concurrent stale/mixed-generation race reproduced. String-'false' context_only shared parser inspected previously; independent end-to-end regression unexecuted.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized disposable exact-SHA checkout or safe read-only executable harness; Gemini structured-JSON reliability UNVERIFIED.",
+    "recovery": "Provide authorized disposable checkout at exact public SHA; run bounded no-network A-paused-before-publish / append PIT-visible rowB / B publishes / A resumes with distinct generation and source_record_id oracle, compact IPC, finally cleanup, exitcodes, three JSON parse/hash/provenance snapshots; mark INVALID_TEST unless overlap and B delta proven. Retain collect-only/targeted/full pytest logs."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
