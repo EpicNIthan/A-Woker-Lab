@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 23:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Exactly one +112-line sequential spawn preflight test; no concurrent production repair",
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "sequential_spawn": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_integration": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "5b263a00f17fb2897d9d1f485c6e580e45b42219",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "verification": "B 23:30 nontruncated worker-control tree plus exact worker-control diff from B prewrite 19c46d2b9c4dc478e109e78f5bdbedeef21e5a36 to current: only B report and supervisor_roadmap.md changed; no executor_queue changes"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "supervisor_latest": "2026-10-30 23:49 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-2302-reuse-existing-role-regression-execution-blocked.json",
+      "B": "B-20261030-db4c6bf-2330-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-role-identity-oracle-2319.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "EXECUTOR_DONE_PASS_ONLY_WITH_HARNESS_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "integration_decision": {
+    "name": "STOP_SPEC_EXPANSION; TWO_WRITER_HARNESS_NOT_COMMITTED; REQUIRE_EXECUTION_CAPABILITY",
+    "new_verified_gap": "The proposed part2/capital_flow/tests/test_runner_two_writer_retention.py is absent at exact public SHA (GitHub fetch_file 404 NOT_FOUND). Existing committed spawn preflight runs A and B sequentially and cannot observe stale concurrent handoff. Existing role test is present; do not duplicate it.",
+    "source_boundary": "runner.run_once calls append_observations then load_observations then writes latest.json, audit_latest.json, anata_latest.json separately; storage.ArchiveWriterLock only wraps archive operations. This is a possible stale-publication interleaving, not a reproduced defect.",
+    "next_feasible_recovery": "Use an authorized disposable checkout pinned to exact SHA. First run existing role and spawn tests; create the previously specified witnessed A/APPENDER/B test only as an ephemeral disposable harness (no Specialist-branch edit) with bounded joins and positive phase witnesses, then run recovery C and full Capital Flow suite. Preserve logs for independent C review. If no execution, keep BLOCKED_PLATEAU without adding speculative tests."
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "exit_code": 1,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "github_dns_probe": "gaierror [Errno -3] Temporary failure in name resolution",
+    "github_clone_attempted": false,
+    "missing_regression_fetch": "NOT_FOUND: Error code: NOT_FOUND; Error: GitHub API error 404",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "all_four_automations_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
