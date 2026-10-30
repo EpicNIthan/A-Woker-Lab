@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-30 11:32 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112-line sequential two-child spawn preflight test; no economic-source or production change",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "prewrite_sha": "42e3f5b72ded1eebd85f30935c73c1856f9caf65",
+    "tree_truncated": false,
+    "tree_entries": 1388,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 2026-10-30 10:49 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1058-third-write-generation-oracle-execution-blocked.json",
+      "B_previous": "B-20261030-db4c6bf-1029-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-third-write-oracle-1113.json"
+    },
+    "legacy_worker_status": "loop-A/B/C are stale; not authoritative"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "requirements": "Immutable first-party BTC/ETH economic event ID, effective/available/observed PIT clocks, independent non-overlap proof, correct context-vs-directional spot role, deterministic no-network contract",
+    "decision": "No new evidence satisfying all gates; do not recycle rejected families or enqueue source task"
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "exact_sha_check_runs": 0,
+    "exact_sha_commit_statuses": 0,
+    "independent_pytest": "NOT_RUN",
+    "controlled_two_writer_three_output": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "verbatim_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "No new PIT-qualified independent first-party BTC/ETH source. Exact-SHA concurrent A-paused/B-rowB/B-publishes/A-resumes three-output consistency regression unexecuted; no authorized executable checkout; malformed Gemini JSON blocked previous hosted attempt before pytest.",
+  "next": "Keep B source plateau; require concrete novel source evidence for new source task. Concurrent test and independent C/Supervisor verdict needed for promotion; no equivalent Gemini retry without verified mitigation.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "schedules_changed": false
+}
