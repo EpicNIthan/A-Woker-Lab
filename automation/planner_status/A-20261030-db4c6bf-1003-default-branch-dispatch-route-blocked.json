@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 10:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py added (+112 lines); sequential preflight, no production edit",
+    "pinned_blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_sha": "cda7ae57c8649745d7bc2abf50acab0738b0acd6",
+    "tree_truncated": false,
+    "tree_entries": 1383,
+    "authoritative_queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md (2026-10-30 09:52 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-0906-exact-sha-execution-blocked.json",
+      "B": "B-20261030-db4c6bf-0928-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-independent-evidence-blocked-0913.json"
+    },
+    "worker_status_loop_A": "2026-10-05 stale; collector-registration allegation superseded by current runner source"
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_check_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "EXCLUDE_UNAVAILABLE_MANUAL_DISPATCH_ROUTE_KEEP_EXECUTION_CONTRACT_FROZEN",
+    "new_finding": "Public branch has .github/workflows/validate.yml (blob 0f6b0e6319ab5c1e998e261c0b52ab8b14ae4e99) with workflow_dispatch and full Capital Flow pytest. But this file is ABSENT on repository default branch main (fetch_file returned GitHub API 404); main/.github/workflows lists only gemini-executor.yml. Therefore do not assume a usable existing manual validation dispatch route; changing workflows/main is forbidden. GitHub-hosted Gemini cannot be used as a reliability-unverified substitute.",
+    "static_scope": "Pinned test joins A before B, transmits full anata_output through Queue, lacks whole-test finally cleanup and checks only anata_latest.json; runner independently publishes latest.json, audit_latest.json, anata_latest.json after archive load. Same as_of_ms is not a generation oracle. Plausible stale/mixed publication NOT PROVEN.",
+    "no_network_test_contract": "Keep frozen bounded spawn-safe A-pauses-before-publish / parent appends PIT-visible rowB / B publishes distinguishable newer generation / A resumes; require compact IPC, rowB source_record_id, exitcodes, all-three JSON parses and final-vs-B generation hashes, whole-test finally; INVALID_TEST without observed pause, B delta, and rowB proof. Commands: python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; python -m pytest -q part2/capital_flow/tests. No tests executed this run."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "additional_read_failure": "mcp__GitHub__fetch_file(.github/workflows/validate.yml, ref=main): NOT_FOUND: GitHub API error 404",
+    "next_feasible_recovery": "Supervisor provides authorized disposable exact-SHA checkout or existing safe hosted read-only harness, with no workflow/main edits; execute bounded two-writer and targeted/full pytest, preserve logs, obtain independent C verdict. No DNS clone retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
