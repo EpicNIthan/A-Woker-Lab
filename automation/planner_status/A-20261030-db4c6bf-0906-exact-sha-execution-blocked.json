@@ -1,0 +1,80 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 09:06 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "compare": "IDENTICAL to prior SHA; parent c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4; only +112-line sequential preflight test; no production change",
+    "pinned_blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "28518c895016a5fbed9857b4497655942631d3ec",
+    "no_changes_since_supervisor_0853": true,
+    "authoritative_queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "proof": "Supervisor 08:53 nontruncated recursive 1380-entry Git tree, with zero worker-control changes since"
+    },
+    "roadmap": "automation/supervisor_roadmap.md 2026-10-30 08:53 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-0803-execution-only-gate-blocked.json",
+      "B": "B-20261030-db4c6bf-0832-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-execution-gate-0815.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_reported_collect_targeted_full": "PASS_BEFORE_COMMIT_PER_TASK_CONTRACT",
+    "exact_head_commit_statuses": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "HOLD_TEST_CONTRACT_FREEZE_ESCALATE_MISSING_EXECUTION",
+    "finding": "Pinned two-child test starts and joins A before starting B; it proves only sequential preflight. It sends full anata_output via Queue, lacks encompassing finally cleanup and checks only anata_latest.json. runner.py publishes latest.json, audit_latest.json and anata_latest.json independently after archive read. Matching executor PASS is SHA proof but not concurrent three-output consistency proof. No new static revision is warranted.",
+    "runnable_no_network_contract": "In authorized disposable checkout at exact SHA, run collect-only and existing sequential test, then separate bounded spawn-safe test: A pauses before anata_latest.json write; parent appends PIT-visible rowB; B runs to completion and snapshots all three distinguishable outputs; A resumes; assert A/B exitcodes, rowB scoring provenance and all final JSON parse; compare final hashes against B generation. Require compact IPC and whole-test finally release/terminate/join. INVALID_TEST if pause, B generation delta or rowB proof missing. Preserve logs and request C independent review.",
+    "commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "tests_executed_this_run": false
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Supervisor supplies authorized disposable exact-SHA checkout or safe existing hosted read-only harness; run bounded paused-A/B-publishes/A-resumes plus full Capital Flow pytest, preserve logs, independent C audit. Do not retry DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "automations_enabled_verified": true,
+  "original_hourly_schedules_preserved": true
+}
