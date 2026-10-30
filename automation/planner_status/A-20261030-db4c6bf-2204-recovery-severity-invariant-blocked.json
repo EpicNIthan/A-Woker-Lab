@@ -1,0 +1,82 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 22:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112 lines in part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential spawn preflight, no production repair",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_preflight": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "37c4f872cf58b720eab9ecb837263bef52e1d2a6",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": {
+      "path": "automation/supervisor_roadmap.md",
+      "blob": "2d2ee6150d77df499e92c2200832711c0c983e1f",
+      "last_supervisor_review": "2026-10-30 21:46 ICT"
+    },
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-2100-append-phase-witness-deadlock-safe-blocked.json",
+      "B": "B-20261030-db4c6bf-2128-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-append-phase-deadlock-proof-2113.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_HARNESS_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "SEPARATE_TRANSIENT_HANDOFF_STALENESS_FROM_ARCHIVE_CORRUPTION",
+    "new_source_checked_finding": "Pinned runner.run_once first append/loads observations.jsonl, computes handoff, then independently publishes latest/audit/anata JSON. Pinned storage.append_observations is append-only, and a stale writer's later anata_latest.json replacement does not remove the already appended rowB archive record. Thus a stale final handoff may be recoverable by a subsequent successful refresh; this recovery and its timing are NOT yet demonstrated. Distinguish temporary published-handoff loss from persistent archive/data loss instead of calling all mixed-generation cases permanent.",
+    "runnable_no_network_contract": "Use existing bounded top-level spawn A/APPENDER/B phase-witness design (A paused before anata_latest.json; APPENDER adds PIT rowB with T=1700000000000, effective=T-2000, available=observed=T-1000; B positively publishes rowB before A release). Check final supported cf-anata-handoff-v1: if rowB disappears after A resumes, classify expected diagnostic RED, not PASS. NEW RECOVERY CHECK: after all children exit and archive locks release, parse observations.jsonl and assert exactly one rowB with original ID/clocks; run sequential C=runner.run_once(network=False,local_dir=same_tmp,as_of_ms=T), assert C loads/scorers 1/1, no errors, final anata_latest.json restores rowB scoring provenance and archive remains exactly one rowB. If archive lost/corrupted or C fails, classify stronger PERSISTENT_DATA_LOSS; if C restores, classify RECOVERABLE_STALE_HANDOFF. This recovery check does NOT turn the preceding RED into PASS. A serialized repair may make APPENDER wait; require positive lock/phase evidence or INCONCLUSIVE, not inferred PASS. Never synchronously append in parent while A is paused; bounded Event/Queue waits, release in finally, finite joins/terminate+join, exitcodes, no network or sleeps.",
+    "test_commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_writer_retention.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "test_path_status": "Proposed test_runner_two_writer_retention.py NOT PRESENT; commands NOT EXECUTED",
+    "next_decision": "Acquire authorized disposable exact-SHA checkout, run recovery-graded two-writer RED diagnostic plus targeted/full pytest, retain logs and obtain independent C audit. No Gemini enqueue before structured JSON reliability is proven."
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "status": "NOT_RUN",
+    "next_feasible_recovery": "Provision exact-SHA checkout through an authorized channel or safe hosted read-only no-network test harness. No repeat DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
