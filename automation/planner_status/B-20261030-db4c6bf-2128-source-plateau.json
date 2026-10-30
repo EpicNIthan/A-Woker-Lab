@@ -1,0 +1,60 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-30 21:28 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only +112 lines in sequential spawn preflight test; no production or economic source addition",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f",
+    "ignore_inert_specialist_automation": true
+  },
+  "control": {
+    "prewrite_head": "2242f0ee989df4a838c2405175cb315675353a8d",
+    "tree_truncated": false,
+    "tree_entries": 1419,
+    "authoritative_queue_path": "automation/executor_queue",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 2026-10-30 20:49 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-2100-append-phase-witness-deadlock-safe-blocked.json",
+      "B_previous": "B-20261030-db4c6bf-2027-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-append-phase-deadlock-proof-2113.json"
+    }
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "new_task_justified": false,
+    "rejected_families_readmitted": false,
+    "reason": "No new first-party immutable BTC/ETH economic artifact/event ID with effective/available/observed point-in-time clocks, proven independent non-overlap, correct context-vs-directional spot role, and deterministic no-network contract. Current source contract still distinguishes Farside BTC ETF flows from DefiLlama aggregate stablecoin liquidity and context-only mining; no new admission evidence."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_HARNESS_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "independent_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "separate_quality_blocker": "A/C latest: parent-synchronous rowB append while A is deliberately paused can deadlock a future correct whole-run lock; proposed bounded APPENDER child and positive phase witnesses are unexecuted. This is an oracle design issue, not new B economic source or proven production race.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "workflows_or_schedules_modified": false
+}
