@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 09:13 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "diff": "Only added 112-line sequential spawn preflight test; no production edits",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "prewrite_head": "aa080c715b398ebdee933ee0b0784bda4411cbc5",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "blobs": {
+      "roadmap": "4f1fbae7911d524c495f813d587230fbebc6ef18",
+      "A": "eed5ab2586269a0ea043c331c2c632192e855caa",
+      "B": "531fc239d89f03532e2d996e2ecfa79915f72671",
+      "C_previous": "b1109ad9cdfba1851aff2c32bd80fa52e73fda67",
+      "executor_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "executor_failed": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Current test joins child A before B; verifies only anata_latest.json, not latest.json or audit_latest.json; same as_of_ms is not a generation oracle. No concurrent three-output safety proof or reproduced production race. String-'false' shared parser inspected previously, but independent end-to-end role test NOT RUN.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized disposable exact-SHA executable checkout. Gemini structured JSON reliability UNVERIFIED after malformed response before pytest.",
+    "recovery": "Authorized exact-SHA disposable checkout/read-only harness; deterministic no-network paused-A/rowB/B-publishes/A-resumes with distinct generation snapshots, final three-file hashes, source_record_id proof, compact IPC, finally cleanup, exitcodes and pytest logs; INVALID_TEST if interleaving or generation delta absent."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
