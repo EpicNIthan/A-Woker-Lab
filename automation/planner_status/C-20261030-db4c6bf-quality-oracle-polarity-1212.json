@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 12:12 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only +112-line sequential two-child spawn preflight test; no production changes",
+    "blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "features": "af20e0ced4df0f5af3c73553dc2ad0b1b6cc072c",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "context_parser": "9acde817964824086608f6572f361216ac4bd014"
+    }
+  },
+  "control": {
+    "prewrite_head": "ba2bf346920b9e3bde8aef8772f37859e27ada17",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "pending_basis": "No pending directory in worker-control executor_queue",
+    "blobs": {
+      "roadmap": "0db319da78a9a640e8d2982037b1c7e94a645c8a",
+      "A": "346be3bbd022ae86726a8cd834ed6bdc01882082",
+      "B": "db3966292417cce099b6c16efff0e56e5da3e6c0",
+      "C_previous": "d7b2946f6812436864960fb98abbd555dee1b4cb",
+      "executor_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "executor_failed": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Corrected deterministic oracle polarity: features.py MIN_TRAILING_WINDOWS=5 means one PIT-visible rowB can establish distinct generation via source_record_id, scoring/coverage and audit counts but cannot establish a changed directional score or flow_state. Existing test is sequential, checks only anata_latest.json and lacks whole-test finally cleanup. Mixed latest/audit=B plus anata=A after controlled A-pause/B-publish/A-resume is a FAIL (reproduced mixed-generation defect), not PASS; absent overlap or generation delta is INVALID_TEST. No production race reproduced.",
+    "context_only": "Shared evidence_health._is_context_only parses string 'false' as False; runner and handoff reuse it. Independent end-to-end string-'false' regression NOT_RUN.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized exact-SHA executable checkout or safe read-only harness. Gemini structured-JSON reliability UNVERIFIED after malformed JSON before pytest.",
+    "recovery": "Use authorized disposable checkout pinned to exact HEAD or safe hosted read-only harness; deterministic bounded spawn Events and compact IPC, rowB PIT provenance, A/B generation delta, three JSON parse/hash/provenance snapshots, exitcodes and finally cleanup. Collect-only, targeted and full Capital Flow pytest with preserved logs; independent C verdict."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "exact_sha_commit_statuses": 0,
+    "exact_sha_check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
