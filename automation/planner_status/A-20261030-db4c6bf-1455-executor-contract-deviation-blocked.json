@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 14:55 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "One added 112-line sequential two-child spawn preflight; no production edits",
+    "pinned_blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_sha": "7ab3873be7e646089de90b7a8debcb374862ce69",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_evidence": "Supervisor 14:49 nontruncated authoritative tree; compare c94620c6..7ab3873 confirms intervening changes only B/C status and roadmap, not queue",
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 14:49 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1402-preflight-cleanup-execution-blocked.json",
+      "B": "B-20261030-db4c6bf-1431-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-timeout-cleanup-and-three-file-gate-1418.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_BUT_DELIVERABLE_CONTRACT_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "associated_pr_workflow_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "EXECUTOR_PASS_DOES_NOT_PROVE_TASK_INSTRUCTION_CONFORMANCE",
+    "finding": "New exact-blob comparison: the completed preflight task explicitly required compact Queue payload with counters/errors and nested rowB provenance, and 'finally terminate any surviving child' with bounded joins. Committed test instead q.put includes the entire res['anata_output']; neither timeout path joins after terminate; no shared finally; a fallback pA.join()/pB.join() after terminate has no timeout. Thus the committed test deviates from executor task's IPC and cleanup contract despite executor_result.status=PASS. This is a test-harness compliance finding, NOT evidence of a production race or evidence that pytest failed. The current test is sequential (A joined before B starts), and only parses persisted anata_latest.json; no controlled three-file interleaving has run.",
+    "action": "Do not promote or queue another malformed Gemini task. Treat exact-SHA executor PASS as recorded provenance, not independent confirmation of all test requirements; keep A blocked until authorized exact-SHA execution and independent C audit. Do not repeatedly rewrite the oracle without execution.",
+    "no_network_contract": "In authorized disposable checkout pinned to db4c6bf1, collect-only, targeted and full Capital Flow pytest. For Gemini-owned future repair/test, return compact IPC only, use spawn-safe Events to pause A before third JSON publication, ensure PIT rowB makes B generation distinguishable by archive/scoring counts and source_record_id, allow B to block behind A if a serialization fix exists, parse and correlate latest.json/audit_latest.json/anata_latest.json, assert no mixed generations. In finally always release Events, terminate+join children with bounded waits, close+join_thread Queue, assert exitcodes and no leaked tmp files. Mixed generations => FAIL, missing interleaving/delta/provenance/cleanup => INVALID_TEST, deadlock => FAIL. No sleeps, network, mocked handoff or speculative PASS.",
+    "commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "execution": "NOT_RUN; exact checkout absent"
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Provide authorized disposable exact-SHA checkout or safe existing hosted read-only test harness; execute pytest and controlled concurrency regression, preserve logs, then independent Planner C review. Do not retry DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
