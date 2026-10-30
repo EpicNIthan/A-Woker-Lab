@@ -1,0 +1,80 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 15:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112-line sequential two-child preflight test; no production edits",
+    "inert_automation_ignored": true,
+    "pinned_blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "engine": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "features": "source inspected"
+    }
+  },
+  "control": {
+    "prewrite_sha": "ec4f04db8f8b2c9ad75bbe2e0da1edf236f4e814",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_basis": "Supervisor 15:46 nontruncated 1402-entry authoritative worker-control tree; current worker-control HEAD remains that Supervisor roadmap-only commit; no intervening queue changes",
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 15:46 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1455-executor-contract-deviation-blocked.json",
+      "B": "B-20261030-db4c6bf-1526-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-executor-contract-deviation-1510.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_CONTRACT_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "ARCHIVE_LOCK_IS_NOT_A_THREE_FILE_PUBLICATION_TRANSACTION",
+    "source_finding": "ArchiveWriterLock in storage.py protects individual append_observations and load_observations calls, not the entire runner.run_once snapshot/compute/publish sequence. atomic_write_json uses per-file tempfile + os.replace; runner writes latest.json then audit_latest.json then anata_latest.json independently. Consequently a safe archive lock does not establish cross-file generation consistency. This is a source-level concurrency exposure, NOT an executed race reproduction.",
+    "improved_oracle": "Use real no-network spawned processes and a child-A Event barrier immediately before A's anata_latest.json write. A reads empty archive; parent appends exactly one PIT-visible rowB; B reads 1/1 and publishes. For the existing unsynchronized implementation, B-completes-then-A-resumes should reveal cross-file disagreement if the suspected interleaving occurs; a future serialized implementation may block B until A is released. Parse all three files. Assert latest.coverage == audit.coverage == anata.quality.coverage, audit.visible_observation_count and audit.normalized_observation_count match the final generation (0 or 1), and anata.source_evidence contains rowB iff the final generation is B. Source-derived A/B expected ETF coverage 0 versus 1/3, subject to execution confirmation. Mixed generation => FAIL; barrier not reached, no A/B delta, missing provenance, or no cleanup => INVALID_TEST; deadlock => FAIL.",
+    "scope": "Do not modify Specialist code; test contract only. The existing 112-line test remains a sequential preflight and violates compact Queue and finally cleanup requirements."
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "status": "NOT_RUN",
+    "next_feasible_recovery": "Obtain an authorized disposable exact-db4c6bf1 checkout or hosted read-only exact-SHA test harness; run the three commands and controlled Event regression, save logs, then obtain independent Planner C review. No repeat DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
