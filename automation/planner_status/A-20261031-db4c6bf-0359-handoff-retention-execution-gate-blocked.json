@@ -1,0 +1,91 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 03:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "One +112-line sequential spawn preflight test, part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; no production change",
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_preflight": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "5532bd264351295db3a233566d2c85c9114c5f17",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "source": "Nontruncated recursive worker-control git tree, counted *.json by authoritative queue subdirectory"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_review": "2026-10-31 03:50 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-0300-role-identity-oracle-execution-blocked.json",
+      "B": "B-20261031-db4c6bf-0328-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-a-oracle-execution-gate-0312.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "REPRIORITIZE_A_TO_CAUSAL_HANDOFF_RETENTION_NOT_ROLE_ORACLE_SPEC_CHURN",
+    "rationale": "The 03:00 A identity-to-role assertion is a valid but unexecuted oracle, already explicitly owned by independent C quality audit. A's unresolved integration-specific issue is overlapping run_once generations. Pinned runner computes archive snapshot and handoff then atomically writes latest.json, audit_latest.json, anata_latest.json separately; archive writer locks cover append/load individually, not end-to-end handoff generation. The existing two-child spawn test runs A then append then B sequentially and therefore cannot witness an overlapping generation. Avoid claiming three-file atomic snapshot is a supported consumer requirement; test supported anata_latest.json causal retention instead.",
+    "evidence": "Pinned failed Supervisor two-writer task documents A pause before anata_latest, B append+publish rowB, then A release; prior Gemini attempt failed test collection with unterminated string at line 117, not a reproduced race.",
+    "next_no_network_test_contract": "Reuse pinned same-clock two-independent-process A/APPENDER/B test specification: A loads 0-row archive, pauses immediately before writing anata_latest.json and signals witness; B appends PIT-valid rowB, loads 1-row archive and publishes rowB, parent verifies persisted rowB before A release; release A, assert rowB still persists; run sequential recovery C. Bound every wait/join, capture process exitcodes and phase witnesses; absent B publication witness => INCONCLUSIVE, stale overwrite => RED; never require all three output files atomic absent proven consumer contract.",
+    "existing_fixture_identity": "C independently evaluates score_rec_1445_01→scoring and context_rec_1445_01→context in returned and persisted handoff; A does not add duplicate role-only spec.",
+    "targeted_commands": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py::test_run_once_runner_context_role_integration",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_single_handoff_stale.py"
+    ],
+    "full_command": "python -m pytest -q part2/capital_flow/tests",
+    "contract_status": "SOURCE_REVIEWED_NOT_EXECUTED; failed task test file absent from public HEAD"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "done_task_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_result": "PASS",
+    "executor_run": 40860520862,
+    "proof": "Alternative (b) only: done-task exact commit and required collect-only/targeted/full pytest before commit; GitHub combined commit status pending with zero statuses",
+    "independent_pytest": "NOT_RUN",
+    "two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "malformed_run": 40868824814
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_attempted": false,
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "next_feasible_recovery": "Authorized disposable checkout pinned to exact public SHA or safe no-network hosted execution; run targeted identity and spawn tests, bounded witnessed two-writer handoff retention/recovery, full Capital Flow pytest; preserve logs and request C audit."
+  },
+  "automation": {
+    "A_enabled": true,
+    "B_enabled": true,
+    "C_enabled": true,
+    "Supervisor_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "verified_read_only": true
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
