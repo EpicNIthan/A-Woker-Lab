@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 16:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "diff": "+112 lines in sequential two-child preflight test only; no production changes",
+    "blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014"
+    }
+  },
+  "control": {
+    "prewrite_head": "252771e74a9d76bd9f51bd59dd0ab2755098b567",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_basis": "Nontruncated worker-control executor_queue tree; pending absent, done and failed enumerated",
+    "blobs": {
+      "roadmap": "3cf7f5211d4273d7822728778efad7bb26cb88f4",
+      "A": "793c40a01133abe167c7ea06dbbfc5b307ed22cd",
+      "B": "c664b8b5e5e901f09c1b22ede0f166744817a74a",
+      "C_previous": "5111ee7c6d11c351e22847d60234800f2d31c009",
+      "executor_done": "c9671db6967da7295c8846d8a561be08a3146cf0",
+      "executor_failed": "a065ba42eaca103a42f39d95749157ef7652d7ba"
+    }
+  },
+  "quality": {
+    "finding": "Exact source confirms runner.run_once writes latest.json, audit_latest.json and anata_latest.json in three independent atomic_write_json calls, without one shared transaction. Committed preflight starts B only after A joins, checks only anata_latest.json, sends full anata_output through Queue despite compact-only task contract, and omits bounded finally cleanup. This is a test-harness contract/coverage gap and potential mixed-generation exposure, NOT a reproduced production race.",
+    "context_only": "handoff.py and runner.py delegate to evidence_health._is_context_only; source-inspected string 'false' maps to False. End-to-end regression NOT_RUN.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; independent executable exact-SHA checkout unavailable. Gemini structured JSON reliability UNVERIFIED.",
+    "recovery": "Authorized disposable exact-SHA no-network checkout or safe hosted read-only harness: collect-only, targeted and full Capital Flow pytest with logs; deterministic spawn Event barrier before A third write, distinct PIT rowB generation, parse all three persisted outputs, bounded process exitcodes and finally cleanup. Permit B to wait if safely serialized. Mixed-generation FAIL; missing controlled overlap/provenance INVALID_TEST."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_HARNESS_CONTRACT_DEVIATIONS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS; INDEPENDENT_NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
