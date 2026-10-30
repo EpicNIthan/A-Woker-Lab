@@ -1,0 +1,94 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 05:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112/-0 sequential test part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; no concurrent generation-order test",
+    "source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_preflight": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "head_at_read": "abb34c830d5b31c975f8b5e8e64f2b8d722e0366",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "source": "05:50 Supervisor nontruncated 1445-entry authoritative tree, cross-checked with worker-control compare from 05:00: only B, C, roadmap changed"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 05:50 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-0500-posttest-diff-gate-serialized-witness-blocked.json",
+      "B": "B-20261031-db4c6bf-0534-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-failed-oracle-proof-gate-0511.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "new_integration_decision": {
+    "name": "PATCH_SPAWN_CHILD_RUNNER_ALIAS_NOT_PARENT_OR_STORAGE",
+    "finding": "Pinned test uses multiprocessing.get_context('spawn'); parent monkeypatches are not inherited. Pinned runner imports atomic_write_json directly from storage, so monkeypatching storage.atomic_write_json alone does not intercept runner.run_once writes. A witnessed A/APPENDER/B test must patch runner.atomic_write_json inside the importable child A target, after child import and before runner.run_once; child B must remain unpatched. This fixes a concrete harness-implementation trap without asserting a reproduced production defect.",
+    "no_network_contract": [
+      "At exact SHA in disposable checkout, use importable top-level child targets, ctx=get_context('spawn'), shared tmp_path and T=1700000000000; seed no observations; rowB from pinned sequential fixture.",
+      "Inside child A, patch runner.atomic_write_json locally, forwarding all paths except anata_latest.json; for that file, emit A_PAUSED immediately before original writer and wait on release_A Event with timeout; use try/finally to restore alias. Parent monkeypatch does not work with spawn.",
+      "Start A, await A_PAUSED; start independent APPENDER and B. Require durable rowB archive witness, then require B_PUBLISHED_ROW_B witness plus parent read of persisted anata_latest.json with rowB before release_A. Only a positively witnessed B-before-A interleaving can test stale overwrite; missing witness = INCONCLUSIVE.",
+      "Release A and bound Queue/Event waits and process joins/termination; if rowB disappears from persisted anata_latest.json after A completes, classify RED stale handoff. Run recovery C to classify recoverable vs persistent loss, keeping RED even if recovery restores rowB.",
+      "If a future whole-run lock genuinely serializes B, require positive lock/phase evidence and post-release B rowB persistence for SERIALIZED_PASS; merely slow B or timed-out B is INCONCLUSIVE, not PASS.",
+      "Capture process exitcodes, phase timestamps, before/after archive and handoff hashes, stdout/stderr, diff-check output; never claim 3-file transaction atomicity absent consumer contract."
+    ],
+    "targeted": [
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py::test_run_once_runner_context_role_integration"
+    ],
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "status": "PINNED_SOURCE_REVIEWED; NO EXACT_SHA_TEST_EXECUTION"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "alternative_b_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_result": "PASS",
+    "matching_commit_sha": true,
+    "independent_pytest": "NOT_RUN",
+    "witnessed_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_role_task_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_role_task_test_logs": "NOT_PRESERVED; do not infer PASS"
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_attempted": false,
+    "tests_run_this_run": false,
+    "next_feasible_recovery": "Obtain authorized disposable checkout pinned to db4c6bf1; execute targeted and full no-network Capital Flow pytest and child-local patched A/APPENDER/B/recovery diagnostic; preserve logs, handoff hashes and diff-check output; request independent C review. No DNS clone retry or new Gemini task."
+  },
+  "automation": {
+    "A_enabled": true,
+    "B_enabled": true,
+    "C_enabled": true,
+    "Supervisor_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_changed": false,
+    "source": "read-only Automations peek"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false
+}
