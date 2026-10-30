@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 23:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112 lines: part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential test, no production fix",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_preflight": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "existing_role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "81421c264cff1eaa0b0e789c882236885da02bc5",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": {
+      "path": "automation/supervisor_roadmap.md",
+      "blob": "6f53dc5bfe29b74f6cf3ca100de628d7166dd2fa",
+      "last_supervisor_review": "2026-10-30 22:47 ICT"
+    },
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-2204-recovery-severity-invariant-blocked.json",
+      "B": "B-20261030-db4c6bf-2232-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-lock-timeout-hierarchy-2213.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_HARNESS_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "REUSE_EXISTING_END_TO_END_ROLE_TEST_AND_STOP_DUPLICATE_CONTRACT_EXPANSION",
+    "new_source_checked_finding": "Pinned part2/capital_flow/tests/test_runner_role_consistency.py already contains test_run_once_runner_context_role_integration: a real no-network runner.run_once with provenance context_only=' false ' scoring and context_only=None context evidence. It asserts scoring_records_loaded=1, archive_records_loaded=2, audit context_only_observation_count=1, and both scoring/context handoff roles. A parameterized truth table also covers string ' false '. The existing integration test does NOT assert nested handoff clock_provenance for the string-false row; do not overclaim full causal-provenance coverage. No additional duplicate role-only Gemini task is justified. Reuse this test in the first executable checkout, while keeping nested rowB provenance and concurrent retention as separate checks.",
+    "runnable_no_network_contract": "On authorized disposable exact public SHA: (1) python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py; (2) python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; (3) run proposed A/APPENDER/B top-level-spawn two-writer diagnostic with fixed PIT rowB and positive phase witnesses, A paused before exact anata_latest.json replace, B publication witness, bounded release/cleanup and lock timeout headroom; classify RED if B's rowB handoff is overwritten by stale A, PASS only with proven serialization and retained rowB, otherwise INCONCLUSIVE. Verify archive rowB clocks and sequential recovery C without converting RED into PASS; (4) python -m pytest -q part2/capital_flow/tests. Do not report results unless executed.",
+    "proposed_two_writer_test_path": "part2/capital_flow/tests/test_runner_two_writer_retention.py (NOT PRESENT)",
+    "decision": "Execution capability, not more source-only test-spec edits, is the next A-lane bottleneck. No task enqueue while Gemini JSON reliability unverified."
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "next_feasible_recovery": "Obtain an authorized disposable checkout of db4c6bf1ba8f81ee4f4ae27ba59da756594db853 or safe hosted no-network execution, then run existing focused tests, controlled diagnostic and full Capital Flow pytest; retain logs for independent C review. Do not repeat DNS clone."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
