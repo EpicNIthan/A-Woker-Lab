@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-30 15:26 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "diff": "One added 112-line sequential two-child spawn preflight test; no source or production change",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f",
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "prewrite_head": "87fdf9eda852241af9e7334938bbfefa5fe09899",
+    "tree_truncated": false,
+    "tree_entries": 1401,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 2026-10-30 14:49 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1455-executor-contract-deviation-blocked.json",
+      "B_previous": "B-20261030-db4c6bf-1431-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-executor-contract-deviation-1510.json"
+    }
+  },
+  "source_admission": {
+    "qualified_new_independent_btc_eth_sources": 0,
+    "rejected_families_readmitted": false,
+    "criteria": "Immutable first-party BTC/ETH economic artifact/event ID; effective/available/observed PIT clocks; independent non-overlap proof; context vs directional spot semantics; deterministic no-network contract",
+    "finding": "No new source artifact, revision, publication-clock or non-overlap proof was established. Latest exact-SHA diff is test-only; do not recycle rejected source families or queue a speculative source task."
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "independent_pytest": "NOT_RUN",
+    "concurrent_two_writer_three_file": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "verbatim_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)",
+    "contract_deviation": "A/C independently found committed preflight queues full anata_output instead of compact counters/provenance and lacks bounded finally cleanup; PASS is not independent task-instruction conformance."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "blocker": "No newly proven qualifying independent PIT BTC/ETH source. Separate A/C/Supervisor execution gate lacks authorized exact-SHA executable checkout and controlled two-writer three-output proof; malformed Gemini JSON mitigation unverified.",
+  "next": "B: wait for genuinely new immutable first-party source/event PIT and non-overlap evidence. A/C/Supervisor: authorized exact-SHA read-only execution and independent quality verdict; no duplicate Gemini task without verified structured-output mitigation.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "schedules_changed": false
+}
