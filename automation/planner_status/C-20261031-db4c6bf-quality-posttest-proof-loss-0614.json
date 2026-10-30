@@ -1,0 +1,78 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-31 06:14 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 sequential test only; no witnessed overlapping run_once proof",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "parser": "9acde817964824086608f6572f361216ac4bd014",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "6a5bc445e6ed5b9e931301957624fff57945ae98",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "source": "nontruncated worker-control queue subtrees"
+    },
+    "roadmap_blob": "d381e762fc6a7f2447b65d243993748abac51d5a",
+    "roadmap_latest": "2026-10-31 05:50 ICT",
+    "reports": {
+      "A": {
+        "file": "A-20261031-db4c6bf-0558-spawn-child-write-boundary-contract-blocked.json",
+        "blob": "96d58c5d72115f174ef30b114b137c0634b643e5"
+      },
+      "B": {
+        "file": "B-20261031-db4c6bf-0534-source-plateau.json",
+        "blob": "f04f2c35b7f816479f881543d011d4dc7b51cd96"
+      },
+      "C": {
+        "file": "C-20261031-db4c6bf-quality-failed-oracle-proof-gate-0511.json",
+        "blob": "bdc93aa424d346a8b05a6d2b76e79d937cdb68e2"
+      }
+    }
+  },
+  "quality_finding": "Independent read of failed run 41134555607/job 124333661975 confirms job log exposes only git diff --check exit 2, not offending diff or pytest outputs. Therefore do not claim the failed role-identity task passed targeted/full tests, or attribute failure to whitespace. Source-pinned test_runner_role_consistency.py asserts aggregate scoring/context roles only, not score_rec_1445_01->scoring and context_rec_1445_01->context in returned AND persisted handoff. Shared evidence_health._is_context_only explicitly parses string ' false ' as false; parser-level concern is mitigated but end-to-end identity oracle remains unproven. runner.py imports atomic_write_json directly, so a future spawned child A witness must patch runner.atomic_write_json in that child, not parent or storage module.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_reported": "PASS (prior exact-SHA commit)",
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS_PRIOR_COMMIT; INDEPENDENT_NOT_RUN",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS_PRIOR_COMMIT; INDEPENDENT_NOT_RUN",
+    "failed_identity_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_task_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_task_pytest": "NOT_AUDITABLY_PRESERVED",
+    "identity_oracle": "NOT_RUN_WITH_PROOF",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized disposable checkout; no preserved independent targeted/full pytest and failed-task diff diagnostics.",
+  "recovery": "In authorized exact-SHA disposable checkout, preserve collect-only/targeted/full pytest stdout stderr exitcodes plus git diff --check diagnostics; assert source_record_id->role for both returned and persisted handoff; run bounded no-network child-local patched A/APPENDER/B with B-published-rowB witness before A release and recovery C. Missing positive witness => INCONCLUSIVE. Do not enqueue duplicate until structured-JSON reliability proven.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "actions": {
+    "tasks_enqueued": 0,
+    "tests_run_this_run": false,
+    "clone_attempted": false,
+    "specialist_code_modified": false,
+    "protected_changes": false,
+    "automation_settings_changed": false
+  }
+}
