@@ -1,0 +1,79 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 14:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "One added 112-line sequential two-child spawn preflight test; no production edits",
+    "pinned_blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_sha": "d0e83b5adfd6d5b48147f6fb861a8cb202f4b018",
+    "authoritative_nontruncated_tree": true,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 13:49 ICT)",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1258-serialized-fix-oracle-compatibility-blocked.json",
+      "B": "B-20261030-db4c6bf-1329-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-serialization-oracle-1312.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "exact_sha_workflow_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_task_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "PREFLIGHT_TIMEOUT_CLEANUP_IS_NOT_EXCEPTION_SAFE; FREEZE_SOURCE_ONLY_CONCURRENCY_REVISIONS",
+    "finding": "Direct inspection of exact test_runner_two_child_spawn_preflight.py shows both Queue.get(timeout=10) except queue.Empty branches call pA/pB.terminate() followed immediately by pytest.fail(), without join() or shared finally cleanup; ctx.Queue is also not explicitly closed/join_thread. Therefore timeout/failure can leave unjoined child resources. This is a test-harness hygiene gap, not evidence of a Capital Flow production race. Current test joins A before starting B and checks only anata_latest.json; cannot establish three-file concurrency safety. runner.py writes latest.json, audit_latest.json, anata_latest.json via separate atomic_write_json calls; storage.py archive lock covers archive read/append only. No new production defect proven.",
+    "no_network_contract": "On authorized exact-SHA checkout, run existing preflight collect-only/targeted/full suite and preserve stdout, exitcodes, SHA. For future Gemini-owned bounded two-writer regression, use spawn-safe Events; A pauses before third write; rowB PIT-visible and B generation demonstrably distinct via audit/coverage/provenance; inspect all three persisted JSON files. Current-SHA diagnostic may wait for B before releasing A; future serialized-fix acceptance must allow B to wait behind A's lock. Always release Events and terminate+join both children in finally, close+join_thread Queue, assert bounded exitcodes, parse/provenance, and no leaked temporary files. Mixed generations => FAIL; absent interleaving/generation delta/cleanup => INVALID_TEST, not PASS. No sleeps, network, mock handoff, or speculative PASS.",
+    "commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "execution": "NOT_RUN; exact repository checkout unavailable; no speculative test outcome."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA checkout or safe hosted read-only test harness; execute bounded deterministic interleaving and full Capital Flow pytest, preserve logs, then independent C review. Do not repeat DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
