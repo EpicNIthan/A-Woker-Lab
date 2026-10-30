@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-30 07:12 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only +112-line sequential spawn preflight test; no production edits",
+    "blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "handoff_tests": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "read_head": "7b072e2e71a465e2adf4784aa5625b51506df0f6",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "proof": "Latest 07:01 A nontruncated 1374-entry worker-control tree; corroborated by 06:45 Supervisor roadmap; not independently re-enumerated by C"
+    },
+    "blobs": {
+      "roadmap": "d70c13d7019b7c4594fe713a2e07b0e3579c71e5",
+      "A": "361c4e5b4832794438b6574d3e53f09859e0fd3f",
+      "B": "6354b10e3fe3988554a8bb097557f888ebab6c53",
+      "C_previous": "d7d294ae0d2b45492ae258a7bc0679b5ea45139b"
+    },
+    "latest_reports": {
+      "A": "A-20261030-db4c6bf-0701-execution-proof-scope-blocked.json",
+      "B": "B-20261030-db4c6bf-0635-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-execution-blocker-0615.json"
+    }
+  },
+  "quality": {
+    "finding": "Direct exact-SHA source inspection: existing test joins child A before launching B, carries full anata_output through queue, and asserts only anata_latest.json. It does not test concurrent publication of latest.json, audit_latest.json and anata_latest.json. Both children use identical as_of_ms, not a generation oracle. evidence_health._is_context_only parses string 'false' as False; end-to-end role inversion not independently tested. No production race reproduced.",
+    "blocker": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; no authorized disposable exact-SHA executable checkout. Gemini paused-A task failed before pytest on malformed JSON; structured-JSON reliability UNVERIFIED.",
+    "recovery": "Authorized disposable exact-SHA checkout or read-only hosted runner: deterministic network=False spawn-safe paused-A/B-publishes-rowB/A-resumes with bounded events, compact queues, whole-test finally cleanup, checked exitcodes, independently different A/B generation hashes and all-three final JSON B-hash equality. Preserve collect-only, targeted and full Capital Flow pytest logs; mark INVALID_TEST if barriers/delta not proven."
+  },
+  "validation": {
+    "exact_sha": "PASS_VIA_MATCHING_EXECUTOR_DONE_TASK_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "hosted_run": 40860520862,
+    "targeted_pytest": "EXECUTOR_REPORTED_PASS",
+    "full_capital_flow_pytest": "EXECUTOR_REPORTED_PASS",
+    "independent_targeted": "NOT_RUN",
+    "independent_full": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
