@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 19:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "one +112-line sequential spawn preflight; no production code change",
+    "pinned_blobs": {
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "readme": "506cee1a4f173ee818c4ffad3b684eab55599fa4"
+    }
+  },
+  "control": {
+    "prewrite_sha": "8e985ecf05dee33629902cf3c339b5ec4484af20",
+    "recursive_tree_truncated": false,
+    "authoritative_queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md, Supervisor 2026-10-30 18:46 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1803-supported-handoff-gate-prioritized-blocked.json",
+      "B": "B-20261030-db4c6bf-1826-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-supported-handoff-gate-1814.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_WITH_HARNESS_DEVIATIONS",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "executor_status": "PASS",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "REQUIRE_B_PHASE_WITNESS_TO_PREVENT_FALSE_GREEN_SERIALIZATION_CLASSIFICATION",
+    "new_finding": "The prior acceptance branch 'B did not finish while A paused, then B finished after A release' is not evidence of safe serialization: a slow spawn/import/scheduler delay can produce the same ordering even with no publication lock. Treat this branch as INCONCLUSIVE absent positive evidence B entered the contested lock/critical section before A release; never count absence of overlap as a PASS.",
+    "no_network_contract": "At exact SHA use spawn top-level children and T=1700000000000. A computes empty snapshot and pauses immediately before atomic_write_json(anata_latest.json), reporting A_prewrite payload lacks rowB. Parent appends PIT rowB (BTC ETF net_flow_usd; effective=T-2000, available=observed=T-1000). Start B with B_entered Event; instrument B_pre_first_publish Event after B has computed its rowB snapshot, and compact IPC (archive/scoring 1/1, role=scoring, effective.source_record_id=rowB). If B publishes all three files before A release, release A and require persisted cf-anata-handoff-v1 retains rowB; stale overwrite is RED. If B cannot reach/complete publication before A release, release A and require bounded completion but classify INCONCLUSIVE unless an explicit observed serialization-lock wait establishes the intended ordering. Do not infer serialization from elapsed time. Require A/B exitcodes, bounded Events/Queue/join, finally release/terminate/join, no network or sleeps. Three-file reader atomicity is out of scope without supported consumer contract. Run collect-only, targeted and full Capital Flow pytest at exact SHA; preserve logs.",
+    "tasks_enqueued": 0
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "status": "NOT_RUN",
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or safe hosted read-only test harness; execute witnessed two-writer test, targeted and full python -m pytest -q part2/capital_flow/tests; preserve exact-SHA logs; obtain independent Planner C review. No repeat DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
