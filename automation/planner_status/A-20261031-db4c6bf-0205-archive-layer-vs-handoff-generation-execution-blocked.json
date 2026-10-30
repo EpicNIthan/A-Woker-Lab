@@ -1,0 +1,80 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 02:05 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "One +112-line sequential-only test: part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; no production concurrency repair.",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "archive_concurrent_dedup_test": "d08fd060df84eae63f1c13eb1bb390cda5d20e52",
+      "archive_reader_writer_visibility_test": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "atomic_handoff_visibility_test": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "spawn_preflight_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "d22ab1246bce7ac2d896396a7fde543daa05f2cf",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26,
+      "source": "worker-control queue directories; pending directory absent; done and failed counts independently read"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "a458699d8570f60ffb8974799f00e8c10cfb2b64",
+    "supervisor_review": "2026-10-31 01:52 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-0100-stale-abtc-status-closed-execution-blocked.json",
+      "B": "B-20261031-db4c6bf-0132-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-identity-and-witness-gate-0116.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "REUSE_EXISTING_ARCHIVE_CONCURRENCY_AND_ATOMICITY_TESTS; PRIORITIZE_MISSING_RUN_ONCE_GENERATION_ORDER_REGRESSION",
+    "verified_coverage": "test_archive_concurrent_dedup.py already covers spawned concurrent append, distinct/same observation IDs, and lock behavior; test_archive_reader_writer_visibility.py covers locked archive reader during partial write; test_atomic_handoff_visibility.py covers atomic replacement of one JSON destination; test_runner_two_child_spawn_preflight.py is sequential A then append rowB then B and verifies persisted rowB provenance.",
+    "gap": "No test at exact HEAD witnesses overlapping runner.run_once calculations and stale anata_latest.json publication. runner.py lines 120-144 load archive, calculate, then publish latest.json, audit_latest.json and anata_latest.json independently; ArchiveWriterLock protects archive read/append only. Existing tests prove layer-local safety, not cross-run freshness/order. The proposed test_runner_two_writer_retention.py is 404 NOT_FOUND at exact HEAD. Potential stale overwrite is SOURCE-INFERRED, NOT REPRODUCED.",
+    "test_contract": "Disposable exact-SHA checkout only; use network=False, fixed as_of_ms, same shared tmp_path; phase-witness A after old archive snapshot but before final handoff replace; bounded separate rowB appender and B child; record whether B reached post-load/pre-publish phase (otherwise INCONCLUSIVE); release A in finally; join/terminate all children with timeouts; compare persisted source_record_id=rowB and returned B provenance; check archive retains rowB; run recovery C and distinguish stale recoverable handoff from persistent loss. Correct serialized behavior may delay B and must not be mislabeled FAIL. Do not add duplicate archive-lock or single-file-atomicity tests.",
+    "priority": "Obtain authorized executable checkout; first run existing targeted archive/role/PIT/spawn tests; then ephemeral witnessed runner-level concurrency diagnostic; finally full python -m pytest -q part2/capital_flow/tests and retain logs for independent C audit. Do not enqueue malformed Gemini repeat."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS_WITH_HARNESS_DEVIATIONS",
+    "executor_run": "40860520862",
+    "executor_run_conclusion": "success on worker-control push, not independent public SHA pytest",
+    "public_commit_status_count": 0,
+    "public_check_run_count": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_attempted": false,
+    "targeted_pytest": "NOT_RUN",
+    "full_pytest": "NOT_RUN",
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or isolated no-network hosted test runner; no repeated DNS clone."
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false
+}
