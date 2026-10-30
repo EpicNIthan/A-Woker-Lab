@@ -1,0 +1,79 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 12:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112 lines in sequential test_runner_two_child_spawn_preflight.py; no production changes",
+    "pinned_blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_sha": "47d5d041a2b8d15bd9baeaf0831d2861d106ea48",
+    "authoritative_nontruncated_tree": true,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "roadmap": "automation/supervisor_roadmap.md, Supervisor 12:52 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1155-generation-delta-safety-oracle-blocked.json",
+      "B": "B-20261030-db4c6bf-1227-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-oracle-polarity-1212.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "exact_sha_workflow_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "verbatim_failed_task_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "SEPARATE_CURRENT_SHA_DIAGNOSTIC_FROM_FUTURE_SERIALIZATION_ACCEPTANCE",
+    "finding": "Earlier A-paused/B-must-finish-before-release requirement is a valid current-SHA race-reproduction diagnostic but an invalid universal post-fix acceptance condition: a correct transaction-wide publication lock can intentionally block B until A is released. Requiring B to finish during A pause would reject a safe serialized implementation. runner.py currently writes latest.json, audit_latest.json, anata_latest.json separately with no surrounding publication lock; existing preflight runs children sequentially. Race still unproven.",
+    "runnable_no_network_contract": "For pinned current-SHA diagnostic: spawn A on empty archive, pause A immediately before third output write via spawn-safe bounded Events, verify first two A outputs and absent A handoff, append PIT-visible BTC ETF rowB (T=1700000000000; effective=T-2000, available=observed=T-1000; source=farside_etf, source_record_id=rowB), spawn B on same directory; if B completes while A paused, verify B generation via coverage/audit counts/rowB provenance and snapshot all three B JSON, then release A and assert final three-file coherence; mixed B latest/audit with stale A handoff => FAIL (defect reproduced). For future fixed-SHA acceptance, DO NOT require B completion before release: assert B started, release A within bounded timeout, join A/B, require B's rowB generation is last coherently published or a proven stale-write suppression mechanism leaves all three B; no mixed generations. B waiting for A's publication lock is allowed, but post-release timeout/deadlock => FAIL. In both cases missing barrier, rowB delta, valid JSON, process exitcodes, cleanup or final generation proof => INVALID_TEST, never PASS. Use compact IPC, finally release/terminate/join, no network/sleeps/mock handoff. Re-pin and revalidate on any new HEAD.",
+    "commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "execution": "NOT_RUN: no exact-SHA checkout; contract source-derived only."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or safe read-only hosted harness; run current-SHA diagnostic and, if repaired, future-SHA serialization-compatible acceptance, plus collect-only/targeted/full Capital Flow pytest with logs and independent C review. Do not retry DNS clone or malformed Gemini task."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
