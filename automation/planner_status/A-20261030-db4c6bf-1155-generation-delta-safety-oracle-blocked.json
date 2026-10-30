@@ -1,0 +1,81 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-30 11:55 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112-line sequential part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; no production changes",
+    "source_blobs": {
+      "test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "features": "af20e0ced4df0f5af3c73553dc2ad0b1b6cc072c",
+      "engine": "d5ae19dc91aaf93291fd9d9bffc1f26de1114968",
+      "output": "94904d4e00a350d621e9c271372766879059ec03",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_sha": "f1525d8c6479f7204b5c0f13427a35311ed48daf",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 26
+    },
+    "queue_basis": "pending path direct 404; done/failed from Supervisor 11:46 authoritative nontruncated tree; worker-control HEAD unchanged since Supervisor refresh",
+    "roadmap": "automation/supervisor_roadmap.md, 11:46 ICT",
+    "latest_durable": {
+      "A": "A-20261030-db4c6bf-1058-third-write-generation-oracle-execution-blocked.json",
+      "B": "B-20261030-db4c6bf-1132-source-plateau.json",
+      "C": "C-20261030-db4c6bf-quality-third-write-oracle-1113.json"
+    }
+  },
+  "validation": {
+    "exact_sha": "MATCHING_EXECUTOR_DONE_PASS_ONLY",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_status": "PASS",
+    "executor_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "controlled_two_writer": "NOT_RUN",
+    "exact_sha_commit_statuses": 0,
+    "gemini_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261029-paused-A-event-preflight-1851-01",
+    "failed_task_error": "ExecutorError: Gemini returned invalid JSON: Expecting ',' delimiter: line 9 column 1 (char 3803)"
+  },
+  "integration_decision": {
+    "name": "CORRECT_GENERATION_DELTA_AND_SAFETY_ORACLE_POLARITY",
+    "finding": "Exact features.py requires MIN_TRAILING_WINDOWS=5 for magnitude_percentile/direction_score. One PIT-visible rowB changes ETF family presence and compact coverage from 0 to 1/3, but cannot establish normalized directional ETF score; both A and B may retain flow_state=UNKNOWN. The previous mixed-generation diagnostic must not be treated as a passing safety regression: final mixed outputs are a FAIL, not a success.",
+    "runnable_no_network_contract": "Pin exact SHA. Spawn A on empty archive; wrap only A's runner.atomic_write_json to set A_paused and wait bounded before anata_latest.json. Verify A latest/audit exist and no handoff. Append one PIT-visible BTC ETF rowB (T=1700000000000, effective=T-2000, available=observed=T-1000, source=farside_etf, source_record_id=rowB). Spawn unpatched B on shared directory, assert B completed while A paused, B archive/scoring=1/1, no errors, B latest.coverage=1/3 vs A=0, audit.visible_observation_count=1 vs A=0, handoff effective.source_record_id=rowB. Do not require changed flow_state or directional score. Snapshot all three B JSON files, release A and join; final all-three JSON must be coherent with a single generation. If final latest/audit=B but handoff=A lacking rowB, FAIL MIXED_GENERATION (bug reproduced); if final all three=B, PASS consistency for this interleaving; if pause, generation delta, B completion, cleanup or event ordering fails, INVALID_TEST, never PASS. Use bounded Events, compact IPC, exitcode checks, finally release/terminate/join, no network/sleeps/mock handoff; preserve logs. Do not change production code.",
+    "commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "execution": "NOT_RUN; source-derived contract only. No exact-SHA checkout; no race claim."
+  },
+  "blocker": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "exit_code": 42,
+    "verbatim_error": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or safe hosted read-only harness; execute corrected paused-A/B-publish/A-resume consistency regression and collect-only/targeted/full Capital Flow pytest; retain logs; request independent C audit. No repeated DNS clone, workflow edits or malformed Gemini retry."
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "automation_settings_changed": false,
+  "planner_A_enabled_verified": true,
+  "original_hourly_schedule_preserved": true
+}
