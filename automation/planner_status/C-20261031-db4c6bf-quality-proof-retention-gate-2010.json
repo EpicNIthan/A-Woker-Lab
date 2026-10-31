@@ -1,0 +1,64 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-31 20:10 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 sequential two-child spawn preflight test only; no overlap proof",
+    "pinned_blobs": {
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "d59b8be8504cb7025aec9c4e37dd91237b5a4073",
+    "roadmap_blob": "d57a22b78f8db64978db3fc39d1c57275cf84d44",
+    "latest_report_blobs": {
+      "A": "eceb67960f7c0c94f9a48f58fa6bc148c0224e34",
+      "B": "fcf1f2c73611d5bf9c5141ce02e1cd9b598fac19",
+      "C_previous": "603afc438fcf5bcbbef2b0c63aba2162cfc5232b"
+    },
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "source": "independently counted nontruncated recursive worker-control Git tree; pending directory absent"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "finding": "Committed context-only role test covers string ' false ' but does not assert source_record_id-to-role identity for both returned and persisted handoff; sequential child A-then-B preflight cannot prove concurrent-writer safety. Failed exact-SHA identity task stopped at git diff --check exit 2; no retained patch, stderr or pytest logs. No Capital Flow production defect reproduced.",
+  "validation": {
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_status": "PASS",
+    "matching_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "scope": "executor-recorded collect-only, targeted and full Capital Flow pytest for sequential preflight; no independent replay",
+    "failed_task_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "identity_regression": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "Authorized disposable exact-SHA checkout unavailable; failed executor diagnostics not preserved. No local pytest executed.",
+  "recovery": "Provide separately authorized disposable exact-SHA checkout or sanitized pre-cleanup executor retention (patch, diff-check stdout/stderr/exit, collect-only/targeted/full pytest logs). Then run no-network returned/persisted source_record_id->role regression and positively witnessed first/last-boundary A/APPENDER/B overlap plus recovery. Without positive B publication witness mark INCONCLUSIVE. Do not enqueue until structured-JSON reliability proven.",
+  "actions": {
+    "tasks_enqueued": 0,
+    "pytest_executed": false,
+    "specialist_code_modified": false,
+    "protected_code_workflows_secrets_schedules_modified": false
+  }
+}
