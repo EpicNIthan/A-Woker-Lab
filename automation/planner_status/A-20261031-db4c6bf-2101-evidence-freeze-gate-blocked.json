@@ -1,0 +1,100 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 21:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; A joined before B starts; no overlap witness",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "branch": "worker-control",
+    "prewrite_head": "0dd133e5182bbfc108da932df5b50288a85a75a9",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "source": "nontruncated 1490-entry recursive Git tree; done/failed directories independently listed"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 20:53 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-2000-automation-health-and-execution-gate.json",
+      "B": "B-20261031-db4c6bf-2031-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-proof-retention-gate-2010.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "validation": {
+    "route": "exact-SHA executor done alternative (b)",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_status": "PASS",
+    "commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recorded_commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "combined_commit_status_count": 0,
+    "independent_replay": "NOT_RUN",
+    "source_identity_and_overlap_proof": "NOT_ESTABLISHED",
+    "invalidate_on_new_head": true
+  },
+  "integration_decision": {
+    "action": "EVIDENCE_GATE_FREEZE",
+    "decision": "No more A source-only contract edits or repeat Gemini task until executable exact-SHA proof or sanitized pre-cleanup diagnostics is available. Preserve distinct gates: (1) role identity returned+persistent; (2) first/last publication-boundary A/APPENDER/B overlap with positive B publication witness; (3) recovery and targeted/full no-network pytest. Sequential smoke PASS cannot satisfy gate (2).",
+    "source_inspection": "runner releases archive read lock before three separate atomic_write_json calls (latest.json, audit_latest.json, anata_latest.json); storage atomic replace protects individual files only; no reproduced production race.",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "gemini_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "execution_blocker": {
+    "attempted_operation": "local exact-SHA checkout and runner preflight",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT_RUNNER:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "targeted_pytest": "NOT_RUN",
+    "full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next": "Obtain separately authorized disposable checkout pinned to db4c6bf1 or preserve sanitized Gemini executor patch plus git diff --check stdout/stderr/exit and pytest logs before worktree reset. Run frozen positive-B-witness first/last-boundary A/APPENDER/B and recovery, role identity, targeted and full no-network pytest; classify absent B witness INCONCLUSIVE. Request independent C verification; no promotion without same-SHA A/B/C and Supervisor unqualified PLATEAU.",
+  "automation_health": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "Supervisor": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "specialist_code_modified": false,
+    "private_main_railway_workflows_secrets_prediction_broker_modified": false,
+    "automation_settings_modified": false,
+    "queue_modified": false
+  }
+}
