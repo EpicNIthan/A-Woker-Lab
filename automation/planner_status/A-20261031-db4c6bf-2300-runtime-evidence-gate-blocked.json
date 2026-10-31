@@ -1,0 +1,101 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 23:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "diff": "One added sequential two-child spawn preflight test, +112/-0; no concurrent overlap",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    },
+    "ignore_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "558fba98f91fa664d49bd7ac8a293e03925b977d",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "c139f190680a5d3fb2e03fa790fe9d28b936c04e",
+    "roadmap_latest": "2026-10-31 22:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "evidence": "Nontruncated worker-control recursive tree, 1496 entries"
+    },
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-2200-legacy-status-reconciled-execution-gate-blocked.json",
+      "B": "B-20261031-db4c6bf-2234-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-identity-witness-gate-2216.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "decision": {
+    "status": "FREEZE_EXISTING_TWO_WRITER_CONTRACT_AND_REQUIRE_EXECUTION_EVIDENCE",
+    "rationale": "Current runner loads archive snapshot then separately writes latest.json, audit_latest.json and anata_latest.json; storage atomic_write_json uses per-file os.replace. The committed child A joins before child B starts. Source inspection cannot prove generation-wide consistency or demonstrate stale overwrite. No substantive new runnable no-network contract improves the already frozen first/last boundary A/APPENDER/B witness specification; do not generate a repetitive speculative contract.",
+    "identity_gap": "Current role test checks only role-set membership, not returned and persisted source_record_id-to-role mapping; the narrow Gemini attempt failed and must not be blindly repeated.",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "verbatim_executor_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "lost_diagnostics": "Generated patch and command stdout/stderr and pytest logs not retained",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "validation": {
+    "route": "matching exact-SHA worker-control done task alternative (b)",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS",
+    "commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "combined_commit_statuses": 0,
+    "independent_pytest": "NOT_RUN",
+    "identity_regression": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "invalidate_on_head_change": true
+  },
+  "execution_blocker": {
+    "attempted_operation": "Read-only local exact-repository preflight using test -e, find /mnt/data -maxdepth 3 -type d -name .git, and python -m pytest --version",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "targeted_pytest": "NOT_RUN: exact checkout absent",
+    "full_capital_flow_pytest": "NOT_RUN: exact checkout absent",
+    "dns_clone_retried": false
+  },
+  "next": "Separately authorize an exact-SHA disposable executable checkout or executor pre-cleanup sanitized patch, git diff --check stdout/stderr/exit and pytest logs. With exact-SHA repo, run deterministic returned/persisted source_record_id→role assertions, positively witnessed A/APPENDER/B overlap at first and last publication boundaries and recovery, then collect-only, targeted and full python -m pytest -q part2/capital_flow/tests; preserve logs for independent Planner C review. Missing B publication witness = INCONCLUSIVE. No promotion until same-SHA unqualified A/B/C and independent Supervisor PLATEAU.",
+  "automation_health": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "Supervisor": true,
+    "source": "Automations read-only peek",
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "specialist_code_modified": false,
+    "queue_modified": false,
+    "protected_systems_modified": false,
+    "automation_settings_modified": false
+  }
+}
