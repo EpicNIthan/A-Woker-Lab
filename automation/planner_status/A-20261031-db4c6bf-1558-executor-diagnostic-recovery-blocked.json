@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 15:58 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": {
+      "path": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "additions": 112,
+      "deletions": 0,
+      "character": "sequential A-then-B; no overlapping-writer witness"
+    },
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "7f4623e47f7d793da1ad7dc31eddbf5879b7f7cd",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 15:45 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1500-exact-sha-execution-preflight-blocked.json",
+      "B": "B-20261031-db4c6bf-1531-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-no-executable-evidence-1517.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "RECOVERY_DEPENDENCY_SELECTED_NO_NEW_SPEC",
+    "finding": "Direct pinned blobs confirm archive read lock is released before run_once writes latest.json, audit_latest.json, anata_latest.json individually; committed spawn preflight joins child A before child B and therefore cannot validate overlapping publication. Existing role test checks presence of scoring/context but not exact source_record_id-to-role mapping. No stale overwrite is reproduced.",
+    "selected_next_step": "Escalate to separately authorized Supervisor/infrastructure diagnostic retention for the already-failed test-only executor attempt: preserve sanitized generated patch, git diff --check stderr and exit code, collect-only/targeted/full pytest stdout/stderr and exit codes BEFORE reset_worktree. This is an infrastructure request only; Planner A must not edit executor/workflows. Alternatively obtain an authorized disposable checkout pinned to exact public SHA. Once available, execute frozen no-network first/last-boundary A/APPENDER/B with positive B-publication witness, fail-closed timeout, per-file identity snapshots, recovery C, role-identity checks, targeted and full pytest. Missing witness = INCONCLUSIVE.",
+    "why_now": "Repeated source-only test-contract rewrites do not resolve the absent executable checkout or the lost executor diagnostics. Freeze the contract and choose one concrete recovery dependency."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_executor_result": "PASS",
+    "mode": "alternative (b) only; independent exact-SHA pytest NOT RUN",
+    "combined_commit_status_count": 0,
+    "gemini_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_patch_and_diagnostics": "NOT_PRESERVED"
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA executable-checkout preflight before running pytest",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "targeted_pytest": "NOT_RUN",
+    "full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN"
+  },
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_or_protected_changes": false,
+    "workflow_or_automation_settings_modified": false,
+    "pytest_executed": false,
+    "automation_state_checked": "A/B/C/Supervisor enabled; original hourly schedules unchanged"
+  }
+}
