@@ -1,0 +1,89 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 11:00 ICT hourly window",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential A joins before B, not concurrent proof",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "fe769c5feed895beda3f3f129a4d0e7f31859869",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 10:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "source": "10:50 Supervisor nontruncated authoritative queue/tree audit; pending direct fetch 404 NOT_FOUND"
+    },
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1000-two-boundary-generation-contract-execution-blocked.json",
+      "B": "10:31 SOURCE_ADMISSION_PLATEAU per 10:50 Supervisor roadmap; last directly fetched B-20261031-db4c6bf-0933-source-plateau.json",
+      "C": "10:14 QUALITY_EVIDENCE_INCOMPLETE per 10:50 Supervisor roadmap; last directly fetched C-20261031-db4c6bf-quality-per-path-proof-gate-0919.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "CAUSAL_STALE_PAYLOAD_ORACLE_FOR_EXISTING_TWO_BOUNDARY_CONTRACT",
+    "new_distinction": "Per-path B snapshot hash mismatch alone does not causally identify stale A output. Pin A's pre-publication stale payload and require final output to match A's payload while B publication was positively witnessed. This prevents mislabeling unrelated per-path changes as stale-generation overwrite; no production defect claimed.",
+    "runnable_no_network_contract": [
+      "Use exact-SHA checkout; fresh tmp dir per scenario; T=1700000000000; network=False; spawn top-level child targets. Child A patches runner.atomic_write_json locally (not storage or parent) and pauses fail-closed at requested path after building payload.",
+      "At A_PAUSED record the exact paused A path and serialized payload SHA-256; assert child A's loaded archive was empty by instrumentation/returned result and its precomputed anata handoff lacks provenance_refs entry farside_etf:rowB. A must not be released on missing witnesses.",
+      "APPENDER append exactly one PIT-visible rowB to observations.jsonl, verify append count and durable archive read. Spawn unpatched B. Require B exitcode=0, archive_records_loaded=1, source_evidence rowB and provenance_refs farside_etf:rowB, persisted anata_latest.json rowB; capture independent SHA-256 plus parsed identity for each B-published latest.json/audit_latest.json/anata_latest.json.",
+      "Scenario L: pause A before anata_latest.json, after its latest/audit writes. After B_PUBLISHED and snapshots, release A; final anata_latest.json matching A's pre-pause payload with rowB absent while other paths retain B snapshots is RED mixed-generation stale publication. Hash changes without A-payload identity => INCONCLUSIVE.",
+      "Scenario F: fresh tmp dir; pause A before latest.json, then B publishes all three. After A release, require final per-path content to equal A's own captured prepublication payloads (record all three A payloads inside child) and differ from each B snapshot; final handoff lacking rowB is RED whole-generation stale overwrite. A-only final hash mismatch is insufficient proof.",
+      "Each scenario: positive phase trace A_PAUSED/ROWB_APPENDED/B_PUBLISHED/A_RELEASED, bounded Queue waits/process joins/terminate+join, exitcodes and exception messages, fail-closed timeouts; if B cannot publish before A release, record serialization evidence or INCONCLUSIVE, never PASS by timeout.",
+      "After any RED/INCONCLUSIVE, spawn recovery C on same directory, require persisted handoff rowB restored and all three outputs parse; preserve test logs. Run targeted deterministic pytest then python -m pytest -q part2/capital_flow/tests. Do not edit production code or claim tests run before executing."
+    ],
+    "tasks_enqueued": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_task_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_task_diagnostics": "No retained diff stderr/patch; root cause unverified; do not repeat malformed or failed task."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "alternative_b_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_commit_sha": true,
+    "executor_result": "PASS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "witnessed_two_writer": "NOT_RUN"
+  },
+  "execution": {
+    "attempted_operation": "test -e /mnt/data/A-Woker-Lab/.git; test -e /mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+    "verbatim_observation": "ABSENT:/mnt/data/A-Woker-Lab/.git\nABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+    "clone_attempted": false,
+    "reason": "No local executable exact-SHA checkout; connector read access does not provide a runnable checkout.",
+    "next_feasible_recovery": "Obtain separately authorized disposable checkout pinned to db4c6bf1, or authorized infrastructure diagnostics preserving pytest stdout/stderr/exitcodes and git diff --check stderr/patch; execute bounded causal two-boundary regression, recovery C, targeted/full pytest, then independent Planner C review."
+  },
+  "automation": {
+    "A_enabled": true,
+    "B_enabled": true,
+    "C_enabled": true,
+    "Supervisor_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_changed": false,
+    "source": "read-only Automations peek"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false
+}
