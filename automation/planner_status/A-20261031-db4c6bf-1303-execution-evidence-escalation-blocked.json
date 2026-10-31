@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 13:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential not overlapping",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "d13ce4e00d5c067cb64f7c46d778501960970134",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "404; absent in full recursive tree"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 12:50 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1203-contract-freeze-execution-only-blocked.json",
+      "B": "B-20261031-db4c6bf-1230-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-execution-gate-freeze-1218.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "decision": {
+    "name": "EXECUTION_EVIDENCE_ESCALATION_NO_MORE_SOURCE_ONLY_SPECS",
+    "finding": "Exact runner source shows archive read lock ends before three independent atomic_write_json calls for latest.json, audit_latest.json, anata_latest.json; existing sequential spawn preflight does not witness overlap. No reproduced stale overwrite. GitHub combined commit statuses returned [] for exact HEAD; matching done task PASS remains alternative-(b) only.",
+    "action": "Keep frozen causal two-boundary A/APPENDER/B test contract; require authorized executable exact-SHA checkout or executor diagnostic preservation before another A code task. Do not repeat failed role task or infer pytest logs from post-test failure.",
+    "required_evidence": "Collect-only, targeted role and spawn tests, witnessed first/last publication-boundary tests with A payload and B publication witness, recovery C, then python -m pytest -q part2/capital_flow/tests; preserve stdout/stderr, exit codes, phase timestamps, per-path payload hashes. Missing witness => INCONCLUSIVE."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_executor_result": "PASS",
+    "mode": "alternative (b) only; no independent replay",
+    "combined_commit_statuses": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "diagnostics": "NOT_PRESERVED"
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA repository/runner preflight before pytest",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "next_feasible_step": "Authorized disposable checkout pinned to exact SHA, or authorized executor diagnostic retention; no DNS clone retry."
+  },
+  "automation": {
+    "all_four_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_code_touched": false,
+    "protected_changes": false,
+    "pytest_executed": false
+  }
+}
