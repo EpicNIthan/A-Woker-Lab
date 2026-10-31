@@ -1,0 +1,94 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 03:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "f8ff72130044ff51fb987b147d1008ed690daab5",
+    "roadmap_latest": "2026-11-01 03:53 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT_404"
+    },
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-0303-partial-identity-scope-execution-blocked.json",
+      "B": "B-20261101-db4c6bf-0327-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-partial-identity-witness-gate-0313.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "ARCHIVE_LOCK_IS_NOT_PUBLICATION_GENERATION_LOCK",
+    "exact_source_finding": "ArchiveWriterLock protects append_observations and load_observations separately; run_once then computes and publishes latest.json, audit_latest.json, and anata_latest.json using three separate atomic_write_json calls, with no encompassing run-wide publication lock. Per-file os.replace prevents torn individual JSON but does not prove three-file generation coherence. Source evidence is grouped by (family, source, role), with independently selected effective/available/observed record provenance; do not assume all clock IDs must match for arbitrary multirow sources. The sequential two-child test verifies rowB scoring ID in returned/persisted handoff, not overlapping publication. This is a structural proof gap, NOT a reproduced production race.",
+    "test_contract_decision": "KEEP_FROZEN: do not revise the existing two-boundary no-network contract until executable evidence; positively witness B publication before releasing paused A at both last-file and first-file boundaries, per-path SHA-256/parsed provenance, recovery C, and mixed scoring/context record-ID-to-role in returned/persisted handoff. No B publication witness => INCONCLUSIVE. Then collect-only, targeted and full Capital Flow pytest.",
+    "gemini_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_executor_result": "PASS (sequential test-only commit)",
+    "push_run_success": "40860520862",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_task_verbatim": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_push_run": "41134555607",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "mixed_role_identity": "NOT_RUN",
+    "invalidate_on_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "local exact-repo existence preflight and python -m pytest --version",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Acquire separately authorized disposable exact-SHA executable checkout or sanitized pre-cleanup executor patch and git diff --check stdout/stderr/exit plus pytest logs; execute frozen first/last-boundary A/APPENDER/B overlap and recovery C and mixed-role ID assertions, targeted and full pytest. Do not repeat DNS clone or malformed Gemini task."
+  },
+  "automation_health": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "Supervisor": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "specialist_code_modified": false,
+    "queue_modified": false,
+    "protected_systems_modified": false,
+    "automation_settings_modified": false
+  }
+}
