@@ -1,0 +1,102 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 01:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; child A joins before B starts; not overlap proof",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "observed_head": "79c5c776914b8c100430f1607d60cde4a158add2",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "d16932be1eeeb2a0c192a8da2d897f684731d7b4",
+    "roadmap_latest": "2026-11-01 01:53 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "source": "authoritative worker-control executor_queue directory reads"
+    },
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-0105-execution-evidence-blocked.json",
+      "B": "B-20261101-db4c6bf-0127-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-proof-gate-0113.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "KEEP_FROZEN_TWO_BOUNDARY_ORACLE_PRIORITIZE_EVIDENCE_RETENTION",
+    "finding": "Direct exact-blob check: runner publishes latest/audit/anata as three separate atomic file replacements; spawn preflight is sequential; role test asserts role set but not returned/persisted source_record_id->role. No witnessed race or reproduced production defect. Existing two-boundary first/last A/APPENDER/B and recovery-C no-network contract is sufficiently specified; further source-only rewriting is not progress.",
+    "next_execution": "After separately authorized exact-SHA disposable checkout or sanitized executor diagnostic retention, run positively witnessed scenario L (pause A before last anata write), then scenario F (pause A before first latest write) if L evidence preserved; append PIT-visible rowB; require B-published witness before A release, per-path B hash/identity snapshots, recovery C, returned/persisted role identity, targeted and full python -m pytest -q part2/capital_flow/tests. Missing B witness = INCONCLUSIVE, not PASS.",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "validation": {
+    "route": "matching done executor-result alternative (b)",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS",
+    "commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "github_actions_success_run": 40860520862,
+    "independent_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "identity_regression": "NOT_RUN",
+    "invalidate_on_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "read-only local exact-repository existence preflight and python -m pytest --version; inspect failed GitHub Actions run 41134555607 jobs, logs and artifacts",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "targeted_pytest": "NOT_RUN: exact checkout absent",
+    "full_capital_flow_pytest": "NOT_RUN: exact checkout absent",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_job_id": 124333661975,
+    "failed_job_conclusion": "failure",
+    "verbatim_failed_executor_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_run_artifacts": 0,
+    "retained_patch_and_diff_stderr": false,
+    "dns_clone_retried": false
+  },
+  "automation_health": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "Supervisor": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "specialist_code_modified": false,
+    "queue_modified": false,
+    "protected_systems_modified": false,
+    "automation_settings_modified": false
+  }
+}
