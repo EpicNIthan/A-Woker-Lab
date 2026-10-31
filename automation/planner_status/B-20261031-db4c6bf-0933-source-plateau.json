@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-31 09:33 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py only; sequential test, not new economic source",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "f9dcaaa87abfac5e03e431214bb1a23766dc5b40",
+    "tree_entries": 1456,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "absent"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 08:54 ICT",
+    "latest_A": "A-20261031-db4c6bf-0859-per-path-generation-oracle-blocked.json",
+    "latest_B_previous": "B-20261031-db4c6bf-0833-source-plateau.json",
+    "latest_C": "C-20261031-db4c6bf-quality-per-path-proof-gate-0919.json",
+    "stale_worker_status_ignored": true
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "new_candidate": null,
+    "new_task_justified": false,
+    "rejected_families_readmitted": false,
+    "reason": "No newly proven immutable first-party BTC/ETH economic artifact/event ID with effective/available/observed PIT clocks, independent non-overlap, correct context-vs-directional spot role and deterministic no-network contract. The public HEAD change is test-only; previously rejected families have no concrete new admission proof."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_executor_result": "PASS",
+    "matching_commit_sha": true,
+    "independent_pytest": "NOT_RUN",
+    "witnessed_A_APPENDER_B": "NOT_RUN",
+    "source_record_role_identity": "NOT_COMMITTED_OR_INDEPENDENTLY_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_task_tests": "CONDITIONAL_EXECUTOR_INFERRED_ZERO_EXIT_ON_UNCOMMITTED_DIFF; NO PRESERVED LOGS/PATCH/DIFF STDERR"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "next": "No source task or duplicate failed role task. Require a genuinely independently PIT-qualified first-party BTC/ETH artifact before B admission. Separate authorized diagnostics/checkout needed for exact-SHA role identity, witnessed fail-closed A/APPENDER/B per-path B-snapshot and recovery C; preserve pytest/diff stderr. Promotion remains blocked.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "workflows_or_schedules_modified": false
+}
