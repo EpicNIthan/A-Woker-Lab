@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-31 23:16 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; A joins before B starts",
+    "pinned_blobs": {
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "85806d2b405504b2685c60689f07a28988486e57",
+    "roadmap_blob": "c139f190680a5d3fb2e03fa790fe9d28b936c04e",
+    "roadmap_latest": "2026-10-31 22:50 ICT",
+    "latest_reports": {
+      "A": {
+        "at": "23:00",
+        "blob": "dbd072fc304435c60b69a6347c7da6f2056477dc"
+      },
+      "B": {
+        "at": "22:34",
+        "blob": "cd109b4d5550382d6cd564c6576c356c069fbdef"
+      },
+      "C_previous": {
+        "at": "22:16",
+        "blob": "a3a7fec4d4a90328cb3ec2efc3215eefb3ada9fc"
+      }
+    },
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "evidence": "corroborated latest A/B reports and Supervisor roadmap; not independently re-enumerated this run"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "finding": "Exact-source shared _is_context_only handles string ' false ' as scoring and is imported by handoff/runner. Current role integration test checks counts and role membership, not returned and persisted source_record_id-to-role mapping. Two-child test is sequential; it cannot witness A/APPENDER/B overlapping publication boundaries. No production defect reproduced.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_result": "PASS",
+    "scope": "executor-recorded collect-only, targeted/full Capital Flow pytest for sequential preflight, not independent identity or concurrency proof",
+    "failed_role_task_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_task_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "identity_regression": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "No authorized exact-SHA executable checkout available; failed role-identity task did not retain generated patch, git diff --check stderr/stdout, or pytest logs.",
+  "recovery": "Obtain separately authorized exact-SHA disposable checkout or sanitized executor pre-cleanup diagnostics. Run no-network returned/persisted source_record_id-to-role assertions and positively witnessed A/APPENDER/B first/last publication overlap plus recovery C; missing B witness is INCONCLUSIVE. Preserve targeted/full python -m pytest -q part2/capital_flow/tests logs. No task until structured JSON reliability is proven.",
+  "actions": {
+    "tasks_enqueued": 0,
+    "pytest_executed": false,
+    "specialist_code_modified": false,
+    "protected_code_workflows_secrets_schedules_modified": false
+  }
+}
