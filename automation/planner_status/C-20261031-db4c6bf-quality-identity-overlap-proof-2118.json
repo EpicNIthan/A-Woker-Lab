@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-31 21:18 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential A join then B start, not overlapping writer proof",
+    "pinned_blobs": {
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "edecb8e0d1c2369c1e508e7c7698e7b2d149b859",
+    "roadmap_blob": "f2ae6dd87cdf73988d98caba6662f29e095271e5",
+    "latest_report_blobs": {
+      "A": "ba906d9df25e79b95ae38ebfe17361c7d1360a72",
+      "B": "ea2c2b1ef1a4bcd118fab490af1cd6fc4fc6f428",
+      "C_previous": "4ea3235ac89f3c01f8a5ae941e39325f63918cc0"
+    },
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "source": "nontruncated exact worker-control tree directories"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "finding": "Shared evidence_health._is_context_only parser handles string ' false ' and runner/handoff import it; committed runner integration test checks role set, not source_record_id-to-role for both returned and persisted handoff. Sequential two-child spawn test does not witness concurrent writer overwrite; runner writes latest/audit/anata JSON independently. No production defect reproduced.",
+  "validation": {
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_status": "PASS",
+    "matching_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "scope": "executor-recorded collect-only, targeted and full Capital Flow pytest for sequential preflight only",
+    "failed_task_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "identity_regression": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "Authorized exact-SHA disposable checkout absent (/mnt/data/A-Woker-Lab/.git and runner.py); failed executor generated patch, stderr and pytest logs not retained.",
+  "recovery": "Obtain separately authorized exact-SHA checkout or sanitized pre-cleanup executor diagnostics (patch, git diff --check stdout/stderr/exit, collect-only/targeted/full pytest logs). Execute no-network returned+persistent source_record_id->role identity test and positively witnessed first/last publication-boundary A/APPENDER/B overlap plus recovery; missing B publication witness is INCONCLUSIVE. Preserve targeted/full pytest outputs. No task until Gemini structured JSON reliability proven.",
+  "actions": {
+    "tasks_enqueued": 0,
+    "pytest_executed": false,
+    "specialist_code_modified": false,
+    "private_main_railway_workflows_secrets_execution_modified": false,
+    "automation_settings_modified": false
+  }
+}
