@@ -1,0 +1,88 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 12:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential A completes before rowB append and B starts",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "67caa1add75e0d1899e16227dac3716280e3c10d",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "source": "fresh nontruncated worker-control git tree; pending directory absent"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 11:50 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1100-causal-payload-witness-execution-blocked.json",
+      "B": "B-20261031-db4c6bf-1129-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-causal-stale-payload-oracle-1113.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "decision": {
+    "name": "FREEZE_TWO_BOUNDARY_SPEC_ESCALATE_EXECUTION_GATE",
+    "reason": "Existing pinned A and C reports already specify causal A payload identity, positive B publication witness, per-path outputs, first/last boundary pauses, fail-closed timeout, recovery C. Repeated specification refinement is not evidence and has reached diminishing returns. The next A deliverable must be executed exact-SHA evidence, not another speculative source-only contract.",
+    "source_boundary": "runner.run_once loads history under archive read lock, then computes and publishes latest.json, audit_latest.json, anata_latest.json with three independent atomic_write_json calls; no enclosing generation-level transaction is present in the inspected source. This is a risk surface, not a reproduced defect.",
+    "execution_order": "In an authorized disposable checkout at exact SHA: run collect-only and targeted existing two-child preflight; run targeted role-identity test; run two bounded no-network A/APPENDER/B scenarios with A payload capture, B publication witness, per-path comparisons and recovery C; then python -m pytest -q part2/capital_flow/tests. Preserve command, exitcode, stdout/stderr, hashes, phase timestamps and witness files. PASS only with positive witnesses; RED only with causal stale A publication; otherwise INCONCLUSIVE.",
+    "no_new_gemini_task": "Gemini JSON/diagnostic reliability UNVERIFIED; pending empty alone is insufficient. Do not repeat malformed/failed role task."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_executor_result": "PASS",
+    "matching_commit_sha": true,
+    "mode": "alternative (b); no independent replay",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "last_failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "last_failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_task_diagnostics": "NOT_PRESERVED"
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA checkout preflight before pytest",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+      "RUNNER_ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "next_feasible_step": "Use an authorized disposable exact-SHA checkout or separately authorized executor diagnostic preservation; do not repeat DNS clone or claim tests executed."
+  },
+  "automation": {
+    "all_four_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_code_touched": false,
+    "protected_changes": false,
+    "pytest_executed": false
+  }
+}
