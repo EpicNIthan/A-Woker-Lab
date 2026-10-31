@@ -1,0 +1,61 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-31 10:31 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential, no new economic source",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "inert_specialist_branch_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "8c9f4cd1e95fd6af659e651d0c0dd797c5e9009e",
+    "nontruncated_tree_entries": 1459,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 09:52 ICT",
+    "latest_A": "A-20261031-db4c6bf-1000-two-boundary-generation-contract-execution-blocked.json",
+    "latest_B_previous": "B-20261031-db4c6bf-0933-source-plateau.json",
+    "latest_C": "C-20261031-db4c6bf-quality-two-boundary-proof-gate-1014.json"
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "new_candidate": null,
+    "new_task_justified": false,
+    "rejected_families_readmitted": false,
+    "reason": "No newly proven immutable first-party BTC/ETH economic event/artifact ID with effective/available/observed PIT clocks, independent non-overlap proof, correct spot context-versus-directional role, and deterministic no-network contract. Public HEAD change is test-only; previously rejected source families have no new admission proof."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_executor_result": "PASS",
+    "matching_commit_sha": true,
+    "independent_pytest": "NOT_RUN",
+    "witnessed_A_APPENDER_B": "NOT_RUN",
+    "role_identity": "NOT_COMMITTED_OR_INDEPENDENTLY_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_task_tests": "CONDITIONAL_ZERO_EXIT_INFERRED_ONLY; NO PRESERVED PATCH/LOGS"
+  },
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "next": "No B source task or duplicate failed role task. Separate authorization needed for exact-SHA executable checkout/diagnostic preservation, returned+persisted identity oracle and positively witnessed two-boundary A/APPENDER/B with per-path B snapshots and recovery C. Promotion requires matching validation and A/B/C/Supervisor PLATEAU.",
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false,
+  "workflows_or_schedules_modified": false
+}
