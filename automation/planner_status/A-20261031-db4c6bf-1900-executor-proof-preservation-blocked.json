@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 19:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "one added 112-line part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; A fully joins before B starts; not a concurrency test",
+    "exact_source_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "inert_automation_ignored": true
+  },
+  "worker_control": {
+    "observed_head": "9575416d9640a4e86077e51139efbe29dd176d02",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 18:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT",
+      "source": "fresh worker-control directory listings"
+    },
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1800-executor-evidence-loss-root-cause-blocked.json",
+      "B": "B-20261031-db4c6bf-1830-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-evidence-loss-gate-1812.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    },
+    "legacy_loop_A_B_C_status_files": "STALE_SHA; superseded by current durable planner_status"
+  },
+  "exact_sha_validation": {
+    "mode": "alternative (b) only",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS",
+    "commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recorded_commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "combined_commit_statuses": 0,
+    "independent_replay": "NOT_RUN",
+    "does_not_prove": "role-to-record identity or overlapping-writer safety",
+    "new_head_invalidates_this": true
+  },
+  "decision": {
+    "action": "NO_NEW_SPEC_AND_NO_GEMINI_RETRY; escalate execution-evidence retention dependency",
+    "basis": "Exact runner writes latest.json, audit_latest.json and anata_latest.json in three separate atomic_write_json calls. Spawn preflight is sequential. Existing two-boundary A/APPENDER/B causal oracle is frozen; without positive B publication witness, classify INCONCLUSIVE. Failed role-identity task has no preserved patch, diff stderr, or pytest outputs.",
+    "infrastructure_handoff_acceptance": "Separately authorized owner must either provide disposable exact-SHA checkout or preserve sanitized generated patch plus git diff --check stdout/stderr/exit and collect-only/targeted/full pytest stdout/stderr/exit before executor reset_worktree. This is a tooling observability defect; no Capital Flow defect is asserted.",
+    "executor_source_read_only": "automation/gemini_executor.py main blob 0a77b2ef212f782f95564656cf051f2fd3348482: run capture_output=True; commit_and_push diff --check; top-level except resets worktree then logs only exception.",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "verbatim_failed_task_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2."
+  },
+  "execution_blocker": {
+    "attempted_operation": "preflight exact-SHA local executable checkout",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "targeted_pytest": "NOT_RUN",
+    "full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next": "On fresh HEAD and queue refresh, request authorized disposable exact-SHA checkout or sanitized executor evidence preservation. Then run returned/persisted record-id-to-role assertions, positive B-witness first/last-boundary A/APPENDER/B concurrency plus recovery C, targeted and full python -m pytest -q part2/capital_flow/tests. Do not enqueue until Gemini JSON reliability is proven; no promotion until A/B/C and independent Supervisor PLATEAU same SHA.",
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "main_private_railway_workflows_secrets_execution_modified": false,
+    "automation_settings_modified": false
+  }
+}
