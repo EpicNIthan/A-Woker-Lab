@@ -1,0 +1,95 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 20:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "one added +112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential child A join before B, not concurrent-writer proof",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "3cad3b4db0cb909fc8f61ce85d6f109b003e51d8",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "d57a22b78f8db64978db3fc39d1c57275cf84d44",
+    "roadmap_latest": "2026-10-31 19:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "source": "nontruncated recursive Git tree; 1487 entries including directories"
+    },
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1900-executor-proof-preservation-blocked.json",
+      "B": "B-20261031-db4c6bf-1930-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-retention-gate-1917.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "automation_health": {
+    "finding": "The prompt's last-A-report Oct 16 and repeatedly disabled assertions are stale at this refresh: latest A durable report is 2026-10-31 19:00; 19 A reports dated Oct 31 were present before this write; A/B/C/Supervisor each independently peeked enabled with unchanged hourly schedules.",
+    "settings_modified": false
+  },
+  "validation": {
+    "mode": "exact-SHA executor done alternative (b)",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_status": "PASS",
+    "matching_commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recorded_commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "combined_commit_status_count": 0,
+    "independent_replay": "NOT_RUN",
+    "identity_and_concurrency_proof": "NOT_ESTABLISHED",
+    "invalidate_on_new_head": true
+  },
+  "integration_decision": {
+    "action": "FREEZE existing two-boundary regression specification; require executable proof, not another source-only revision",
+    "reason": "Exact runner lines 139-144 publish latest.json, audit_latest.json, anata_latest.json via three separate atomic_write_json calls; sequential spawn preflight cannot establish overlap safety. Failed role-identity task exited at git diff --check before commit and retained neither generated patch nor stderr. No production race defect has been reproduced.",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_task_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "gemini_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "execution_blocker": {
+    "attempted_operation": "test local exact-SHA executable checkout preflight",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "targeted_pytest": "NOT_RUN",
+    "full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "dns_clone_retried": false,
+    "report_write_failure": null
+  },
+  "next": "Single feasible recovery: separately authorized sanitized pre-cleanup executor diagnostics retention (patch, git diff --check stdout/stderr/exit and collect-only/targeted/full pytest outputs), or an authorized disposable checkout pinned to db4c6bf1. Then run existing positive-B-witness first/last-boundary A/APPENDER/B causal tests and recovery, returned/persisted source_record_id->role oracle, targeted/full no-network pytest. Without positive B publication witness classify INCONCLUSIVE. Keep promotion blocked pending exact-SHA A/B/C and independent Supervisor PLATEAU.",
+  "actions": {
+    "specialist_code_modified": false,
+    "private_main_railway_workflows_secrets_execution_modified": false,
+    "automation_settings_modified": false
+  }
+}
