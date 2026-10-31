@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-01 04:31 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+    "source_contract": "part2/capital_flow/SOURCES.md"
+  },
+  "control": {
+    "prewrite_head": "f7fd00644593dc7e113bfb2377ef5efa28bfa90c",
+    "tree_entries": 1513,
+    "truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT_404"
+    },
+    "latest": {
+      "A": "A-20261101-db4c6bf-0359-archive-lock-scope-evidence-blocked.json",
+      "B_previous": "B-20261101-db4c6bf-0327-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-archive-publication-proof-gate-0419.json",
+      "Supervisor": "supervisor_roadmap.md 2026-11-01 03:53 ICT"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_admission": {
+    "qualified_new_independent_first_party_btc_eth_sources": 0,
+    "new_candidate": null,
+    "task_justified": false,
+    "rejected_families_readmitted": false,
+    "reason": "No new first-party immutable BTC/ETH economic artifact/event with effective/available/observed PIT clocks, independent non-overlap, correct context-vs-directional spot role, and testable no-network contract. SOURCES.md forbids pre-bootstrap backdating. Last Specialist diff is test-only."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor": "PASS at current SHA, sequential spawn preflight only; returned and persisted rowB scoring ID",
+    "independent_pytest": "NOT_RUN",
+    "mixed_scoring_context_id_to_role": "NOT_ESTABLISHED",
+    "witnessed_overlap_recovery": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_write_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "diagnostics": "Generated patch, stderr, pytest logs not retained"
+  },
+  "next": "No new Gemini task. Require authorized disposable exact-SHA checkout or sanitized pre-cleanup executor diagnostics; mixed returned/persisted scoring/context record-ID-to-role, positively witnessed first/last A/APPENDER/B overlap and recovery C, independent targeted/full Capital Flow pytest. Missing B publication witness => INCONCLUSIVE. Promotion requires same-SHA A/B/C and independent Supervisor PLATEAU.",
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflows_modified": false,
+    "schedules_modified": false
+  }
+}
