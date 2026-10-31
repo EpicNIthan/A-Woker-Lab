@@ -1,0 +1,103 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 04:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "cf8693ca1a51b608f80d1faf756d467fafb738b0",
+    "roadmap_latest": "2026-11-01 04:53 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT_404"
+    },
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-0359-archive-lock-scope-evidence-blocked.json",
+      "B": "B-20261101-db4c6bf-0431-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-archive-publication-proof-gate-0419.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "NONVACUOUS_TWO_BOUNDARY_PUBLICATION_BARRIER_HANDOFF",
+    "new_substantive_detail": "Source-pinned exact order: runner.run_once loads archive once, then independently publishes latest.json, audit_latest.json, anata_latest.json; archive lock is released before publishing. Existing two-child test joins A before B starts, so it cannot witness a stale publication. Convert the existing frozen two-boundary contract into explicit deterministic barrier phases and isolated A/B golden fingerprints; do not edit source or queue a task.",
+    "runnable_no_network_contract": [
+      "Pin exact SHA db4c6bf1; use only temporary local_dir and as_of_ms fixed T, network=False; no credentials, sleeps as oracle, mocks of handoff, skips, or production changes.",
+      "Build isolated A-only (empty archive) and B-only (one PIT-visible rowB) golden outputs for latest.json, audit_latest.json, anata_latest.json; capture canonical parsed JSON and per-path SHA-256, plus returned/persisted source_evidence effective source_record_id/role.",
+      "Spawn child A on empty shared archive. A child installs test-only wrapper around runner.atomic_write_json to signal an event and wait at (1) immediately AFTER A latest.json publication and separately (2) immediately BEFORE A anata_latest.json publication; prove A had loaded 0 rows before release.",
+      "While A is blocked, parent append rowB to observations.jsonl using real append_observations, then spawn B on same directory. Require B exitcode 0, loaded/scoring 1/1, returned rowB scoring identity, and positively witnessed B publication of ALL THREE JSON files with B golden fingerprints BEFORE releasing A.",
+      "Release A, join with bounded timeouts, read all final JSON files and compare per-path parsed values/hashes to B-only golden outputs. Any A-old artifact or cross-generation mix is a witnessed RED; missing B-before-A-release publication witness is INCONCLUSIVE, not PASS.",
+      "Run recovery C after failure/interleave and verify three final artifacts equal C/B-current golden, no stale resurrection; independently assert both scoring/context source_record_id→role for returned and persisted handoff with score_rec_1445_01 and context_rec_1445_01.",
+      "Record collect-only, focused tests and full python -m pytest -q part2/capital_flow/tests transcripts, exact SHA, child exitcodes, barrier events, artifact hashes, errors, and pytest exit codes; require independent Planner C review."
+    ],
+    "claim_boundary": "This is an unexecuted handoff contract, not a reproduced production race or a PASS. Existing frozen regression intent preserved; no new speculative Gemini task.",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS (sequential test-only commit)",
+    "push_run": "40860520862 completed success (push; control branch)",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_task_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_push_run": "41134555607 completed failure",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "mixed_role_identity": "NOT_RUN",
+    "invalidate_on_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "local exact-repo existence preflight; python -m pytest --version",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Acquire authorized disposable exact-SHA executable checkout OR sanitized pre-cleanup Gemini generated patch and git diff --check stdout/stderr/exit plus test logs; then run deterministic first/last boundary overlap, mixed-role identity, recovery C, targeted and full pytest. No repeated DNS clone or malformed Gemini task."
+  },
+  "automation_health": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "Supervisor": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "specialist_code_modified": false,
+    "queue_modified": false,
+    "protected_systems_modified": false,
+    "automation_settings_modified": false
+  }
+}
