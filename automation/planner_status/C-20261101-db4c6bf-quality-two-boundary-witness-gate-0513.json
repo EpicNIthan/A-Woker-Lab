@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-01 05:13 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+    "blobs": {
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "v1_handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "05801e184d30dd641ec80b21e318f8826230eccc",
+    "roadmap_blob": "ac7f5cb904b2db4fd30589cf36e9c0a9097b5b3e",
+    "roadmap_review": "2026-11-01 04:53 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "tree_truncated": false
+    },
+    "latest": {
+      "A": "A-20261101-db4c6bf-0456-first-last-publication-barrier-contract-blocked.json",
+      "B": "B-20261101-db4c6bf-0431-source-plateau.json",
+      "C_previous": "C-20261101-db4c6bf-quality-archive-publication-proof-gate-0419.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "finding": "Sequential child A then B verifies returned/persisted rowB scoring identity but not overlapping-writer safety. Mixed scoring/context test lacks both returned/persisted source_record_id-to-role mapping. Runner loads archive and independently publishes latest.json, audit_latest.json, anata_latest.json without a run-wide publication barrier: cross-generation coherence is UNPROVEN, not a reproduced race. First/last A pause with positively witnessed B three-file publication before A release is required; absent witness means INCONCLUSIVE.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor": "PASS (sequential only; executor-recorded, not independently replayed)",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "targeted_pytest": "NOT_RUN",
+    "full_capital_flow_pytest": "NOT_RUN",
+    "mixed_role_identity": "NOT_RUN",
+    "witnessed_overlap_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "Authorized disposable exact-SHA executable checkout and retained failed-task generated patch, diff-check stderr, and pytest logs unavailable; no independent execution evidence.",
+  "recovery": "Obtain authorized exact-SHA disposable checkout or sanitized pre-cleanup executor diagnostics. Execute deterministic no-network mixed-role source-ID mapping and first/last A/APPENDER/B barrier with B all-three-file witness and recovery C; retain collect-only, targeted, full python -m pytest -q part2/capital_flow/tests logs. No speculative Gemini task.",
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "automation_settings_modified": false
+  }
+}
