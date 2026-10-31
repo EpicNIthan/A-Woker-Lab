@@ -1,0 +1,100 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 07:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py only; sequential not concurrent",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_preflight": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "head_at_read": "cb8ffb5d3635e6ddefc0b3c605b98ae2dee4f6c3",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "absent",
+      "source": "worker-control authoritative executor_queue"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 07:51 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-0703-fail-closed-pause-witness-execution-blocked.json",
+      "B": "B-20261031-db4c6bf-0731-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-failclosed-phase-proof-0715.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    },
+    "stale_worker_status_ignored": true
+  },
+  "integration_decision": {
+    "name": "RECLASSIFY_FAILED_ROLE_TASK_TEST_EVIDENCE_FROM_UNKNOWN_TO_EXECUTOR_INFERRED_ZERO_EXIT",
+    "finding": "New independent read of pinned executor infrastructure shows the failed role-identity task reached git diff --check only via if ok: commit_and_push. run_tests returns ok=True only after all listed pytest commands return zero. Therefore, conditional on the checked-out main executor source (confirmed at 4bbee3dfde71a90d8bbdc2a4c3def4bb3f195514 in job logs), the executor observed zero exit status for collect-only, targeted role integration, and full Capital Flow pytest on its temporary generated diff before git diff --check failed. This is a stronger execution-path inference than 'tests may not have run', but NOT an independently replayed PASS and NOT committed or current-HEAD regression coverage.",
+    "source_evidence": {
+      "executor_main_commit": "4bbee3dfde71a90d8bbdc2a4c3def4bb3f195514",
+      "executor_blob": "0a77b2ef212f782f95564656cf051f2fd3348482",
+      "run_tests": "automation/gemini_executor.py lines 320-338: subprocess returncode checked for each command",
+      "gate": "lines 451-462: apply_files -> run_tests -> if ok: commit_and_push",
+      "diff": "lines 352-361: commit_and_push runs git diff --check before commit",
+      "lost_stderr": "lines 39-51: subprocess capture_output=True and check=True; lines 476-492: generic exception serializes only exception string",
+      "workflow_run": "41134555607",
+      "workflow_job": "124333661975",
+      "job_logs": "checkout main 4bbee3df; executor status FAILED at git diff --check exit 2; no pytest/diff stdout-stderr preserved"
+    },
+    "exact_failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_task_tests": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_role_consistency.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_role_consistency.py::test_run_once_runner_context_role_integration",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "interpretation": "EXECUTOR_INFERRED_ALL_TEST_COMMANDS_ZERO_EXIT_ON_UNCOMMITTED_TEMP_DIFF; NO_INDEPENDENT_REPLAY; NO_COMMIT; NO_WHITESPACE_ROOT_CAUSE_PROVEN",
+    "next_decision": "Do not requeue the same malformed/failed role task. Prioritize preserving git diff --check stdout/stderr and the generated patch through separately authorized executor-infrastructure diagnostics; retain no-network A/APPENDER/B phase-witness and recovery C as the unresolved A integration gate. Require fail-closed A pause, positive B-before-A persisted rowB witness or explicit serialization proof, bounded exits, and three-file generation coherence. Source inference is not a reproduced race."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "alternative_b_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_result": "PASS",
+    "matching_commit_sha": true,
+    "independent_pytest": "NOT_RUN",
+    "witnessed_two_writer": "NOT_RUN",
+    "role_task_pytest": "INFERRED_EXECUTOR_ZERO_EXIT_ON_UNCOMMITTED_DIFF",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git",
+    "verbatim_observation": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git",
+    "clone_attempted": false,
+    "targeted_pytest_run_this_run": false,
+    "full_pytest_run_this_run": false,
+    "next_feasible_recovery": "Acquire authorized exact-SHA executable checkout without retrying known DNS clone; preserve exact git diff --check stderr and pytest stdout/stderr in authorized executor environment; run bounded A/APPENDER/B/recovery and full Capital Flow suite; independent C review."
+  },
+  "automation": {
+    "A_enabled": true,
+    "B_enabled": true,
+    "C_enabled": true,
+    "Supervisor_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_changed": false,
+    "source": "read-only Automations peek"
+  },
+  "tasks_enqueued": 0,
+  "specialist_code_modified": false,
+  "protected_changes": false
+}
