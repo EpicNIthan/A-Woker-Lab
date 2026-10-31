@@ -1,0 +1,111 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 22:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential child A join before B start, not concurrent writer proof",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "9848cf2c8111cf76945b1c7e49a75ecc5b6eb4d4",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "evidence": "nontruncated 1493-entry worker-control Git tree and independent done/failed directory listing"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_blob": "662a51a1f602f3e24885ccd03399eb9f09efcf2c",
+    "roadmap_latest": "2026-10-31 21:54 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-2101-evidence-freeze-gate-blocked.json",
+      "B": "B-20261031-db4c6bf-2126-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-identity-overlap-proof-2118.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "new_integration_finding": {
+    "decision": "CLOSE_STALE_LEGACY_A_BLOCKER; DO_NOT_REQUEUE",
+    "legacy_status": "automation/worker_status/loop-A.json",
+    "legacy_status_date": "2026-10-05T18:57:00Z",
+    "legacy_head": "ded21ded9a23dd34a3235fdb11509ce0b3aa37c0",
+    "legacy_claim": "AmericanBitcoinTreasuryCollector missing from runner registration",
+    "exact_head_evidence": "Current pinned runner.py imports AmericanBitcoinTreasuryCollector from providers_abtc and registers ('american_bitcoin_treasury', AmericanBitcoinTreasuryCollector(), {}) in _collect_live. Historical loop-A BLOCKED is not a current integration blocker; do not reopen the old collector-registration task. Legacy loop-B/loop-C worker_status also refer to older SHAs; use fresh durable planner statuses.",
+    "scope": "Source-registration existence only; no live collection or runtime correctness claim."
+  },
+  "validation": {
+    "route": "matching exact-SHA executor done alternative (b)",
+    "done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS",
+    "commit_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recorded_required_commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "combined_commit_status_count": 0,
+    "independent_pytest": "NOT_RUN",
+    "witnessed_concurrent_writers": "NOT_RUN",
+    "invalidate_on_new_head": true
+  },
+  "current_gate": {
+    "decision": "FREEZE_TWO_WRITER_CONTRACT; REQUIRE_EXECUTABLE_PROOF",
+    "source_inspection": "runner.run_once releases archive read lock before separate atomic_write_json(latest.json), atomic_write_json(audit_latest.json), atomic_write_json(anata_latest.json). Per-file os.replace does not prove generation-wide consistency. Existing two-child test is sequential; no stale overwrite reproduced.",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "diagnostics": "Generated patch and stdout/stderr/pytest logs not preserved",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "execution_blocker": {
+    "attempted_operation": "Local exact-repository preflight: test -e for checkout .git and runner.py, plus find /mnt/data -maxdepth 2 -type d -name .git",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_errors": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git"
+    ],
+    "targeted_pytest": "NOT_RUN",
+    "full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "dns_clone_retried": false
+  },
+  "next": "Obtain separately authorized disposable checkout pinned to db4c6bf1 or sanitized executor pre-cleanup patch, git diff --check stdout/stderr/exit and pytest logs. On exact SHA execute returned/persisted source_record_id-to-role identity, positively witnessed A/APPENDER/B first/last-publication-boundary overlap plus recovery, targeted and full no-network Capital Flow pytest. Missing B publication witness is INCONCLUSIVE. Independent C review required; no promotion without same-SHA unqualified A/B/C and independent Supervisor PLATEAU.",
+  "automation_health": {
+    "A": true,
+    "B": true,
+    "C": true,
+    "Supervisor": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "specialist_code_modified": false,
+    "private_main_railway_workflows_secrets_prediction_broker_modified": false,
+    "automation_settings_modified": false,
+    "queue_modified": false
+  }
+}
