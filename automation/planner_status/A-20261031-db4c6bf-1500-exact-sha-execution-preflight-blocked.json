@@ -1,0 +1,82 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 15:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "one +112/-0 added sequential spawn preflight test at part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; no overlap witness",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "04a3c53817cd3014cc397d0e81ad6058d156edd0",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT"
+    },
+    "roadmap_latest": "2026-10-31 14:51 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1404-execution-dependency-gate-blocked.json",
+      "B": "B-20261031-db4c6bf-1430-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-executable-evidence-gate-1414.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "decision": {
+    "name": "EXECUTION_ONLY_GATE_NO_SPEC_CHURN",
+    "finding": "Direct pinned-source review: runner writes latest.json, audit_latest.json and anata_latest.json as separate atomic files after archive loading; sequential two-child spawn test joins A before B. Neither proves simultaneous-writer safety nor reproduces a stale overwrite. Role test asserts presence of roles but not exact returned-and-persisted source_record_id-to-role mapping.",
+    "action": "Freeze existing no-network first/last-boundary A/APPENDER/B contract. No further speculative specification or Gemini task. Require authorized exact-SHA executable checkout or separately authorized durable executor diagnostics before a new A-lane integration verdict.",
+    "minimal_execution_gate": "On exact db4c6bf SHA: verify source-record identity in returned and persisted handoffs; run bounded child-local first/last publication-boundary A/APPENDER/B scenarios with positive B publication witness and per-file generation snapshots, fail-closed timeout and recovery C; run targeted deterministic pytest and python -m pytest -q part2/capital_flow/tests, preserving stdout/stderr and exit codes. No witness => INCONCLUSIVE."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_result": "PASS",
+    "mode": "alternative (b) only; independent replay NOT RUN",
+    "combined_commit_statuses": 0,
+    "targeted_pytest": "NOT_RUN",
+    "full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_diagnostics": "NOT_PRESERVED"
+  },
+  "blocker": {
+    "attempted_operation": "check executable exact-SHA repository and Capital Flow runner before pytest",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "next_feasible_step": "Supervisor/infrastructure provides authorized disposable exact-SHA checkout or durable failed-executor patch/diff-check stderr/pytest logs; do not retry DNS clone or failed Gemini task."
+  },
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_or_protected_changes": false,
+    "workflow_or_automation_settings_modified": false,
+    "pytest_executed": false
+  }
+}
