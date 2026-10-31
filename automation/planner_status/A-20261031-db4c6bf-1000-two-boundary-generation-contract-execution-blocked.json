@@ -1,0 +1,86 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 10:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential A-join-before-append-B; no overlap proof",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "746b4de6d6d811f383197d0fd6413d0cf13be517",
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 09:52 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_direct_fetch": "404 NOT_FOUND",
+      "count_source": "09:52 supervisor nontruncated authoritative directory/tree audit; connector fetch_file does not enumerate directories"
+    },
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-0859-per-path-generation-oracle-blocked.json",
+      "B": "B-20261031-db4c6bf-0933-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-per-path-proof-gate-0919.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "TWO_PUBLICATION_BOUNDARIES_FAIL_FAST_NO_NETWORK_DIAGNOSTIC",
+    "new_distinction": "The previous last-file-only pause can witness a mixed-generation handoff but cannot exercise an entire stale generation replacing all three files. Add a first-file boundary as a SECOND bounded scenario, only after the existing last-file scenario has been executed and its evidence preserved; never expand unexecuted production changes.",
+    "contract": [
+      "Pin exact SHA and run in fresh separate tmp directories, fixed as_of_ms=T, network=False; use top-level spawn targets. Patch runner.atomic_write_json inside spawned child A, not parent or storage; child B unpatched.",
+      "Scenario L: child A loads empty archive and pauses fail-closed BEFORE writing anata_latest.json (after latest and audit). APPENDER durably writes PIT-visible rowB. Require B process success, B returned rowB provenance and persisted rowB handoff before A release; capture each B file's own SHA-256 and parsed identity.",
+      "Release A only on positive B publication witness; bound joins/cleanup. Compare each final file against its own B snapshot; missing rowB or changed B-published path => RED with phase trace. Missing B-before-A witness or explicit serialization witness => INCONCLUSIVE, not PASS.",
+      "Scenario F (conditional follow-on): in new tmp dir, pause A fail-closed BEFORE latest.json, then append rowB and let B publish all three; resume A. Detect whole-generation stale overwrite, which scenario L cannot distinguish from partial mixed-generation overwrite. Do not claim a race defect without actual phase witnesses.",
+      "For both scenarios preserve child exitcodes, A_PAUSED/B_PUBLISHED/A_RELEASED, JSON parse results, per-path hashes, rowB effective/available/observed provenance, recovery child C results; fixed T alone is not a generation identifier. Then targeted deterministic pytest and full python -m pytest -q part2/capital_flow/tests."
+    ],
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_role_task_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "gemini_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "alternative_b_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_commit_sha": true,
+    "executor_result": "PASS",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "witnessed_two_writer": "NOT_RUN"
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; test -f /mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+    "verbatim_observation": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git\nRUNNER_ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+    "clone_attempted": false,
+    "reason": "No authorized executable exact-SHA checkout available in local runtime",
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA checkout or separately authorized executor diagnostics preserving pytest stdout/stderr/exitcodes and git diff --check stderr/patch. Execute scenario L first, scenario F only if warranted; full Capital Flow suite; independent C review."
+  },
+  "automation": {
+    "A_enabled": true,
+    "B_enabled": true,
+    "C_enabled": true,
+    "Supervisor_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_changed": false,
+    "source": "read-only Automations peek"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false
+}
