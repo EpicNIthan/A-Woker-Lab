@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-10-31 16:30 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": {
+      "path": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "additions": 112,
+      "deletions": 0,
+      "character": "sequential test-only; no independent BTC/ETH source or concurrent-writer proof"
+    },
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "1d150287a37790dd61f12db5101b4c40cfc57987",
+    "tree_entries": 1477,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 15:45 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1558-executor-diagnostic-recovery-blocked.json",
+      "B_previous": "B-20261031-db4c6bf-1531-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-diagnostic-retention-blocker-1614.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_admission": {
+    "new_qualified_independent_btc_eth_sources": 0,
+    "new_candidate": null,
+    "new_task_justified": false,
+    "rejected_source_families_readmitted": false,
+    "reason": "No new verified immutable first-party BTC/ETH economic event ID with effective/available/observed PIT clocks, independent non-overlap, correct context-vs-directional spot role, and deterministic no-network contract. Source availability is collector-first-known; historical rows must not be backdated. Latest public diff is test-only."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_executor_result": "PASS",
+    "scope": "committed sequential preflight only; independent pytest NOT RUN",
+    "source_record_role_identity": "NOT_COMMITTED",
+    "witnessed_A_APPENDER_B": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_operation": "GitHub-hosted Gemini executor git diff --check",
+    "failed_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_patch_and_diagnostics": "NOT_PRESERVED"
+  },
+  "next": "No B queue task. A/C/Supervisor need separately authorized disposable exact-SHA checkout or sanitized executor diagnostic retention before role-identity and positively witnessed first/last-boundary A/APPENDER/B with recovery and targeted/full no-network pytest. Require matching A/B/C and Supervisor PLATEAU before promotion.",
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_or_protected_changes": false,
+    "workflows_or_schedules_modified": false,
+    "pytest_executed": false
+  }
+}
