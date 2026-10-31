@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-31 19:17 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 sequential spawn preflight only; no overlapping-writer proof",
+    "pinned_blobs": {
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "0d6d4b329374e845dbf2c71c116aab0c0f0b2724",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "source": "latest A 19:00 and Supervisor roadmap 18:50 worker-control directory verification; no independent tree listing in C run"
+    },
+    "roadmap_blob": "891be3e459c480c35219519a53614448e77cd679",
+    "latest_reports": {
+      "A": "1cc972294f976203572d643f40cb2328ec740bc4",
+      "B": "505c5e5cba970a89f6e1974dda00cc4ca868ed59",
+      "C_previous": "97044a2413695977784dddc50225759b2540c0ab"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "finding": "Existing role test covers context_only=' false ' in truth table but integration checks only scoring/context role presence, not exact source-record-id->role in returned and persisted handoffs. Sequential two-child test joins A before B and cannot prove overlapping publication. Failed identity task exited git diff --check with code 2, but patch and subprocess stdout/stderr were not retained, so failure cause and regression remain unverified. No production defect reproduced.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_result": "PASS, same SHA; collect-only/targeted/full reported, not independently replayed",
+    "failed_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "identity_regression": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "Authorized disposable exact-SHA checkout absent at /mnt/data/A-Woker-Lab/.git; executor failure artifacts and pytest logs unavailable.",
+  "recovery": "Authorize disposable exact-SHA checkout or sanitized executor pre-cleanup retention of patch, git diff --check stdout/stderr/exit and collect-only/targeted/full pytest logs. Then run deterministic no-network returned/persisted identity oracle and causally witnessed first/last-boundary A/APPENDER/B overlap plus recovery; no B witness means INCONCLUSIVE. No Gemini retry before reliability proof.",
+  "actions": {
+    "tasks_enqueued": 0,
+    "pytest_executed": false,
+    "specialist_code_modified": false,
+    "protected_code_workflows_secrets_schedules_modified": false
+  }
+}
