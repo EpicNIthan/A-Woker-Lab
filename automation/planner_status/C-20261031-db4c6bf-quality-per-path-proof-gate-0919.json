@@ -1,0 +1,73 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-10-31 09:19 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (sequential spawn, not overlap)",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "parser": "9acde817964824086608f6572f361216ac4bd014",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "control": {
+    "prewrite_head": "a197a9da5ef5bfc85f3ad64da521b884dafb5130",
+    "roadmap_blob": "a44715baaaf571256d51bb58c74a6d21f06097af",
+    "roadmap_latest": "2026-10-31 08:54 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "absent",
+      "verified_nontruncated_subtrees": true
+    },
+    "latest_reports": {
+      "A": "A-20261031-db4c6bf-0859-per-path-generation-oracle-blocked.json",
+      "A_blob": "11f8b81d20acf8cd429a1f20a2c39cd2bf52a142",
+      "B": "B-20261031-db4c6bf-0833-source-plateau.json",
+      "B_blob": "dd58b8cddfad4ed8f3762dc956b11c1ca96dfbf8",
+      "C": "C-20261031-db4c6bf-quality-executor-proof-boundary-0810.json",
+      "C_blob": "3b7b3fdb6e66933a55d461c0d0c3258800b8bc45"
+    }
+  },
+  "quality_finding": "New audit refinement: three output files have different schemas; cross-file hash equality is INVALID. For a witnessed A/APPENDER/B overlap, capture B-published SHA-256 separately for latest.json, audit_latest.json, and anata_latest.json; after releasing paused A compare each path to ITS OWN B snapshot, plus rowB identity and recovery C. Missing positive B publication or serialization witness => INCONCLUSIVE. runner.py writes three paths sequentially, no run-wide generation lock shown. Existing role test checks aggregate role presence, not score_rec_1445_01=>scoring and context_rec_1445_01=>context in returned AND persisted handoff. Shared parser correctly handles string ' false '; no production defect reproduced.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor_reported": "PASS (committed exact SHA; targeted and full Capital Flow pytest)",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "role_identity_regression": "NOT_COMMITTED_OR_INDEPENDENTLY_RUN",
+    "witnessed_concurrent_writer": "NOT_RUN",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_task_tests": "CONDITIONAL EXECUTOR-INFERRED ZERO EXIT ON UNCOMMITTED DIFF ONLY; LOGS AND PATCH NOT PRESERVED",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA executable checkout; executor post-test failure discards pytest/diff diagnostics and temporary patch. No independent replay.",
+  "recovery": "Separately authorize preservation of pytest stdout/stderr, exit codes, diff-check stderr and patch. In disposable exact-SHA checkout run no-network role identity assertions in returned/persisted handoff, bounded child-local fail-closed A pause, positive B publication witness, per-path B snapshots, recovery C and python -m pytest -q part2/capital_flow/tests with logs.",
+  "lanes": {
+    "A": "BLOCKED_PLATEAU",
+    "B": "SOURCE_ADMISSION_PLATEAU",
+    "C": "QUALITY_EVIDENCE_INCOMPLETE",
+    "Supervisor": "NOT_PLATEAU"
+  },
+  "actions": {
+    "tasks_enqueued": 0,
+    "independent_pytest_run": false,
+    "clone_attempted": false,
+    "specialist_code_modified": false,
+    "protected_changes": false,
+    "automation_settings_changed": false
+  }
+}
