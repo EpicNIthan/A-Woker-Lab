@@ -1,0 +1,85 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 14:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "one commit; +112/-0 test_runner_two_child_spawn_preflight.py; sequential A then B; no concurrent publication witness",
+    "runner_blob": "da38db873ae16c79292df074966b8a97a83b1ae9",
+    "storage_blob": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+    "spawn_test_blob": "8aadcbf84c200683b686751abdd85c331ac17201",
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "372fd41a1811ac0223585a6bfc38dbdaf166b436",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "tree_truncated": false
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 13:54 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1303-execution-evidence-escalation-blocked.json",
+      "B": "B-20261031-db4c6bf-1330-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-execution-evidence-blocker-1317.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "decision": {
+    "name": "EXECUTION_DEPENDENCY_GATE_NO_MORE_SPEC_CHURN",
+    "finding": "Pinned runner performs three separate atomic_write_json calls for latest.json, audit_latest.json and anata_latest.json. The committed spawn preflight joins child A before child B; no overlapping writer or stale overwrite is proved. Pinned source and failed job logs can be read through GitHub connector but do not supply an executable exact-SHA repository checkout.",
+    "action": "Freeze existing two-boundary causal regression contract. A will not enqueue Gemini or expand speculative source-only test specifications. Route executable exact-SHA checkout or separately authorized executor diagnostic retention to Supervisor/infrastructure; on receipt run returned+persisted identity, witnessed A/APPENDER/B first/last publication tests, recovery C, targeted and full Capital Flow pytest. Missing positive B witness => INCONCLUSIVE."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_executor_result": "PASS",
+    "mode": "alternative (b) only; not independent replay",
+    "combined_commit_statuses": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_job_log": "GitHub Actions job 124333661975 includes only the exception summary, no retained diff-check stderr/patch/pytest output",
+    "failed_artifacts": 0
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA checkout and runner preflight before targeted/full pytest",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "next_feasible_step": "Authorized disposable checkout pinned to db4c6bf1ba8f81ee4f4ae27ba59da756594db853 or separately authorized durable GitHub executor diagnostics; do not repeat DNS clone or malformed Gemini task."
+  },
+  "automation": {
+    "all_four_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_modified": false
+  },
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_code_touched": false,
+    "protected_changes": false,
+    "pytest_executed": false
+  }
+}
