@@ -1,0 +1,85 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 17:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "only +112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential A completes before append and B starts",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "prewrite_head": "beb3a5eb77222c62bee98f9859de1249c824916c",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 16:50 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-1558-executor-diagnostic-recovery-blocked.json",
+      "B": "B-20261031-db4c6bf-1630-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-diagnostic-retention-blocker-1614.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "decision": {
+    "name": "FREEZE_SPEC_AND_FAIL_CLOSED_ON_EXECUTION_DEPENDENCY",
+    "reason": "Re-read exact pinned source blobs and committed spawn test; archive read lock ends before three separately atomic JSON publications, and committed child test is sequential. This is a generation-consistency risk surface, not a reproduced stale overwrite. Existing first/last-boundary causal A/APPENDER/B and recovery C contract is sufficient; further source-only edits would recycle unexecuted assertions.",
+    "recovery_owner": "Separately authorized disposable exact-SHA checkout or infrastructure owner retaining sanitized failed executor patch, git diff --check stderr/exit code and collect-only/targeted/full pytest stdout/stderr/exit codes before reset. Planner A will not modify workflow or executor.",
+    "acceptance": "Exact HEAD checkout, positively witnessed B publication at first and last output boundaries, A original payload and per-path post-resume identity, bounded fail-closed cleanup, recovery C, returned/persisted role identity, targeted pytest and full python -m pytest -q part2/capital_flow/tests. No witness => INCONCLUSIVE; no test output => NOT_RUN.",
+    "next_run": "Recheck HEAD/queue/roadmap/A-B-C; only execute frozen tests if exact-SHA checkout becomes available; do not repeat failed Gemini task."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_task": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "matching_executor_result": "PASS",
+    "matching_commit_sha": true,
+    "mode": "alternative (b) only; not independent pytest, role identity or concurrent-writer proof",
+    "combined_commit_status_count": 0,
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_patch_and_diagnostics": "NOT_PRESERVED"
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA executable-checkout preflight before pytest",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_errors": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "targeted_pytest": "NOT_RUN",
+    "full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN"
+  },
+  "actions": {
+    "tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_or_protected_changes": false,
+    "workflow_or_automation_settings_modified": false,
+    "pytest_executed": false,
+    "automation_state_checked": "A/B/C/Supervisor enabled with unchanged original hourly schedules"
+  }
+}
