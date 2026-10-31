@@ -1,0 +1,89 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-10-31 08:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (sequential, not concurrent)",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_preflight": "8aadcbf84c200683b686751abdd85c331ac17201"
+    },
+    "inert_public_automation_ignored": true
+  },
+  "control": {
+    "head_at_read": "6f1a10a1b2aa1d6b08ab1bc7d3e568af01e73e87",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "absent (404)",
+      "source": "worker-control authoritative executor_queue directory reads"
+    },
+    "roadmap": "automation/supervisor_roadmap.md",
+    "roadmap_latest": "2026-10-31 08:54 ICT",
+    "latest_durable": {
+      "A": "A-20261031-db4c6bf-0757-executor-test-evidence-reclassified-blocked.json",
+      "B": "B-20261031-db4c6bf-0833-source-plateau.json",
+      "C": "C-20261031-db4c6bf-quality-executor-proof-boundary-0810.json"
+    },
+    "lanes": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "CORRECT_CROSS_FILE_GENERATION_ORACLE_TO_PER_PATH_SNAPSHOTS",
+    "finding": "The prior shorthand 'three-file generation hashes' must NOT compare hashes across latest.json, audit_latest.json and anata_latest.json: these files intentionally contain different schemas. Correct oracle is a B-publication snapshot for EACH path, compared to that SAME path after A resumes. The exact runner writes latest, audit, anata in sequence with no run-wide generation lock; storage.atomic_write_json atomically replaces one destination only. This is a source-level test gap, not a reproduced defect.",
+    "no_network_contract": [
+      "Spawn child A using multiprocessing.get_context('spawn'); inside A, patch runner.atomic_write_json (not storage module or parent). Let A write latest.json and audit_latest.json, then pause BEFORE anata_latest.json; emit A_AT_HANDOFF_WRITE and fail closed on release timeout.",
+      "After A_AT_HANDOFF_WRITE, append one PIT-visible rowB to observations.jsonl; start child B on same local_dir, network=False, same as_of_ms; require B completed and persisted rowB in anata_latest.json before A release. If B cannot publish before A release, mark INCONCLUSIVE unless an explicit serialization witness is obtained; never infer PASS.",
+      "Before releasing A, capture SHA-256 independently for each of latest.json, audit_latest.json and anata_latest.json, and B's rowB identity/provenance; do NOT compare different file hashes to each other.",
+      "Release A; bound child exits and clean up on failure; compare each final path hash against its own B snapshot. Any overwritten B handoff and lost rowB is RED, with final mixed-generation path map recorded; matching all B snapshots is necessary but not by itself proof of general concurrency safety.",
+      "Run recovery child C, verify all three outputs parse and returned latest/anata equal their persisted counterparts, and rowB scoring provenance survives; then run targeted pytest and full python -m pytest -q part2/capital_flow/tests on exact-SHA checkout."
+    ],
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01",
+    "failed_task_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_run": "41134555607",
+    "failed_run_artifacts": "0 (GitHub Actions artifact listing); no preserved generated patch or pytest/diff stderr",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "alternative_b_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01",
+    "executor_result": "PASS",
+    "matching_commit_sha": true,
+    "independent_pytest": "NOT_RUN",
+    "witnessed_two_writer": "NOT_RUN",
+    "role_task_pytest": "EXECUTOR_INFERRED_ZERO_EXIT_ON_UNCOMMITTED_DIFF_ONLY"
+  },
+  "execution": {
+    "attempted_operation": "test -d /mnt/data/A-Woker-Lab/.git; test -f /mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+    "verbatim_observation": "ABSENT_EXACT_REPO:/mnt/data/A-Woker-Lab/.git; RUNNER_ABSENT; ls: cannot access '/mnt/data/A-Woker-Lab': No such file or directory",
+    "clone_attempted": false,
+    "targeted_pytest_run_this_run": false,
+    "full_pytest_run_this_run": false,
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or authorized executor diagnostic path preserving pytest stdout/stderr, git diff --check stderr and generated diff; run bounded A/APPENDER/B/recovery per-path snapshot oracle and full suite; independent Planner C review."
+  },
+  "automation": {
+    "A_enabled": true,
+    "B_enabled": true,
+    "C_enabled": true,
+    "Supervisor_enabled": true,
+    "original_hourly_schedules_preserved": true,
+    "settings_changed": false,
+    "source": "read-only Automations peek"
+  },
+  "specialist_code_modified": false,
+  "protected_changes": false
+}
