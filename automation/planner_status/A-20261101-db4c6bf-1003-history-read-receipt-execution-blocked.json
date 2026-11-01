@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 10:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential, no concurrent overlap",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "worker_control": {
+    "prewrite_head": "71f5cd139ae3bf172544569a869b8527342fb5ba",
+    "since_previous_A": "3 commits: B 09:31 status, C 09:15 status, Supervisor roadmap 09:48; no code, queue or workflow changes",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "basis": "complete untruncated worker-control Git tree"
+    },
+    "roadmap": "automation/supervisor_roadmap.md 2026-11-01 09:48 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-0904-posttest-diffcheck-diagnostic-gate-blocked.json",
+      "B": "B-20261101-db4c6bf-0931-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-posttest-diagnostic-gate-0915.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "EXPLICIT_PRE_B_APPEND_A_HISTORY_READ_RECEIPT",
+    "new_verified_source_fact": "Pinned runner.run_once calls runner-imported load_observations before computing all three outputs, but archive_records_loaded is returned only AFTER the final anata_latest.json write. A child paused at the first or last publication barrier cannot report the return count until released; output fingerprints alone are an indirect proxy. The existing sequential child preflight returns counts only after completion. Thus the frozen two-writer test needs a positively acknowledged A history-read receipt before parent appends rowB.",
+    "runnable_no_network_refinement": "In spawned child A, before calling real runner.run_once(network=False,as_of_ms=T), wrap runner.load_observations locally (not storage in parent). Call the ORIGINAL function exactly once, send tagged A_HISTORY_READ count=len(result) through a bounded child-to-parent channel, return the unmodified result. Also install existing child-local runner.atomic_write_json wrapper with first/last publication Event barrier. Parent must receive A_HISTORY_READ=0 AND A_BARRIER_ACK before append_observations(rowB). Use separate channels or explicit child/phase tags; never infer A count from its eventual return. Then start unmodified child B; require B returned loaded/scoring 1/1, successful exit and all three persisted B golden fingerprints before releasing A. Run two isolated boundary cases, repeatable per-file distinct A/B goldens, final B/A/A or B/B/A oracle, recovery C, scoring/context returned+persisted source-record-ID-to-role, collect-only/targeted/full Capital Flow pytest with retained exact-SHA transcripts. No network, sleeps as timing oracle, production changes, or unqualified PASS.",
+    "claim_boundary": "This is a source-derived test-contract feasibility correction, not an executed test or reproduced race. Preserve frozen regression intent; no Gemini task justified while structured-JSON/diagnostic reliability unverified."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS matching SHA, sequential preflight only",
+    "push_run": "40860520862 completed success",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_run": "41134555607 completed failure",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "generated_patch_and_test_logs": "NOT_RETAINED",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "invalidate_on_public_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA checkout preflight; python -m pytest --version",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Acquire authorized disposable exact-SHA executable checkout or sanitized pre-reset executor patch, git diff --check stdout/stderr and pytest logs. Execute read-receipt plus frozen overlap/recovery contract. No repeat DNS clone or malformed Gemini task."
+  },
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_code_changed": false,
+    "workflows_or_schedules_changed": false,
+    "automation_health_read_only": {
+      "A": true,
+      "B": true,
+      "C": true,
+      "Supervisor": true
+    }
+  }
+}
