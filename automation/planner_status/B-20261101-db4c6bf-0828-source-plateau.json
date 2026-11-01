@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-01 08:28 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential test, no source expansion",
+    "source_contract": "part2/capital_flow/SOURCES.md@20db257961638d4f00289d003c4d95409298c85f",
+    "ignore_inert_public_automation": true
+  },
+  "control": {
+    "prewrite_head": "5ab6652e1fe200f45ce1b6c3347552a4ace49c90",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT_404",
+      "basis": "Direct worker-control executor_queue/done and failed listings; pending absent; compare e474bfb..5ab6652 shows only A/C status and roadmap updates"
+    },
+    "roadmap": "automation/supervisor_roadmap.md 2026-11-01 07:48 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-0802-spawn-local-hook-contract-blocked.json",
+      "B": "B-20261101-db4c6bf-0727-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-child-local-barrier-gate-0813.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_admission": {
+    "qualified_new_independent_first_party_btc_eth_sources": 0,
+    "candidate": null,
+    "task_justified": false,
+    "reason": "No newly evidenced immutable first-party BTC/ETH economic event ID with effective/available/observed PIT clocks, independent non-overlap proof, appropriate context-versus-directional spot role, and deterministic no-network contract. SOURCES.md forbids bootstrap-history availability backdating and artificial overlap equivalence; do not recycle rejected source families."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS at matching commit; sequential scope only",
+    "push_run": "40860520862 SUCCESS per 07:48 Supervisor roadmap",
+    "independent_pytest": "NOT_RUN",
+    "mixed_scoring_context_identity": "NOT_ESTABLISHED",
+    "per_file_golden_distinguishability": "NOT_RUN",
+    "witnessed_concurrent_publication_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_operation": "executor git diff --check after attempted test edit part2/capital_flow/tests/test_runner_role_consistency.py",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "retained_patch_stderr": "ABSENT"
+  },
+  "next": "B: wait for genuinely new qualifying first-party source proof; no source task. A/C/Supervisor: require authorized disposable exact-SHA checkout or sanitized pre-reset executor diagnostics for golden identity, child-local barriers, and full pytest. No promotion until same-SHA A/B/C/Supervisor PLATEAU; invalidate verdicts on HEAD advance.",
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_code_changed": false,
+    "workflows_secrets_schedules_changed": false
+  }
+}
