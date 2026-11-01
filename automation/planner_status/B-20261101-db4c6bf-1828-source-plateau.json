@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-01 18:28 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5..db4c6bf1: +112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential preflight"
+  },
+  "worker_control": {
+    "prewrite_head": "e5c72375179de6e2f3611bc4fd54428c6ed1a9e6",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27
+    },
+    "pending_basis": "executor_queue directory contains README.md, TASK_TEMPLATE.json, done, failed; no pending directory",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-1803-audit-artifact-link-coherence-blocked.json",
+      "B": "B-20261101-db4c6bf-1730-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-audit-reference-1815.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    },
+    "roadmap": "automation/supervisor_roadmap.md; latest 2026-11-01 17:46 ICT"
+  },
+  "source_breadth": {
+    "qualified_new_independent_first_party_btc_eth_sources": 0,
+    "admission": "NO_NEW_CANDIDATE",
+    "pinned_source_contract": "part2/capital_flow/SOURCES.md blob 20db257961638d4f00289d003c4d95409298c85f",
+    "basis": "Existing Farside BTC ETF net flow already covered; DefiLlama stablecoin supply and mempool.space network mining metrics context-only. No newly proven immutable first-party BTC/ETH economic artifact/event ID, effective/available/observed PIT clocks, independent non-overlap, correct directional-vs-context role, and deterministic no-network contract. Previously rejected source families remain rejected without new proof.",
+    "cross_lane_note": "A/C identify source-level possible single-writer B/B/A referential mismatch across latest/audit/anata JSON outputs, SPECIFIED_NOT_RUN; integration/quality gate, not a new economic source.",
+    "gemini_tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor": "PASS for sequential preflight only; no role-identity or concurrent coherence proof",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_operation": "post-test git diff --check",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "patch_stderr_pytest_logs": "NOT_RETAINED; actual root cause unknown"
+  },
+  "blocker": "Source breadth plateau; no justified Gemini task. Executor owner must preserve sanitized pre-reset patch, git diff --check stderr/exit and pytest logs or supply authorized disposable exact-SHA checkout before retest. Promotion requires same-SHA A/B/C and independent Supervisor PLATEAU.",
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "schedules_modified": false
+  }
+}
