@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 03:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5..db4c6bf1: +112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential two-child preflight, not overlap",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/providers.py": "072581823a815c124d8629afd678196e86fe8840",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "02c3247fd407bb8715036241531c1324a8586a34",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "source": "nontruncated recursive Git tree plus direct done/failed listings; pending path 404"
+    },
+    "roadmap": "automation/supervisor_roadmap.md, Supervisor exact-SHA review 2026-11-02 03:46 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0300-nonvacuous-orphan-append-proof-blocked.json",
+      "B": "B-20261102-db4c6bf-0327-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-role-parser-and-nonvacuous-orphan-0315.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "ORPHAN_APPEND_TIMEOUT_ORIGIN_AND_BOUND_REFINE",
+    "classification": "SOURCE_VERIFIED_NO_NETWORK_TEST_CONTRACT_NOT_EXECUTED",
+    "finding": "Prior orphan pre-cleanup contract requires TimeoutError but does not prove which call raised it. At pinned runner.py:120 append_observations runs before runner.py:121 load_observations; storage.py:136-142 bypasses writer lock on empty input, while storage.py:97-100 always locks the reader. Both paths use ArchiveWriterLock.__enter__ and the same TimeoutError message. A bounded child deadline of 10s is also too short for the lock's default 10s timeout (storage.py:17,30-34), causing a timing false negative.",
+    "runnable_contract": "Freeze valid PIT-visible rowB fixture; assert direct JsonlFlowAdapter.collect() yields exactly one rowB and archive/output paths are initially absent. Positively ACK owner lock acquired, crash with os._exit(17), join and verify orphan inode/owner and child exit. In separate bounded child run the exact run_once(network=False,external_jsonl=(fixture,),local_dir=tmp_path,as_of_ms=T); wait >=15s (> default lock timeout), send exception type, traceback frame/function names and elapsed time to parent; assert TimeoutError originated in append_observations -> ArchiveWriterLock.__enter__ (not load_observations), and no archive or any three outputs. Only after confirmed death remove the test-owned orphan; same run_once must report local collector OK/count1, source_errors=[], appended=1, archive/scoring=1/1, persisted/returned rowB role and source_record_id; repeat appended=0 and archive/scoring remain 1/1. Keep separate positive-ACK overlap, same-clock rollback and role identity tests. Do not use elapsed time as sole correctness oracle.",
+    "proof_boundary": "Unexecuted test refinement; not a reproduced production defect. Do not change production code or requeue failed Gemini task."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "result": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_new_head": true
+  },
+  "blocker": {
+    "attempted_operation": "Exact-SHA runnable checkout local path presence probe",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/part2/capital_flow/tests"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/part2/capital_flow/tests",
+      "pytest 9.0.2"
+    ],
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "executor_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA checkout or retained sanitized failed Gemini patch/git diff --check stderr/pytest transcripts. Execute bounded traceback-origin orphan test, corrected two-writer, rollback, role identity, collect-only and full python -m pytest -q part2/capital_flow/tests; preserve logs. No repeated DNS clone, blind task replay or invented test results."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflow_secret_schedule_modified": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ],
+    "automations_schedules_unchanged": true
+  }
+}
