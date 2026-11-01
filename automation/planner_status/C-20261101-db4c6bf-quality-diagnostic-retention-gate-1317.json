@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-01 13:17 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "latest_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential not concurrent",
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "evidence_health": "9acde817964824086608f6572f361216ac4bd014",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "v1_handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "1c918493745f630b414b143b99c774b3eb81a2e8",
+    "roadmap_blob": "772b7ba84ce49501df72af8b5b17ca5fdc57fed7",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "13:04 A and 12:50 Supervisor complete-tree audits; current pending path 404, done/failed directories exist; direct re-enumeration unavailable through file-only connector"
+    },
+    "latest_reports": {
+      "A": "A-20261101-db4c6bf-1304-gha-log-diagnostic-retention-blocked.json",
+      "B": "B-20261101-db4c6bf-1229-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-barrier-ack-order-gate-1217.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": "Direct source confirms shared _is_context_only parser maps string ' false ' to scoring, None to context; no role inversion reproduced. Returned/persisted source_record_id-to-role regression uncommitted after failed post-test git diff --check (exit 2); executor failed-job logs retain neither patch nor pytest transcript/stderr. Sequential PASS cannot establish three-file overlap coherence. C requires positive A history-read ACK, child-local first/last write barrier, distinct three-file A/B goldens, B completion before A resume, bounded recovery C.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor": "PASS committed sequential preflight only",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "identity_and_witnessed_overlap_recovery": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA executable checkout. Failed executor discarded generated patch, diff-check stdout/stderr and pytest logs. Exact failure cause UNKNOWN.",
+  "recovery": "Authorized executor owner should retain sanitized pre-reset diff-check stdout/stderr/exit, allowlisted patch and collect-only/targeted/full pytest logs; or supply disposable exact-SHA checkout. Then run deterministic no-network role-identity and witnessed A/B/C overlap tests. No new task until structured-JSON reliability proven.",
+  "actions": {
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_changes": false,
+    "workflow_or_schedule_changes": false
+  }
+}
