@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-01 22:25 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4..db4c6bf1ba8f81ee4f4ae27ba59da756594db853: only +112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential preflight",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f"
+  },
+  "worker_control": {
+    "prewrite_head": "af069d9dd780b1b92681013166208dbdd494bd72",
+    "tree": {
+      "truncated": false,
+      "entries": 1567
+    },
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "absent"
+    },
+    "roadmap": "automation/supervisor_roadmap.md, Supervisor 2026-11-01 21:45 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-2200-stale-generation-rollback-gate-blocked.json",
+      "B": "B-20261101-db4c6bf-2125-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-stale-generation-rollback-gate-2216.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_breadth": {
+    "new_qualified_independent_first_party_btc_eth_sources": 0,
+    "admission": "NO_NEW_CANDIDATE",
+    "basis": "Exact public-SHA SOURCES.md already covers Farside BTC ETF net flows (collector-first-seen PIT), DefiLlama aggregate stablecoin supply (potential liquidity, not directional BTC buying), and context-only network/mining. No new first-party immutable BTC/ETH economic artifact/event with effective/available/observed PIT clocks, independent non-overlap proof, defensible directional/context role and deterministic no-network test contract. Rejected families not recycled.",
+    "gemini_tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS sequential two-child preflight only; targeted and full pytest required by task; independent pytest NOT RUN",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_attempted_operation": "GitHub-hosted Gemini post-test git diff --check for intended part2/capital_flow/tests/test_runner_role_consistency.py",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_patch_stderr_pytest": "NOT_RETAINED; root cause UNKNOWN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_change": true
+  },
+  "blocker": "No new source qualifies; no execution task justified. A/C additionally identify an unexecuted stale-generation rollback oracle (older A/A/A can overwrite newer B/B/B), separate from B source admission and not a demonstrated production defect. Exact-SHA independent role identity, overlapping writer, rollback and bounded recovery tests are unexecuted. Recover sanitized failed-executor patch/diff-check stderr/pytest logs or authorized runnable exact-SHA checkout before a narrow task; do not retry blindly.",
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflow_or_schedule_changes": false
+  }
+}
