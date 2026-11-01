@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-01 12:17 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential only",
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "v1_handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "control": {
+    "prewrite_head": "a91a5ed2150335dfeb6a7fa9f5b7ff382cd59f59",
+    "roadmap_blob": "878b93318298eab6e0721df192899f1858c702c2",
+    "roadmap_latest": "2026-11-01 11:50 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "tree_counts": "complete nontruncated direct worker-control subtrees"
+    },
+    "latest": {
+      "A": "A-20261101-db4c6bf-1202-barrier-ordering-oracle-blocked.json",
+      "B": "B-20261101-db4c6bf-1135-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-three-semantic-witnesses-1116.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": "Source-derived witness-order correction: first overlap barrier must ACK A_LATEST_REPLACED only AFTER original latest.json os.replace, else expected B/A/A is not causally established; last barrier must ACK A_ANATA_PRE_REPLACE BEFORE original anata_latest.json write, else B/B/A is not established. Child A must separately ACK A_HISTORY_READ=0 before rowB append; assert canonical A!=B and distinct semantic witnesses in each of latest/audit/anata JSON; B must fully publish before A release. Require returned and persisted scoring/context source_record_id-to-role mapping. All unexecuted; no reproduced race or role inversion.",
+  "validation": {
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor": "PASS for matching committed SHA, sequential preflight only",
+    "failed_identity_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "targeted_pytest": "NOT_RUN_INDEPENDENTLY",
+    "full_capital_flow_pytest": "NOT_RUN_INDEPENDENTLY",
+    "identity_and_overlap_recovery": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED"
+  },
+  "blocker": "Authorized exact-SHA disposable executable checkout absent; failed Gemini patch, diff-check stderr and pytest logs not retained. /mnt/data/A-Woker-Lab/.git and runner.py absent; pytest 9.0.2 installed. Do not retry DNS clone.",
+  "recovery": "Obtain authorized disposable exact-SHA checkout or sanitized pre-reset executor diagnostics; run deterministic no-network golden A/B, pre-append ACK, child-local post-replace/pre-replace overlap and recovery, identity checks, collect-only, targeted and python -m pytest -q part2/capital_flow/tests with retained logs. No Gemini enqueue until reliability proven.",
+  "actions": {
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_changes": false,
+    "workflow_or_schedule_changes": false
+  }
+}
