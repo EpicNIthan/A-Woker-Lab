@@ -1,0 +1,64 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-01 07:27 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "latest_commit_change": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential preflight, no new source",
+    "source_contract": "part2/capital_flow/SOURCES.md@20db257961638d4f00289d003c4d95409298c85f",
+    "ignore_inert_automation": true
+  },
+  "control": {
+    "prewrite_sha": "817dde86a53ac09048ab768492792cf44bb5de87",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT_404",
+      "basis": "complete untruncated 1522-entry tree and direct done/failed directory enumeration"
+    },
+    "roadmap": "automation/supervisor_roadmap.md 2026-11-01 06:50 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-0656-golden-distinguishability-gate-execution-blocked.json",
+      "B": "B-20261101-db4c6bf-0626-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-golden-oracle-gate-0719.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_admission": {
+    "new_qualified_first_party_independent_btc_eth_sources": 0,
+    "candidate": null,
+    "task_justified": false,
+    "reason": "No new immutable first-party BTC/ETH economic event/artifact with effective/available/observed PIT clocks, independent non-overlap proof, correct context-vs-directional spot role, and deterministic no-network contract. Source contract forbids pre-bootstrap availability backdating; existing rejected families not readmitted."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_status": "PASS sequential preflight only; push run 40860520862 SUCCESS per supervisor roadmap",
+    "independent_pytest": "NOT_RUN",
+    "mixed_scoring_context_id_role": "NOT_ESTABLISHED",
+    "golden_per_file_distinguishability": "NOT_RUN",
+    "witnessed_overlap_recovery": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_operation": "executor git diff --check after attempted edit part2/capital_flow/tests/test_runner_role_consistency.py",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "retained_patch_stderr_pytest": "ABSENT"
+  },
+  "next": "Do not enqueue duplicate source or failed role task. Require new first-party PIT source proof for B; A/C/Supervisor need authorized exact-SHA executable checkout or sanitized pre-reset executor diagnostics to test identity, distinguishability and overlapping publication/recovery. Invalidate verdict if public HEAD advances.",
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_code_changed": false,
+    "workflows_or_schedules_changed": false
+  }
+}
