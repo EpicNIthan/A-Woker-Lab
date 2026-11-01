@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 22:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4..db4c6bf1ba8f81ee4f4ae27ba59da756594db853: 1 commit; +112/-0 test_runner_two_child_spawn_preflight.py, sequential only",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "e6b491385755aced6ff4b46660dbe0877c90b2fb",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "404 absent",
+      "basis": "worker-control direct directory enumeration and nontruncated 1565-entry tree"
+    },
+    "roadmap": "automation/supervisor_roadmap.md, Supervisor review 2026-11-01 21:45 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-2100-serialized-writer-acceptance-correction-blocked.json",
+      "B": "B-20261101-db4c6bf-2125-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-serialized-writer-oracle-correction-2116.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "STALE_GENERATION_ROLLBACK_NOT_PREVENTED_BY_PUBLICATION_ONLY_LOCK",
+    "classification": "SOURCE_DERIVED_TEST_CONTRACT_NOT_EXECUTED",
+    "finding": "Pinned runner calls load_observations, computes snapshot, then independently replaces latest/audit/anata; ArchiveWriterLock covers archive append/load only. A lock added solely around the three output replacements could fix B/A/A and B/B/A interleaving yet still allow an older A snapshot, computed before rowB was appended, to overwrite a fully published newer B snapshot as coherent A/A/A. Three-file coherence alone is therefore insufficient; acceptance must also reject stale generation rollback. No production race reproduced.",
+    "no_network_contract": "Spawn child A on empty archive at fixed T. Inside A, wrap runner.load_observations in child process, ACK after the real call returned zero rows, then hold before frame/output publication. In independent child P append PIT-visible rowB and ACK actual append completion (not attempted start). If P completes while A held, spawn unpatched B on same directory; require B's real read/return and persisted three outputs contain rowB (B/B/B) before releasing A. Release A and require bounded completion; final persisted generation must still include rowB and not roll back to A/A/A. The pinned unguarded source is expected to produce RED A/A/A after A resumes. A publication-only lock does not change this expected RED because it starts after A's stale read. If a valid read-through-publish lock prevents P append, require positive observed lock/wait evidence (not just timeout), release A, then require P append and B complete, final B/B/B. Keep existing separately frozen first/last publication-boundary mixed-generation tests, bounded recovery C, returned/persisted source_record_id-to-role checks. Use child-local hooks, Events/Queues, explicit ACKs and finally cleanup, no sleeps as causal oracle, no network. Collect-only + targeted deterministic tests + python -m pytest -q part2/capital_flow/tests at exact SHA.",
+    "acceptance_design": "Serialization must cover read-through-publish or use a generation/version compare-and-swap that prevents an older snapshot from replacing a newer one. This is an integration acceptance requirement, not an instruction to change Specialist code."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS for sequential preflight only; corresponding GitHub Actions run 40860520862 job 123402282636",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "overlap_recovery_identity_and_rollback": "NOT_RUN",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "verbatim_failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_patch_stderr_pytest": "NOT_RETAINED; cause UNKNOWN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA executable checkout presence probes; no DNS clone retried",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Obtain authorized exact-SHA disposable executable checkout or sanitized failed executor pre-reset patch, git diff --check stdout/stderr/exit and pytest logs. Execute existing frozen two-writer/role/recovery suite plus independent stale-generation rollback test. No speculative Gemini task retry."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflows_modified": false,
+    "automations_verified_enabled": [
+      "Anata Project Loop A",
+      "Anata Project Loop B",
+      "Anata Project Loop C",
+      "Anata Loop Supervisor"
+    ],
+    "schedules_changed": false
+  }
+}
