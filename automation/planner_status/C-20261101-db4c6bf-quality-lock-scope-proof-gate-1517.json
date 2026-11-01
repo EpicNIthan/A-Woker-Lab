@@ -1,0 +1,63 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-01 15:17 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "latest_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential spawn",
+    "pinned_blobs": {
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "v1_handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "worker_control": {
+    "read_head": "5d7a052ed851dbded2213f0bc219778ff9c301ed",
+    "roadmap_blob": "4c791c8a56e59d68a023f57b2502585cc794e286",
+    "supervisor_review": "2026-11-01 14:50 ICT; NOT_PLATEAU",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "complete nontruncated recursive worker-control tree (1545 entries)"
+    },
+    "latest_reports": {
+      "A": "A-20261101-db4c6bf-1505-archive-lock-publication-scope-execution-blocked.json",
+      "B": "B-20261101-db4c6bf-1434-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-source-role-proof-gate-1415.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": "Pinned storage.py ArchiveWriterLock serializes archive append/load, but atomic_write_json performs independent per-file os.replace outside that lock; pinned runner.run_once publishes latest.json, audit_latest.json, anata_latest.json separately. Thus archive locking alone does not prove cross-file generation coherence. Existing sequential spawn PASS does not test overlapping writers. Role fixture already covers string ' false ' as scoring and None as context, but returned/persisted source_record_id-to-role identity assertions remain uncommitted. No race or role inversion reproduced.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "sequential_executor": "PASS only for committed sequential preflight with mandated collect-only/targeted/full pytest",
+    "failed_role_task_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "role_identity_and_overlap_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable exact-SHA executable checkout and failed executor generated patch, diff-check stderr and pytest transcripts not retained; root cause of exit 2 unknown. No DNS clone attempted.",
+  "recovery": "Executor owner supplies disposable exact-SHA checkout or sanitized pre-reset patch, git diff --check stdout/stderr/exit and targeted/full pytest logs. Then run deterministic no-network source-record identity, three distinct A-empty/B-rowB semantic goldens, child A history-read ACK, first/last child-local publication barriers with witnessed B completion, bounded recovery C and full python -m pytest -q part2/capital_flow/tests.",
+  "actions": {
+    "new_gemini_tasks": 0,
+    "specialist_code_changes": false,
+    "protected_changes": false,
+    "workflow_or_schedule_changes": false
+  }
+}
