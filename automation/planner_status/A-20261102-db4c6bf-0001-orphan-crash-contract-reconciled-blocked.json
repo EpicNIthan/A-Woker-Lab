@@ -1,0 +1,89 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 00:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4..db4c6bf1ba8f81ee4f4ae27ba59da756594db853: +112/-0, only sequential two-child spawn preflight test",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "archive_concurrent_test": "d08fd060df84eae63f1c13eb1bb390cda5d20e52"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "c86a331a68d04ba3672132c6be9ad1bc8181a342",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "absent"
+    },
+    "roadmap": "automation/supervisor_roadmap.md; latest independent Supervisor review 2026-11-01 23:54 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-2300-posttest-git-diff-proof-boundary-blocked.json",
+      "B": "B-20261101-db4c6bf-2325-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-posttest-proof-tier-2318.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    },
+    "worker_status_note": "loop-A/B/C.json are older than the latest durable planner reports; do not use stale loop-A's ABTC registration claim"
+  },
+  "integration_decision": {
+    "name": "CRASH_ORPHAN_REGRESSION_ALREADY_PRESENT_ON_EXACT_HEAD",
+    "classification": "PINNED_SOURCE_AND_QUEUE_RECONCILIATION_NOT_EXECUTED_TEST_PROOF",
+    "finding": "Exact current public HEAD's part2/capital_flow/tests/test_archive_concurrent_dedup.py already defines test_archive_orphan_lock_fail_closed and _orphan_lock_child_target. It positively acknowledges a spawned child's ArchiveWriterLock acquisition, releases child to os._exit(17), asserts the orphan .jsonl.lock persists, asserts a subsequent short lock attempt raises TimeoutError, and cleans only test-owned lock after child death. Same file retains test_pid_write_failure_removes_only_new_lock and test_preexisting_orphan_lock_is_preserved. The queue's C-20261028-restore-crash-orphan-regression-0857-01.json is FAILED at git diff --check exit 2, but the test it sought to restore is present at this SHA. Do not enqueue duplicate restoration work or mistake failed queue status for missing code; this source inspection does not prove the test passed.",
+    "recovery_contract": "Preserve fail-closed semantics for a real orphan lock: do not silently auto-delete a live or unowned lock. A supplementary deterministic no-network integration check may assert successful reacquisition/run_once only AFTER confirmed child death and explicit removal of test-owned orphan, then verify persisted handoff and bounded completion. This is a proposed acceptance refinement, not an executed regression. Keep the existing positive-ACK two-writer serialization/mixed-generation, stale-rollback, source-record identity, and bounded recovery contracts frozen; do not treat timeout alone as success.",
+    "remaining_gap": "No independent exact-SHA execution of the orphan test, two-writer overlap, stale rollback, role-identity or full Capital Flow suite; failed role-identity candidate patch/pytest transcripts not retained; its git diff --check exit 2 root cause UNKNOWN."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_result": "PASS for committed sequential preflight only; successful queue job 123402282636 run 40860520862",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "concurrency_role_recovery_rollback": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA checkout presence probe; no repeated DNS clone or invented pytest",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA runnable checkout or executor-owner sanitized pre-reset patch, git diff --check stdout/stderr/exit and collect-only/targeted/full pytest logs. Run no-network orphan/role/two-writer/rollback/recovery targeted pytest plus full python -m pytest -q part2/capital_flow/tests; preserve outputs."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflow_or_schedule_changes": false,
+    "automations_verified_enabled": [
+      "Anata Project Loop A",
+      "Anata Project Loop B",
+      "Anata Project Loop C",
+      "Anata Loop Supervisor"
+    ]
+  }
+}
