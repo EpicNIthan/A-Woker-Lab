@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-01 10:11 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential only",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "worker_control": {
+    "prewrite_head": "654320f0455fd5ca0492a758d73b2795b92d1ba4",
+    "roadmap_blob": "1ff17edb758c7b357491bc08d0efb5827c96d9c6",
+    "roadmap_at_ict": "2026-11-01 09:48 ICT",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "complete nontruncated 1530-entry worker-control Git tree; pending directory absent"
+    },
+    "latest_reports": {
+      "A": "A-20261101-db4c6bf-1003-history-read-receipt-execution-blocked.json",
+      "B": "B-20261101-db4c6bf-0931-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-posttest-diagnostic-gate-0915.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality_finding": "Pinned runner.run_once loads observations before three separate atomic_write_json publications, but archive_records_loaded is returned only after the third write. A paused child cannot return its pre-append history count until released. The proposed overlapping-writer oracle must positively acknowledge child A's original load_observations return count=0 BEFORE parent appends rowB, plus a separate child-local publication-barrier ACK; child B must complete and prove three distinct B golden JSON generations before A resumes. Without both receipts, mixed-generation outcomes are not causally established. Current sequential test checks rowB identity but not overlap. Current role integration checks only role set, not returned+persistent source_record_id-to-role mapping. No reproduced race or role inversion.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor": "PASS sequential preflight only; workflow run 40860520862 SUCCESS",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "targeted_pytest": "NOT_RUN independently",
+    "full_capital_flow_pytest": "NOT_RUN independently",
+    "history_receipt_regression": "NOT_RUN",
+    "mixed_role_identity": "NOT_RUN",
+    "overlap_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "No authorized disposable executable exact-SHA checkout or retained failed executor generated patch, git diff --check stderr and pytest transcripts. Prior checkout absence known; no DNS clone retries.",
+  "recovery": "Acquire authorized exact-SHA test checkout or sanitized pre-reset executor diagnostics; run deterministic no-network child-local pre-append read receipt + first/last publication barriers, distinct A/B golden JSON per file, recovery, returned+persisted source ID/role regression, collect-only/targeted/full Capital Flow pytest with retained logs. No malformed Gemini task or promotion.",
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_code_changed": false,
+    "workflows_or_schedules_changed": false
+  }
+}
