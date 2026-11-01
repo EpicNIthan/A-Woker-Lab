@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-01 16:10 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "latest_commit_parent": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "+112/-0 one sequential two-child spawn preflight test only",
+    "pinned_blobs": {
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "v1_handoff_test": "341851b2d03ddd642d4199ac7d96badd1808e026"
+    }
+  },
+  "worker_control": {
+    "read_head": "fc6bdd11e65a1b6aad5789aaa16f322ec4291176",
+    "roadmap_blob": "cbc46267a00cefda9a11a367c6ef8361327ef26b",
+    "supervisor_review": "2026-11-01 15:50 ICT; NOT_PLATEAU",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "nontruncated 1548-entry worker-control recursive tree"
+    },
+    "latest_reports": {
+      "A": "A-20261101-db4c6bf-1602-diffcheck-exit2-triage-blocked.json",
+      "B": "B-20261101-db4c6bf-1532-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-lock-scope-proof-gate-1517.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": "Fresh pinned role-test source already parametrizes string ' false ' as scoring and None as context, but returned and persisted source_record_id-to-role identity remains uncommitted/unexecuted. The last failed exact-base-SHA role-identity executor task reached post-test git diff --check and exited 2; A's independent disposable control reproduced exit 2 with trailing whitespace, but no generated Gemini patch or stderr survived. Therefore neither whitespace root cause nor regression correctness is established. Sequential spawn test asserts B rowB in anata_latest.json only; it does not witness concurrent writers or three-file generation coherence. No production defect reproduced.",
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "sequential_executor": "PASS for committed sequential preflight with mandated collect-only/targeted/full pytest; not independent proof of role/concurrency",
+    "failed_role_task_blob": "f2fbc91b1be7da85b0989539adf4a6d1f707415f",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "mixed_role_identity": "NOT_RUN",
+    "overlap_and_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED"
+  },
+  "blocker": "Authorized disposable exact-SHA executable checkout unavailable; failed executor generated patch, diff-check stderr and pytest transcripts not retained. No DNS clone attempted.",
+  "recovery": "Authorized executor owner should preserve sanitized pre-reset git diff --check stdout/stderr/exit, git status, generated patch and collect-only/targeted/full pytest logs, or supply disposable exact-SHA checkout. Then run deterministic no-network returned/persisted role-identity, distinct three-file A-empty/B-rowB goldens, child A pre-append history-read ACK, witnessed first/last child-local publication barriers, bounded recovery C and full python -m pytest -q part2/capital_flow/tests.",
+  "actions": {
+    "new_gemini_tasks": 0,
+    "specialist_code_changes": false,
+    "protected_changes": false,
+    "workflow_or_schedule_changes": false
+  }
+}
