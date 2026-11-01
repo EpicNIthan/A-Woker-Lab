@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 06:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5..db4c6bf1: +112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential, not overlapping",
+    "pinned_blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "67a1b4b650c5d1c6280187a7f64d9ef2b2bff45a",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_path": "ABSENT_404"
+    },
+    "roadmap": "automation/supervisor_roadmap.md; Supervisor 2026-11-02 05:49 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0459-partial-jsonl-crash-boundary-blocked.json",
+      "B": "B-20261102-db4c6bf-0525-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-no-newline-append-boundary-0515.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "VALID_NO_NEWLINE_ARCHIVE_E2E_FAIL_CLOSED_OR_COMMIT",
+    "classification": "SOURCE_VERIFIED_INTEGRATION_ACCEPTANCE_REFINEMENT_NOT_EXECUTED",
+    "finding": "C's storage-level valid-no-terminal-newline append risk crosses the runner boundary. Pinned _load_observations_unlocked accepts a complete final JSONL row without newline; append_observations opens in append mode and writes the next row with no separator. In run_once, append precedes load and all three atomic handoff writes. A distinct PIT-visible rowB may therefore be appended into malformed {rowA}{rowB}\\n; subsequent load raises ValueError after archive mutation, leaving previously published handoffs intact but the archive unusable. Source-derived risk, not a reproduced incident.",
+    "decision": "Use ONE shared A+C acceptance target, not duplicate Gemini tasks. Accept either (i) successful durable separation and complete end-to-end publication, or (ii) explicit fail-closed rejection BEFORE any archive/handoff mutation. Reject malformed mutated archive plus stale handoffs even if the exception is caught by the test. Preserve independent two-writer, stale-rollback, orphan and role-identity gates.",
+    "runnable_no_network_contract": "At exact SHA in isolated tmp_path: create rowA as a complete valid FlowObservation JSONL without terminal newline; assert load_observations=1. Run baseline run_once(network=False,local_dir=tmp_path,as_of_ms=T) and snapshot archive bytes and all three handoff bytes/hashes. Build distinct rowB (different source_record_id/revision_key; effective/available/observed<=T; scoring role), write immutable external fixture, assert JsonlFlowAdapter.collect() returns exactly rowB. Call run_once(network=False,external_jsonl=(fixture,),local_dir=tmp_path,as_of_ms=T). Success branch: appended=1, archive two parseable separate lines, loaded/scoring=2, all three handoffs parse and match T and rowB scoring identity; replay same fixture appended=0 and no duplicate. Rejection branch: require explicit error and byte-identical archive plus all three prior handoffs, and load_observations still returns rowA. Any partially mutated invalid JSONL, missing rowB on success, or mixed handoff generation is RED. No network, sleeps, skips, xfail or production edits.",
+    "proof_boundary": "Only exact source and existing positive-control test inspected. Contract NOT RUN. Current source predicts failure; do not claim confirmed production defect."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "result": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "overlap_orphan_rollback_role_newline": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_new_head": true
+  },
+  "blocker": {
+    "attempted_operation": "Exact-SHA local executable checkout presence probe (no repeat DNS clone)",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/part2/capital_flow/tests"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/part2/capital_flow/tests",
+      "pytest 9.0.2"
+    ],
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "executor_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "next_feasible_recovery": "Obtain authorized disposable checkout at exact SHA or sanitized pre-reset executor patch, diff-check stderr and pytest logs. Run targeted no-terminal-newline end-to-end test and frozen overlap, stale rollback, orphan and role identity contracts, then full python -m pytest -q part2/capital_flow/tests with retained transcripts. Do not blindly requeue Gemini."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflow_secret_schedule_modified": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ],
+    "automations_schedules_unchanged": true
+  }
+}
