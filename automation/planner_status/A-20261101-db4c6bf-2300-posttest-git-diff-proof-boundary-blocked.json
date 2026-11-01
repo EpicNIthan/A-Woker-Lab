@@ -1,0 +1,94 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 23:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4..db4c6bf1ba8f81ee4f4ae27ba59da756594db853: 1 commit, only +112/-0 test_runner_two_child_spawn_preflight.py (sequential)",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "a0cbea536403b1ab87f2b6517e180c82a24ae496",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "nontruncated_tree_entries": 1568
+    },
+    "roadmap": "automation/supervisor_roadmap.md, 2026-11-01 22:53 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-2200-stale-generation-rollback-gate-blocked.json",
+      "B": "B-20261101-db4c6bf-2225-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-stale-generation-rollback-gate-2216.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "FAILED_ROLE_TASK_REACHED_POSTTEST_GIT_DIFF_CHECK",
+    "classification": "EXACT_EXECUTOR_CONTROL_FLOW_INFERENCE_NOT_RETAINED_PYTEST_TRANSCRIPT",
+    "finding": "The failed GitHub queue run 41134555607 checked out main 4bbee3dfde71a90d8bbdc2a4c3def4bb3f195514 and Specialist db4c6bf1. That exact main's gemini_executor.py blob 0a77b2ef212f782f95564656cf051f2fd3348482 calls commit_and_push only after validate_model_result, apply_files, and run_tests returns ok=True; commit_and_push calls git diff --check before committing. Therefore reaching the observed CalledProcessError at git diff --check implies all three specified pytest subprocesses returned exit status 0 in that ephemeral executor attempt, conditional on the recorded source/logs. The generated patch and stdout/stderr/test transcripts were not retained, no commit occurred, and this does NOT validate current public HEAD for role identity or prove race/recovery. One structurally accepted response does not establish Gemini JSON reliability.",
+    "evidence": {
+      "queue_run": "41134555607",
+      "execute_job": "124333661975",
+      "main_sha_from_checkout": "4bbee3dfde71a90d8bbdc2a4c3def4bb3f195514",
+      "main_executor_blob": "0a77b2ef212f782f95564656cf051f2fd3348482",
+      "specialist_sha_from_checkout": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+      "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+      "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2."
+    },
+    "decision": "Treat the failed task as an unretained, nonpromotable candidate whose test stage was reached, not as an unexecuted Gemini parse failure. Do not repeat the malformed/failed task. Keep frozen corrected two-writer, source-record identity, bounded recovery and stale-generation rollback contracts; next authorized executor-owner action is diagnostic retention BEFORE reset (sanitized git diff/status, diff --check stdout/stderr/exit, collect-only/targeted/full pytest transcripts). Alternatively obtain authorized disposable exact-SHA executable checkout. No new Specialist task or workflow change by Planner A."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_result": "PASS sequential preflight only; successful queue job 123402282636 in run 40860520862",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "concurrency_identity_recovery_rollback": "NOT_RUN_OR_NOT_RETAINED_AS_APPROPRIATE",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA executable checkout path presence probe; no DNS clone or meaningless pytest repeated",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Authorized diagnostic-retention work by executor owner or disposable runnable exact-SHA checkout; run corrected deterministic no-network collect-only/targeted/full Capital Flow pytest and preserve logs."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflow_or_schedule_changes": false,
+    "automations_verified_enabled": [
+      "Anata Project Loop A",
+      "Anata Project Loop B",
+      "Anata Project Loop C",
+      "Anata Loop Supervisor"
+    ]
+  }
+}
