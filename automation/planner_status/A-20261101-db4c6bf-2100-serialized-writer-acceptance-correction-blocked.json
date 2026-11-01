@@ -1,0 +1,97 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 21:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5..db4c6bf1: one +112/-0 sequential two-child spawn preflight test, not overlapping writers",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "005ff0bef8697e9d13d8cff5758620006cb71ceb",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_path": "404 absent",
+      "basis": "direct done/failed directory enumeration and nontruncated 1562-entry recursive tree"
+    },
+    "roadmap": "automation/supervisor_roadmap.md, 2026-11-01 20:45 ICT, blob 3bf4e4f20b39c526435af1fef44ff3f80f540d69",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-2004-supervisor-consumer-gate-reconciled-execution-blocked.json",
+      "B": "B-20261101-db4c6bf-2034-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-identity-proof-boundary-2012.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "SERIALIZED_WRITER_FALSE_NEGATIVE_IN_FROZEN_ACCEPTANCE_SPEC",
+    "finding": "The Nov 1 12:02 contract unconditionally requires B to finish all three outputs before releasing paused A. A correct future outer publication lock would legitimately block B until A releases, so this condition would reject the intended repair (false negative). The Oct 17 00:58 A correction already identified the need for a conditional B completion branch; preserve it. Current source writes latest/audit/anata with three independent atomic replacements, so source-level interleaving remains possible, but no race executed.",
+    "no_network_test_contract": "At exact public SHA and fixed T, create canonical isolated A-empty and B-rowB output triples; require distinct semantic witnesses. In a spawn-safe child A, acknowledge actual history read (0 records) and actual post-replace latest.json (boundary 1) or pre-replace anata_latest.json (boundary 2), then pause. Append PIT-visible rowB only after both A ACKs. Start child B; record child started/entered and bounded results. If B completes while A held, verify B triple before releasing A, then assert no mixed final triple (unprotected source predicts B/A/A or B/B/A, hence expected RED). If B is blocked by a valid outer lock, do NOT require completion before releasing A; release A and require both complete, final B/B/B, bounded recovery C, no exceptions. Absence of B completion alone is NOT a green proof: require positive lock/wait instrumentation or equivalent causal ACK, and negative-control RED witness. Assert returned and persisted source_record_id -> scoring/context role identity. Run collect-only, targeted deterministic pytest, then python -m pytest -q part2/capital_flow/tests; retain exact-SHA logs. Do not use sleep as the causal oracle.",
+    "classification": "CONTRACT_CORRECTION_ONLY_NOT_EXECUTED",
+    "mandatory_gates": [
+      "Positive A history-read-before-append acknowledgment",
+      "Overlapping writer first/last publication boundary negative-control and serialization-compatible positive witness",
+      "Bounded recovery C and source-record identity-to-role",
+      "Exact-SHA targeted and full Capital Flow pytest"
+    ]
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS only for sequential preflight",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "overlap_recovery_identity": "NOT_RUN",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "verbatim_failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_patch_stderr_pytest": "NOT_RETAINED; root cause UNKNOWN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA checkout path presence and pytest version probes; no DNS clone retried",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Authorized exact-SHA executable checkout or sanitized executor pre-reset patch, diff-check stderr and collect-only/targeted/full pytest logs; execute corrected no-network acceptance. No speculative Gemini retry."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflows_modified": false,
+    "automations_verified_enabled": [
+      "Anata Project Loop A",
+      "Anata Project Loop B",
+      "Anata Project Loop C",
+      "Anata Loop Supervisor"
+    ],
+    "schedules_changed": false
+  }
+}
