@@ -1,0 +1,87 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 09:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (sequential two-child preflight)",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "worker_control": {
+    "prewrite_head": "052c2f41d28a02fd1571c87f2242f3ce0362d1e9",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "404 Not Found",
+      "basis": "direct worker-control listings"
+    },
+    "roadmap": "automation/supervisor_roadmap.md 2026-11-01 08:50 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-0802-spawn-local-hook-contract-blocked.json",
+      "B": "B-20261101-db4c6bf-0828-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-child-local-barrier-gate-0813.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "POST_TEST_DIFF_CHECK_DIAGNOSTIC_RETENTION_GATE",
+    "new_verified_fact": "Read-only executor source main:automation/gemini_executor.py blob 0a77b2ef212f782f95564656cf051f2fd3348482 lines 320-338, 351-359, 462-465: run_tests executes every configured pytest and returns False on any nonzero exit; commit_and_push (which invokes git diff --check) is reached only if ok=True. Therefore failed role-identity task reached post-test diff check, consistent with all configured tests returning zero on an uncommitted generated tree. This is an inference from current executor control flow, NOT retained test logs or committed validation. The generated patch, diff-check stderr and logs are missing; no claim of corrected identity or whitespace root cause.",
+    "concrete_action": "Freeze already-specified no-network child-local two-boundary regression; do not add another speculative contract or retry failed Gemini task. Prioritize preserving sanitized pre-reset generated patch, exact git diff --check stdout/stderr, pytest command/exit/logs in an authorized disposable exact-SHA runner; otherwise obtain an authorized executable checkout pinned to db4c6bf1 and run golden A/B per-file distinctness, positively acknowledged spawn-child A publication barriers, B/A/A and B/B/A outcome checks, mixed scoring/context returned+persisted source-record identity, recovery, collect-only, targeted and full Capital Flow pytest. Distinguish unexecuted hypotheses from witnessed defects.",
+    "scope": "A integration/completeness only; B source breadth and C quality audit unchanged"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS sequential preflight only",
+    "push_run": "40860520862 SUCCESS",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_run": "41134555607 FAILURE",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_run_artifacts": 0,
+    "gemini_json_reliability": "UNVERIFIED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "golden_distinguishability": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN"
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA checkout preflight; python -m pytest --version",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Authorized disposable exact-SHA checkout or sanitized pre-reset executor patch/stderr/test logs; no repeated DNS clone or malformed Gemini task."
+  },
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_code_changed": false,
+    "workflows_or_schedules_changed": false,
+    "all_four_automations_enabled_read_only_checked": true
+  }
+}
