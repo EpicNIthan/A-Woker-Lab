@@ -1,0 +1,99 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 06:56 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential not overlapping",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/output.py": "94904d4e00a350d621e9c271372766879059ec03",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "4e0c288a026a6d28b785eecf949b8574dcf1661c",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "tree_truncated": false
+    },
+    "roadmap": "automation/supervisor_roadmap.md; latest independent Supervisor review 2026-11-02 06:50 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0602-newline-e2e-failclosed-or-commit-blocked.json",
+      "B": "B-20261102-db4c6bf-0627-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-archive-commit-or-no-mutation-0611.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "FREEZE_SPEC_PROLIFERATION_EXECUTION_ONLY_PROOF_GATE",
+    "classification": "NEW_OPERATIONAL_GATE_NOT_A_NEW_PRODUCTION_DEFECT",
+    "decision": "Existing no-network two-writer causal/rollback, role-identity, orphan recovery, and valid-no-terminal-newline commit-or-no-mutation contracts are sufficiently specified. Do not add another source-only regression hypothesis or enqueue malformed Gemini retry. Next A advancement requires executable exact-SHA test evidence or retained sanitized executor diagnostics. Prioritize independent targeted tests, then full Capital Flow pytest. A coherent same-as_of_ms across three handoffs alone is not sufficient without source-record identity and controlled writer interleaving.",
+    "frozen_minimum_contract": "On an authorized exact-db4c6bf1 checkout, run deterministic PIT rowB sequential positive control; controlled two-writer overlap with positive barrier/return witnesses and generation + rowB identity/no-rollback assertions; orphan-lock recovery with confirmed append origin; no-terminal-newline archive commit-or-byte-identical-rejection; role-identity returned and persisted; then python -m pytest -q part2/capital_flow/tests. No network, skips, xfail, sleep-only oracle, or production edits.",
+    "proof_boundary": "Source and historical test contracts reviewed, not executed. This report does not assert new runtime failure or PASS."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "two_writer_orphan_role_newline": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_new_head": true
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA executable checkout presence probe; read-only GitHub Actions failed-run artifact/log recovery; exact-SHA public archive download attempt (not git clone)",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/part2/capital_flow/tests",
+      "https://github.com/EpicNIthan/A-Woker-Lab/archive/db4c6bf1ba8f81ee4f4ae27ba59da756594db853.tar.gz"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/part2/capital_flow/tests",
+      "pytest 9.0.2",
+      "ERROR: download failed because url not viewed in conversation before."
+    ],
+    "failed_run": {
+      "run_id": 41134555607,
+      "job_id": 124333661975,
+      "artifacts_count": 0,
+      "log_evidence": "Only FAILED status and CalledProcessError shown; no diff stderr, generated patch or pytest transcripts",
+      "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2."
+    },
+    "next_feasible_recovery": "Obtain authorized disposable checkout pinned to db4c6bf1, or have infrastructure owner preserve sanitized pre-reset patch, git diff --check stdout/stderr, and targeted/full pytest logs. Do not retry same DNS clone or failed malformed task. Recheck fresh HEAD before testing."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_main_railway_workflows_secrets_modified": false,
+    "automation_schedules_modified": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
