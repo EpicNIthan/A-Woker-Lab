@@ -1,0 +1,65 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-01 16:34 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential, not concurrency proof",
+    "source_contract": "part2/capital_flow/SOURCES.md at exact SHA: collector first-seen available_at; bootstrap history not retroactive PIT"
+  },
+  "worker_control": {
+    "prewrite_head": "9b9581a62cf88c66fb2cdb4bff12fb7ac89a59ed",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "direct pending 404; direct done/failed directories and nontruncated planner tree"
+    },
+    "since_prior_B": "3 commits; only A status, C status, supervisor_roadmap.md changed",
+    "roadmap": "automation/supervisor_roadmap.md; 2026-11-01 15:50 ICT; NOT_PLATEAU",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-1602-diffcheck-exit2-triage-blocked.json",
+      "B": "B-20261101-db4c6bf-1532-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-diffcheck-evidence-boundary-1610.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_breadth": {
+    "qualified_new_independent_first_party_btc_eth_sources": 0,
+    "admission": "NO_NEW_CANDIDATE",
+    "reason": "No newly proven immutable first-party economic BTC/ETH artifact/event ID with effective/available/observed PIT clocks, independent non-overlap proof, correct scoring-vs-context role and deterministic no-network test. Existing Farside ETF flow already covered; DefiLlama stablecoin supply is context, not BTC/ETH directional flow. Do not repackage previously rejected families without new evidence.",
+    "gemini_tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_executor_result": "PASS for sequential spawn preflight, required collect-only/targeted/full Capital Flow pytest; independent pytest NOT RUN",
+    "role_identity": "NOT_ESTABLISHED",
+    "overlapping_writer_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "attempted_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "failed_operation": "post-test git diff --check",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "patch_stderr_pytest_logs": "NOT_RETAINED; cause unknown"
+  },
+  "blocker": "No new qualifying first-party source contract; avoid speculative browsing/tasks. Executor owner must retain sanitized pre-reset patch, git diff --check stdout/stderr/exit and pytest transcripts, or provide authorized disposable exact-SHA checkout. A/C/Supervisor still require source_record_id-to-role and witnessed three-output overlapping-writer recovery proof before promotion.",
+  "actions": {
+    "status_only": true,
+    "specialist_code_modified": false,
+    "new_gemini_tasks": 0,
+    "main_private_railway_workflows_secrets_touched": false,
+    "schedule_changes": false,
+    "ignore_inert_specialist_automation": true
+  }
+}
