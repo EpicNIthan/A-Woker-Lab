@@ -1,0 +1,86 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 08:02 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+    "blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "worker_control": {
+    "prewrite_head": "4d78a29187ec2f54449aa95d5f61a3d337d99dd1",
+    "since_previous_A_report": "3 commits: B-0727, C-0719, supervisor roadmap 0748 only; no queue/workflow/Specialist changes",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "Supervisor 07:48 direct directory counts; pending directory 404 reconfirmed; compare 0ee47d7..worker-control shows no queue changes"
+    },
+    "roadmap": "automation/supervisor_roadmap.md 2026-11-01 07:48 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-0656-golden-distinguishability-gate-execution-blocked.json",
+      "B": "B-20261101-db4c6bf-0727-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-golden-oracle-gate-0719.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "SPAWN_CHILD_LOCAL_PUBLICATION_HOOK_PRECONDITION",
+    "new_verified_source_fact": "runner.py imports atomic_write_json directly from storage at module import and calls it three times sequentially (latest,audit,anata); the existing test uses multiprocessing.get_context('spawn') and fully joins A before starting B. Thus patching storage.atomic_write_json in the parent cannot reliably instrument runner writes in spawned A; the interception must be installed on runner.atomic_write_json inside child A before run_once.",
+    "runnable_no_network_contract": "Use fixed T=1700000000000, real PIT-visible rowB, network=False. In two isolated fresh directories per generation, generate A-empty and B-rowB goldens; assert repeatable canonical JSON within each generation and A!=B for EACH of latest.json/audit_latest.json/anata_latest.json, else mark that path INCONCLUSIVE and strengthen real PIT fixture. In child A (spawn top-level target), wrap runner.atomic_write_json locally with bounded Event/Queue acknowledgements, pausing AFTER A latest replacement for first boundary and BEFORE A anata replacement for last boundary. Parent must witness A archive_loaded=0 at barrier, append rowB, run unmodified child B, witness B archive_loaded=scoring_loaded=1 and successful completion of all three writes, then release A; require both exitcodes=0 and no timeouts. Compare final three fingerprints against A/B goldens; B/A/A or B/B/A is a witnessed mixed generation, B/B/B is consistent; never claim a defect without positive barrier receipts. Run fresh recovery C, returned+persisted scoring/context ID->role assertions, collect-only/targeted/full Capital Flow pytest, retain exact SHA and logs. No network, sleeps as oracle, production edits or fake generation markers.",
+    "claim_boundary": "Hook placement and sequential limitation verified by source; golden repeatability and two-boundary contract SPECIFIED ONLY, NOT EXECUTED. No production race established."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS at matching commit, sequential scope only",
+    "push_run": "40860520862 SUCCESS per supervisor 07:48",
+    "failed_role_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_run_artifacts": "[] at 41134555607",
+    "gemini_json_reliability": "UNVERIFIED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "golden_repeatability": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN"
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA checkout preflight; python -m pytest --version",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "next_feasible_recovery": "Obtain authorized disposable checkout pinned to db4c6bf1 or sanitized preserved executor diagnostics; implement/test child-local barrier in an isolated test-only environment and retain logs. No DNS clone retry or malformed Gemini task repeat."
+  },
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_code_changed": false,
+    "workflows_or_schedules_changed": false,
+    "all_four_planners_supervisor_enabled_checked": true
+  }
+}
