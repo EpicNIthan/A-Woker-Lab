@@ -1,0 +1,94 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 13:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (sequential two-child spawn, no overlap)",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "role_test": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a",
+      "handoff": "23d704dead9982f9f3f395f425bbbefe5541d193"
+    },
+    "ignore_inert_public_automation": true
+  },
+  "worker_control": {
+    "prewrite_head": "f620b4589c3eaab8d88ef0cd0a41f07a1ba957bf",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "complete nontruncated worker-control Git tree; pending directory absent"
+    },
+    "roadmap": "automation/supervisor_roadmap.md, Supervisor exact-SHA review 2026-11-01 12:50 ICT",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-1202-barrier-ordering-oracle-blocked.json",
+      "B": "B-20261101-db4c6bf-1229-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-barrier-ack-order-gate-1217.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "RECOVERED_GHA_LOGS_CONFIRM_DIAGNOSTIC_CAPTURE_GAP__FREEZE_UNEXECUTED_RACE_CONTRACT",
+    "direct_evidence": "Read-only GitHub Actions failed run 41134555607 execute job 124333661975 log (33422 chars). Step 8 failed. It prints only status FAILED and CalledProcessError for git diff --check exit 2, with no pytest transcript, generated patch, git diff stderr, or diff-check stdout. Run artifacts API returned [] (none). This directly confirms no retained diagnostic artifact for this failure.",
+    "executor_source": "main automation/gemini_executor.py blob 0a77b2ef212f782f95564656cf051f2fd3348482: run() uses capture_output=True and check=True (lines 39-46); commit_and_push invokes git(repo,'diff','--check') at line 358; run_tests captures logs internally (320-337); exception handler reset_worktree(repo) before printing only exception class/message (496-505). Thus Git's stderr and generated patch are not surfaced before reset. Root cause of exit 2 is UNKNOWN.",
+    "prior_contract": "Freeze previously documented no-network A-empty/B-rowB three-file golden distinguishability, child A pre-append A_HISTORY_READ=0, post-replace first-boundary ACK producing B/A/A, pre-replace last-boundary ACK producing B/B/A, recovery C, source_record_id-role returned/persisted, bounded child exits, collect-only/targeted/full pytest. No production race reproduced.",
+    "next_feasible_recovery": "An authorized executor owner (not Planner A) should preserve sanitized pre-reset git diff --check stdout/stderr/exit, git status/diff --stat, allowlisted generated test patch, and per-command pytest outputs as a durable artifact before any future retry; or provide a disposable exact-SHA executable checkout. Reassess Gemini structured JSON reliability first. Do not blindly rerun the malformed/failed task, edit workflow/executor here, or enqueue new tasks."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS matching committed SHA, sequential preflight only",
+    "failed_task": "SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_run": "https://github.com/EpicNIthan/A-Woker-Lab/actions/runs/41134555607",
+    "failed_job_id": 124333661975,
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "github_run_artifacts": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "witnessed_concurrency": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA executable checkout preflight and GitHub failed-job diagnostic retrieval",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_local_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "github_log_result": "GitHub job log fetched, but no patch, pytest transcript, diff-check stderr, or artifact retained",
+    "next_feasible_recovery": "Owner-authorized diagnostic retention or exact-SHA disposable checkout; then execute frozen deterministic contract with retained evidence."
+  },
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_code_changed": false,
+    "workflows_or_schedules_changed": false,
+    "automations_verified_enabled": [
+      "Anata Project Loop A",
+      "Anata Project Loop B",
+      "Anata Project Loop C",
+      "Anata Loop Supervisor"
+    ]
+  }
+}
