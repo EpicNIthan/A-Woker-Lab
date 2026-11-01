@@ -1,0 +1,86 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 17:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5..db4c6bf1: one +112/-0 sequential two-child spawn preflight test; no newer commit",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "bc16ba1636774537700e52c1a86841e725c0b596",
+    "since_previous_A": "3 commits; B 16:34 status, C 16:10 status, Supervisor roadmap 16:50; no code, queue, workflow edits",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27
+    },
+    "roadmap": "automation/supervisor_roadmap.md 2026-11-01 16:50 ICT; Supervisor NOT_PLATEAU",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-1602-diffcheck-exit2-triage-blocked.json",
+      "B": "B-20261101-db4c6bf-1634-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-diffcheck-evidence-boundary-1610.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "IN_FLIGHT_CONSUMER_COHERENCE_DISTINCT_FROM_FINAL_TWO_WRITER_COHERENCE",
+    "source_basis": "runner.run_once writes latest.json, audit_latest.json, anata_latest.json in order; storage.atomic_write_json performs an independent os.replace per file. Even a writer-only lock spanning all three writes cannot guarantee a lock-free reader sees one generation while a writer is mid-publication.",
+    "supplementary_no_network_diagnostic": "Seed complete A-empty triple at fixed T with run_once(network=False). Append one PIT-visible BTC ETF rowB. Spawn child B at same T/path; child-local wrapper around runner.atomic_write_json calls original for latest.json, sends post-replace ACK, and blocks on bounded Event before audit_latest.json. Parent reads all three while paused: expect latest=B, audit=A, anata=A by independently distinct A/B golden witnesses. Release B, join with bounded timeout and assert B/B/B; ensure cleanup on failure. No sleep/timing oracle, no network. Diagnostic SPECIFIED_NOT_RUN, not a production defect reproduction. Preserve separate frozen two-writer post-run B/A/A and B/B/A + recovery C contract.",
+    "decision": "Do not conflate final-state writer race with in-flight consumer snapshot guarantee. Freeze existing two-writer gate; flag consumer protocol/manifest requirement for Supervisor to decide if triple must be atomically readable. Do not enqueue Gemini until JSON reliability proven."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor": "PASS sequential collect-only/targeted/full Capital Flow pytest; NOT a concurrent/consumer proof",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "two_writer_and_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA targeted/full pytest invocation",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests"
+    ],
+    "verbatim_output": [
+      "ERROR: file or directory not found: /mnt/data/A-Woker-Lab/part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "no tests ran in 0.00s",
+      "target_exit=4",
+      "ERROR: file or directory not found: /mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "no tests ran in 0.00s",
+      "full_exit=4"
+    ],
+    "failed_gemini_task": "SUPERVISOR-20261031-role-identity-0453-01.json: CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.; patch/stderr not retained",
+    "next_feasible_recovery": "Authorized disposable exact-SHA executable checkout or executor-side sanitized pre-reset patch, git diff --check stdout/stderr/exit and pytest logs. Then execute frozen two-writer, identity, recovery and full pytest; optionally run supplementary single-writer consumer diagnostic to clarify required read protocol."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "automations_verified_enabled": [
+      "Anata Project Loop A",
+      "Anata Project Loop B",
+      "Anata Project Loop C",
+      "Anata Loop Supervisor"
+    ],
+    "schedule_changes": false
+  }
+}
