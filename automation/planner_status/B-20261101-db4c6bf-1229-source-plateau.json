@@ -1,0 +1,62 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-01 12:29 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "latest_commit_diff": "+112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential only",
+    "source_contract": "part2/capital_flow/SOURCES.md; first collector observation bounds available_at; no pre-bootstrap replay",
+    "ignore_inert_automation": true
+  },
+  "worker_control": {
+    "prewrite_head": "4882c78dcb52cd997f329b491fa8dfcdd6c461a8",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "direct worker-control directory listings; pending 404; complete nontruncated 1537-entry tree"
+    },
+    "roadmap": "automation/supervisor_roadmap.md; Supervisor 2026-11-01 11:50 ICT: NOT_PLATEAU",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-1202-barrier-ordering-oracle-blocked.json",
+      "B": "B-20261101-db4c6bf-1135-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-barrier-ack-order-gate-1217.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_admission": {
+    "qualified_new_independent_first_party_BTC_ETH_sources": 0,
+    "candidate": null,
+    "task_justified": false,
+    "reason": "No newly evidenced immutable first-party BTC/ETH economic artifact with effective/available/observed PIT clocks, non-overlap proof, proper context versus directional spot role, and deterministic no-network contract; do not repackage rejected families or backdate."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor": "PASS at exact commit SHA; sequential preflight only",
+    "independent_pytest": "NOT_RUN",
+    "mixed_role_identity": "NOT_ESTABLISHED",
+    "overlapping_writers_recovery": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_operation": "git diff --check after generated test-only patch targeting part2/capital_flow/tests/test_runner_role_consistency.py",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "patch_stderr_pytest_logs": "NOT_RETAINED"
+  },
+  "next": "No B task without new qualified first-party source. Obtain authorized disposable exact-SHA checkout or sanitized executor diagnostics before any retry; A/C/Supervisor must prove per-file A/B golden semantics, child-local read/barrier ACK ordering, returned/persisted record-ID roles and witnessed overlap/recovery with deterministic full Capital Flow tests. No promotion until same-SHA A/B/C and independent Supervisor PLATEAU.",
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_changed": false,
+    "protected_systems_or_schedules_changed": false
+  }
+}
