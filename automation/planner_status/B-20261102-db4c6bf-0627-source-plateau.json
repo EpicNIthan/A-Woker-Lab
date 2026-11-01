@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-02 06:27 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5..db4c6bf1: +112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential, not concurrent",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f"
+  },
+  "worker_control": {
+    "prewrite_head": "4b4acf239b91ef3f1076ce615998021be15d5056",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27
+    },
+    "roadmap": "automation/supervisor_roadmap.md, 2026-11-02 05:49 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0602-newline-e2e-failclosed-or-commit-blocked.json",
+      "B": "B-20261102-db4c6bf-0525-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-archive-commit-or-no-mutation-0611.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_breadth": {
+    "qualified_new_first_party_btc_eth_sources": 0,
+    "admission": "NO_NEW_CANDIDATE",
+    "basis": "Exact-SHA source contract already covers Farside BTC ETF daily net flows; DefiLlama aggregate stablecoin supply is potential liquidity not directional BTC buying; mempool.space mining hashrate/difficulty are context-only. No newly substantiated independent BTC/ETH economic event with immutable first-party artifact ID, effective/available/observed PIT clocks, non-overlap proof, defensible spot directional/context role and deterministic no-network fixture. Rejected candidates not recycled.",
+    "gemini_tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_pytest": "NOT_RUN",
+    "new_quality_contract": "VALID_NO_TERMINAL_NEWLINE_ARCHIVE_COMMIT_OR_NO_MUTATION_NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "GitHub-hosted Gemini executor post-test git diff --check",
+    "attempted_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "missing": "Sanitized pre-reset patch, git diff --check stderr, pytest transcripts and independent executable exact-SHA checkout; A/C no-newline archive commit-or-no-mutation, identity, overlapping-writer, rollback and orphan recovery tests not run.",
+    "next": "Do not blind-retry. Obtain retained diagnostics or authorized exact-SHA checkout; then deterministic targeted and full python -m pytest -q part2/capital_flow/tests. B resumes source admission only with genuinely new first-party BTC/ETH PIT evidence."
+  },
+  "actions": {
+    "report_only": true,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false
+  }
+}
