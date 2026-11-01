@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 03:00 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5..db4c6bf1: +112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential two-child, no overlapping generation proof",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "providers": "072581823a815c124d8629afd678196e86fe8840",
+      "archive_visibility_test": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "atomic_handoff_test": "c06587133a4444d90df4d2f8cbc4f599a0240ca7",
+      "spawn_preflight": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "acf590b2eea840cb98f81e2c1c778bc31753a515",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "tree_truncated": false,
+      "source": "Direct GitHub worker-control recursive tree enumeration"
+    },
+    "roadmap": "automation/supervisor_roadmap.md, Supervisor exact-SHA review 2026-11-02 02:52 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0204-external-jsonl-recovery-e2e-blocked.json",
+      "B": "B-20261102-db4c6bf-0227-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-precleanup-e2e-failclosed-0211.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "NONVACUOUS_PRE_ORPHAN_APPEND_WITNESS",
+    "classification": "SOURCE_VERIFIED_DETERMINISTIC_NO_NETWORK_TEST_CONTRACT_NOT_EXECUTED",
+    "finding": "Pre-cleanup run_once TimeoutError plus absence of outputs alone is non-specific: runner catches JsonlFlowAdapter parse errors, then append_observations([]) skips its writer lock and load_observations can raise the same TimeoutError. Thus a malformed/empty external fixture can make a negative orphan-lock oracle pass without exercising the append path. Existing archive reader/writer visibility and individual-file atomicity tests cover different primitives; neither proves full three-file run_once generation consistency.",
+    "contract": "Use a fresh isolated tmp_path and immutable canonical PIT-visible rowB input.jsonl. Before inducing orphan, positively verify list(JsonlFlowAdapter(input_path).collect()) is exactly one rowB with observation_id, source_record_id=rowB, visible clocks; ensure archive/output paths absent. Spawn lock owner, ACK acquisition, os._exit(17), bounded join, confirm exitcode=17 and test-owned orphan. Invoke the SAME run_once(network=False,external_jsonl=(input_path,),local_dir=tmp_path,as_of_ms=T) before cleanup in a bounded child; require TimeoutError and no observations.jsonl/latest.json/audit_latest.json/anata_latest.json. Preserve orphan. After confirmed child death remove only test-owned lock, call identical run_once; assert collection_attempt OK/count1, source_errors=[], appended=1, archive/scoring=1/1, persisted and returned rowB scoring source_record_id, no lock. Repeat: appended=0, archive/scoring=1/1, same single rowB identity. Keep separate positive-ACK overlapping-writer lock-vs-mixed-generation and same-clock rollback tests; do not conflate archive atomicity with three-file generation atomicity.",
+    "proof_boundary": "No test executed and no production defect established. A timeout alone does not identify which lock acquisition failed; immutable positive adapter witness plus same fixture and post-cleanup append=1 make the intended path non-vacuous."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "result": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_new_head": true
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA executable checkout presence probe",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/part2/capital_flow/tests"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/part2/capital_flow/tests",
+      "pytest 9.0.2"
+    ],
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "executor_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA runnable checkout or retained sanitized failed executor patch, git diff --check stderr and pytest transcripts; execute nonvacuous orphan test, corrected two-writer/rollback/role identity tests, collect-only, targeted and full python -m pytest -q part2/capital_flow/tests with logs. No blind DNS retry or malformed task replay."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflow_schedule_secret_modified": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
