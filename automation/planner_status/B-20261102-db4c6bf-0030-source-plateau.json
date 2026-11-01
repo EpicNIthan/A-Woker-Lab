@@ -1,0 +1,69 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-02 00:30 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repository": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4..db4c6bf1ba8f81ee4f4ae27ba59da756594db853: one +112/-0 sequential two-child preflight test only",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f"
+  },
+  "worker_control": {
+    "prewrite_head": "d82c8de885153b02306eb6095e7f10727352fafc",
+    "tree_entries": 1573,
+    "tree_truncated": false,
+    "authoritative_queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "absent"
+    },
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0001-orphan-crash-contract-reconciled-blocked.json",
+      "B": "B-20261101-db4c6bf-2325-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-orphan-postcleanup-recovery-gap-0018.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    },
+    "supervisor_roadmap": "automation/supervisor_roadmap.md; latest review 2026-11-01 23:54 ICT"
+  },
+  "source_breadth": {
+    "new_qualified_independent_first_party_btc_eth_sources": 0,
+    "admission": "NO_NEW_CANDIDATE",
+    "basis": "Pinned SOURCES.md already covers Farside spot-BTC ETF daily net flows. DefiLlama stablecoin supply is potential liquidity, not directional spot BTC buying; mempool.space network hashrate/difficulty are context-only. No new source demonstrated immutable first-party BTC/ETH economic event/artifact ID, effective/available/observed PIT clocks, non-overlap independence, appropriate context/scoring role and deterministic no-network contract. Previously rejected candidates not recycled.",
+    "gemini_tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS for committed sequential preflight only",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "attempted_operation": "Gemini executor post-test git diff --check for proposed part2/capital_flow/tests/test_runner_role_consistency.py",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "diagnostics": "Candidate patch, stderr and pytest transcripts NOT_RETAINED; root cause UNKNOWN",
+    "other_proofs": "A/C report existing orphan fail-closed test but missing independently executed post-cleanup recovery, returned/persisted source-record identity, positive-ACK overlapping writers, stale-generation rollback and full suite. No evidence of reproduced production defect.",
+    "next": "Recover sanitized failed candidate diagnostics or authorized disposable runnable exact-SHA checkout; no speculative Gemini enqueue or repeated source browsing without new admissible evidence."
+  },
+  "actions": {
+    "report_only": true,
+    "specialist_code_modified": false,
+    "gemini_tasks_enqueued": 0,
+    "protected_systems_modified": false,
+    "workflow_queue_schedule_changes": false
+  }
+}
