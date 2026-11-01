@@ -1,0 +1,94 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-01 14:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential, no overlap",
+    "pinned_blobs": {
+      "runner": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "storage": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "spawn_test": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "sec_context_test": "a3558b035004a9115b874d2bdd92d466857c16f1",
+      "abtc_provider": "61aee3964a87c87407e083e23e8c454380a8fdbc"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "0cb1a964eb465614de2abbbd239c137f6ac9b087",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "direct worker-control queue enumeration; pending directory absent; done/failed counted"
+    },
+    "roadmap": {
+      "path": "automation/supervisor_roadmap.md",
+      "blob": "54c95407bb6e7beba35523b1b1f010d1604ac85d",
+      "latest": "Supervisor exact-SHA review 2026-11-01 13:54 ICT"
+    },
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-1304-gha-log-diagnostic-retention-blocked.json",
+      "B": "B-20261101-db4c6bf-1334-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-diagnostic-retention-gate-1317.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "RETIRE_STALE_ABTC_REGISTRATION_BLOCKER_FROM_CURRENT_A_ASSESSMENT__FREEZE_RACE_CONTRACT",
+    "new_verified_source_finding": "worker-control automation/worker_status/loop-A.json is stale: it is pinned to Oct 5 ded21ded and says AmericanBitcoinTreasuryCollector is not registered. At current exact public HEAD, runner.py imports AmericanBitcoinTreasuryCollector and includes ('american_bitcoin_treasury', AmericanBitcoinTreasuryCollector(), {}) in _collect_live. Existing test_sec_context_collectors.py::test_new_sec_context_collectors_are_live_and_excluded_from_scoring checks attempted/OK, archived rows, context-only scoring exclusion, handoff role, and evidence-health visibility. Therefore the old registration-missing blocker is resolved at source level; do not queue a duplicate registration task. Runtime behavior is not independently rerun here.",
+    "remaining_blocker": "The two-writer generation coherence and source-record identity/recovery contract remains unexecuted; sequential spawn PASS cannot establish concurrent safety. No new speculative regression-contract refinement is warranted. Freeze child-local post-first/pre-last write barriers, positive A history-read ACK, three distinguishable A/B goldens, B completion before A release, recovery C, and returned/persisted source-record roles.",
+    "executor_diagnostics": "Existing failed role-identity task ran at exact base SHA but failed after test commands at git diff --check exit 2; failed GitHub job logs retain no patch, stderr or pytest transcript, and executor resets worktree. No retry until structured-JSON reliability and diagnostics retention are proven.",
+    "next_feasible_recovery": "Authorized executor owner supplies a disposable checkout pinned to db4c6bf1ba8f81ee4f4ae27ba59da756594db853 or retains sanitized pre-reset patch/diff-check stdout-stderr/pytest outputs; then run exact-repo collect-only, targeted SEC integration + role identity, frozen two-writer overlap/recovery and full python -m pytest -q part2/capital_flow/tests with retained evidence."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS committed sequential preflight only; task required collect-only, targeted and full suite",
+    "successful_run": "https://github.com/EpicNIthan/A-Woker-Lab/actions/runs/40860520862",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_capital_flow_pytest": "NOT_RUN",
+    "concurrent_writer_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_change": true
+  },
+  "blocker": {
+    "attempted_operation": "local exact-SHA checkout preflight and direct exact-blob source/test reconciliation",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/anata-local-hardening/.git"
+    ],
+    "verbatim_local_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/anata-local-hardening/.git",
+      "pytest 9.0.2"
+    ],
+    "execution_host": "NOT_AVAILABLE; no network clone repeated"
+  },
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_code_changed": false,
+    "workflows_or_schedules_changed": false,
+    "automations_verified_enabled": [
+      "Anata Project Loop A",
+      "Anata Project Loop B",
+      "Anata Project Loop C",
+      "Anata Loop Supervisor"
+    ]
+  }
+}
