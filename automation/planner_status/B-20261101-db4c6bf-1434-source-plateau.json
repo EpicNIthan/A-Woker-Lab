@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-01 14:34 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "one file only: +112/-0 part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential A then B, not concurrent",
+    "source_contract": "part2/capital_flow/SOURCES.md: collector first observation sets earliest usable available_at; bootstrap history cannot be replayed earlier; missing availability excludes causal use",
+    "ignore_inert_specialist_automation": true
+  },
+  "worker_control": {
+    "prewrite_head": "fa5ecf25edfb346250066403ba95ec9bfaf92414",
+    "tree_entries": 1543,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "404 NOT_FOUND; confirmed no pending tree entries"
+    },
+    "roadmap": "automation/supervisor_roadmap.md (latest 2026-11-01 13:54 ICT)",
+    "latest_durable": {
+      "A": "A-20261101-db4c6bf-1404-stale-abtc-status-reconciled-execution-blocked.json",
+      "B": "B-20261101-db4c6bf-1334-source-plateau.json",
+      "C": "C-20261101-db4c6bf-quality-source-role-proof-gate-1415.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_breadth": {
+    "qualified_new_independent_first_party_btc_eth_sources": 0,
+    "admission": "NO_NEW_CANDIDATE",
+    "reason": "No newly evidenced immutable first-party BTC/ETH economic event/artifact ID with effective/available/observed point-in-time clocks, independent non-overlap proof, scoring-vs-context role and deterministic no-network contract. Farside BTC ETF flow is already admitted; DefiLlama stablecoin supply is liquidity context, not proof of BTC/ETH buying. Rejected categories remain rejected absent new proof.",
+    "gemini_tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_executor_result": "PASS for committed sequential spawn preflight only; task required collect-only, targeted and full Capital Flow pytest",
+    "independent_pytest": "NOT_RUN",
+    "role_identity": "NOT_ESTABLISHED",
+    "overlap_recovery": "NOT_RUN",
+    "gemini_structured_json": "UNVERIFIED",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "failed_write_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "failed_operation": "post-test git diff --check",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "failed_patch_stderr_pytest_logs": "NOT_RETAINED"
+  },
+  "next": "No B task without a genuinely independent qualifying source. Executor owner should preserve sanitized pre-reset patch, diff-check stdout/stderr and pytest transcripts or provide authorized disposable exact-SHA checkout; A/C/Supervisor must prove per-file A/B golden inequality, positive history-read and child-local publication ACKs, source-record role identity, witnessed overlapping publication and recovery C. Promotion requires same-HEAD unqualified A/B/C and independent Supervisor PLATEAU.",
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_or_protected_changes": false,
+    "workflows_or_schedules_changed": false
+  }
+}
