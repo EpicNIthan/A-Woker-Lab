@@ -1,0 +1,92 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 04:59 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recent_diff": "c7a3c7f5..db4c6bf1: one +112/-0 sequential two-child preflight test, no overlap",
+    "pinned_blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "source inspected at exact public SHA",
+      "part2/capital_flow/tests/test_archive_concurrent_dedup.py": "source inspected at exact public SHA"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "1f606f12c8968bed70cb9492ed24552527185484",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "source": "nontruncated worker-control recursive Git tree; pending absent"
+    },
+    "roadmap": "automation/supervisor_roadmap.md, Supervisor exact-SHA review 2026-11-02 04:48 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0356-append-timeout-origin-contract-blocked.json",
+      "B": "B-20261102-db4c6bf-0433-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-orphan-existing-output-preservation-0414.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "CRASH_ORPHAN_RECOVERY_IS_VALID_ARCHIVE_ONLY",
+    "classification": "SOURCE_VERIFIED_RECOVERY_SCOPE_CORRECTION_NOT_EXECUTED",
+    "finding": "The integrated orphan-lock cleanup/replay contract assumes the archive remains well-formed. Pinned storage.append_observations writes each JSONL row and newline before final flush/fsync, so a process crash during a row can leave a truncated tail; _load_observations_unlocked raises ValueError for malformed JSONL after the orphan is removed. Existing test_archive_reader_writer_visibility pauses a partial row but resumes and completes it; test_archive_orphan_lock_fail_closed crashes with a held lock but does not write a partial row. Neither proves crash-corrupt-tail recovery. This is a source-derived failure mode, not an observed production incident.",
+    "decision": "Keep previously frozen intact-archive orphan recovery contract; explicitly qualify its PASS as recovery after lock cleanup with VALID JSONL. Do not infer corrupt-tail auto-repair, do not silently delete or truncate archive rows. Treat partial-tail crash as separate fail-closed integrity risk and do not expand Gemini queue while diagnostics and exact-SHA execution remain blocked.",
+    "runnable_no_network_negative_control": "In isolated tmp_path seed valid baseline archive + three persisted handoffs; record exact bytes/hashes. Spawn lock-owning child with positive acquired ACK, append and fsync only a deliberately incomplete JSONL row, ACK partial bytes, os._exit(17). Parent verifies child exit=17 and lock inode. Before cleanup require lock timeout and unchanged three handoff hashes. Remove only positively identified test-owned orphan after child death; load_observations must raise ValueError identifying the malformed line, and archive bytes plus published handoffs must remain unchanged (no silent truncation/repair). This is a negative integrity oracle; valid-archive postcleanup append/read/handoff recovery remains a separate positive test. Do not assert current implementation can automatically repair corrupt tails.",
+    "proof_boundary": "Source inspection only; test NOT RUN; no production defect reproduction or promotion validation."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "result": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "concurrent_and_recovery_tests": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_new_head": true
+  },
+  "blocker": {
+    "attempted_operation": "Exact-SHA executable checkout local presence probe",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/part2/capital_flow/tests"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/part2/capital_flow/tests",
+      "pytest 9.0.2"
+    ],
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "executor_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "next_feasible_recovery": "Acquire authorized disposable checkout pinned to db4c6bf1 or sanitized pre-reset Gemini patch, diff-check stderr and pytest logs. Run frozen valid-archive orphan, positive-ACK overlap/rollback/role identity tests and full python -m pytest -q part2/capital_flow/tests; preserve results. If partial-tail recovery is in scope, execute negative integrity oracle separately; no DNS clone retry or blind Gemini requeue."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflow_secret_schedule_modified": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ],
+    "automations_schedules_unchanged": true
+  }
+}
