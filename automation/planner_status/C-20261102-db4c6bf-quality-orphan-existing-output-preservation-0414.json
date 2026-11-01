@@ -1,0 +1,75 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-02 04:14 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "latest_diff": "c7a3c7f5..db4c6bf1: +112/-0 only sequential test_runner_two_child_spawn_preflight.py",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "8454e1b6c117a181fb83060c5a5adeb3188e9407",
+    "tree_sha": "4cd505b8e422b19b9d77f5e090dfe8ea38088ac9",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27
+    },
+    "roadmap_blob": "abce260146ef2274d031cd9f7137afceab6df155",
+    "latest_reports": {
+      "A": "A-20261102-db4c6bf-0356-append-timeout-origin-contract-blocked.json",
+      "B": "B-20261102-db4c6bf-0327-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-role-parser-and-nonvacuous-orphan-0315.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": {
+    "classification": "SOURCE_VERIFIED_UNEXECUTED_TEST_COVERAGE_GAP_NOT_PRODUCTION_DEFECT",
+    "finding": "The proposed fresh-directory orphan test asserts absent outputs on pre-cleanup timeout but does not protect already published snapshots. At pinned runner.py append/load precede three independent atomic_write_json calls. An append-lock timeout should leave all preexisting latest.json, audit_latest.json and anata_latest.json byte-for-byte unchanged; absence-only checks cannot establish that preservation contract.",
+    "acceptance": "In an isolated no-network tmp_path, first create a successful baseline snapshot and record hashes of all three JSON files plus archive. Prevalidate a distinct PIT-visible rowB fixture through JsonlFlowAdapter. Positively ACK and crash a test-owned lock owner, confirm retained inode and exit. Run same run_once with external_jsonl=(fixture,) under bounded child (>10s lock timeout), capture traceback proving append_observations lock origin, and assert baseline archive and all three output hashes unchanged. After removing only confirmed test-owned orphan, run same entrypoint: append=1, loaded/scoring counts increment, returned and persisted rowB scoring identity; repeat append=0. Keep separate overlapping-writer and same-clock rollback tests. This is a proposed oracle, NOT RUN."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "executor": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "role_overlap_rollback_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "new_head_invalidates": true
+  },
+  "blocker": {
+    "exact_sha_executable_checkout": "NOT_AVAILABLE",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "missing": "Authorized disposable exact-SHA checkout or retained sanitized candidate patch, git diff --check stderr, pytest logs.",
+    "recovery": "Obtain executable checkout or sanitized executor diagnostics; run deterministic no-network role-identity, append-lock/orphan-preservation, overlapping-writer, rollback and full python -m pytest -q part2/capital_flow/tests; preserve logs. No blind Gemini retry."
+  },
+  "actions": {
+    "status_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "workflow_secret_schedule_modified": false,
+    "automation_schedules_modified": false
+  }
+}
