@@ -1,0 +1,98 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 09:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0; only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (sequential child A then child B, no overlap)",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "933736add08e7266fc012695b7e2e642f50fa83c",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "tree_truncated": false
+    },
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 2026-11-02 08:48 ICT)",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0801-executable-checkout-dns-blocked.json",
+      "B": "B-20261102-db4c6bf-0830-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-executable-evidence-gate-0810.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "EXECUTION_EVIDENCE_DEPENDENCY_TRACKED_NO_UNAUTHORIZED_RETRY",
+    "finding": "New independent Supervisor issue #1 (opened 08:49 ICT, 0 comments, still open) tracks sanitized pre-reset diff-check stderr/patch/pytest transcript retention, the missing evidence needed to diagnose last Gemini executor failure. This is a concrete infrastructure recovery route, NOT authorization to edit it. No changed public HEAD or evidence permitting a repeat failed task.",
+    "decision": "Do not add further source-only contracts. Freeze existing positive-ACK overlapping-writer/generation rollback, source-record role identity, orphan append/read recovery, and no-terminal-newline commit-or-no-mutation regressions. Route execution to an authorized exact-SHA disposable checkout or sanitized retained Gemini failure bundle; after a proven executor reliability change, require fresh SHA, collect-only/targeted/full suite and preserve logs.",
+    "issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1",
+    "issue_state": "OPEN_UNASSIGNED_NO_COMMENTS",
+    "no_network_commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py part2/capital_flow/tests/test_archive_reader_writer_visibility.py part2/capital_flow/tests/test_runner_role_consistency.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ]
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "github_commit_statuses": 0,
+    "github_check_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "concurrency_recovery_identity_newline": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA checkout presence probes; pytest collect-only at /mnt/data (no network)",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/part2/capital_flow/tests"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/part2/capital_flow/tests",
+      "ERROR: file or directory not found: part2/capital_flow/tests",
+      "no tests collected in 0.00s",
+      "EXIT:4"
+    ],
+    "prior_failed_executor": {
+      "run_id": 41134555607,
+      "job_id": 124333661975,
+      "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+      "artifacts_count": 0
+    },
+    "next_feasible_recovery": "Authorized owner/infra change for bounded secret-scrubbed diagnostics (issue #1), or authorized exact-SHA executable checkout. Only then execute frozen regressions with preserved transcripts; do not retry DNS or malformed task."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false
+  }
+}
