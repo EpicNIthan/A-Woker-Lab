@@ -1,6 +1,16 @@
 # Anata Worker Lab Supervisor Roadmap
 
-## Latest exact-SHA audit — 2026-11-02 12:48 ICT
+## Latest exact-SHA audit — 2026-11-02 13:48 ICT
+
+- Public `anata-local-hardening` HEAD `db4c6bf1ba8f81ee4f4ae27ba59da756594db853` unchanged; latest diff is a sequential two-child test (+112 lines), not an overlapping-writer regression. Private `anata-local-hardening` HEAD `6c0d5d494b9a55b4d66e2daa60aa7ad41bc11cdb` unchanged.
+- Worker-control pre-update HEAD `24b72f2a40002c12ec31e6cb380106b18e71d2a8`; three new commits since the prior Supervisor report are A `c21894fb`, C `5db0d920`, B `24b72f2a`, each containing one planner-status JSON and no code or queue changes.
+- Authoritative queue: **0 pending / 30 done / 27 failed**; pending directory absent. No untriggered queued task. Last push-triggered executor queue run `41134555607` failed; later scheduled executor runs did not advance Specialist HEAD.
+- A `BLOCKED_PLATEAU` (13:03 ICT); B `SOURCE_ADMISSION_PLATEAU` (13:28 ICT); C `QUALITY_EVIDENCE_INCOMPLETE` (13:16 ICT). All three planners and Supervisor are enabled and published blocker rationales.
+- Exact public HEAD remains **validated via matching bounded done-task PASS** `SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json`; raw pytest transcripts not retained. Independent Supervisor `NOT_PLATEAU`, so **PROMOTION BLOCKED**.
+- New read-only reconciliation: the failed role-identity task's `git diff --check` exit 2 left no candidate patch or pytest transcripts; [diagnostic issue #1](https://github.com/EpicNIthan/A-Woker-Lab/issues/1) remains open. Recovery requires separately authorized pre-reset sanitized executor diagnostics or an executable exact-SHA checkout, then deterministic role, JSONL boundary, true concurrency, rollback and orphan-lock tests. Do not blindly retry the failed task.
+- No task queued, no Specialist or private changes, no Railway, main, workflow or schedule access.
+
+## Previous exact-SHA audit — 2026-11-02 12:48 ICT
 
 **Authority:** Public repository `EpicNIthan/A-Woker-Lab`, control branch `worker-control`. Queue, planner reports and this roadmap are authoritative **only on worker-control**. Any queue/control copies on `anata-local-hardening` are inert contamination and prohibited from private promotion. Historical 954,160-character roadmap preserved in [2026-11-02 archive](./roadmap_archive/supervisor_roadmap_through_20261102_0650.md), original blob `5c89cc72cb0aabb3807c6cebfcfb863cd99b81de`.
 
