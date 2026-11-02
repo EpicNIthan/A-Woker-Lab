@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 18:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "Only +112 lines in part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (sequential spawn, no overlap)",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "part2/capital_flow/tests/test_runner_pit_visible_handoff.py": "67c0f0aebbf5bc7d51c8c4b71d13c658bc4b8caa"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "1db7be675c62bc9731b48a78a703831c1eac7e8d",
+    "tree_entries": 1630,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT"
+    },
+    "roadmap": "automation/supervisor_roadmap.md blob 9bebe01f9d09f80e1591516cd1985b5d40277eb3 (latest 18:53 ICT)",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-1804-spawn-crossprocess-generation-oracle-blocked.json",
+      "B": "B-20261102-db4c6bf-1830-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-overlap-witness-inconclusive-1816.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "WITHHOLD_PREVIOUS_SPAWN_ORACLE_AS_PASS_EVIDENCE_NONVACUOUS_CAUSAL_WITNESS_REQUIRED",
+    "source_finding": "The proposed 18:04 two-spawn test calls run_once(network=False, external_jsonl omitted) against an EMPTY archive and asserts observations.jsonl is absent. append_observations returns before acquiring its archive lock on empty input, so the proposed test does not exercise append admission, PIT row identity or returned/persisted source provenance. Independently, b_finished.wait(15) return value is ignored: slow B can yield final [B,B,B] without any demonstrated B-final-before-A-release overlap. C and Supervisor also flagged the latter. The test is not written or executed; do not treat syntax-only validation as an integration PASS.",
+    "pinned_source_evidence": "runner.run_once uses append_observations then load_observations, constructs frame and three separate atomic_write_json calls; storage.append_observations returns 0 before ArchiveWriterLock when observations_list empty; existing pinned sequential preflight supplies a valid rowB FlowObservation fixture with effective=T-2000, available=observed=T-1000.",
+    "revised_acceptance_contract": [
+      "Use two spawn processes and same T; seed at least one valid PIT-visible rowA, and have B ingest a distinct PIT-visible rowB through a test-owned external_jsonl fixture (or other deterministic non-network input). Assert A sees rowA and B sees rowB in both returned and persisted source_evidence, including clock_provenance source_record_id.",
+      "Test-only tag all three output files per writer; pause A after latest.json; capture an explicit causal event proving B finished anata_latest.json BEFORE A release for the forced-overlap branch. Record timestamps/events, child exit codes and returned errors; no sleeps as overlap proof.",
+      "If B is blocked by a legitimate whole-generation lock, separately witness blocked-then-released serialization and final coherent B/B/B; a timeout or merely B-started event is INCONCLUSIVE, never PASS.",
+      "Assert every reader-observable snapshot and final three-file generation is coherent; mixed [B,A,A] or mismatched PIT provenance fails. Include a negative control that proves the oracle detects a forced mixed-generation interleaving.",
+      "Only after a separately authorized exact-SHA checkout exists: python -m pytest --collect-only -q part2/capital_flow/tests; targeted generation/identity/newline/rollback/orphan tests; python -m pytest -q part2/capital_flow/tests. Retain exact SHA, command, exit, stdout/stderr. No public code edit by Planner A."
+    ],
+    "decision": "Freeze old proposed test as NOT_ADMISSIBLE_AS_PASS_ORACLE; do not enqueue until Gemini JSON reliability and failure diagnostics are established."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "new_contract_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "attempted_path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "pytest_operation": "python -m pytest --collect-only -q /mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+    "pytest_exit_code": 4,
+    "pytest_verbatim_error": "ERROR: file or directory not found: /mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+    "diagnostic_issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1 (OPEN, zero comments)",
+    "next_feasible_recovery": "Separately authorized exact-SHA executable checkout or sanitized pre-reset Gemini executor diagnostics; then execute nonvacuous two-writer PIT identity regression, newline, rollback and orphan recovery, targeted/full Capital Flow pytest with retained transcripts. No DNS clone retry and no blind Gemini task."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
