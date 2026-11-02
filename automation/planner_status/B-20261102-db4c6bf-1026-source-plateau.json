@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-02 10:26 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0; only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential two-child preflight only",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f"
+  },
+  "worker_control": {
+    "prewrite_head": "c10c627092101e17a2f2f108edfdb562cdd351aa",
+    "authoritative_tree_entries": 1605,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT_404"
+    },
+    "roadmap": "automation/supervisor_roadmap.md; Supervisor 2026-11-02 09:48 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0955-frozen-contract-execution-gate-blocked.json",
+      "B": "B-20261102-db4c6bf-0934-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-evidence-still-blocked-1015.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_breadth": {
+    "new_qualified_first_party_btc_eth_sources": 0,
+    "admission": "NO_NEW_CANDIDATE",
+    "basis": "Pinned source contract covers BTC ETF net flows; stablecoin supply and mining metrics remain context-only. No newly documented immutable first-party BTC/ETH economic event ID with effective/available/observed PIT clocks, non-overlap proof, correct context-versus-directional spot role, and deterministic no-network acceptance. Previously rejected source classes not recycled."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "GitHub-hosted Gemini executor: git diff --check",
+    "attempted_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "missing": "Sanitized pre-reset candidate patch, diff-check stderr, pytest transcripts or authorized executable exact-SHA checkout. Issue #1 tracks diagnostics; no blind retry.",
+    "next": "Await executable evidence; only admit a new independent source with complete first-party PIT proof."
+  },
+  "actions": {
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false
+  }
+}
