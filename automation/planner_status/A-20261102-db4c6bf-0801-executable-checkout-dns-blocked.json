@@ -1,0 +1,107 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 08:01 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential child A then B, not concurrent",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_archive_reader_writer_visibility.py": "e6db95a964afccfb62d7bb03003869004a7c1186",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201",
+      "part2/capital_flow/tests/test_runner_role_consistency.py": "ef9651653b1f1251bb60bdc8b633359d5e3dd34a"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "84d436a7cd0255b2562b63e58163236e20b4d72b",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "tree_truncated": false
+    },
+    "roadmap": "automation/supervisor_roadmap.md; Supervisor 2026-11-02 07:45 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0656-execution-only-evidence-gate-blocked.json",
+      "B": "B-20261102-db4c6bf-0733-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-execution-evidence-freeze-0716.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "FROZEN_ACCEPTANCE_EXECUTION_ROUTE_ATTEMPTED_NOT_AVAILABLE",
+    "classification": "BLOCKED_PLATEAU_WITH_NEW_EXACT_SNAPSHOT_ACCESS_PROBE",
+    "finding": "Pinned source confirms run_once calls append_observations then load_observations then independently writes latest.json/audit_latest.json/anata_latest.json; no terminal-newline existing test verifies load only, not append. Existing two-child test is sequential. No new speculative regression proposed.",
+    "decision": "Keep existing no-network acceptance suite frozen: positive-ACK overlapping writers, stale-generation rollback, returned/persisted role/source-record identity, orphan-lock append/read recovery, and valid-no-terminal-newline archive commit-or-byte-identical rejection. Prioritize executable evidence; do not recycle source-only proposals or enqueue failed malformed task.",
+    "existing_test_baseline": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py part2/capital_flow/tests/test_archive_reader_writer_visibility.py part2/capital_flow/tests/test_runner_role_consistency.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "boundary": "Existing tests do not independently prove two-writer overlap or archive commit-or-no-mutation; frozen new regression contracts still require implementation by authorized Gemini executor. None of these commands ran here."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "github_commit_status": "pending/no statuses",
+    "github_check_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "concurrency_recovery_identity_newline": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "failed_run_artifacts": 0,
+    "invalidate_on_new_head": true
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA checkout presence check and HTTPS HEAD to GitHub exact-SHA zipball (not git clone)",
+    "attempted_paths": [
+      "/mnt/data/A-Woker-Lab/.git",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "/mnt/data/part2/capital_flow/tests",
+      "https://api.github.com/repos/EpicNIthan/A-Woker-Lab/zipball/db4c6bf1ba8f81ee4f4ae27ba59da756594db853"
+    ],
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/part2/capital_flow/tests",
+      "pytest 9.0.2",
+      "URLError: <urlopen error [Errno -3] Temporary failure in name resolution>"
+    ],
+    "failed_executor": {
+      "run_id": 41134555607,
+      "job_id": 124333661975,
+      "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+      "artifacts_count": 0
+    },
+    "next_feasible_recovery": "Obtain authorized disposable exact-SHA checkout via an accessible runner, or retain sanitized pre-reset patch, git diff --check stderr, and pytest logs from hosted executor. Then run frozen deterministic targeted and full Capital Flow suite, preserve outputs. Do not retry DNS clone/zipball or malformed Gemini task without changed access/reliability evidence."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "private_main_railway_workflows_secrets_modified": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ],
+    "automation_schedules_modified": false
+  }
+}
