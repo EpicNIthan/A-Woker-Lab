@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 18:04 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "exact compare +112/-0 in only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential spawn, not overlapping writer proof",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "cbb617ebfadb8bdd44320f02c9d0c7125bcebdff",
+    "tree_entries": 1627,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT"
+    },
+    "roadmap": "automation/supervisor_roadmap.md (latest 2026-11-02 17:54 ICT)",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-1657-final-output-barrier-oracle-blocked.json",
+      "B": "B-20261102-db4c6bf-1729-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-final-output-barrier-review-1710.json"
+    },
+    "verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "CROSS_PROCESS_SPAWN_GENERATION_ORACLE_IMPROVES_THREAD_ONLY_CONTRACT",
+    "prior_contract": "automation/planner_status/A-20261102-db4c6bf-1657-final-output-barrier-oracle-blocked.json",
+    "finding": "Prior test used two Python threads. That can detect some mixed-generation interleavings but does not exercise cross-process output publication; the real archive writer lock is cross-process. This proposed no-network test uses two spawn children, top-level importable target, shared Events and Queue, and a test-only generation tag applied inside each child. A pauses after its first latest.json write, B may finish all three outputs before A is released; a mixed [B,A,A] must fail, while serialized B finishing after A produces [B,B,B]. Both writers use identical as_of_ms so timestamp equality cannot mask the generation mismatch. No Specialist production code changes.",
+    "proposed_test_path": "part2/capital_flow/tests/test_runner_output_generation.py (NOT WRITTEN)",
+    "pytest_source": "import json\nimport multiprocessing as mp\nfrom pathlib import Path\n\nT = 1_800_000_000_000\n\n\ndef _writer(root, label, a_written, release_a, b_finished, b_started, results):\n    from part2.capital_flow import runner\n    original = runner.atomic_write_json\n\n    def tagged(path, payload):\n        original(path, {**payload, \"_test_generation\": label})\n        if label == \"A\" and Path(path).name == \"latest.json\":\n            a_written.set()\n            if not release_a.wait(30):\n                raise TimeoutError(\"writer A release timed out\")\n        if label == \"B\" and Path(path).name == \"anata_latest.json\":\n            b_finished.set()\n\n    runner.atomic_write_json = tagged\n    try:\n        if label == \"B\":\n            b_started.set()\n        outcome = runner.run_once(local_dir=Path(root), network=False, as_of_ms=T)\n        results.put((label, outcome[\"appended_observations\"], outcome[\"source_errors\"]))\n    except BaseException as exc:\n        results.put((label, \"ERROR\", repr(exc)))\n        raise\n\n\ndef test_two_process_generation_is_coherent(tmp_path):\n    ctx = mp.get_context(\"spawn\")\n    a_written, release_a, b_finished, b_started = (ctx.Event() for _ in range(4))\n    results = ctx.Queue()\n    shared = (str(tmp_path), a_written, release_a, b_finished, b_started, results)\n    a = ctx.Process(target=_writer, args=(shared[0], \"A\", *shared[1:]))\n    b = ctx.Process(target=_writer, args=(shared[0], \"B\", *shared[1:]))\n    a.start()\n    try:\n        assert a_written.wait(30), \"writer A never wrote latest.json\"\n        b.start()\n        assert b_started.wait(30), \"writer B never entered run_once\"\n        b_finished.wait(15)  # A valid generation lock may serialize B until A releases.\n    finally:\n        release_a.set()\n        for proc in (a, b):\n            if proc.pid is not None:\n                proc.join(30)\n                if proc.is_alive():\n                    proc.terminate()\n                    proc.join(5)\n    assert a.exitcode == b.exitcode == 0\n    observed = [results.get(timeout=5) for _ in range(2)]\n    assert sorted(item[0] for item in observed) == [\"A\", \"B\"]\n    assert all(item[1:] == (0, []) for item in observed), observed\n    assert not (tmp_path / \"observations.jsonl\").exists()\n    docs = [json.loads((tmp_path / name).read_text(encoding=\"utf-8\"))\n            for name in (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\")]\n    assert [doc[\"as_of_ms\"] for doc in docs] == [T] * 3\n    assert [doc[\"_test_generation\"] for doc in docs] == [\"B\"] * 3\n",
+    "syntax_check": "LOCAL CONTRACT-ONLY python -m py_compile /tmp/planner_a_two_process_contract.py: PASS; not exact-repository pytest",
+    "commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests/test_runner_output_generation.py",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "acceptance": "No network; both spawn children exit 0; no source errors or appended observations; no archive; all three outputs parse with equal T and test-only generation tag B; mixed B/A/A is failure. Tags are injected only by child test monkeypatch.",
+    "limitations": "B's final-write wait is bounded. If B is slow rather than serialized, a passing final B/B/B can be a false negative. Retain whether b_finished was set before A release and run deterministic CI repetitions; this test alone is not promotion-grade proof. It is a proposed test contract, NOT executed or a reproduced production bug."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "commit_statuses": 0,
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "new_contract_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "attempted_path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "checkout_probe": "ABSENT /mnt/data/A-Woker-Lab; ABSENT /mnt/data/part2/capital_flow/tests; ABSENT /workspace/A-Woker-Lab; ABSENT /home/oai/share/A-Woker-Lab",
+    "diagnostic_issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1 (OPEN; 0 comments; 0 assignees)",
+    "next_feasible_recovery": "Separately authorize an exact-SHA runnable checkout or preserve secret-scrubbed pre-reset executor diagnostics. Run proposed spawn regression and frozen PIT identity, terminal-newline JSONL, rollback and orphan-lock tests, then targeted and full Capital Flow pytest with exit codes and stdout/stderr retained. Do not retry DNS clone or blindly enqueue Gemini."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
