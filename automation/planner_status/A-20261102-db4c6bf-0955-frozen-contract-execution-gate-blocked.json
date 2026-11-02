@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 09:55 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0, only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential two-child preflight, not overlapping-writer proof",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "2c0408e28fc550c02a866a81e83113817164a087",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_path": "ABSENT_404",
+      "done_failed_listings_verified": true
+    },
+    "roadmap": "automation/supervisor_roadmap.md (Supervisor 2026-11-02 09:48 ICT)",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0903-diagnostic-retention-issue-gate-blocked.json",
+      "B": "B-20261102-db4c6bf-0934-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-diagnostic-issue-unresolved-0911.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "FROZEN_CONTRACT_EXECUTION_ONLY_GATE",
+    "finding": "Read-only reinspection of exact-SHA source and sequential two-child test finds no newly executable overlapping-writer proof. GitHub connector can read source blobs but cannot supply an executable checkout in this runtime; speculative source-only test expansion would not resolve the blocker.",
+    "decision": "Freeze two-writer positive-ACK overlap, same-clock stale rollback, scoring/context source-record identity, orphan append/read recovery, no-terminal-newline JSONL fail-closed-or-commit and crash-partial-tail controls. Do not enqueue malformed-task retry. Prioritize authorized exact-SHA checkout or secret-scrubbed pre-reset executor failure diagnostics tracked in issue #1.",
+    "no_network_commands": [
+      "python -m pytest --collect-only -q part2/capital_flow/tests",
+      "python -m pytest -q part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py",
+      "python -m pytest -q part2/capital_flow/tests"
+    ],
+    "issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1",
+    "issue_state": "OPEN_ZERO_COMMENTS"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "github_commit_statuses": 0,
+    "github_check_runs": 0,
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "concurrency_recovery_identity_newline": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "Local exact-SHA checkout presence probes and pytest collect-only",
+    "attempted_path": "/mnt/data/part2/capital_flow/tests",
+    "verbatim_output": [
+      "ABSENT:/mnt/data/A-Woker-Lab/.git",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/tests",
+      "ABSENT:/mnt/data/A-Woker-Lab/part2/capital_flow/runner.py",
+      "ABSENT:/mnt/data/part2/capital_flow/tests",
+      "ERROR: file or directory not found: part2/capital_flow/tests",
+      "no tests collected in 0.00s",
+      "EXIT:4"
+    ],
+    "prior_failed_executor": {
+      "run_id": 41134555607,
+      "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+      "retained_artifacts": 0
+    },
+    "next_feasible_recovery": "Owner-authorized exact-SHA executable checkout or bounded sanitized pre-reset patch/diff-check stderr/pytest transcripts (issue #1). Then collect-only, targeted deterministic and full Capital Flow pytest with retained logs. No DNS retry."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false
+  }
+}
