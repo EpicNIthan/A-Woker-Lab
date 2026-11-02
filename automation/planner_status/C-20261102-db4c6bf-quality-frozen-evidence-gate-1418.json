@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-02 14:18 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py +112/-0; sequential not concurrent",
+    "pinned_blobs": {
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "1945b4ac8b8e086b6a9a0b160624777e53678dfc",
+    "tree_sha": "9387f209a64c5d0550bd790e4aaec0abcc0eafdf",
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT"
+    },
+    "roadmap_blob": "f2d4e4e3a06d0e67563b3f251ec18ecb57847e93",
+    "latest_report_blobs": {
+      "A": "f36fa8731961548d63f1de6493ae845d91347cf3",
+      "B": "cb2f6b8bd337b1c57a3518be982731add78ac637",
+      "C": "cad4b7e1211006817bdbdf68a3c588e1b2b3e6af"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": {
+    "finding": "Shared evidence_health._is_context_only normalizes string ' false ' to False; handoff/runner delegate to it, so direct bool('false') role inversion is not present at pinned HEAD. End-to-end persisted role identity still unexecuted. storage.append_observations appends without ensuring a final newline on existing valid JSONL, risking a concatenated invalid record; source-level risk, not reproduced incident. Sequential spawn PASS cannot validate true overlap, rollback or orphan recovery.",
+    "blocker": "No authorized runnable exact-SHA checkout; failed Gemini role-identity task stopped at git diff --check exit 2 without retained candidate patch, stderr or pytest transcripts. Diagnostic issue #1 open; root cause unknown.",
+    "recovery": "Acquire separately authorized sanitized pre-reset executor diagnostics or disposable exact-SHA checkout; run deterministic no-network string-'false' persisted role, newline-free JSONL, overlapping-writer, rollback and orphan-lock regressions with retained targeted and full pytest logs. No blind Gemini retry."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "automation_schedule_modified": false
+  }
+}
