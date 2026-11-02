@@ -1,0 +1,68 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-02 12:17 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py (+112/-0); sequential child A/B, not concurrent writer proof",
+    "pinned_blobs": {
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "c3b74293a58dd4a941b2294aab40697b6a6e9e4f",
+    "tree_sha": "f9f26011798e4f8a188b87d51cbc655a5495c454",
+    "truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT"
+    },
+    "roadmap_blob": "d5a3391300b5b6c71a249af65c4762520f823577",
+    "roadmap_at_ict": "2026-11-02 11:49 ICT",
+    "latest_report_blobs": {
+      "A": "a6be4f82cc19405d23446c25b3e1afeac663cc6b",
+      "B": "9e032f623f5c1c618913e7c25972205dcf35c26e",
+      "C": "007d862de9c877f3cc7364e6f34de6b7da06fcd3"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": {
+    "finding": "No new executable quality evidence. Source-pinned handoff.py and runner.py delegate context_only to shared evidence_health parser; the earlier direct bool('false') claim is stale, while persisted end-to-end role identity remains untested. Missing-newline JSONL archive integrity, true overlapping writers, rollback and orphan-lock recovery remain frozen unexecuted acceptance requirements, not production incidents. Exact-SHA executor PASS attests sequential preflight only; raw pytest transcripts not retained.",
+    "precise_blocker": "No authorized disposable exact-SHA checkout. Prior Gemini role-identity task failed at git diff --check exit 2; executor cleanup lost bounded candidate patch, stderr and raw pytest logs. Independently verified Supervisor roadmap and A 12:05 report identify diagnostic retention gap; issue #1 open.",
+    "recovery": "Separately authorized executor infrastructure owner must retain secret-scrubbed pre-reset changed-path list, allowlisted patch, diff-check stderr/exit and collect-only/targeted/full pytest command/exit/output; alternatively provide authorized exact-SHA disposable checkout. Then run deterministic no-network frozen regressions and preserve logs. No blind Gemini retry."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_collect_only": "NOT_RUN_BY_C",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "regressions": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "actions": {
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "automation_schedule_modified": false
+  }
+}
