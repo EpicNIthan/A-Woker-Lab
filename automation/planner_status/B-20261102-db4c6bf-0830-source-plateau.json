@@ -1,0 +1,67 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "B",
+  "lane": "SOURCE_BREADTH_ONLY",
+  "at_ict": "2026-11-02 08:30 ICT",
+  "verdict": "SOURCE_ADMISSION_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0 only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential preflight only",
+    "source_contract": "part2/capital_flow/SOURCES.md",
+    "source_contract_blob": "20db257961638d4f00289d003c4d95409298c85f"
+  },
+  "worker_control": {
+    "prewrite_head": "9c90bfa86cbcf82df3219c9e5eeb193688c45ff1",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27
+    },
+    "queue_basis": "A 08:01 and C 08:10 nontruncated authoritative queue enumeration; compare 709fdb08..9c90bfa8 shows only A/C status additions and roadmap archival, no queue changes",
+    "roadmap": "automation/supervisor_roadmap.md; Supervisor 2026-11-02 07:45 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-0801-executable-checkout-dns-blocked.json",
+      "B": "B-20261102-db4c6bf-0733-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-executable-evidence-gate-0810.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "source_breadth": {
+    "qualified_new_first_party_btc_eth_sources": 0,
+    "admission": "NO_NEW_CANDIDATE",
+    "basis": "Pinned SOURCES.md already covers Farside BTC ETF net flows. DefiLlama stablecoin supply is potential liquidity, not directional BTC spot buying; mempool.space network hashrate/difficulty are context-only. No independent source has newly demonstrated immutable first-party BTC/ETH economic event ID, effective/available/observed PIT clocks, non-overlap proof, defensible role and deterministic no-network contract. Rejected source families not recycled.",
+    "gemini_tasks_enqueued": 0
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "executor_result": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "prior_attempted_operation": "GitHub-hosted Gemini executor: git diff --check",
+    "prior_attempted_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "failed_task": "automation/executor_queue/failed/SUPERVISOR-20261031-role-identity-0453-01.json",
+    "verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "additional_access_probe": "A 08:01 exact-SHA zipball HTTPS HEAD failed: URLError: <urlopen error [Errno -3] Temporary failure in name resolution>",
+    "missing": "Sanitized pre-reset patch, diff-check stderr, targeted/full pytest logs or authorized executable exact-SHA checkout. Frozen no-network tests for identity, overlap, stale rollback, orphan recovery, newline integrity remain unexecuted.",
+    "next": "No blind Gemini retry; resume B source admission only with genuinely new first-party PIT evidence. Promotion requires same-SHA A/B/C and independent Supervisor PLATEAU."
+  },
+  "actions": {
+    "report_only": true,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false
+  }
+}
