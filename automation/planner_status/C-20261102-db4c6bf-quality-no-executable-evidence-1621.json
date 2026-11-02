@@ -1,0 +1,70 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-02 16:21 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py only (+112/-0), sequential not concurrent",
+    "pinned_blobs": {
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "d25064724b1d767fb88f265dedb852b205e9d794",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_directory": "ABSENT",
+      "basis": "GitHub untruncated executor_queue done/failed trees and queue directory"
+    },
+    "roadmap_blob": "0dae658a72f04717fa38749c76f5ee34a50cabc8",
+    "roadmap_latest": "2026-11-02 15:57 ICT",
+    "latest_report_blobs": {
+      "A": "977fa4f4926788565d90c493dd2b228907aef6ac",
+      "B": "6ade7565f26f85ffbbd858f13a2babd76d350953",
+      "C": "d6c8ff9da467f612740f555c24e501b6899c99a1"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": {
+    "finding": "At pinned SHA, evidence_health._is_context_only explicitly parses string ' false ' as False; runner and handoff share parser, so direct bool('false') inversion is not established. Persisted end-to-end source role/record identity remains unexecuted. storage.append_observations appends JSONL without verifying an existing nonempty archive ends in newline; concatenation is a source-derived risk, not a reproduced defect. Sequential two-child spawn preflight does not prove simultaneous writer consistency, rollback or orphan recovery.",
+    "precise_blocker": "No authorized executable exact-SHA checkout in inspected paths. Previous Gemini role-identity task failed at git diff --check exit 2 and did not retain candidate patch, stderr or raw pytest transcripts. Issue #1 open/unassigned/0 comments.",
+    "recovery": "Obtain separately authorized runnable exact-SHA checkout or sanitized pre-reset executor diagnostics. Run deterministic no-network persisted role identity, missing-terminal-newline append, true overlap, rollback and orphan recovery regressions; retain command, exit, stdout/stderr for targeted and full pytest. No blind Gemini retry."
+  },
+  "validation": {
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "matching_done_commit": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "commit_statuses": 0,
+    "check_runs": 0,
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_advance": true
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "automation_schedule_modified": false
+  }
+}
