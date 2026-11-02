@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 16:57 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "exact compare +112/-0, one sequential test only; no overlapping-writer proof",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "e63061c57ec42c99bd9e78d9bb4084433e033d78",
+    "since_prior_A": "2 commits: B 16:31 status and Supervisor roadmap; no queue/workflow/Specialist changes",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT",
+      "basis": "untruncated recursive worker-control tree, 1624 entries"
+    },
+    "roadmap": "automation/supervisor_roadmap.md updated 2026-11-02 16:52 ICT",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-1624-test-only-generation-tag-oracle-blocked.json",
+      "B": "B-20261102-db4c6bf-1631-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-no-executable-evidence-1621.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "FINAL_OUTPUT_BARRIER_FIXES_TEST_ORACLE_FALSE_NEGATIVE",
+    "prior_contract": "automation/planner_status/A-20261102-db4c6bf-1624-test-only-generation-tag-oracle-blocked.json",
+    "finding": "Prior test releases A when B has written latest.json; B can then finish audit/anata after A and leave [B,B,B] despite unsafe interleaving. The improved no-network test waits for B's FINAL anata_latest.json write before releasing A, so overtaking B finishes its complete generation first, then A overwrites audit/anata and final tags deterministically become [B,A,A]. A correctly serialized B waits for A release, then publishes [B,B,B].",
+    "proposed_test_path": "part2/capital_flow/tests/test_runner_output_generation.py (NOT WRITTEN)",
+    "pytest_source": "import json\nimport threading\nfrom pathlib import Path\nfrom part2.capital_flow import runner\n\ndef test_same_clock_two_writer_generation_is_coherent(tmp_path, monkeypatch):\n    a_latest = threading.Event()\n    release_a = threading.Event()\n    b_started = threading.Event()\n    b_final = threading.Event()\n    original = runner.atomic_write_json\n    errors = []\n\n    def tagged_write(path, payload):\n        writer = threading.current_thread().name\n        original(path, {**payload, \"_test_writer_generation\": writer})\n        name = Path(path).name\n        if writer == \"writer-A\" and name == \"latest.json\":\n            a_latest.set()\n            assert release_a.wait(20), \"writer A release timed out\"\n        if writer == \"writer-B\" and name == \"anata_latest.json\":\n            b_final.set()\n\n    monkeypatch.setattr(runner, \"atomic_write_json\", tagged_write)\n\n    def invoke():\n        try:\n            if threading.current_thread().name == \"writer-B\":\n                b_started.set()\n            runner.run_once(local_dir=tmp_path, network=False,\n                            external_jsonl=(), as_of_ms=1_800_000_000_000)\n        except BaseException as exc:\n            errors.append(repr(exc))\n\n    a = threading.Thread(target=invoke, name=\"writer-A\")\n    b = threading.Thread(target=invoke, name=\"writer-B\")\n    a.start()\n    try:\n        assert a_latest.wait(20), \"A never reached latest.json\"\n        b.start()\n        assert b_started.wait(5), \"B never started\"\n        b_final.wait(10)  # Serialized B may wait until A is released.\n    finally:\n        release_a.set()\n        a.join(20)\n        if b.ident is not None:\n            b.join(20)\n    assert not a.is_alive() and not b.is_alive()\n    assert not errors, errors\n    assert not (tmp_path / \"observations.jsonl\").exists()\n    names = (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\")\n    outputs = [json.loads((tmp_path / n).read_text(encoding=\"utf-8\"))\n               for n in names]\n    assert [x[\"as_of_ms\"] for x in outputs] == [1_800_000_000_000] * 3\n    assert [x[\"_test_writer_generation\"] for x in outputs] == [\"writer-B\"] * 3\n",
+    "acceptance": "Both threads exit without errors; archive absent; equal as_of_ms; all three persisted test-only tags are writer-B. A [B,A,A] mismatch fails. Test tags do not enter production schema.",
+    "limitations": "B completion is observed with a bounded wait; exceptionally slow B can still cause a false pass, so retain event traces and stress repetition in authorized CI. This is a test contract, not an executed reproduction or production repair.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "frozen_other_contracts": "PIT role/source identity, terminal-newline JSONL append, stale-generation rollback, orphan-lock recovery; none executed"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "new_contract": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "commit_statuses": 0,
+    "invalidate_on_public_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "git -C /mnt/data/A-Woker-Lab rev-parse HEAD",
+    "attempted_path": "/mnt/data/A-Woker-Lab",
+    "exit_code": 128,
+    "verbatim_error": "fatal: cannot change to '/mnt/data/A-Woker-Lab': No such file or directory",
+    "checkout_probe": "ABSENT /mnt/data/A-Woker-Lab; ABSENT /mnt/data/part2/capital_flow/tests; ABSENT /workspace/A-Woker-Lab; ABSENT /home/oai/share/A-Woker-Lab",
+    "diagnostic_issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1 (OPEN; 0 comments; 0 assignees)",
+    "next_feasible_recovery": "Separately authorize exact-SHA runnable checkout or secret-scrubbed pre-reset executor diagnostics; then run targeted and full Capital Flow pytest and frozen regressions, preserving command/exit/stdout/stderr. No DNS retry or blind Gemini task."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
