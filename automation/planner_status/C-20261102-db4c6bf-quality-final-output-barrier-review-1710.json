@@ -1,0 +1,57 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-02 17:10 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "Only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py +112/-0; sequential spawn, no overlapping-writer proof",
+    "pinned_blobs": {
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "observed_head_before_write": "588269a6186ffc27685334d205260f2cff9b2db5",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "basis": "nontruncated recursive worker-control tree; pending directory absent"
+    },
+    "roadmap_blob": "dbe8dae34b71ceab07c71e40d8df226e0a3806fd",
+    "latest_report_blobs": {
+      "A": "3536b7fb0f0742422605f644af2727401589d999",
+      "B": "1c0935ae31b115026c68db908cc0af795c538ddc",
+      "C": "61d8cee1bba6154dfd1e7cb34684aad0f098b93b"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": {
+    "finding": "A's new test-only final-output barrier addresses a false-negative in an earlier generation-tag oracle: releasing A only after B's final anata_latest.json write makes a forced [B,A,A] mixed generation observable, whereas releasing at B's first latest.json write could leave [B,B,B]. This is a stronger proposed deterministic test contract, NOT a run or proof of a real race. Shared context_only parser handles string ' false ' as scoring; persisted source-record role identity still needs end-to-end verification. JSONL missing-newline append, true writer overlap, rollback and orphan recovery remain unexecuted; no production defect confirmed.",
+    "precise_blocker": "No authorized runnable exact-SHA checkout; prior Gemini role-identity task failed at git diff --check exit 2 without retained patch, stderr or raw pytest transcripts. Diagnostic issue #1 open. Gemini structured-JSON reliability unverified.",
+    "targeted_pytest": "NOT_RUN_INDEPENDENTLY",
+    "full_capital_flow_pytest": "NOT_RUN_INDEPENDENTLY",
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "exact_sha_executor_validation": "PASS attestation for sequential preflight only via done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json, commit db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "recovery": "Recover separately authorized secret-scrubbed executor diagnostics or an authorized disposable checkout pinned to db4c6bf; run deterministic no-network role identity, JSONL newline, final-output overlap, rollback and orphan recovery regressions; retain targeted and python -m pytest -q part2/capital_flow/tests logs before reassessment. Do not blind-retry Gemini."
+  },
+  "safety": {
+    "gemini_tasks_enqueued": 0,
+    "specialist_edits": 0,
+    "protected_edits": 0,
+    "schedule_changes": 0
+  }
+}
