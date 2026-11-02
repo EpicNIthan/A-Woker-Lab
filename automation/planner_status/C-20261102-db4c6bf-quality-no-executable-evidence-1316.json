@@ -1,0 +1,66 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "C",
+  "lane": "QUALITY_AUDIT_ONLY",
+  "at_ict": "2026-11-02 13:16 ICT",
+  "verdict": "QUALITY_EVIDENCE_INCOMPLETE",
+  "promotion": "BLOCKED",
+  "public": {
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "latest_diff": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py +112/-0; sequential only",
+    "pinned_blobs": {
+      "part2/capital_flow/evidence_health.py": "9acde817964824086608f6572f361216ac4bd014",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/tests/test_v1_handoff.py": "341851b2d03ddd642d4199ac7d96badd1808e026",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "c21894fbc52d605d4ea13ce0512fdeb95d36e7b4",
+    "tree_sha": "fb488343547c5c9449d14ccaf9465c5f09ca301f",
+    "truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27
+    },
+    "roadmap_blob": "ae97f69f65ed36e024104c0ee48cb1eccb1025df",
+    "latest_report_blobs": {
+      "A": "757cce70a81f4bb4417ff7037ed479c38eaf3a18",
+      "B": "f109d8874fba631ad0cc0865c00bbd72856e7c27",
+      "C": "704277c95a21e4275bdf71707778e6bad0a15c30"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "quality": {
+    "finding": "Shared evidence_health._is_context_only parses string ' false ' as scoring, but persisted end-to-end role identity is not independently tested. JSONL no-final-newline append, true overlapping writers, rollback and orphan-lock recovery remain frozen unexecuted quality requirements; sequential preflight is not a race oracle.",
+    "blocker": "No authorized executable exact-SHA checkout; last role-identity Gemini task failed at git diff --check exit 2. Main executor drops captured patch/stderr and raw pytest transcripts before/after cleanup; diagnostic issue #1 remains open. Underlying diff-check failure cause is unknown.",
+    "recovery": "Separately authorize sanitized pre-reset executor diagnostics or provide disposable exact-SHA checkout; then run deterministic no-network role, JSONL, overlapping-writer, rollback and orphan regressions with retained targeted/full pytest logs. No blind Gemini retry."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done_blob": "c9671db6967da7295c8846d8a561be08a3146cf0",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "regressions": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "actions": {
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "automation_schedule_modified": false
+  }
+}
