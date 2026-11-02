@@ -1,0 +1,90 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 12:05 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "+112/-0; only part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py; sequential child A then B, not concurrent writers",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "3d8cf2f24b2eac7ca95b0eb87b5b65f1af57e091",
+    "tree_entries": 1609,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT"
+    },
+    "roadmap": "automation/supervisor_roadmap.md (2026-11-02 11:49 ICT)",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-1057-executor-pass-transcript-boundary-blocked.json",
+      "B": "B-20261102-db4c6bf-1127-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-attested-pass-no-raw-pytest-1117.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "P0_EXECUTOR_DIAGNOSTIC_RETENTION_BEFORE_ANY_RETRY",
+    "finding": "Read-only exact-source audit of main automation/gemini_executor.py blob 0a77b2ef212f782f95564656cf051f2fd3348482: run_tests() captures per-command exit/output (lines 320-338); success branch receives test_log but neither persists nor prints it (462-479); git() returns only stdout (50-52) and commit_and_push() calls git diff --check (358); generic exception handler resets/cleans worktree before writing failed task evidence (496-503). Thus failed diff-check exit 2 loses stderr and candidate patch and success loses raw pytest transcripts. This is a diagnostic-retention defect, not a demonstrated Capital Flow defect or proof of the underlying git diff failure cause.",
+    "specification": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json; fixed contract must accept B waiting for serialized A; original sequential spawn preflight cannot prove overlap",
+    "decision": "Freeze already-specified deterministic no-network concurrency, generation, archive integrity, role identity, orphan-lock contracts. Do not invent another source-only regression or enqueue a blind repeat of malformed Gemini task. Require authorized executor infrastructure owner to retain bounded secret-scrubbed candidate patch, changed paths, diff-check exit/stderr and collect-only/targeted/full pytest command/exit/output before cleanup, without touching protected systems from Planner A.",
+    "diagnostic_issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1",
+    "diagnostic_issue_status": "OPEN; 0 comments; 0 assignees"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "successful_executor_run_id": 40860520862,
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_collect_only": "FAILED_BEFORE_COLLECTION_EXIT_4",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "concurrency_recovery_integrity_tests": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "python -m pytest --collect-only -q part2/capital_flow/tests",
+    "attempted_path": "part2/capital_flow/tests",
+    "verbatim_error": "ERROR: file or directory not found: part2/capital_flow/tests",
+    "exit_code": 4,
+    "local_exact_checkout": "ABSENT: /mnt/data/A-Woker-Lab/part2/capital_flow/tests; /mnt/data/part2/capital_flow/tests; /workspace/A-Woker-Lab/part2/capital_flow/tests",
+    "upstream_failed_operation": "git diff --check",
+    "upstream_failed_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "upstream_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "next_feasible_recovery": "Authorized exact-SHA disposable checkout or sanitized executor diagnostics after separately approved diagnostic retention change; execute frozen deterministic contracts, targeted and full python -m pytest -q part2/capital_flow/tests with retained raw logs."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
