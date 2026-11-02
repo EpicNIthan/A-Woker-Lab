@@ -1,0 +1,93 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 13:03 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py +112/-0; A then B sequential; no overlapping-writer proof",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "664ac438c384e33276f2a1b9acb941ca42c38d83",
+    "tree_entries": 1612,
+    "tree_truncated": false,
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT"
+    },
+    "roadmap": "automation/supervisor_roadmap.md (2026-11-02 12:48 ICT)",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-1205-executor-diagnostic-retention-root-cause-blocked.json",
+      "B": "B-20261102-db4c6bf-1231-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-diagnostic-retention-blocked-1217.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "EXECUTABLE_EVIDENCE_REQUIRED_FROZEN_CONTRACTS",
+    "specification": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "finding": "Pinned runner publishes latest.json, audit_latest.json, anata_latest.json via three separate atomic writes; pinned preflight serially executes two children, so cannot demonstrate overlapping-writer generation consistency. Existing deterministic concurrency, stale-generation rollback, archive-integrity, role-identity and orphan-lock contracts are frozen; do not add another speculative test.",
+    "action": "Require authorized exact-SHA executable checkout or sanitized retained Gemini executor diagnostics. Diagnostic-retention issue #1 is open, unassigned, 0 comments; do not alter executor infrastructure, main or workflows from Planner A.",
+    "diagnostic_issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_collect_only": "FAILED_BEFORE_COLLECTION_EXIT_4",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "overlapping_writer_rollback_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "python -m pytest --collect-only -q part2/capital_flow/tests",
+    "attempted_path": "part2/capital_flow/tests",
+    "verbatim_error": "ERROR: file or directory not found: part2/capital_flow/tests",
+    "exit_code": 4,
+    "exact_checkout_probes": [
+      "ABSENT /mnt/data/A-Woker-Lab",
+      "ABSENT /mnt/data/part2/capital_flow",
+      "ABSENT /workspace/A-Woker-Lab",
+      "ABSENT /home/oai/share/A-Woker-Lab"
+    ],
+    "upstream_failed_operation": "git diff --check",
+    "upstream_failed_path": "part2/capital_flow/tests/test_runner_role_consistency.py",
+    "upstream_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "next_feasible_recovery": "Authorized exact-SHA checkout or separately authorized executor diagnostic-retention repair; retain secret-scrubbed diff-check stderr/candidate patch and targeted/full pytest logs, then execute frozen no-network regressions and full python -m pytest -q part2/capital_flow/tests."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
