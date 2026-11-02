@@ -1,0 +1,95 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 16:24 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "exact compare: +112/-0 in part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py only; child A then child B sequential",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "4b7e511515fc89ed8a115b4a2bc3b8d4d76fe378",
+    "recent_compare_since_previous_A": "3 commits: B 16:02 status, C 16:21 status, Supervisor roadmap; no queue or Specialist changes",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT",
+      "basis": "untruncated recursive GitHub worker-control tree (1622 entries)"
+    },
+    "roadmap": "automation/supervisor_roadmap.md (2026-11-02 15:57 ICT)",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-1552-generation-identity-oracle-execution-blocked.json",
+      "B": "B-20261102-db4c6bf-1602-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-no-executable-evidence-1621.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "TEST_ONLY_GENERATION_TAG_ORACLE_FOR_SAME_CLOCK_OVERLAP",
+    "change_from_prior": "Previously same-clock outputs could not be distinguished by as_of_ms and required an existing comparable business field. A test-only atomic_write_json wrapper can stamp a per-writer marker into all three persisted payloads without production schema/code changes, providing a direct oracle for mixed-generation publication even when as_of_ms and archive are identical.",
+    "source_basis": "Pinned runner.run_once independently writes latest.json, audit_latest.json, anata_latest.json through runner.atomic_write_json; archive lock covers only append/load, not all three output writes. Existing committed spawn test is sequential.",
+    "prior_contract": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "proposed_test_path": "part2/capital_flow/tests/test_runner_output_generation.py (NOT WRITTEN)",
+    "pytest_source": "from pathlib import Path\nimport json\nimport threading\nfrom part2.capital_flow import runner\n\ndef test_same_clock_writer_generation_is_coherent(tmp_path, monkeypatch):\n    a_latest = threading.Event()\n    release_a = threading.Event()\n    b_latest = threading.Event()\n    b_started = threading.Event()\n    original = runner.atomic_write_json\n    failures = []\n\n    def tagged_write(path, payload):\n        writer = threading.current_thread().name\n        original(path, {**payload, \"_test_writer_generation\": writer})\n        if Path(path).name == \"latest.json\":\n            if writer == \"writer-A\":\n                a_latest.set()\n                assert release_a.wait(20), \"writer A release timed out\"\n            elif writer == \"writer-B\":\n                b_latest.set()\n\n    monkeypatch.setattr(runner, \"atomic_write_json\", tagged_write)\n\n    def invoke():\n        try:\n            if threading.current_thread().name == \"writer-B\":\n                b_started.set()\n            runner.run_once(local_dir=tmp_path, network=False,\n                            external_jsonl=(), as_of_ms=1_800_000_000_000)\n        except BaseException as exc:\n            failures.append(repr(exc))\n\n    a = threading.Thread(target=invoke, name=\"writer-A\")\n    b = threading.Thread(target=invoke, name=\"writer-B\")\n    a.start()\n    try:\n        assert a_latest.wait(20), \"A never reached first output\"\n        b.start()\n        assert b_started.wait(5), \"B never started\"\n        b_latest.wait(10)  # B may overtake, or correctly wait behind A.\n    finally:\n        release_a.set()\n        a.join(20)\n        if b.ident is not None:\n            b.join(20)\n    assert not a.is_alive() and not b.is_alive()\n    assert not failures, failures\n    assert not (tmp_path / \"observations.jsonl\").exists()\n    names = (\"latest.json\", \"audit_latest.json\", \"anata_latest.json\")\n    outputs = [json.loads((tmp_path / n).read_text(encoding=\"utf-8\")) for n in names]\n    assert [x[\"as_of_ms\"] for x in outputs] == [1_800_000_000_000] * 3\n    assert [x[\"_test_writer_generation\"] for x in outputs] == [\"writer-B\"] * 3\n",
+    "acceptance": "Both writer threads finish without errors; no archive is created; all three final as_of_ms are equal; test-only generation tags in latest/audit/anata are all writer-B. With A paused immediately after latest, a B-over-A interleaving yields [B,A,A] and must fail; correctly serialized B waits and final tags are [B,B,B].",
+    "scope": "Deterministic no-network test contract for future authorized exact-SHA execution; test-only instrumentation, not a production field or a reproduced defect.",
+    "limitations": "B latest wait is bounded to avoid deadlocking correct serialization; exceptionally slow scheduling can mask a race, so repeat/stress under controlled CI and preserve event traces. This oracle proves writer identity of persisted files, not source-record identity or crash durability.",
+    "targeted": "python -m pytest -q part2/capital_flow/tests/test_runner_output_generation.py",
+    "full": "python -m pytest -q part2/capital_flow/tests",
+    "other_frozen_contracts": "source-role identity, JSONL terminal-newline append, stale-generation rollback, orphan lock recovery; all require execution"
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_collect_only": "FAILED_BEFORE_COLLECTION_EXIT_4",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "same_clock_contract": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_public_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "cd /mnt/data && python -m pytest --collect-only -q part2/capital_flow/tests",
+    "attempted_path": "/mnt/data/part2/capital_flow/tests",
+    "exit_code": 4,
+    "verbatim_error": "ERROR: file or directory not found: part2/capital_flow/tests",
+    "checkout_probe": "ABSENT /mnt/data/A-Woker-Lab; ABSENT /mnt/data/part2/capital_flow/tests; ABSENT /workspace/A-Woker-Lab; ABSENT /home/oai/share/A-Woker-Lab",
+    "upstream_failed_operation": "git diff --check",
+    "upstream_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "diagnostic_issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1",
+    "next_feasible_recovery": "Obtain separately authorized exact-SHA runnable checkout or sanitized pre-reset executor diagnostics. Execute this test-only generation oracle and frozen regressions with retained targeted/full pytest command, exit code, stdout/stderr. No DNS retry and no blind Gemini task."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
