@@ -1,0 +1,89 @@
+{
+  "schema": "anata-planner-status-v1",
+  "planner": "A",
+  "lane": "INTEGRATION_COMPLETENESS_ONLY",
+  "at_ict": "2026-11-02 15:52 ICT",
+  "verdict": "BLOCKED_PLATEAU",
+  "promotion": "BLOCKED",
+  "public": {
+    "repo": "EpicNIthan/A-Woker-Lab",
+    "branch": "anata-local-hardening",
+    "head_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "parent_sha": "c7a3c7f5cb4637b16dcf099097e2b0afe48bc5e4",
+    "recent_diff": "one new test part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py +112/-0; A and B execute sequentially",
+    "pinned_blobs": {
+      "part2/capital_flow/runner.py": "da38db873ae16c79292df074966b8a97a83b1ae9",
+      "part2/capital_flow/storage.py": "70f9da76f5a5322b58342ecef1d377cd2b070098",
+      "part2/capital_flow/handoff.py": "23d704dead9982f9f3f395f425bbbefe5541d193",
+      "part2/capital_flow/tests/test_runner_two_child_spawn_preflight.py": "8aadcbf84c200683b686751abdd85c331ac17201"
+    }
+  },
+  "worker_control": {
+    "prewrite_head": "9307aeafd5c2c2dd6ca62525e3f5b4e1d97ac23c",
+    "recent_compare": "4 commits since A 14:00: B 14:35 report, C 14:18 and 15:32 reports, supervisor_roadmap.md update; no queue files",
+    "queue": {
+      "pending": 0,
+      "done": 30,
+      "failed": 27,
+      "pending_dir": "ABSENT",
+      "basis": "15:32 C report exact worker-control tree, reconciled with current compare showing no queue-file changes"
+    },
+    "roadmap": "automation/supervisor_roadmap.md (2026-11-02 14:57 ICT)",
+    "latest_durable": {
+      "A": "A-20261102-db4c6bf-1400-frozen-integration-evidence-gate-blocked.json",
+      "B": "B-20261102-db4c6bf-1435-source-plateau.json",
+      "C": "C-20261102-db4c6bf-quality-evidence-gate-1532.json"
+    },
+    "lane_verdicts": {
+      "A": "BLOCKED_PLATEAU",
+      "B": "SOURCE_ADMISSION_PLATEAU",
+      "C": "QUALITY_EVIDENCE_INCOMPLETE",
+      "Supervisor": "NOT_PLATEAU"
+    }
+  },
+  "integration_decision": {
+    "name": "SAME_CLOCK_IS_NOT_GENERATION_IDENTITY",
+    "pinned_contract": "automation/planner_status/A-20261017-378cffe-two-writer-contract-corrected-0058.json",
+    "source_verified": "At pinned HEAD, runner writes latest.json, audit_latest.json, anata_latest.json as three independent atomic writes. All three expose as_of_ms (output.to_dict, frame.to_audit_dict, build_anata_handoff); archive lock is confined to storage operations.",
+    "oracle_limit": "Equal final as_of_ms is a timestamp-level check, not proof that files come from the same generation if overlapping writers use the same as_of_ms but different visible archive states. Sequential two-child preflight does not exercise this.",
+    "disposition": "Do not weaken existing contract or claim a defect. Retain frozen distinct-clock two-writer contract; when executable evidence is available, add a deterministic same-clock, different-source-row identity/coverage assertion for persisted outputs only if all three outputs expose an unambiguous comparable observable. No code edits or new speculative Gemini task now.",
+    "next": "Obtain approved exact-SHA checkout or authorized sanitized executor diagnostics. Execute existing deterministic no-network two-writer, role identity, JSONL newline, rollback and orphan recovery contracts; retain targeted/full pytest logs and inspect whether same-clock identity assertion is testable."
+  },
+  "validation": {
+    "exact_sha": "db4c6bf1ba8f81ee4f4ae27ba59da756594db853",
+    "matching_done": "automation/executor_queue/done/SUPERVISOR-20261029-two-child-spawn-preflight-1748-01.json",
+    "matching_done_status": "PASS_SEQUENTIAL_PREFLIGHT_ONLY",
+    "raw_pytest_transcripts": "NOT_RETAINED",
+    "independent_collect_only": "FAILED_BEFORE_COLLECTION_EXIT_4",
+    "independent_targeted_pytest": "NOT_RUN",
+    "independent_full_pytest": "NOT_RUN",
+    "concurrency_rollback_recovery": "NOT_RUN",
+    "gemini_structured_json_reliability": "UNVERIFIED",
+    "invalidate_on_head_advance": true
+  },
+  "blocker": {
+    "attempted_operation": "cd /mnt/data && python -m pytest --collect-only -q part2/capital_flow/tests",
+    "attempted_path": "/mnt/data/part2/capital_flow/tests",
+    "verbatim_error": "ERROR: file or directory not found: part2/capital_flow/tests",
+    "exit_code": 4,
+    "checkout_probe": "ABSENT /mnt/data/A-Woker-Lab; ABSENT /mnt/data/part2/capital_flow/tests; ABSENT /workspace/A-Woker-Lab; ABSENT /home/oai/share/A-Woker-Lab",
+    "upstream_failed_operation": "git diff --check",
+    "upstream_verbatim_error": "CalledProcessError: Command '['git', 'diff', '--check']' returned non-zero exit status 2.",
+    "diagnostic_issue": "https://github.com/EpicNIthan/A-Woker-Lab/issues/1",
+    "next_feasible_recovery": "Separately authorized exact-SHA executable checkout or sanitized pre-reset executor diagnostics with per-command pytest stdout/stderr/exit and candidate diff-check stderr; do not repeat DNS clone or malformed Gemini task."
+  },
+  "actions": {
+    "report_only": true,
+    "gemini_tasks_enqueued": 0,
+    "specialist_code_modified": false,
+    "protected_systems_modified": false,
+    "queue_workflow_secret_schedule_modified": false,
+    "automation_disabled_or_rescheduled": false,
+    "automations_verified_enabled": [
+      "A",
+      "B",
+      "C",
+      "Supervisor"
+    ]
+  }
+}
